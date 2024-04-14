@@ -1,0 +1,6 @@
+module WordFactoryApp {
+    interface WordFactory {
+        string sayHello();
+        string getUsername(in long playerID);
+    };
+};
