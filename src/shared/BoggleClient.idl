@@ -8,7 +8,7 @@ module BoggleApp {
     interface BoggleClient {
         boolean validateAccount(in string username, in string password);
 
-        long attemptJoin(in string username);
+        long attemptJoin(in string username, out long timeRemaining);
 
         string getDuration(in long gameID);
 

@@ -1,19 +1,66 @@
 package server.model;
 
+import org.omg.CORBA.IntHolder;
+import org.omg.CORBA.LongHolder;
+import org.omg.CORBA.StringHolder;
 import server.model.BoggleApp.BoggleClientPOA;
 import server.model.BoggleApp.Leaderboard;
 
+import javax.swing.Timer;
+import java.util.ArrayList;
+
 public class ServerImplementation extends BoggleClientPOA {
+
+    private int timeOfWaiting;
+
+    private long startTimeInMillis;
+
+    // Will be the holder for a game room that is waiting for users to join
+    ArrayList<String> gameRoomUsers = new ArrayList<>();
+
+    ArrayList<Integer> gameIDList = new ArrayList<>();
+
+    int lastGameID = DataPB.getLastGameID();
+
+    int gameIDForSession;
 
     @Override
     public boolean validateAccount(String username, String password) {
         return false;
     }
 
-    @Override
-    public int attemptJoin(String username) {
-        return 0;
+
+    /** Change to LongHolder on next update of idl */
+    public int attemptJoin(String username, IntHolder timeRemaining) {
+
+        // make entering the game room synchronized
+        synchronized (this) {
+            try {
+                // Add the user to game room
+                gameRoomUsers.add(username);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        // If user is the first to enter the game room start a timer
+        if (gameRoomUsers.size() == 1) {
+            startTimeInMillis = System.currentTimeMillis();
+            timeRemaining.value = (int) ( startTimeInMillis - System.currentTimeMillis());
+            gameIDForSession +=1;
+            try {
+                Thread.sleep(timeOfWaiting);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (gameRoomUsers.size() > 1)
+            return gameIDForSession;
+        else
+            return -1;
     }
+
 
     @Override
     public String getDuration(int gameID) {
@@ -69,4 +116,5 @@ public class ServerImplementation extends BoggleClientPOA {
     public boolean editPassword(String username, String oldPass, String newPass) {
         return false;
     }
+
 }
