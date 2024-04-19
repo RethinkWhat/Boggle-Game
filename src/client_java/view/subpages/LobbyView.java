@@ -23,6 +23,10 @@ public class LobbyView extends JPanel {
      */
     private UsersPanel pnlUsers;
     /**
+     * Panel holding the players.
+     */
+    private JPanel pnlPlayerContainer;
+    /**
      * The stylesheet.
      */
     private SwingStylesheet style = new SwingStylesheet();
@@ -39,7 +43,7 @@ public class LobbyView extends JPanel {
         pnlTimer.setBackground(style.white);
         add(pnlTimer, BorderLayout.NORTH);
 
-        lblTimer = style.createLblP("00:00", style.white);
+        lblTimer = style.createLblP("00:10", style.white);
         lblTimer.setIcon(style.iconTimerWhite);
         lblTimer.setVerticalTextPosition(SwingConstants.CENTER);
         pnlTimer.add(lblTimer);
@@ -47,9 +51,12 @@ public class LobbyView extends JPanel {
         add(pnlUsers = new UsersPanel());
 
         // sample only. delete when controller has logic already.
-        pnlUsers.getPnlPlayerContainer().add(new PlayerPanel(100,100,"username"));
+        pnlPlayerContainer.add(new PlayerPanel(150,150,"username"));
+        pnlPlayerContainer.add(new PlayerPanel(150,150,"username"));
+        pnlPlayerContainer.add(new PlayerPanel(150,150,"username"));
 
-        btnExitLobby = style.createBtnRounded("Exit lobby",style.red, style.black,10);
+
+        btnExitLobby = style.createBtnRounded("Exit Lobby",style.red, style.black,10);
         btnExitLobby.setPreferredSize(new Dimension(260,40));
         add(btnExitLobby, BorderLayout.SOUTH);
 
@@ -60,11 +67,6 @@ public class LobbyView extends JPanel {
      * Holds the users joining in a lobby.
      */
     public class UsersPanel extends JPanel {
-        /**
-         * The panel holding the players to be added.
-         */
-        private JPanel pnlPlayerContainer;
-
         /**
          * Constructs a panel of UsersPanel.
          */
@@ -83,14 +85,6 @@ public class LobbyView extends JPanel {
             add(scroll, BorderLayout.CENTER);
 
             this.setPreferredSize(new Dimension(1300,500));
-        }
-
-        /**
-         * Retrieves the current JPanel of pnlPlayerContainer.
-         * @return The current pnlPlayerContainer.
-         */
-        public JPanel getPnlPlayerContainer() {
-            return pnlPlayerContainer;
         }
     }
 }
