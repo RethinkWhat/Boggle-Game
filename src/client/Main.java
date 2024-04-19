@@ -2,9 +2,14 @@ package client;
 
 import client.model.BoggleApp.BoggleClient;
 import client.model.BoggleApp.BoggleClientHelper;
+import org.omg.CORBA.IntHolder;
+import org.omg.CORBA.LongHolder;
 import org.omg.CORBA.ORB;
 import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Main {
 
@@ -21,7 +26,19 @@ public class Main {
 
             wfImpl = BoggleClientHelper.narrow(ncRef.resolve_str(name));
 
-            System.out.println(wfImpl.attemptJoin("d"));
+            ExecutorService executor = Executors.newFixedThreadPool(10);
+            executor.submit(new Runnable() {
+                @Override
+                public void run() {
+                    IntHolder timeRem = new IntHolder();
+                    int gameID = wfImpl.attemptJoin("username", timeRem);
+
+                    System.out.println("TIME REMAINING: " + timeRem.value);
+
+                    System.out.println("GAME ID: " + gameID);
+
+                }
+            });
 
         } catch (Exception e) {
             e.printStackTrace();
