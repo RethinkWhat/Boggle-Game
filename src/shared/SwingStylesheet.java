@@ -71,6 +71,18 @@ public class SwingStylesheet {
      */
     public final ImageIcon iconLogout = new ImageIcon("res/drawable/icons/logout-white-solid.png");
     /**
+     * The timer icon.
+     */
+    public final ImageIcon iconTimerWhite = new ImageIcon("res/drawable/icons/timer-solid-white.png");
+    /**
+     * The pfp placeholder icon.
+     */
+    public final ImageIcon iconPfpPlaceholder = new ImageIcon("res/drawable/icons/pfp-outline-white.png");
+    /**
+     * The clear icon.
+     */
+    public final ImageIcon iconClear = new ImageIcon("res/drawable/icons/clear-solid-red.png");
+    /**
      * Default padding for panels.
      */
     public final EmptyBorder padding = new EmptyBorder(10, 20, 10, 20);

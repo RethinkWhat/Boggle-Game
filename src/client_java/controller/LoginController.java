@@ -3,6 +3,7 @@ package client_java.controller;
 import client_java.model.LoginModel;
 import client_java.view.ClientApplicationView;
 import client_java.view.LoginView;
+import shared.SwingResources;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -32,10 +33,16 @@ public class LoginController {
 
         // action listeners
         view.setLoginListener(new LoginListener());
-
+        
         // mouse listeners
+        view.getBtnLogin().addMouseListener(new SwingResources.CursorChanger(view.getBtnLogin()));
 
         // focus listeners
+        view.getTxtUsername().addFocusListener(new SwingResources.TextFieldFocus(view.getTxtUsername(), "Username"));
+        view.getTxtPassword().addFocusListener(new SwingResources.PasswordFocusWithCheckbox(view.getTxtPassword(), view.getChkShowPassword(), "Password"));
+
+        view.revalidate();
+        view.repaint();
     }
 
     /**
