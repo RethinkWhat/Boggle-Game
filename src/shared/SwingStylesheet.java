@@ -23,6 +23,10 @@ public class SwingStylesheet {
      */
     public final Color mustard = new Color(208,168,87);
     /**
+     * Tertiary UI color.
+     */
+    public final Color lightYellow = new Color(255,242,216,255);
+    /**
      * Primary flat color.
      */
     public final Color white = new Color(255,255,255);
@@ -138,11 +142,26 @@ public class SwingStylesheet {
      *
      * @param text  The specified text.
      * @param color The specified color.
-     * @return JLabel with specified text and color in an H3 format.
+     * @return JLabel with specified text and color in an H4 format.
      */
     public JLabel createLblH4(String text, Color color) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Arial", Font.BOLD, 12));
+        label.setForeground(color);
+        return label;
+    }
+
+    /**
+     * Creates a new JLabel with a specified text and color.
+     * The JLabel is a heading (h5).
+     *
+     * @param text  The specified text.
+     * @param color The specified color.
+     * @return JLabel with specified text and color in an H5 format.
+     */
+    public JLabel createLblH5(String text, Color color) {
+        JLabel label = new JLabel(text);
+        label.setFont(new Font("Arial", Font.BOLD, 45));
         label.setForeground(color);
         return label;
     }
@@ -536,4 +555,3 @@ public class SwingStylesheet {
         }
     }
 }
-
