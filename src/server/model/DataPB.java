@@ -9,7 +9,8 @@ public class DataPB {
 
     public static void setCon() {
         try {
-            String url = "jdbc:mysql://localhost:8889/wordFactory";
+            //Change port if necessary but RETURN IT TO 8889 KASI NAKAKAHIYA
+            String url = "jdbc:mysql://localhost:3306/wordFactory";
 
             String user = "root";
             String pass = "root";
@@ -82,5 +83,32 @@ public class DataPB {
         return -1;
     }
 
-    /** Insert queries here */
+    /**
+     * Edits the info of a particular player
+     * Returns true if the update is succesful, otherwise it returns falls
+     * @param username
+     * @param toEdit
+     * @param newInfo
+     * @return
+     */
+    public static boolean editInfo(String username, String toEdit, String newInfo){
+        DataPB.setCon();
+
+        if (!(toEdit.equalsIgnoreCase("username") || toEdit.equalsIgnoreCase("password"))){
+            return false;
+        }
+
+        try {
+            String query = "UPDATE player SET " + toEdit + " = ? WHERE username = ?";
+
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, newInfo);
+            ps.setString(2, username);
+
+            ps.executeUpdate();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 }
