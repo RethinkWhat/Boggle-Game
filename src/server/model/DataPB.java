@@ -94,7 +94,7 @@ public class DataPB {
     public static boolean editInfo(String username, String toEdit, String newInfo){
         DataPB.setCon();
 
-        if (!(toEdit.equalsIgnoreCase("username") || toEdit.equalsIgnoreCase("password"))){
+        if (!(toEdit.equalsIgnoreCase("username") || toEdit.equalsIgnoreCase("fullName"))){
             return false;
         }
 
@@ -110,5 +110,68 @@ public class DataPB {
         }catch (Exception e){
             return false;
         }
+    }
+
+    /**
+     * Returns the number of the completed matches of a specific user
+     * @param username
+     * @return
+     */
+    public static int getMatches(String username) throws SQLException{
+        int noOfMatches = 0;
+
+        return noOfMatches;
+    }
+
+    /**
+     * Returns the total wins of a particular user
+     * @param username
+     * @return
+     * @throws SQLException
+     */
+    public static int getWins(String username) throws SQLException{
+        int noOfWins = 0;
+
+        return noOfWins;
+    }
+
+    /**
+     * Returns true if the updating of a password is successful
+     * @param username
+     * @param oldPass
+     * @param newPass
+     * @return
+     */
+    public static boolean editPassword(String username, String oldPass, String newPass){
+        try {
+            String dbOldPass = "";
+
+            String query1 = "SELECT password FROM player WHERE username = ?";
+
+            PreparedStatement ps1 = con.prepareStatement(query1);
+            ps1.setString(1, username);
+
+            ResultSet rs = ps1.executeQuery();
+
+            if (rs.next()){
+                dbOldPass = rs.getString(1);
+            }
+
+            if (dbOldPass.equals(oldPass)){
+                String query2 = "UPDATE player SET password = ? WHERE username = ?";
+
+                PreparedStatement ps2 = con.prepareStatement(query2);
+                ps2.setString(1, newPass);
+                ps2.setString(2, username);
+
+                ps2.executeUpdate();
+                return true;
+            }
+        }catch (SQLException sqle){
+            sqle.printStackTrace();
+            return false;
+        }
+
+        return false;
     }
 }
