@@ -1,0 +1,32 @@
+module BoggleApp {
+    struct Leaderboard {
+        string username;
+        long points;
+    };
+    typedef sequence<Leaderboard> userRanking;
+
+    interface BoggleClient {
+        boolean validateAccount(in string username, in string password);
+
+        long attemptJoin(in string username, out long timeRemaining);
+
+        string getDuration(in long gameID);
+
+        long getRoundID(in long gameID, in string username);
+
+        long getPoints(in string username);
+
+        string getWinnerIfAny(in long gameID);
+
+        string getWordList(in long gameID, in long roundID);
+
+        userRanking getLeaderboard();
+
+        long getUserPoints(in string username);
+
+        boolean editInfo(in string username, in string toEdit, in string newInfo);
+        long getMatches(in string username);
+        long getWins(in string username);
+        boolean editPassword(in string username, in string oldPass, in string newPass);
+    };
+};
