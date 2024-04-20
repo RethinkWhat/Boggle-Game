@@ -6,9 +6,9 @@ import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
+import server.model.BoggleApp.BoggleClient;
+import server.model.BoggleApp.BoggleClientHelper;
 import server.model.ServerImplementation;
-import server.model.WordFactoryApp.WordFactory;
-import server.model.WordFactoryApp.WordFactoryHelper;
 
 public class Server {
 
@@ -22,7 +22,7 @@ public class Server {
             ServerImplementation serverImpl = new ServerImplementation();
 
             org.omg.CORBA.Object ref = rootpoa.servant_to_reference(serverImpl);
-            WordFactory href = WordFactoryHelper.narrow(ref);
+            BoggleClient href = BoggleClientHelper.narrow(ref);
 
             org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
 
