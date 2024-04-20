@@ -3,8 +3,11 @@ package server;
 import server.controller.Server;
 
 public class Main {
-    public static void main(String[] args) {
-        Server server = new Server();
-        server.run(args);
+    public Main() {
+    }
+
+    public static void main(String[] var0) {
+        Server var1 = new Server();
+        var1.run(var0);
     }
 }

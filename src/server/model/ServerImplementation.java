@@ -1,157 +1,122 @@
 package server.model;
 
-import org.omg.CORBA.IntHolder;
-import org.omg.CORBA.LongHolder;
-import org.omg.CORBA.StringHolder;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+import org.omg.CORBA.BooleanHolder;
 import server.model.BoggleApp.BoggleClientPOA;
 import server.model.BoggleApp.Leaderboard;
 
-import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class ServerImplementation extends BoggleClientPOA {
-
     private int timeOfWaiting = 10000;
-
     private long endTimeInMillis;
-
-    // Will be the holder for a game room that is waiting for users to join
-    ArrayList<String> gameRoomUsers = new ArrayList<>();
-
-    ArrayList<Integer> gameIDList = new ArrayList<>();
-
-    int lastGameID = 0;            // TODO: Change to when DB not null DataPB.getLastGameID();
-
+    Set<String> gameRoomUsers = new HashSet();
+    ArrayList<Integer> gameIDList = new ArrayList();
+    int lastGameID = 0;
     int gameIDForSession;
+    private long currTimeValue = 10000;
+    private Time gameDuration = new Time(0, 3, 0);
 
-    @Override
-    public boolean validateAccount(String username, String password) {
+    public ServerImplementation() {
+    }
+
+    public boolean validateAccount(String var1, String var2) {
         return false;
     }
 
-
-    /** Change to LongHolder on next update of idl */
-    public int attemptJoin(String username, IntHolder timeRemaining) {
-
-        Object waitObject = new Object();
-
-        // make entering the game room synchronized
-        synchronized (this) {
-            try {
-                System.out.println("adding " + username + " to game room.");
-                // Add the user to game room
-                gameRoomUsers.add(username);
-
-                // If user is the first to enter the game room start a timer
-                if (gameRoomUsers.size() == 1) {
-                    System.out.println("game room size == 1");
-                    endTimeInMillis = System.currentTimeMillis() + 10000;
-
-                    System.out.println("assigning timeRemaining the value " + (endTimeInMillis - System.currentTimeMillis()));
-                    timeRemaining.value = (int) (endTimeInMillis - System.currentTimeMillis());
-
-                    gameIDForSession += 1;
-                    System.out.println("Starting count down");
-                    System.out.println(timeRemaining.value);
-
-                    while (timeRemaining.value > 0) {
-                        // Update time remaining every second
-                        timeRemaining.value -= 1000; // Decrease by 1 second (1000 milliseconds)
-                        System.out.println("VALUE: " + timeRemaining.value);
-                        if (timeRemaining.value <= 0) {
-                            // Stop the timer if countdown is over
-                            break;
-                        }
-                        try {
-                            Thread.sleep(1000);
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    // Notify waiting threads after timer finishes
-                    synchronized(waitObject) {
-                        waitObject.notify();
-                    }
-
-                } else {
-                    gameRoomUsers.add(username);
-                    // Spawn a new thread to wait on separate object
-                    Thread waitingThread = new Thread(() -> {
-                        synchronized(waitObject) {
-                            try {
-                                waitObject.wait();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    });
-                    waitingThread.start(); // Start the waiting thread
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+    public long attemptJoin(String var1, BooleanHolder var2) {
+        if (this.currTimeValue <= 0L) {
+            var2.value = true;
+            GameRoom var3 = new GameRoom(this.gameRoomUsers, this.gameDuration);
+            return (long)var3.getGameID();
+        } else if (this.gameRoomUsers.isEmpty()) {
+            var2.value = false;
+            this.gameRoomUsers.add(var1);
+            this.startTimer();
+            return 10000L;
+        } else {
+            var2.value = false;
+            this.gameRoomUsers.add(var1);
+            return this.getCurrTimeValue();
         }
-        if (gameRoomUsers.size() > 1)
-            return gameIDForSession;
-        else
-            return -1;
     }
 
+    public long getCurrTimeValue() {
+        return this.currTimeValue;
+    }
 
-    @Override
-    public String getDuration(int gameID) {
+    public void setCurrTimeValue(long var1) {
+        this.currTimeValue = var1;
+    }
+
+    private void startTimer() {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true) {
+                    if (currTimeValue > 0L) {
+                        currTimeValue -= 1000L;
+                        System.out.println("VALUE: " + currTimeValue);
+                        if (currTimeValue > 0L) {
+                            try {
+                                Thread.sleep(1000L);
+                            } catch (Exception var2) {
+                                var2.printStackTrace();
+                            }
+                            continue;
+                        }
+                    }
+
+                    return;
+                }
+            }
+        });
+
+        thread.start();
+    }
+
+    public String getDuration(int var1) {
         return null;
     }
 
-    @Override
-    public int getRoundID(int gameID, String username) {
+    public int getRoundID(int var1, String var2) {
         return 0;
     }
 
-    @Override
-    public int getPoints(String username) {
+    public int getPoints(String var1) {
         return 0;
     }
 
-    @Override
-    public String getWinnerIfAny(int gameID) {
+    public String getWinnerIfAny(int var1) {
         return null;
     }
 
-    @Override
-    public String getWordList(int gameID, int roundID) {
+    public String getWordList(int var1, int var2) {
         return null;
     }
 
-    @Override
     public Leaderboard[] getLeaderboard() {
         return new Leaderboard[0];
     }
 
-    @Override
-    public int getUserPoints(String username) {
+    public int getUserPoints(String var1) {
         return 0;
     }
 
-    @Override
-    public boolean editInfo(String username, String toEdit, String newInfo) {
+    public boolean editInfo(String var1, String var2, String var3) {
         return false;
     }
 
-    @Override
-    public int getMatches(String username) {
+    public int getMatches(String var1) {
         return 0;
     }
 
-    @Override
-    public int getWins(String username) {
+    public int getWins(String var1) {
         return 0;
     }
 
-    @Override
-    public boolean editPassword(String username, String oldPass, String newPass) {
+    public boolean editPassword(String var1, String var2, String var3) {
         return false;
     }
-
 }

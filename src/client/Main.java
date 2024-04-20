@@ -2,6 +2,7 @@ package client;
 
 import client.model.BoggleApp.BoggleClient;
 import client.model.BoggleApp.BoggleClientHelper;
+import org.omg.CORBA.BooleanHolder;
 import org.omg.CORBA.IntHolder;
 import org.omg.CORBA.ORB;
 import org.omg.CosNaming.NamingContextExt;
@@ -22,22 +23,21 @@ public class Main {
             NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
 
             String name = "WordFactory";
+            System.out.println("Starting client.");
 
             wfImpl = BoggleClientHelper.narrow(ncRef.resolve_str(name));
 
-            ExecutorService executor = Executors.newFixedThreadPool(10);
-            executor.submit(new Runnable() {
-                @Override
-                public void run() {
-                    IntHolder timeRem = new IntHolder();
-                    int gameID = wfImpl.attemptJoin("username", timeRem);
+            long id =0;
+            BooleanHolder startGame = new BooleanHolder(false);
+            while (!startGame.value) {
+                id = wfImpl.attemptJoin("username", startGame);
+                System.out.println("TIME REMAINING: " + id);
+                if (id == 0)
+                    break;
+                Thread.sleep(1000);
+            }
+            System.out.println("GAME ID: " + id);
 
-                    System.out.println("TIME REMAINING: " + timeRem.value);
-
-                    System.out.println("GAME ID: " + gameID);
-
-                }
-            });
 
         } catch (Exception e) {
             e.printStackTrace();
