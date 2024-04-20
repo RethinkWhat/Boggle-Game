@@ -1,4 +1,4 @@
-module BoggleApp {
+module server.model.server.model.client.model.server.model.client.model.client.model.server.model.client.model.server.model.client.model.BoggleApp {
     struct Leaderboard {
         string username;
         int points;
