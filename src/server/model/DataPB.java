@@ -25,7 +25,7 @@ public class DataPB {
             String var2 = "SELECT * FROM player WHERE username=? AND password=?";
             PreparedStatement var3 = con.prepareStatement(var2);
             var3.setString(1, var0);
-            var3.setString(1, var1);
+            var3.setString(2, var1);
             ResultSet var4 = var3.executeQuery();
             return var4.first();
         } catch (Exception var5) {
