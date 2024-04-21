@@ -74,6 +74,7 @@ public class ServerStatusView extends JPanel {
             lblServerPrompt.setHorizontalAlignment(SwingConstants.CENTER);
             container.add(lblServerPrompt, gbc);
 
+            //To be dynamically changed in the controller
             gbc.gridy = 2;
             lblServerStatus = style.createLblH1("OFFLINE", style.red);
             lblServerStatus.setHorizontalAlignment(SwingConstants.CENTER);
@@ -147,10 +148,5 @@ public class ServerStatusView extends JPanel {
         btnServerSwitch.setBackground(style.white);
         btnServerSwitch.setForeground(style.deepSkyBlue);
     }
-
-    public static void main(String[] args) {
-        ServerStatusView serverStatusView = new ServerStatusView();
-    }
 }
-
 

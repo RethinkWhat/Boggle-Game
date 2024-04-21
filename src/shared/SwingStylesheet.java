@@ -98,6 +98,11 @@ public class SwingStylesheet {
      * The switch icon.
      */
     public final ImageIcon iconSwitch = new ImageIcon("res/drawable/icons/switch-solid.png");
+
+    /**
+     * The search icon.
+     */
+    public final ImageIcon iconSearch = new ImageIcon("res/drawable/icons/search-solid.png");
     /**
      * Default padding for panels.
      */
