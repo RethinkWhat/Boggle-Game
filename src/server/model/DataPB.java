@@ -113,6 +113,19 @@ public class DataPB {
     public static int getMatches(String username) throws SQLException{
         int noOfMatches = 0;
 
+        String query = "SELECT DISTINCT rd.gameID, rd.username, g.duration, g.gameStatus, g.winner AS gameWinner " +
+                "FROM round_details rd JOIN game g USING (gameID) " +
+                "WHERE username = ? AND g.gameStatus = 'done'";
+
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, username);
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+            ++noOfMatches;
+        }
+
         return noOfMatches;
     }
 
@@ -123,7 +136,6 @@ public class DataPB {
      * @throws SQLException
      */
     public static int getWins(String username) throws SQLException{
-        DataPB.setCon();
         int size = 0;
         String query = "SELECT winner FROM game WHERE winner = ? AND gameStatus = 'done'";
 
@@ -176,13 +188,5 @@ public class DataPB {
         }
 
         return false;
-    }
-
-    /**
-     * TESTING PURPOSES ONLY
-     * @param args
-     */
-    public static void main(String[] args) throws Exception{
-        System.out.println(getWins("Rithik"));
     }
 }
