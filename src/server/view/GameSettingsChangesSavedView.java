@@ -17,7 +17,7 @@ public class GameSettingsChangesSavedView extends JFrame {
     private SwingStylesheet style = new SwingStylesheet(); // the stylesheet
 
 
-    // constructor panel for the GameSettingsChangesSavedView
+    // constructor for the GameSettingsChangesSavedView
     public GameSettingsChangesSavedView() {
         this.setSize(600, 370);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
