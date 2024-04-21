@@ -4,7 +4,7 @@ import java.sql.Time;
 import java.util.Set;
 
 public class GameRoom {
-    private int gameID = 1;// TODO: when database is finished change to DataPB.getLastGameID() + 1;
+    private int gameID = DataPB.getLastGameID() + 1;// TODO: when database is finished change to DataPB.getLastGameID() + 1;
     private Set<String> players;
     private Time duration;
 

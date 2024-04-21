@@ -10,7 +10,7 @@ public class DataPB {
 
     public static void setCon() {
         try {
-            String var0 = "jdbc:mysql://localhost:8889/wordFactory";
+            String var0 = "jdbc:mysql://localhost:8889/boggle";
             String var1 = "root";
             String var2 = "root";
             con = DriverManager.getConnection(var0, var1, var2);
@@ -27,7 +27,9 @@ public class DataPB {
             var3.setString(1, var0);
             var3.setString(2, var1);
             ResultSet var4 = var3.executeQuery();
-            return var4.first();
+            if (var4.next())
+                return true;
+            return false;
         } catch (Exception var5) {
             var5.printStackTrace();
             return false;
