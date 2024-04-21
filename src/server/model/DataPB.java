@@ -10,7 +10,7 @@ public class DataPB {
 
     public static void setCon() {
         try {
-            String var0 = "jdbc:mysql://localhost:8889/wordFactory";
+            String var0 = "jdbc:mysql://localhost:3306/wordFactory";
             String var1 = "root";
             String var2 = "root";
             con = DriverManager.getConnection(var0, var1, var2);
@@ -87,8 +87,6 @@ public class DataPB {
      * @return
      */
     public static boolean editInfo(String username, String toEdit, String newInfo){
-        DataPB.setCon();
-
         if (!(toEdit.equalsIgnoreCase("username") || toEdit.equalsIgnoreCase("fullName"))){
             return false;
         }
@@ -124,10 +122,20 @@ public class DataPB {
      * @return
      * @throws SQLException
      */
-    public static int getWins(String username) throws SQLException {
-        int noOfWins = 0;
+    public static int getWins(String username) throws SQLException{
+        DataPB.setCon();
+        int size = 0;
+        String query = "SELECT winner FROM game WHERE winner = ? AND gameStatus = 'done'";
 
-        return noOfWins;
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, username);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+            ++size;
+        }
+
+        return size;
     }
 
     /**
@@ -168,5 +176,13 @@ public class DataPB {
         }
 
         return false;
+    }
+
+    /**
+     * TESTING PURPOSES ONLY
+     * @param args
+     */
+    public static void main(String[] args) throws Exception{
+        System.out.println(getWins("Rithik"));
     }
 }
