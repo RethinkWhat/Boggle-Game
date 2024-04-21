@@ -87,4 +87,12 @@ public class LobbyView extends JPanel {
             this.setPreferredSize(new Dimension(1300,500));
         }
     }
+
+    public JLabel getLblTimer() {
+        return lblTimer;
+    }
+
+    public void setLblTimerTxt(String lblTimer) {
+        this.lblTimer.setText(lblTimer);
+    }
 }

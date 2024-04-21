@@ -8,6 +8,7 @@ import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
 import server.model.BoggleApp.BoggleClient;
 import server.model.BoggleApp.BoggleClientHelper;
+import server.model.DataPB;
 import server.model.ServerImplementation;
 
 public class Server {

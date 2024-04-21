@@ -19,10 +19,12 @@ public class ServerImplementation extends BoggleClientPOA {
     private Time gameDuration = new Time(0, 3, 0);
 
     public ServerImplementation() {
+        DataPB.setCon();
+
     }
 
     public boolean validateAccount(String var1, String var2) {
-        return false;
+        return DataPB.validateAccount(var1,var2);
     }
 
     public long attemptJoin(String var1, BooleanHolder var2) {

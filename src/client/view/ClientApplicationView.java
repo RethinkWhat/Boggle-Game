@@ -45,6 +45,36 @@ public class ClientApplicationView extends JFrame {
     /**
      * Constructs a frame of ClientApplication View.
      */
+
+    private HomeView homeView;
+    private  LobbyView lobbyView;
+    private GameRoomView gameRoomView;
+
+    public HomeView getHomeView() {
+        return homeView;
+    }
+
+    public LobbyView getLobbyView() {
+        return lobbyView;
+    }
+
+    public GameRoomView getGameRoomView() {
+        return gameRoomView;
+    }
+
+    public void showLobby() {
+        cardLayout.show(pnlCards, "lobby");
+
+    }
+    public void showHome() {
+        cardLayout.show(pnlCards, "home");
+    }
+
+    public void showGameRoom() {
+        cardLayout.show(pnlCards, "gameroom");
+    }
+
+
     public ClientApplicationView() {
         super("Word Factory");
 
@@ -56,9 +86,12 @@ public class ClientApplicationView extends JFrame {
         pnlCards = new JPanel(cardLayout = new CardLayout(0,0));
         contentArea.add(pnlCards, BorderLayout.CENTER);
 
-        pnlCards.add(new HomeView(), "home");
-        pnlCards.add(new LobbyView(), "lobby");
-        pnlCards.add(new GameRoomView(), "gameroom");
+        homeView = new HomeView();
+        lobbyView = new LobbyView();
+        gameRoomView = new GameRoomView();
+        pnlCards.add( homeView, "home");
+        pnlCards.add( lobbyView, "lobby");
+        pnlCards.add( gameRoomView, "gameroom");
 
         cardLayout.show(pnlCards, "home");
 
