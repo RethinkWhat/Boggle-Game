@@ -83,6 +83,22 @@ public class SwingStylesheet {
      */
     public final ImageIcon iconClear = new ImageIcon("res/drawable/icons/clear-solid-red.png");
     /**
+     * The add icon.
+     */
+    public final ImageIcon iconAdd = new ImageIcon("res/drawable/icons/add-blue-solid.png");
+    /**
+     * The players icon.
+     */
+    public final ImageIcon iconPlayers = new ImageIcon("res/drawable/icons/players-white-solid.png");
+    /**
+     * The game settings icon.
+     */
+    public final ImageIcon iconGameSettings = new ImageIcon("res/drawable/icons/gameController-white-solid.png");
+    /**
+     * The switch icon.
+     */
+    public final ImageIcon iconSwitch = new ImageIcon("res/drawable/icons/switch-solid.png");
+    /**
      * Default padding for panels.
      */
     public final EmptyBorder padding = new EmptyBorder(10, 20, 10, 20);

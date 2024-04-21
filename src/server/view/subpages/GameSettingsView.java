@@ -1,4 +1,4 @@
-package server.view.suibpages;
+package server.view.subpages;
 
 public class GameSettingsView {
 }
