@@ -1,11 +1,6 @@
 package server.model;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.sql.Time;
+import java.sql.*;
 
 public class DataPB {
     private static Connection con;
@@ -30,7 +25,7 @@ public class DataPB {
             String var2 = "SELECT * FROM player WHERE username=? AND password=?";
             PreparedStatement var3 = con.prepareStatement(var2);
             var3.setString(1, var0);
-            var3.setString(1, var1);
+            var3.setString(2, var1);
             ResultSet var4 = var3.executeQuery();
             return var4.first();
         } catch (Exception var5) {
@@ -129,7 +124,7 @@ public class DataPB {
      * @return
      * @throws SQLException
      */
-    public static int getWins(String username) throws SQLException{
+    public static int getWins(String username) throws SQLException {
         int noOfWins = 0;
 
         return noOfWins;

@@ -1,5 +1,6 @@
 package client.controller;
 
+import client.model.ClientApplicationModel;
 import client.model.LoginModel;
 import client.view.ClientApplicationView;
 import client.view.LoginView;
@@ -8,6 +9,7 @@ import shared.SwingResources;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 
 /**
  * TODO: Documentation
@@ -47,6 +49,8 @@ public class LoginController {
 
     /**
      * Processes the request for loggin in.
+     *
+     * FOR CODE CLEANING
      */
     class LoginListener implements ActionListener {
         /**
@@ -55,12 +59,28 @@ public class LoginController {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            // backend implementation
+
+            String username = view.getTxtUsername().getText();
+
+            try {
+                if (model.validateAccount(view.getTxtUsername().getText(), view.getTxtPassword().getText())){
+                    new ClientApplicationController(new ClientApplicationView(), new ClientApplicationModel(view.getTxtUsername().getText()));
+                    view.dispose();
+                }else {
+                    //Error message na gagawin palang ni pat
+                }
+            }catch (SQLException sqle){
+                sqle.printStackTrace();
+            } catch (Exception ex) {
+                throw new RuntimeException(ex);
+            }
+
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
                     final ClientApplicationView view = new ClientApplicationView();
-                    final ClientApplicationController controller = new ClientApplicationController(view);
+                    final ClientApplicationModel model = new ClientApplicationModel(username);
+                    final ClientApplicationController controller = new ClientApplicationController(view, model);
                 }
             });
             view.dispose();
