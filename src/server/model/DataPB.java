@@ -89,8 +89,6 @@ public class DataPB {
      * @return
      */
     public static boolean editInfo(String username, String toEdit, String newInfo){
-        DataPB.setCon();
-
         if (!(toEdit.equalsIgnoreCase("username") || toEdit.equalsIgnoreCase("fullName"))){
             return false;
         }
@@ -117,6 +115,19 @@ public class DataPB {
     public static int getMatches(String username) throws SQLException{
         int noOfMatches = 0;
 
+        String query = "SELECT DISTINCT rd.gameID, rd.username, g.duration, g.gameStatus, g.winner AS gameWinner " +
+                "FROM round_details rd JOIN game g USING (gameID) " +
+                "WHERE username = ? AND g.gameStatus = 'done'";
+
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, username);
+
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+            ++noOfMatches;
+        }
+
         return noOfMatches;
     }
 
@@ -126,10 +137,19 @@ public class DataPB {
      * @return
      * @throws SQLException
      */
-    public static int getWins(String username) throws SQLException {
-        int noOfWins = 0;
+    public static int getWins(String username) throws SQLException{
+        int size = 0;
+        String query = "SELECT winner FROM game WHERE winner = ? AND gameStatus = 'done'";
 
-        return noOfWins;
+        PreparedStatement ps = con.prepareStatement(query);
+        ps.setString(1, username);
+        ResultSet rs = ps.executeQuery();
+
+        while (rs.next()){
+            ++size;
+        }
+
+        return size;
     }
 
     /**
