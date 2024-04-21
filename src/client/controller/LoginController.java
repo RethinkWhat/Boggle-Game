@@ -64,7 +64,7 @@ public class LoginController {
 
             try {
                 if (model.validateAccount(view.getTxtUsername().getText(), view.getTxtPassword().getText())){
-                    new ClientApplicationController(new ClientApplicationView(), new ClientApplicationModel(view.getTxtUsername().getText()));
+                    new ClientApplicationController(new ClientApplicationView(), new ClientApplicationModel(username, model.getWfImpl()));
                     view.dispose();
                 }else {
                     //Error message na gagawin palang ni pat
@@ -75,6 +75,7 @@ public class LoginController {
                 throw new RuntimeException(ex);
             }
 
+            /*
             SwingUtilities.invokeLater(new Runnable() {
                 @Override
                 public void run() {
@@ -84,6 +85,8 @@ public class LoginController {
                 }
             });
             view.dispose();
+
+             */
         }
     }
 }
