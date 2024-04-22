@@ -8,11 +8,17 @@ module BoggleApp {
     interface BoggleClient {
         boolean validateAccount(in string username, in string password);
 
-        long long attemptJoin(in string username, out boolean timerDone);
+        long long attemptJoin();
 
-        string getDuration(in long gameID);
+        long joinGameRoom(in string username, out long long duration);
 
-        long getRoundID(in long gameID, in string username);
+        long startRound(in string username, in long gameID, out long roundNumber, out string vowels, out string consonants);
+
+        long long getGameDurationVal(in long gameID, in long roundID);
+
+        string getRoundWinner(in string username, in long gameID, in long roundID, in string wordsEntered);
+
+        string getOverallWinner(in long gameId);
 
         long getPoints(in string username);
 

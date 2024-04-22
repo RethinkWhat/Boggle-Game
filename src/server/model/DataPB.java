@@ -1,5 +1,7 @@
 package server.model;
 
+import org.omg.CORBA.ORB;
+
 import java.sql.*;
 
 public class DataPB {
@@ -50,12 +52,74 @@ public class DataPB {
         }
     }
 
+    public static int createRound(String vowelSet, String consonantSet) {
+        try {
+            String stmt = "INSERT INTO round(vowels,consonants) VALUES(?,?)";
+            PreparedStatement preparedStatement = con.prepareStatement(stmt);
+            preparedStatement.setString(1,vowelSet);
+            preparedStatement.setString(2,consonantSet);
+            preparedStatement.execute();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public static int createRoundDetails(int gameID, int roundID, int roundNumber, String username) {
+        try {
+            String stmt = "INSERT INTO round_details(gameID, roundID, roundNumber, username) VALUES (?,?,?,?)";
+            PreparedStatement preparedStatement = con.prepareStatement(stmt);
+            preparedStatement.setInt(1, gameID);
+            preparedStatement.setInt(2, roundID);
+            preparedStatement.setInt(3, roundNumber);
+            preparedStatement.setString(4, username);
+            preparedStatement.execute();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+
+        }
+    }
+
+    public static int getLatestRound(int gameID) {
+        try {
+            String stmt = "SELECT roundID FROM round_details(gameID) VALUES (?) ORDER BY roundID DESC";
+            PreparedStatement preparedStatement = con.prepareStatement(stmt);
+            preparedStatement.setInt(1,gameID);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next())
+                return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public static int createGameRoom(int var0, Time var1) {
         try {
             String var2 = "INSERT INTO game(gameid, duration) VALUES(?)";
             PreparedStatement var3 = con.prepareStatement(var2);
             var3.setInt(1, var0);
             var3.setTime(1, var1);
+            var3.execute();
+            ResultSet var4 = var3.getGeneratedKeys();
+            return var4.getInt(1);
+        } catch (Exception var5) {
+            var5.printStackTrace();
+            return -1;
+        }
+    }
+
+    public static int createGameRoom(long duration) {
+        Time time = new Time(duration);
+        try {
+            String var2 = "INSERT INTO game(duration) VALUES(?)";
+            PreparedStatement var3 = con.prepareStatement(var2);
+            var3.setTime(1, time);
             var3.execute();
             ResultSet var4 = var3.getGeneratedKeys();
             return var4.getInt(1);
