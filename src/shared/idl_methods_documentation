@@ -1,47 +1,48 @@
-module server.model.server.model.client.model.server.model.client.model.client.model.server.model.client.model.server.model.client.model.BoggleApp {
+module BoggleApp {
     struct Leaderboard {
         string username;
-        int points;
+        long points;
     };
     typedef sequence<Leaderboard> userRanking;
 
     interface BoggleClient {
         boolean validateAccount(in string username, in string password);
 
-        // Will return a gameID and will be stored by the model. Join successful if != -1.
-        // Return will happen after 10 seconds and will return a value >-1 \
-        // if and only if there are are 2 or more people in game room
-        long attemptJoin(in string username);
+        long long attemptJoin(out boolean timerDone);
 
-        // Get the duration a round will span
+        // RETURN GAMEID duration. This creates a game object in sql database. It also creates a round object in database wherein round number is 1
+        long joinGameRoom(in username, out duration);
+
+        // Returns the round letter set, as well as the round id, if round id = -1 game is over.
+        long startRound(in username, in gameID, out string letterSet);
+
+        // Get the curr time of the countdown in server
+        long long getGameDurationVal(in gameID, in roundID);
+
+        // Get the username of the winner of the round when countdown time in client is 0)
+        string getRoundWinner(in username, in gameID, in roundID, in string wordsEntered);
+
+        // Return username of winner
+        string getOverallWinner(in gameId);
+
+
         string getDuration(in long gameID);
-
-        // Delay for 5 seconds, then getWordList, then get ready (10 seconds?), the showWordList
 
         long getRoundID(in long gameID, in string username);
 
-        // Get the totality of the points the user was able to accumulate through trials and tribulations
-        long getPoints(in string user);
+        long getPoints(in string username);
 
-        // After every round check GAME table.status and see if it is done. If it is done, then the game has been complete
-        // therefore, return the winner
-        // Returns null if no winner
-        string getWinnerIfAny(in long gameID)
+        string getWinnerIfAny(in long gameID);
 
-        // Get word list for the round -> The series of letters the user will have to make words using
         string getWordList(in long gameID, in long roundID);
 
-        // Will store a map of users mapped to their respective points
         userRanking getLeaderboard();
 
-        // Populate user score
         long getUserPoints(in string username);
 
-        // User account settings
         boolean editInfo(in string username, in string toEdit, in string newInfo);
         long getMatches(in string username);
         long getWins(in string username);
-        long getPoints(in string username);
         boolean editPassword(in string username, in string oldPass, in string newPass);
     };
 };

@@ -9,9 +9,10 @@ public class GameRoomModel {
 
     private int gameRoomID;
 
-    public GameRoomModel(String username, BoggleClient wfImpl, int gameRoomID) {
+    private long duration;
+
+    public GameRoomModel(String username, BoggleClient wfImpl) {
         this.username = username;
         this.wfImpl = wfImpl;
-        this.gameRoomID = gameRoomID;
     }
 }

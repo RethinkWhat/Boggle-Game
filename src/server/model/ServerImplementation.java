@@ -27,19 +27,16 @@ public class ServerImplementation extends BoggleClientPOA {
         return DataPB.validateAccount(var1,var2);
     }
 
-    public long attemptJoin(String var1, BooleanHolder var2) {
+    public long attemptJoin(String username, BooleanHolder startMatch) {
         if (this.currTimeValue <= 0L) {
-            var2.value = true;
-            GameRoom var3 = new GameRoom(this.gameRoomUsers, this.gameDuration);
-            return (long)var3.getGameID();
-        } else if (this.gameRoomUsers.isEmpty()) {
-            var2.value = false;
-            this.gameRoomUsers.add(var1);
+            startMatch.value = true;
+            return 0;
+        } else if (getCurrTimeValue() == 10000L) {
+            startMatch.value = false;
             this.startTimer();
             return 10000L;
         } else {
-            var2.value = false;
-            this.gameRoomUsers.add(var1);
+            startMatch.value = false;
             return this.getCurrTimeValue();
         }
     }

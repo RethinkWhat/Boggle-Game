@@ -35,24 +35,18 @@ public class LobbyController {
     public void timer() {
         BooleanHolder startGame = new BooleanHolder(false);
         System.out.println("reached");
-        long id;
+        long timerVal;
         try {
-            id = model.getWfImpl().attemptJoin("username", startGame);
-            System.out.println("ID: " + id);
+            //TODO: REMOVE USERNAME
             while (!startGame.value) {
-                System.out.println("REACHED WHILE");
-                view.setLblTimerTxt("00:" + id/1000);
-                id = model.getWfImpl().attemptJoin("username", startGame);
+                timerVal = model.getWfImpl().attemptJoin("username", startGame);
+                view.setLblTimerTxt("00:" + timerVal / 1000);
                 Thread.sleep(1000);
-                System.out.println(id );
             }
-            id = model.getWfImpl().attemptJoin("username", startGame);
             parentView.showGameRoom();
-            new GameRoomController(new GameRoomModel(model.getUsername(), model.getWfImpl(), (int) id), parentView.getGameRoomView());
+            new GameRoomController(new GameRoomModel(model.getUsername(), model.getWfImpl()), new GameRoomView());
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
-
 }
