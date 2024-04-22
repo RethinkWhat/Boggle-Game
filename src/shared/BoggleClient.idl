@@ -8,27 +8,17 @@ module BoggleApp {
     interface BoggleClient {
         boolean validateAccount(in string username, in string password);
 
-        long long attemptJoin(out boolean timerDone);
+        long long attemptJoin();
 
-        // RETURN GAMEID duration. This creates a game object in sql database. It also creates a round object in database wherein round number is 1
-        long joinGameRoom(in username, out duration);
+        long joinGameRoom(in string username, out long long duration);
 
-        // Returns the round letter set, as well as the round id, if round id = -1 game is over.
-        long startRound(in username, in gameID, out string letterSet);
+        long startRound(in string username, in long gameID, out long roundNumber, out string vowels, out string consonants);
 
-        // Get the curr time of the countdown in server
-        long long getGameDurationVal(in gameID, in roundID);
+        long long getGameDurationVal(in long gameID, in long roundID);
 
-        // Get the username of the winner of the round when countdown time in client is 0)
-        string getRoundWinner(in username, in gameID, in roundID, in string wordsEntered);
+        string getRoundWinner(in string username, in long gameID, in long roundID, in string wordsEntered);
 
-        // Return username of winner
-        string getOverallWinner(in gameId);
-
-
-        string getDuration(in long gameID);
-
-        long getRoundID(in long gameID, in string username);
+        string getOverallWinner(in long gameId);
 
         long getPoints(in string username);
 

@@ -33,13 +33,10 @@ public class LobbyController {
     }
 
     public void timer() {
-        BooleanHolder startGame = new BooleanHolder(false);
-        System.out.println("reached");
-        long timerVal;
+        long timerVal=10000;
         try {
-            //TODO: REMOVE USERNAME
-            while (!startGame.value) {
-                timerVal = model.getWfImpl().attemptJoin("username", startGame);
+            while (timerVal!=0) {
+                timerVal = model.getWfImpl().attemptJoin();
                 view.setLblTimerTxt("00:" + timerVal / 1000);
                 Thread.sleep(1000);
             }
