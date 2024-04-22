@@ -3,6 +3,7 @@ package server.model;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.Set;
 import org.omg.CORBA.BooleanHolder;
 import org.omg.CORBA.IntHolder;
@@ -94,10 +95,25 @@ public class ServerImplementation extends BoggleClientPOA {
     }
 
     public String createRandomVowelSet() {
-        return "";
+        String vowel = "AEIOU";
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for(int i = 0; i < 7; i++){
+            int index= random.nextInt(vowel.length());
+            sb.append(vowel.charAt(index));
+        }
+        return sb.toString();
     }
-    public String createRandomConsonantSet() {
-        return "";
+
+    public static String createRandomConsonantSet() {
+        String consonant = "BCDFGHJKLMNPQRSTVWXYZ";
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+        for (int i = 0; i < 17; i++) {
+            int index = random.nextInt(consonant.length());
+            sb.append(consonant.charAt(index));
+        }
+        return sb.toString();
     }
 
 
