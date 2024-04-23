@@ -5,11 +5,10 @@ import shared.SwingStylesheet;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 
 public class SettingsView extends JPanel{
     private JLabel profileLabel; // the label of the profile panel
-    private BufferedImage avatarImg; // the placeholder for the avatar
+    private JPanel avatarPanel; // the panel for the avatar image
     private JLabel currentAvatarLabel; // the label of the current avatar
     private JButton btnChangeAvatar; // the change avatar button
     private JLabel personalInfoLabel; // the label of the personal info
@@ -62,14 +61,89 @@ public class SettingsView extends JPanel{
         this.setPreferredSize(new Dimension(1200, 550));
     }
 
-    class ProfPanel extends JPanel{
-        public ProfPanel(){
-            this.setBackground(style.white);
+    class ProfPanel extends JPanel {
+        public ProfPanel() {
+            this.setBackground(Color.WHITE);
             this.setLayout(new GridBagLayout());
             this.setOpaque(false);
 
             GridBagConstraints gbc = new GridBagConstraints();
-            gbc.insets = new Insets(10, 10, 10, 10);
+            gbc.insets = new Insets(20, -30, 1, 1);
+            gbc.anchor = GridBagConstraints.NORTHWEST;
+
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            avatarPanel = new JPanel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    Graphics2D g2d = (Graphics2D) g.create();
+
+                    int diameter = Math.min(getWidth(), getHeight()) - 10;
+                    int x = (getWidth() - diameter) / 2;
+                    int y = (getHeight() - diameter) / 2;
+
+                    g2d.setColor(style.white);
+                    g2d.fillOval(x, y, diameter, diameter);
+
+                    g2d.dispose();
+                }
+            };
+            avatarPanel.setPreferredSize(new Dimension(110, 110));
+            avatarPanel.setBackground(style.white);
+            avatarPanel.setBorder(BorderFactory.createLineBorder(style.deepSkyBlue,3));
+            this.add(avatarPanel, gbc); // initial placeholder for the avatar image
+
+            gbc.gridx++;
+            gbc.insets = new Insets(20, 20, 0, 0);
+            currentAvatarLabel = style.createLblH2("Current Avatar", style.black);
+            this.add(currentAvatarLabel, gbc);
+
+            gbc.gridy++;
+            gbc.insets = new Insets(-70, 20, 0, 0);
+            btnChangeAvatar = style.createBtnRounded("CHANGE AVATAR", style.deepSkyBlue, style.white, 10);
+            btnChangeAvatar.setPreferredSize(new Dimension(150, 30));
+            this.add(btnChangeAvatar, gbc);
+
+            gbc.gridy++;
+            gbc.insets = new Insets(40, -100, 10, 10);
+            personalInfoLabel = style.createLblH2("Personal Information", style.black);
+            this.add(personalInfoLabel, gbc);
+
+            gbc.gridy++;
+            gbc.insets = new Insets(5, -100, 0, 0);
+            fullNameLabel = style.createLblH3("Full Name", style.black);
+            this.add(fullNameLabel, gbc);
+
+            gbc.gridy++;
+            gbc.insets = new Insets(10, -100, 0, 0);
+            fullNameTextField = new JTextField(20);
+            fullNameTextField.setPreferredSize(new Dimension(300, 30));
+            fullNameTextField.setEnabled(false);
+            this.add(fullNameTextField, gbc);
+
+            gbc.gridx = 2;
+            gbc.insets = new Insets(10, -40, 0, 0);
+            btnEdit = style.createBtnIconOnly(style.iconEdit, 20,20);
+            this.add(btnEdit, gbc);
+
+            // resets grid x-position and increment y-position
+            gbc.gridx = 0;
+            gbc.gridy++;
+            gbc.gridwidth = 3;
+            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.insets = new Insets(55, 0, 0, 0);
+
+            btnChangePass = style.createBtnRounded("SAVE CHANGES", style.deepSkyBlue, style.white, 10);
+            btnChangePass.setPreferredSize(new Dimension(180,40));
+            this.add(btnChangePass, gbc);
+            this.setFocusable(true);
+
+            gbc.gridy++;
+            errorMessageLabel = style.createLblH3("Full name must only contain alphanumeric characters.", style.black);
+            errorMessageLabel.setForeground(Color.RED);
+            errorMessageLabel.setVisible(false); // initially hides the error message
+            this.add(errorMessageLabel, gbc);
 
             this.setPreferredSize(new Dimension(400, 400));
             this.setMaximumSize(new Dimension(400, 400));
@@ -140,7 +214,7 @@ public class SettingsView extends JPanel{
             gbc.gridy++;
             errorMessageLabel = new JLabel("Passwords do not match. Try again.");
             errorMessageLabel.setForeground(Color.RED);
-            errorMessageLabel.setVisible(false); // initially hide the error message
+            errorMessageLabel.setVisible(false); // initially hides the error message
             this.add(errorMessageLabel, gbc);
 
             // resets grid x-position and increment y-position
@@ -148,7 +222,7 @@ public class SettingsView extends JPanel{
             gbc.gridy++;
             gbc.gridwidth = 3;
             gbc.anchor = GridBagConstraints.CENTER;
-            gbc.insets = new Insets(40, 0, 0, 0);
+            gbc.insets = new Insets(35, 0, 0, 0);
 
             btnChangePass = style.createBtnRounded("CHANGE PASSWORD", style.deepSkyBlue, style.white, 10);
             btnChangePass.setPreferredSize(new Dimension(180,40));
@@ -175,6 +249,39 @@ public class SettingsView extends JPanel{
 
             g2d.dispose();
         }
+    }
+
+    // retrieves the current JButton of btnChangeAvatar
+    // return the current btnChangeAvatar
+    public JButton getBtnChangeAvatar() {
+        return btnChangeAvatar;
+    }
+
+    // sets a specified action listener for btnChangeAvatar
+    public void setChangeAvatarListener(ActionListener actionListener) {
+        btnChangeAvatar.addActionListener(actionListener);
+    }
+
+    // retrieves the current JButton of btnEdit
+    // return the current btnEdit
+    public JButton getBtnEdit() {
+        return btnEdit;
+    }
+
+    // sets a specified action listener for btnEdit
+    public void setEditListener(ActionListener actionListener) {
+        btnEdit.addActionListener(actionListener);
+    }
+
+    // retrieves the current JButton of btnSaveChanges
+    // return the current btnSaveChanges
+    public JButton getBtnSaveChanges() {
+        return btnSaveChanges;
+    }
+
+    // sets a specified action listener for btnSaveChanges
+    public void setSaveChangesListener(ActionListener actionListener) {
+        btnSaveChanges.addActionListener(actionListener);
     }
 
     // retrieves the current JButton of btnChangePass
