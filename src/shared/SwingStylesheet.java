@@ -5,11 +5,15 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * The stylesheet of the different view classes.
  */
 public class SwingStylesheet {
+    public final Font bowlbyOne = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/Bowlby_One/BowlbyOne-Regular.ttf"));
     /**
      * Primary UI color.
      */
@@ -107,6 +111,9 @@ public class SwingStylesheet {
      * Default padding for panels.
      */
     public final EmptyBorder padding = new EmptyBorder(10, 20, 10, 20);
+
+    public SwingStylesheet() throws IOException, FontFormatException {
+    }
 
     /**
      * Creates a new JLabel with a specified text and color.
@@ -554,6 +561,16 @@ public class SwingStylesheet {
                 shape = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
             }
             return shape.contains(x, y);
+        }
+    }
+
+    public static void loadFonts() {
+        try {
+            GraphicsEnvironment ge =
+                    GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/Bowlby_One/BowlbyOne-Regular.ttf")));
+        } catch (IOException|FontFormatException e) {
+            e.printStackTrace();
         }
     }
 }
