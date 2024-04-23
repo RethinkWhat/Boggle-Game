@@ -3,20 +3,38 @@ package server.view.subpages;
 import shared.SwingStylesheet;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
+/**
+ * Panel for displaying and managing players.
+ * It consists of a function panel for search and adding players,
+ * a table panel for displaying player information,
+ * and buttons panel for actions like remove and cancel.
+ */
 public class PlayersView extends JPanel {
 
-    private JPanel pnlButtons;
+    /**
+     * The button panel.
+     */
+    private JPanel pnlButtons; // Panel for buttons
+    /**
+     * The remove button.
+     */
     private JButton btnRemove;
+    /**
+     * The cancel button.
+     */
     private JButton btnCancel;
     /**
      * The stylesheet.
      */
     private SwingStylesheet style = new SwingStylesheet();
 
+    /**
+     * Constructs a new PlayersView panel.
+     * Initializes components, sets layout, and adds subpanels.
+     */
     public PlayersView() {
         setBackground(style.deepSkyBlue);
         setLayout(new BorderLayout());
@@ -25,10 +43,9 @@ public class PlayersView extends JPanel {
         FunctionPanel functionPanel = new FunctionPanel();
         TablePanel tablePanel = new TablePanel();
 
-
         pnlButtons = new JPanel();
-        btnRemove = style.createBtnRounded("REMOVE", style.red,style.white,10);
-        btnCancel = style.createBtnRounded("CANCEL", style.goldenTainoi,style.white,10);
+        btnRemove = style.createBtnRounded("REMOVE", style.red, style.white, 10);
+        btnCancel = style.createBtnRounded("CANCEL", style.goldenTainoi, style.white, 10);
 
         // Add the buttons to pnlButtons
         pnlButtons.setLayout(new FlowLayout());
@@ -37,6 +54,7 @@ public class PlayersView extends JPanel {
         pnlButtons.add(btnRemove);
         pnlButtons.add(btnCancel);
 
+        // Add subpanels to the main panel
         this.add(functionPanel, BorderLayout.NORTH);
         this.add(tablePanel, BorderLayout.CENTER);
         this.add(pnlButtons, BorderLayout.SOUTH);
@@ -45,13 +63,33 @@ public class PlayersView extends JPanel {
         this.setVisible(true);
     }
 
+    /**
+     * Panel for function buttons like search and add.
+     * It contains text field for search, search button, add button, and add player button.
+     */
     class FunctionPanel extends JPanel {
 
+        /**
+         * The textfield for the search bar.
+         */
         private JTextField txtSearchbar;
+        /**
+         * The search button.
+         */
         private JButton btnSearch;
+        /**
+         * The add player button.
+         */
         private JButton btnAdd;
+        /**
+         * The add button.
+         */
         private JButton btnAddPlayer;
 
+        /**
+         * Constructs a new FunctionPanel.
+         * Initializes components, sets layout, and adds subpanels.
+         */
         public FunctionPanel() {
             setBackground(style.deepSkyBlue);
             setPreferredSize(new Dimension(1300, 70));
@@ -85,14 +123,18 @@ public class PlayersView extends JPanel {
         }
     }
 
-
-
+    /**
+     * Panel for displaying player information in a table.
+     */
     class TablePanel extends JPanel {
-        private JTable tblPlayers;
-        private DefaultTableModel tblPlayersModel;
-        private JPanel pnlTable;
-        private Font headerFont;
+        private JTable tblPlayers; // Table for displaying players
+        private DefaultTableModel tblPlayersModel; // Table model for players data
+        private JPanel pnlTable; // Panel for table
 
+        /**
+         * Constructs a new TablePanel.
+         * Initializes components, sets layout, and adds subpanels.
+         */
         public TablePanel() {
             setBackground(style.deepSkyBlue);
             setPreferredSize(new Dimension(1300, 600));
@@ -102,14 +144,14 @@ public class PlayersView extends JPanel {
             pnlTable.setLayout(new BorderLayout());
             add(pnlTable, BorderLayout.CENTER);
 
+            // Initialize table model and columns
             tblPlayersModel = new DefaultTableModel();
-
             tblPlayersModel.addColumn("");
             tblPlayersModel.addColumn("USERNAME");
             tblPlayersModel.addColumn("FULL NAME");
 
+            // Create table with custom model
             tblPlayers = new JTable(tblPlayersModel);
-
             tblPlayers.setDragEnabled(false);
             tblPlayers.setOpaque(false);
             tblPlayers.setFillsViewportHeight(true);
@@ -117,32 +159,168 @@ public class PlayersView extends JPanel {
             tblPlayers.getTableHeader().setReorderingAllowed(false);
             tblPlayers.getTableHeader().setFont(style.bowlbyOne.deriveFont(Font.BOLD, 14));
 
+            // Set preferred column widths
             tblPlayers.getColumnModel().getColumn(0).setPreferredWidth(200);
             tblPlayers.getColumnModel().getColumn(1).setPreferredWidth(350);
             tblPlayers.getColumnModel().getColumn(2).setPreferredWidth(350);
 
+            // Set row height
             tblPlayers.setRowHeight(30);
             tblPlayers.setRowHeight(30);
             tblPlayers.setRowHeight(30);
 
+            // Set background color
             tblPlayers.setBackground(style.mustard);
 
+            // Add table to scrollable pane
             JScrollPane scrollPane = new JScrollPane(tblPlayers);
             scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
             pnlTable.add(scrollPane, BorderLayout.CENTER);
         }
     }
 
-    //TO DO: Delete after testing JDialogs
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> {
-//            JFrame frame = new JFrame("Players View");
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            frame.getContentPane().add(new PlayersView());
-//            frame.pack();
-//            frame.setLocationRelativeTo(null);
-//            frame.setVisible(true);
-//        });
-//    }
-}
+    /**
+     * Dialog panel for adding a new player.
+     */
+    class AddPlayerPanel extends JDialog {
 
+        /**
+         * The layout for this dialog.
+         */
+        private GridBagConstraints gbc;
+        /**
+         * The JLabel for the title.
+         */
+        private JLabel lblAddPlayer;
+        /**
+         * The placeholder for displaying the avatar.
+         */
+        private JLabel lblAvatar;
+        /**
+         * The edit button.
+         */
+        private JButton btnEdit;
+        /**
+         * The create button.
+         */
+        private JButton btnCreate;
+        /**
+         * The cancel text button.
+         */
+        private JButton btnCancel;
+        /**
+         * The label for displaying the error message.
+         */
+        private JLabel lblErrorMessage;
+        /**
+         * The text field for the username
+         */
+        private JTextField txtUsername;
+        /**
+         * The text field for the full name
+         */
+        private JTextField txtFullName;
+        /**
+         * The password field for the password.
+         */
+        private JPasswordField txtPassword;
+        /**
+         * The password field for the confirm password.
+         */
+        private JPasswordField txtConfirmPassword;
+        /**
+         * The checkbox to hide or show the password.
+         */
+        private JCheckBox chkPassword;
+        /**
+         * The checkbox to hide or show the password.
+         */
+        private JCheckBox chkConfirmPassword;
+
+        /**
+         * Constructs a new AddPlayerPanel dialog.
+         */
+        public AddPlayerPanel() {
+            setBackground(style.deepSkyBlue);
+            setPreferredSize(new Dimension(500, 700));
+            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            setLocationRelativeTo(null);
+            setResizable(false);
+
+            setLayout(new GridBagLayout());
+            gbc = new GridBagConstraints();
+            gbc.insets = new Insets(2, 80, 2, 80);
+            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.fill = GridBagConstraints.BOTH;
+            gbc.weightx = 2;
+            gbc.ipady = 40;
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+
+            lblAddPlayer = style.createLblH1("Add Player", style.deepSkyBlue);
+            lblAddPlayer.setHorizontalAlignment(SwingConstants.CENTER);
+            add(lblAddPlayer, gbc);
+
+            gbc.ipady = 5;
+            gbc.gridy = 1;
+            lblAvatar = new JLabel(style.iconAvatar);
+            add(lblAvatar, gbc);
+
+            gbc.gridy = 2;
+            btnEdit = style.createBtnRounded("Edit", style.deepSkyBlue, style.white, 10);
+            add(btnEdit, gbc);
+
+            gbc.gridy = 3;
+            gbc.gridwidth = 2;
+            txtUsername = style.createTxtRounded("Username", style.lightGray, style.gray, 20);
+            add(txtUsername, gbc);
+
+            gbc.gridy = 4;
+            txtFullName = style.createTxtRounded("Name", style.lightGray, style.gray, 20);
+            add(txtFullName, gbc);
+
+            gbc.gridy = 5;
+            txtPassword = style.createPwdRounded(style.lightGray, style.gray, 20);
+            txtPassword.setText("Password");
+            txtPassword.setFont(style.bowlbyOne.deriveFont(Font.BOLD, 14));
+            txtPassword.setEchoChar((char) 0);
+            add(txtPassword, gbc);
+
+            gbc.gridy = 6;
+            chkPassword = new JCheckBox("Show Password");
+            chkPassword.setFont(style.bowlbyOne.deriveFont(Font.BOLD, 14));
+            chkPassword.setHorizontalAlignment(SwingConstants.LEFT);
+            chkPassword.setBackground(style.lightGray);
+            add(chkPassword, gbc);
+
+            gbc.gridy = 7;
+            txtConfirmPassword = style.createPwdRounded(style.lightGray, style.gray, 20);
+            txtConfirmPassword.setText("Confirm Password");
+            txtConfirmPassword.setFont(style.bowlbyOne.deriveFont(Font.BOLD, 14));
+            txtConfirmPassword.setEchoChar((char) 0);
+            add(txtConfirmPassword, gbc);
+
+            gbc.gridy = 8;
+            chkConfirmPassword = new JCheckBox("Show Password");
+            chkConfirmPassword.setFont(style.bowlbyOne.deriveFont(Font.BOLD, 14));
+            chkConfirmPassword.setHorizontalAlignment(SwingConstants.LEFT);
+            chkConfirmPassword.setBackground(style.lightGray);
+            add(chkConfirmPassword, gbc);
+
+            gbc.gridy = 9;
+            lblErrorMessage = style.createLblP("", style.red);
+            add(lblErrorMessage, gbc);
+
+            gbc.gridy = 10;
+            btnCreate = style.createBtnRounded("Create Account", style.deepSkyBlue, style.white, 10);
+            add(btnCreate, gbc);
+
+            gbc.gridy = 11;
+            btnCancel = style.createBtnTxtOnly("Cancel.", style.red);
+            add(btnCancel, gbc);
+
+            pack();
+            setVisible(true);
+        }
+    }
+}
