@@ -1,5 +1,6 @@
 package client_java.view;
 
+import client_java.view.subpages.SettingsView;
 import shared.SwingStylesheet;
 
 import javax.swing.*;
@@ -35,11 +36,8 @@ public class ClientSettingsView extends JFrame{
         pnlCards.setBackground(style.deepSkyBlue);
         contentArea.add(pnlCards, BorderLayout.CENTER);
 
-        /**
-         * Placeholder for calling a future view for the settings view
-         *  //pnlCards.add(new DefaultGameSettingsView(), "defaultSettings");
-         *  //cardLayout.show(pnlCards, "defaultSettings");
-         */
+        pnlCards.add(new SettingsView(), "settings");
+        cardLayout.show(pnlCards, "settings");
 
         this.setContentPane(contentArea);
         this.pack();
