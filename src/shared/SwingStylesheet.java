@@ -55,6 +55,10 @@ public class SwingStylesheet {
      */
     public final ImageIcon iconMusic = new ImageIcon("res/drawable/icons/audio-white-solid.png");
     /**
+     * The edit icon.
+     */
+    public final ImageIcon iconEdit = new ImageIcon("res/drawable/icons/edit-black-solid.png");
+    /**
      * The logo in white.
      */
     public final ImageIcon iconLogoWhite = new ImageIcon("res/drawable/logo/logo-solid-white.png");
