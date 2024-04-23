@@ -1,6 +1,5 @@
 package client.view.subpages;
 
-import client.view.subelements.PlayerPanel;
 import shared.SwingStylesheet;
 
 import javax.swing.*;
@@ -49,12 +48,6 @@ public class LobbyView extends JPanel {
         pnlTimer.add(lblTimer);
 
         add(pnlUsers = new UsersPanel());
-
-        // sample only. delete when controller has logic already.
-        pnlPlayerContainer.add(new PlayerPanel(150,150,"username"));
-        pnlPlayerContainer.add(new PlayerPanel(150,150,"username"));
-        pnlPlayerContainer.add(new PlayerPanel(150,150,"username"));
-
 
         btnExitLobby = style.createBtnRounded("Exit Lobby",style.red, style.black,10);
         btnExitLobby.setPreferredSize(new Dimension(260,40));
