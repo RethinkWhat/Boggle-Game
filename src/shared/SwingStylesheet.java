@@ -47,6 +47,14 @@ public class SwingStylesheet {
      */
     public final Color black = new Color(0,0,0);
     /**
+     * The account management icon.
+     */
+    public final ImageIcon iconAccMan = new ImageIcon("res/drawable/icons/profile-white-solid.png");
+    /**
+     * The music/audio icon.
+     */
+    public final ImageIcon iconMusic = new ImageIcon("res/drawable/icons/audio-white-solid.png");
+    /**
      * The logo in white.
      */
     public final ImageIcon iconLogoWhite = new ImageIcon("res/drawable/logo/logo-solid-white.png");
