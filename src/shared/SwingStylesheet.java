@@ -102,7 +102,22 @@ public class SwingStylesheet {
      * The switch icon.
      */
     public final ImageIcon iconSwitch = new ImageIcon("res/drawable/icons/switch-solid.png");
-
+    /**
+     * The music off icon.
+     */
+    public final ImageIcon iconMusicOff = new ImageIcon("res/drawable/icons/music-off-outline.png");
+    /**
+     * The music on icon.
+     */
+    public final ImageIcon iconMusicOn = new ImageIcon("res/drawable/icons/music-on-outline.png");
+    /**
+     * The sound off icon.
+     */
+    public final ImageIcon iconSoundOff = new ImageIcon("res/drawable/icons/sound-off-outline.png");
+    /**
+     * The sound on icon.
+     */
+    public final ImageIcon iconSoundOn = new ImageIcon("res/drawable/icons/sound-on-outline.png");
     /**
      * The search icon.
      */
@@ -112,6 +127,10 @@ public class SwingStylesheet {
      */
     public final EmptyBorder padding = new EmptyBorder(10, 20, 10, 20);
 
+    /**
+     * Constructs a SwingStylesheet.
+     * Loads the necessary fonts used for styling UI elements.
+     */
     public SwingStylesheet() {
         try {
             loadFonts();
