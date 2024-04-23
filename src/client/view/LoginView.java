@@ -90,13 +90,13 @@ public class LoginView extends JFrame {
             gbc.weightx = 300;
             gbc.ipadx = 20;
             gbc.ipady = 80;
-            JLabel lblLogin = style.createLblH1("Log In", style.black);
+            JLabel lblLogin = style.createLblH1("Log In", style.deepSkyBlue);
             lblLogin.setHorizontalAlignment(SwingConstants.CENTER);
             container.add(lblLogin, gbc);
 
             gbc.gridy = 1;
             gbc.ipady = 10;
-            JLabel lblUsername = style.createLblH4("Username", style.black);
+            JLabel lblUsername = style.createLblH4("Username", style.deepSkyBlue);
             lblUsername.setHorizontalTextPosition(SwingConstants.LEFT);
             container.add(lblUsername, gbc);
 
@@ -107,7 +107,7 @@ public class LoginView extends JFrame {
 
             gbc.gridy = 3;
             gbc.ipady = 10;
-            JLabel lblPassword = style.createLblH4("Password", style.black);
+            JLabel lblPassword = style.createLblH4("Password", style.deepSkyBlue);
             lblPassword.setHorizontalTextPosition(SwingConstants.LEFT);
             container.add(lblPassword, gbc);
 
@@ -122,7 +122,7 @@ public class LoginView extends JFrame {
             gbc.ipady = 10;
             chkShowPassword = new JCheckBox("Show Password");
             chkShowPassword.setBorderPaintedFlat(true);
-            chkShowPassword.setBackground(style.lightGray);
+            chkShowPassword.setBackground(style.deepSkyBlue);
             chkShowPassword.setForeground(style.gray);
             chkShowPassword.setFont(new Font("Arial", Font.PLAIN, 12));
             container.add(chkShowPassword, gbc);
@@ -135,7 +135,7 @@ public class LoginView extends JFrame {
 
             gbc.gridy = 7;
             gbc.ipady = 10;
-            btnLogin = style.createBtnRounded("Log In", style.mustard, style.black, 10);
+            btnLogin = style.createBtnRounded("Log In", style.deepSkyBlue, style.black, 10);
             btnLogin.setPreferredSize(new Dimension(260, 20));
             container.add(btnLogin, gbc);
 
@@ -152,14 +152,6 @@ public class LoginView extends JFrame {
             pnlSignup.setBackground(style.white);
             pnlSignup.setPreferredSize(new Dimension(450, 40));
             container.add(pnlSignup, gbc);
-
-            JLabel lblSignup = style.createLblP2("Don't have an account?", style.black);
-            lblSignup.setHorizontalAlignment(SwingConstants.CENTER);
-            pnlSignup.add(lblSignup, gbc);
-
-            btnSignup = style.createBtnTxtOnly("Sign up for free.", style.deepSkyBlue);
-            btnSignup.setFont(new Font("Arial", Font.PLAIN, 12));
-            pnlSignup.add(btnSignup, gbc);
 
             this.setPreferredSize(new Dimension(450, 550));
         }

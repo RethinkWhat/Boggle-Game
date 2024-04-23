@@ -13,7 +13,7 @@ import java.net.URL;
  * The stylesheet of the different view classes.
  */
 public class SwingStylesheet {
-    public final Font bowlbyOne = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/Bowlby_One/BowlbyOne-Regular.ttf"));
+    public Font bowlbyOne;
     /**
      * Primary UI color.
      */
@@ -112,7 +112,13 @@ public class SwingStylesheet {
      */
     public final EmptyBorder padding = new EmptyBorder(10, 20, 10, 20);
 
-    public SwingStylesheet() throws IOException, FontFormatException {
+    public SwingStylesheet() {
+        try {
+            loadFonts();
+            bowlbyOne = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/Bowlby_One/BowlbyOne-Regular.ttf"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -125,7 +131,7 @@ public class SwingStylesheet {
      */
     public JLabel createLblH1(String text, Color color) {
         JLabel label = new JLabel(text);
-        label.setFont(new Font("Arial", Font.BOLD, 26));
+        label.setFont(bowlbyOne.deriveFont(26f));
         label.setForeground(color);
         return label;
     }
@@ -140,7 +146,7 @@ public class SwingStylesheet {
      */
     public JLabel createLblH2(String text, Color color) {
         JLabel label = new JLabel(text);
-        label.setFont(new Font("Arial", Font.BOLD, 22));
+        label.setFont(bowlbyOne.deriveFont(22f));
         label.setForeground(color);
         return label;
     }
@@ -155,7 +161,7 @@ public class SwingStylesheet {
      */
     public JLabel createLblH3(String text, Color color) {
         JLabel label = new JLabel(text);
-        label.setFont(new Font("Arial", Font.BOLD, 18));
+        label.setFont(bowlbyOne.deriveFont(18f));
         label.setForeground(color);
         return label;
     }
@@ -170,7 +176,7 @@ public class SwingStylesheet {
      */
     public JLabel createLblH4(String text, Color color) {
         JLabel label = new JLabel(text);
-        label.setFont(new Font("Arial", Font.BOLD, 12));
+        label.setFont(bowlbyOne.deriveFont(12f));
         label.setForeground(color);
         return label;
     }

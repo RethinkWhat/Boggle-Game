@@ -8,6 +8,7 @@ import shared.SwingStylesheet;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * The container for the client application view and its subviews.
