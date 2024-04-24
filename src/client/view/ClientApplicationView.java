@@ -1,9 +1,6 @@
 package client.view;
 
-import client.view.subpages.GameRoomView;
-import client.view.subpages.HomeView;
-import client.view.subpages.LobbyView;
-import client.view.subpages.HowToPlayView;
+import client.view.subpages.*;
 import shared.SwingStylesheet;
 
 import javax.swing.*;
@@ -59,6 +56,10 @@ public class ClientApplicationView extends JFrame {
      * THe GameRoom panel.
      */
     private GameRoomView gameRoomView;
+    /**
+     * THe Settings panel.
+     */
+    private SettingsView settingsView;
 
     /**
      * Constructs a frame of ClientApplication View.
@@ -78,12 +79,15 @@ public class ClientApplicationView extends JFrame {
         lobbyView = new LobbyView();
         howToPlayView = new HowToPlayView();
         gameRoomView = new GameRoomView();
+        settingsView = new SettingsView();
+
         pnlCards.add( homeView, "home");
         pnlCards.add( lobbyView, "lobby");
         pnlCards.add( howToPlayView, "howToPlay");
         pnlCards.add( gameRoomView, "gameroom");
+        pnlCards.add( settingsView, "settings");
 
-        cardLayout.show(pnlCards, "howToPlay");
+        cardLayout.show(pnlCards, "lobby");
 
         this.setContentPane(contentArea);
         this.pack();
