@@ -26,7 +26,7 @@ public class GameRoomModel {
         this.username = username;
         this.wfImpl = wfImpl;
         LongHolder durHolder = new LongHolder(0);
-        gameRoomID = wfImpl.joinGameRoom(username,durHolder);
+        gameRoomID = wfImpl.joinGameRoom(durHolder);
         duration = durHolder.value;
 
         nextRound();

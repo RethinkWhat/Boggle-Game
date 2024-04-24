@@ -10,7 +10,9 @@ module BoggleApp {
 
         long long attemptJoin();
 
-        long joinGameRoom(in string username, out long long duration);
+        long joinGameRoom(out long long duration);
+
+        long getCurrLobbyTimerValue();
 
         long startRound(in string username, in long gameID, out long roundNumber, out string vowels, out string consonants);
 

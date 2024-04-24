@@ -38,20 +38,6 @@ public class DataPB {
         }
     }
 
-    public static int createGameRoom(Time var0) {
-        try {
-            String var1 = "INSERT INTO game(duration) VALUES(?)";
-            PreparedStatement var2 = con.prepareStatement(var1);
-            var2.setTime(1, var0);
-            var2.execute();
-            ResultSet var3 = var2.getGeneratedKeys();
-            return var3.getInt(1);
-        } catch (Exception var4) {
-            var4.printStackTrace();
-            return -1;
-        }
-    }
-
     public static int createRound(String vowelSet, String consonantSet) {
         try {
             String stmt = "INSERT INTO round(vowels,consonants) VALUES(?,?)";
@@ -69,14 +55,20 @@ public class DataPB {
 
     public static int createRoundDetails(int gameID, int roundID, int roundNumber, String username) {
         try {
+            System.out.println("game id: " + gameID);
+            System.out.println("round id: " + roundID);
+            System.out.println("round Number: " + roundNumber);
+            System.out.println("username: " + username);
             String stmt = "INSERT INTO round_details(gameID, roundID, roundNumber, username) VALUES (?,?,?,?)";
-            PreparedStatement preparedStatement = con.prepareStatement(stmt);
+            PreparedStatement preparedStatement = con.prepareStatement(stmt, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, gameID);
             preparedStatement.setInt(2, roundID);
             preparedStatement.setInt(3, roundNumber);
             preparedStatement.setString(4, username);
             preparedStatement.execute();
             ResultSet rs = preparedStatement.getGeneratedKeys();
+            if (rs.next())
+                return rs.getInt(1);
             return rs.getInt(1);
         } catch (Exception e) {
             e.printStackTrace();
@@ -99,31 +91,24 @@ public class DataPB {
         return 0;
     }
 
-    public static int createGameRoom(int var0, Time var1) {
+    public static int createGameRoom() {
+        Time time = new Time(0,3,0);
+        System.out.println(time);
         try {
-            String var2 = "INSERT INTO game(gameid, duration) VALUES(?)";
-            PreparedStatement var3 = con.prepareStatement(var2);
-            var3.setInt(1, var0);
-            var3.setTime(1, var1);
-            var3.execute();
-            ResultSet var4 = var3.getGeneratedKeys();
-            return var4.getInt(1);
-        } catch (Exception var5) {
-            var5.printStackTrace();
-            return -1;
-        }
-    }
+            String insertStmt = "INSERT INTO game(duration) VALUES(?)";
 
-    public static int createGameRoom(long duration) {
-        Time time = new Time(duration);
-        try {
-            String var2 = "INSERT INTO game(duration) VALUES(?)";
-            PreparedStatement var3 = con.prepareStatement(var2);
-            var3.setTime(1, time);
-            var3.execute();
-            ResultSet var4 = var3.getGeneratedKeys();
-            return var4.getInt(1);
+            PreparedStatement stmt = con.prepareStatement(insertStmt, Statement.RETURN_GENERATED_KEYS);
+            stmt.setTime(1,time);
+            stmt.execute();
+            ResultSet rs = stmt.getGeneratedKeys();
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                System.out.println("game room generated with id: " + id);
+                return id;
+            }
+            return -1;
         } catch (Exception var5) {
+            System.out.println("Exception frfr");
             var5.printStackTrace();
             return -1;
         }
