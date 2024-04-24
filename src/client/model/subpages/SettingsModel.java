@@ -29,6 +29,22 @@ public class SettingsModel {
     }
 
     /**
+     * Sets the username of the player
+     * @param username
+     */
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    /**
+     * Sets the BoggleClient instance
+     * @param wfImpl
+     */
+    public void setWfImpl(BoggleClient wfImpl) {
+        this.wfImpl = wfImpl;
+    }
+
+    /**
      * Returns the total matches of the player
      * @return
      */
