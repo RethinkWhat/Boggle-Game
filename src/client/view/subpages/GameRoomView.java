@@ -15,6 +15,10 @@ public class GameRoomView extends JPanel {
      */
     private int roundNumber = 1;
     /**
+     * The round duration.
+     */
+    private int roundDuration = 30;
+    /**
      * The round number.
      */
     private JLabel lblRoundNumber;
@@ -39,17 +43,17 @@ public class GameRoomView extends JPanel {
      */
     private JTextField txtWordInput;
     /**
+     * The clear input button for txtWordInput.
+     */
+    private JButton btnClear;
+    /**
      * The chat input text field.
      */
     private JTextField txtChatInput;
     /**
      * The text area containing the player input.
      */
-    private JTextArea txaPlayerInputs;
-    /**
-     * The text area containing the player chat.
-     */
-    private JTextArea txaPlayerChat;
+    private JEditorPane edtPlayerInputs;
     /**
      * The LeaderBoard panel containing the players' ranks.
      */
@@ -112,9 +116,13 @@ public class GameRoomView extends JPanel {
             container.setBackground(style.deepSkyBlue);
             layeredPane.add(container, new Integer(0));
 
+            pnlLeaderboard = new LeaderboardPanel();
+            pnlLeaderboard.add(new PlayerPanel("res/drawable/images/pfp-male-1.png", "monem", 100));
+
             JScrollPane scrollPane = new JScrollPane(pnlLeaderboard);
             scrollPane.setBorder(BorderFactory.createEmptyBorder());
             scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            scrollPane.setPreferredSize(new Dimension(380,640));
             container.add(scrollPane, BorderLayout.CENTER);
 
             this.setPreferredSize(new Dimension(400,750));
@@ -129,7 +137,11 @@ public class GameRoomView extends JPanel {
          * Constructs a panel of LeaderboardPanel.
          */
         public LeaderboardPanel() {
+            this.setBackground(style.white);
+            this.setBorder(style.padding);
+            this.setLayout(new FlowLayout(FlowLayout.CENTER, 300,20));
 
+            this.setPreferredSize(new Dimension(350,1200));
         }
     }
 
@@ -140,8 +152,29 @@ public class GameRoomView extends JPanel {
         /**
          * Constructs a panel of PlayerPanel.
          */
-        public PlayerPanel() {
+        public PlayerPanel(String username, String pfpURL, int points) {
+            this.setBackground(style.white);
+            this.setLayout(new BorderLayout());
 
+            ImageIcon iconPfp = new ImageIcon(pfpURL);
+
+            JLabel lblPlayerPfp = style.createLblIconOnly(iconPfp, 60,60);
+            lblPlayerPfp.setPreferredSize(new Dimension(60,60));
+            add(lblPlayerPfp, BorderLayout.WEST);
+
+            JPanel pnlPlayerInfo = new JPanel();
+            pnlPlayerInfo.setBackground(style.white);
+            pnlPlayerInfo.setLayout(new FlowLayout(FlowLayout.LEFT, 500,10));
+            pnlPlayerInfo.setPreferredSize(new Dimension(300,80));
+            add(pnlPlayerInfo, BorderLayout.EAST);
+
+            JLabel lblUsername = style.createLblH2(username, style.deepSkyBlue);
+            pnlPlayerInfo.add(lblUsername);
+
+            JLabel lblPoints = style.createLblH3(points + " PTS", style.deepSkyBlue);
+            pnlPlayerInfo.add(lblPoints);
+
+            this.setPreferredSize(new Dimension(400,100));
         }
     }
 
@@ -233,7 +266,7 @@ public class GameRoomView extends JPanel {
         public LetterPanel(String letter) {
             this.setBackground(style.white);
 
-            JPanel pnlLetter = style.createPnlRounded(80,80,style.deepSkyBlue,style.white);
+            JPanel pnlLetter = style.createPnlRounded(70,80,style.deepSkyBlue,style.white);
             add(pnlLetter);
 
             JLabel lblLetter = style.createLblH1(letter, style.white);
@@ -256,21 +289,30 @@ public class GameRoomView extends JPanel {
          */
         public TimerPanel() {
             this.setBackground(style.white);
+            this.setLayout(new FlowLayout(FlowLayout.CENTER, -6,0));
 
-            JPanel pnlTimer = style.createPnlRounded(100,100,style.deepSkyBlue, style.white);
+            JPanel pnlTimer = style.createPnlRounded(160,80,style.deepSkyBlue, style.white);
             pnlTimer.setBorder(style.padding);
             pnlTimer.setLayout(new BorderLayout());
             add(pnlTimer);
 
-            JPanel pnlProgressBar = style.createPnlRounded(600,40,style.deepSkyBlue,style.white);
-            pnlProgressBar.setPreferredSize(new Dimension(610,40));
+            lblTimer = style.createLblH1(roundDuration + "s", style.white);
+            lblTimer.setIcon(style.iconRoundTimer);
+            lblTimer.setVerticalAlignment(SwingConstants.CENTER);
+            lblTimer.setHorizontalAlignment(SwingConstants.CENTER);
+            pnlTimer.add(lblTimer, BorderLayout.CENTER);
+
+            JPanel pnlProgressBar = style.createPnlRounded(560,40,style.deepSkyBlue,style.white);
+            pnlProgressBar.setPreferredSize(new Dimension(560,40));
             add(pnlProgressBar);
 
-            prgTimer = new JProgressBar(0,800);
+            prgTimer = new JProgressBar(0,100);
+            prgTimer.setBackground(style.goldenTainoi);
             prgTimer.setStringPainted(true);
             prgTimer.setBorderPainted(false);
+            prgTimer.setValue(100);
             prgTimer.setUI(new SwingStylesheet.FancyProgressBar());
-            prgTimer.setPreferredSize(new Dimension(600,30));
+            prgTimer.setPreferredSize(new Dimension(550,30));
             pnlProgressBar.add(prgTimer);
 
             this.setPreferredSize(new Dimension(900, 100));
@@ -308,7 +350,51 @@ public class GameRoomView extends JPanel {
             container.setBackground(style.deepSkyBlue);
             layeredPane.add(container, new Integer(0));
 
+            container.add(new InputPanel());
+
             this.setPreferredSize(new Dimension(900,350));
+        }
+    }
+
+    /**
+     * Holds the text field and text area.
+     */
+    class InputPanel extends JPanel {
+        /**
+         * Constructs a panel of InputPanel.
+         */
+        public InputPanel() {
+            this.setBackground(style.white);
+            this.setLayout(new BorderLayout());
+            this.setBorder(style.padding);
+
+            edtPlayerInputs = new JEditorPane();
+            edtPlayerInputs.setEditable(false);
+            edtPlayerInputs.setContentType("text/html");
+            edtPlayerInputs.setBackground(style.white);
+            edtPlayerInputs.setBorder(style.padding);
+            edtPlayerInputs.setPreferredSize(new Dimension(800,500));
+
+            JScrollPane scrollPane = new JScrollPane(edtPlayerInputs);
+            scrollPane.setBorder(BorderFactory.createEmptyBorder());
+            scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            scrollPane.setPreferredSize(new Dimension(850,100));
+            scrollPane.setMinimumSize(new Dimension(850,100));
+            add(scrollPane, BorderLayout.CENTER);
+
+            JPanel pnlButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 10,0));
+            pnlButtons.setBackground(style.white);
+            pnlButtons.setPreferredSize(new Dimension(900,60));
+            add(pnlButtons, BorderLayout.SOUTH);
+
+            txtWordInput = style.createTxtRounded("Enter word here.", style.lightGray, style.gray, 20);
+            txtWordInput.setPreferredSize(new Dimension(800,40));
+            pnlButtons.add(txtWordInput);
+
+            btnClear = style.createBtnIconOnly(style.iconClear, 30,30);
+            pnlButtons.add(btnClear);
+
+            this.setPreferredSize(new Dimension(900,150));
         }
     }
 }

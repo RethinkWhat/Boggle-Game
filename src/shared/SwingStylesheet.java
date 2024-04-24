@@ -106,6 +106,10 @@ public class SwingStylesheet {
      */
     public final ImageIcon iconEdit  = new ImageIcon("res/drawable/icons/edit-black-solid.png");
     /**
+     * The round timer icon.
+     */
+    public final ImageIcon iconRoundTimer = new ImageIcon("res/drawable/icons/round-timer-white-solid.png");
+    /**
      * The add icon.
      */
     public final ImageIcon iconAdd = new ImageIcon("res/drawable/icons/add-blue-solid.png");
@@ -744,7 +748,7 @@ public class SwingStylesheet {
 
         @Override
         protected void paintIndeterminate(Graphics g, JComponent c) {
-            super.paintIndeterminate(g, c); //To change body of generated methods, choose Tools | Templates.
+            super.paintIndeterminate(g, c);
         }
 
     }
