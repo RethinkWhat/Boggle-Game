@@ -33,10 +33,11 @@ public class LobbyController {
     }
 
     public void timer() {
-        long timerVal=10000;
+        long timerVal = model.getWfImpl().attemptJoin();
         try {
             while (timerVal!=0) {
-                timerVal = model.getWfImpl().attemptJoin();
+                timerVal = model.getWfImpl().getCurrLobbyTimerValue();
+                System.out.println(timerVal);
                 view.setLblTimerTxt("00:" + timerVal / 1000);
                 Thread.sleep(1000);
             }
