@@ -51,6 +51,14 @@ public class SwingStylesheet {
      */
     public final ImageIcon iconLogoWhiteScaled = new ImageIcon("res/drawable/logo/logo-white-75px.png");
     /**
+     * The account management icon.
+     */
+    public final ImageIcon iconAccMan = new ImageIcon("res/drawable/icons/profile-white-solid.png");
+    /**
+     * The music/audio icon.
+     */
+    public final ImageIcon iconMusic = new ImageIcon("res/drawable/icons/audio-white-solid.png");
+    /**
      * The alert icon.
      */
     public final ImageIcon iconAlert = new ImageIcon("res/drawable/icons/alert-red-solid.png");
@@ -164,6 +172,21 @@ public class SwingStylesheet {
     public JLabel createLblH4(String text, Color color) {
         JLabel label = new JLabel(text);
         label.setFont(new Font("Arial", Font.BOLD, 12));
+        label.setForeground(color);
+        return label;
+    }
+
+    /**
+     * Creates a new JLabel with a specified text and color.
+     * The JLabel is a heading (h5).
+     *
+     * @param text  The specified text.
+     * @param color The specified color.
+     * @return JLabel with specified text and color in an H5 format.
+     */
+    public JLabel createLblH5(String text, Color color) {
+        JLabel label = new JLabel(text);
+        label.setFont(new Font("Arial", Font.BOLD, 45));
         label.setForeground(color);
         return label;
     }
