@@ -62,6 +62,14 @@ public class SwingStylesheet {
      */
     public final ImageIcon iconLogoWhiteScaled = new ImageIcon("res/drawable/logo/logo-white-75px.png");
     /**
+     * The account management icon.
+     */
+    public final ImageIcon iconAccMan = new ImageIcon("res/drawable/icons/profile-white-solid.png");
+    /**
+     * The music/audio icon.
+     */
+    public final ImageIcon iconMusic = new ImageIcon("res/drawable/icons/audio-white-solid.png");
+    /**
      * The alert icon.
      */
     public final ImageIcon iconAlert = new ImageIcon("res/drawable/icons/alert-red-solid.png");
