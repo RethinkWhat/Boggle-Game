@@ -3,6 +3,7 @@ package client.view;
 import client.view.subpages.GameRoomView;
 import client.view.subpages.HomeView;
 import client.view.subpages.LobbyView;
+import client.view.subpages.HowToPlayView;
 import shared.SwingStylesheet;
 
 import javax.swing.*;
@@ -51,6 +52,10 @@ public class ClientApplicationView extends JFrame {
      */
     private LobbyView lobbyView;
     /**
+     * The HowToPlayView panel.
+     */
+    private HowToPlayView howToPlayView;
+    /**
      * THe GameRoom panel.
      */
     private GameRoomView gameRoomView;
@@ -71,12 +76,14 @@ public class ClientApplicationView extends JFrame {
 
         homeView = new HomeView();
         lobbyView = new LobbyView();
+        howToPlayView = new HowToPlayView();
         gameRoomView = new GameRoomView();
         pnlCards.add( homeView, "home");
         pnlCards.add( lobbyView, "lobby");
+        pnlCards.add( howToPlayView, "howToPlay");
         pnlCards.add( gameRoomView, "gameroom");
 
-        cardLayout.show(pnlCards, "gameroom");
+        cardLayout.show(pnlCards, "howToPlay");
 
         this.setContentPane(contentArea);
         this.pack();
