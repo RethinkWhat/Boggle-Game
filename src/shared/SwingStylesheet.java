@@ -90,6 +90,10 @@ public class SwingStylesheet {
      */
     public final ImageIcon iconClear = new ImageIcon("res/drawable/icons/clear-solid-red.png");
     /**
+     * The edit icon.
+     */
+    public final ImageIcon iconEdit  = new ImageIcon("res/drawable/icons/edit-black-solid.png");
+    /**
      * The add icon.
      */
     public final ImageIcon iconAdd = new ImageIcon("res/drawable/icons/add-blue-solid.png");
