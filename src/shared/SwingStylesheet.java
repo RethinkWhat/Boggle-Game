@@ -30,6 +30,10 @@ public class SwingStylesheet {
      */
     public final Color mustard = new Color(208,168,87);
     /**
+     * Tertiary UI color.
+     */
+    public final Color lightYellow = new Color(255,242,216,255);
+    /**
      * Primary flat color.
      */
     public final Color white = new Color(255,255,255);
@@ -97,6 +101,14 @@ public class SwingStylesheet {
      * The add icon.
      */
     public final ImageIcon iconAdd = new ImageIcon("res/drawable/icons/add-blue-solid.png");
+    /**
+     * The account management icon.
+     */
+    public final ImageIcon iconAccMan = new ImageIcon("res/drawable/icons/profile-white-solid.png");
+    /**
+     * The music/audio icon.
+     */
+    public final ImageIcon iconMusic = new ImageIcon("res/drawable/icons/audio-white-solid.png");
     /**
      * The players icon.
      */
@@ -206,11 +218,26 @@ public class SwingStylesheet {
      *
      * @param text  The specified text.
      * @param color The specified color.
-     * @return JLabel with specified text and color in an H3 format.
+     * @return JLabel with specified text and color in an H4 format.
      */
     public JLabel createLblH4(String text, Color color) {
         JLabel label = new JLabel(text);
         label.setFont(bowlbyOne.deriveFont(12f));
+        label.setForeground(color);
+        return label;
+    }
+
+    /**
+     * Creates a new JLabel with a specified text and color.
+     * The JLabel is a heading (h5).
+     *
+     * @param text  The specified text.
+     * @param color The specified color.
+     * @return JLabel with specified text and color in an H5 format.
+     */
+    public JLabel createLblH5(String text, Color color) {
+        JLabel label = new JLabel(text);
+        label.setFont(bowlbyOne.deriveFont(45f));
         label.setForeground(color);
         return label;
     }
@@ -253,9 +280,9 @@ public class SwingStylesheet {
      * @param color The specified foreground color.
      * @return JLabel with the specified text and color.
      */
-    public JLabel createLblCalendar(String text, Color color) {
+    public JLabel createLblStatus(String text, Color color) {
         JLabel label = new JLabel(text);
-        label.setFont(new Font("Arial", Font.BOLD, 36));
+        label.setFont(bowlbyOne.deriveFont(36f));
         label.setForeground(color);
         return label;
     }
@@ -287,7 +314,7 @@ public class SwingStylesheet {
      */
     public JButton createBtnTxtOnly(String text, Color color) {
         JButton button = new JButton(text);
-        button.setFont(new Font("Arial", Font.BOLD, 15));
+        button.setFont(bowlbyOne.deriveFont(15f));
         button.setForeground(color);
         button.setOpaque(false);
         button.setContentAreaFilled(false);
@@ -330,7 +357,7 @@ public class SwingStylesheet {
         JButton button = new JButton(text);
         button.setBackground(background);
         button.setForeground(foreground);
-        button.setFont(new Font("Arial", Font.PLAIN, 15));
+        button.setFont(bowlbyOne.deriveFont(15f));
         button.setBorder(new RoundedBorder(radius));
         button.setVerticalTextPosition(SwingConstants.CENTER);
         button.setHorizontalAlignment(SwingConstants.CENTER);
@@ -367,7 +394,7 @@ public class SwingStylesheet {
      */
     public JComboBox<String> createCmbRounded(Color background, Color foreground, int radius) {
         JComboBox<String> comboBox = new JComboBox<>();
-        comboBox.setFont(new Font("Arial", Font.PLAIN, 14));
+        comboBox.setFont(bowlbyOne.deriveFont(14f));
         comboBox.setBackground(background);
         comboBox.setForeground(foreground);
         comboBox.setLightWeightPopupEnabled(true);

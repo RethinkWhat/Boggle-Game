@@ -263,7 +263,7 @@ public class PlayersView extends JPanel {
 
             gbc.ipady = 5;
             gbc.gridy = 1;
-            lblAvatar = new JLabel(style.iconAvatar);
+            lblAvatar = new JLabel(style.iconAdd);
             add(lblAvatar, gbc);
 
             gbc.gridy = 2;
