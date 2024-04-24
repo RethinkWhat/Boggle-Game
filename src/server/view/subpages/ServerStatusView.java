@@ -7,37 +7,19 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
-/**
- * Holds the server status.
- */
 public class ServerStatusView extends JPanel {
-    /**
-     * The button of switching the server on or off.
-     */
     private JButton btnServerSwitch;
-    /**
-     * The label of server status.
-     */
     private JLabel lblServerPrompt;
-    /**
-     * The label of server status information.
-     */
     private JLabel lblServerStatus;
-    /**
-     * Instance variable of GridBagConstraints used for JPanels using GridBagLayout.
-     */
     private GridBagConstraints gbc;
-    /**
-     * The stylesheet.
-     */
     private SwingStylesheet style = new SwingStylesheet();
+    private JLabel lblLogoAnimated;
+    // Timer for animating the logo
+    private Timer logoTimer;
 
-    /**
-     * Constructs a panel of ServerStatusView.
-     */
     public ServerStatusView() {
         setLayout(new BorderLayout());
-        setBackground(style.lightGray);
+        setBackground(style.deepSkyBlue);
         setBorder(new EmptyBorder(25, 25, 25, 25));
 
         MainPanel pnlMain = new MainPanel();
@@ -45,44 +27,35 @@ public class ServerStatusView extends JPanel {
 
         this.setPreferredSize(new Dimension(1300, 750));
         this.setVisible(true);
+
+        // Initialize the timer for animating the logo
+        logoTimer = new Timer(100, e -> {});
+        logoTimer.start();
     }
 
-    /**
-     * The panel that contains the buttons.
-     */
     public class MainPanel extends JPanel {
-        /**
-         * Construct a panel of MainPanel.
-         */
         public MainPanel() {
             setLayout(new BorderLayout());
 
-            JPanel container = style.createPnlRounded(1300, 700, style.white, style.lightGray);
+            JPanel container = new JPanel();
+            container.setBackground(style.deepSkyBlue);
             container.setLayout(new GridBagLayout());
             add(container, BorderLayout.CENTER);
 
             gbc = new GridBagConstraints();
 
-
-            ImageIcon serverImageIcon = new ImageIcon("image-logo-server.png");
-            JLabel lblPhoto = new JLabel(serverImageIcon);
+            lblLogoAnimated = new JLabel(style.iconLogoAnimated);
             gbc.gridy = 0;
-            container.add(lblPhoto, gbc);
+            container.add(lblLogoAnimated, gbc);
 
             gbc.gridy = 1;
-            lblServerPrompt = style.createLblH1("SERVER STATUS", style.goldenTainoi);
-            lblServerPrompt.setHorizontalAlignment(SwingConstants.CENTER);
-            container.add(lblServerPrompt, gbc);
-
-            //To be dynamically changed in the controller
-            gbc.gridy = 2;
             lblServerStatus = style.createLblH1("OFFLINE", style.red);
             lblServerStatus.setHorizontalAlignment(SwingConstants.CENTER);
             container.add(lblServerStatus, gbc);
 
-            gbc.gridy = 4;
+            gbc.gridy = 3;
             gbc.ipady = 10;
-            btnServerSwitch = style.createBtnRounded("Start Server", style.white, style.deepSkyBlue, 15);
+            btnServerSwitch = style.createBtnRounded("Start Server", style.goldenTainoi, style.white, 15);
             btnServerSwitch.setPreferredSize(new Dimension(200, 50));
             container.add(btnServerSwitch, gbc);
 
@@ -90,63 +63,53 @@ public class ServerStatusView extends JPanel {
         }
     }
 
-    /**
-     * Retrieves the current JButton of btnServerSwitch.
-     *
-     * @return The current btnServerSwitch.
-     */
     public JButton getServerSwitch() {
         return btnServerSwitch;
     }
 
-    /**
-     * Retrieves the current JLabel of lblServerPrompt.
-     *
-     * @return The current lblServerPrompt.
-     */
     public JLabel getServerPrompt() {
         return lblServerPrompt;
     }
 
-    /**
-     * Retrieves the current JLabel of lblServerStatus.
-     *
-     * @return The current lblServerStatus.
-     */
     public JLabel getServerStatus() {
         return lblServerStatus;
     }
 
-    /**
-     * Sets a specified action listener for btnServerSwitch.
-     *
-     * @param actionListener The specified action listener.
-     */
     public void setServerListener(ActionListener actionListener) {
         btnServerSwitch.addActionListener(actionListener);
     }
 
-    /**
-     * Changes the labels when the server is online.
-     */
     public void setOnline() {
         lblServerStatus.setText("ONLINE");
-        lblServerStatus.setForeground(style.deepSkyBlue);
+        lblServerStatus.setForeground(style.goldenTainoi);
 
         btnServerSwitch.setText("Terminate Server");
-        btnServerSwitch.setBackground(style.white);
-        btnServerSwitch.setForeground(style.red);
+        btnServerSwitch.setBackground(style.red);
+        btnServerSwitch.setForeground(style.white);
+
+        // Start the logo animation (restart from the first frame)
+        lblLogoAnimated.setIcon(style.iconLogoAnimated);
     }
 
-    /**
-     * Changes the labels when the server is offline.
-     */
     public void setOffline() {
         lblServerStatus.setText("OFFLINE");
         lblServerStatus.setForeground(style.red);
         btnServerSwitch.setText("Start Server");
-        btnServerSwitch.setBackground(style.white);
-        btnServerSwitch.setForeground(style.deepSkyBlue);
+        btnServerSwitch.setBackground(style.goldenTainoi);
+        btnServerSwitch.setForeground(style.white);
+
+        // Stop the logo animation
+        lblLogoAnimated.setIcon(null);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            JFrame frame = new JFrame("Server Status View");
+            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            frame.getContentPane().add(new ServerStatusView());
+            frame.pack();
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+        });
     }
 }
-

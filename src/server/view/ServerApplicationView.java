@@ -46,6 +46,22 @@ public class ServerApplicationView extends JFrame {
      */
     private SwingStylesheet style = new SwingStylesheet();
 
+    private ServerStatusView serverStatusView;
+    private GameSettingsView gameSettingsView;
+    private PlayersView playersView;
+
+    public ServerStatusView getServerStatusView() {
+        return serverStatusView;
+    }
+
+    public GameSettingsView getGameSettingsView() {
+        return gameSettingsView;
+    }
+
+    public PlayersView getPlayersView() {
+        return playersView;
+    }
+
     /**
      * Constructs a frame of ServerApplication View.
      */
@@ -60,9 +76,12 @@ public class ServerApplicationView extends JFrame {
         pnlCards = new JPanel(cardLayout = new CardLayout(0,0));
         contentArea.add(pnlCards, BorderLayout.CENTER);
 
-        pnlCards.add(new ServerStatusView(), "server");
-//        pnlCards.add(new GameSettingsView(), "gsettings");
-        pnlCards.add(new PlayersView(), "players");
+        serverStatusView = new ServerStatusView();
+        gameSettingsView = new GameSettingsView();
+        playersView = new PlayersView();
+        pnlCards.add( serverStatusView, "server");
+//        pnlCards.add( gameSettingsView, "gamesettings");
+        pnlCards.add( playersView, "players");
 
         cardLayout.show(pnlCards, "players");
 
