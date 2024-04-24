@@ -5,11 +5,15 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.geom.RoundRectangle2D;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 
 /**
  * The stylesheet of the different view classes.
  */
 public class SwingStylesheet {
+    public Font bowlbyOne;
     /**
      * Primary UI color.
      */
@@ -98,7 +102,22 @@ public class SwingStylesheet {
      * The switch icon.
      */
     public final ImageIcon iconSwitch = new ImageIcon("res/drawable/icons/switch-solid.png");
-
+    /**
+     * The music off icon.
+     */
+    public final ImageIcon iconMusicOff = new ImageIcon("res/drawable/icons/music-off-outline.png");
+    /**
+     * The music on icon.
+     */
+    public final ImageIcon iconMusicOn = new ImageIcon("res/drawable/icons/music-on-outline.png");
+    /**
+     * The sound off icon.
+     */
+    public final ImageIcon iconSoundOff = new ImageIcon("res/drawable/icons/sound-off-outline.png");
+    /**
+     * The sound on icon.
+     */
+    public final ImageIcon iconSoundOn = new ImageIcon("res/drawable/icons/sound-on-outline.png");
     /**
      * The search icon.
      */
@@ -107,6 +126,19 @@ public class SwingStylesheet {
      * Default padding for panels.
      */
     public final EmptyBorder padding = new EmptyBorder(10, 20, 10, 20);
+
+    /**
+     * Constructs a SwingStylesheet.
+     * Loads the necessary fonts used for styling UI elements.
+     */
+    public SwingStylesheet() {
+        try {
+            loadFonts();
+            bowlbyOne = Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/Bowlby_One/BowlbyOne-Regular.ttf"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * Creates a new JLabel with a specified text and color.
@@ -118,7 +150,7 @@ public class SwingStylesheet {
      */
     public JLabel createLblH1(String text, Color color) {
         JLabel label = new JLabel(text);
-        label.setFont(new Font("Arial", Font.BOLD, 26));
+        label.setFont(bowlbyOne.deriveFont(26f));
         label.setForeground(color);
         return label;
     }
@@ -133,7 +165,7 @@ public class SwingStylesheet {
      */
     public JLabel createLblH2(String text, Color color) {
         JLabel label = new JLabel(text);
-        label.setFont(new Font("Arial", Font.BOLD, 22));
+        label.setFont(bowlbyOne.deriveFont(22f));
         label.setForeground(color);
         return label;
     }
@@ -148,7 +180,7 @@ public class SwingStylesheet {
      */
     public JLabel createLblH3(String text, Color color) {
         JLabel label = new JLabel(text);
-        label.setFont(new Font("Arial", Font.BOLD, 18));
+        label.setFont(bowlbyOne.deriveFont(18f));
         label.setForeground(color);
         return label;
     }
@@ -163,7 +195,7 @@ public class SwingStylesheet {
      */
     public JLabel createLblH4(String text, Color color) {
         JLabel label = new JLabel(text);
-        label.setFont(new Font("Arial", Font.BOLD, 12));
+        label.setFont(bowlbyOne.deriveFont(12f));
         label.setForeground(color);
         return label;
     }
@@ -554,6 +586,16 @@ public class SwingStylesheet {
                 shape = new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, 15, 15);
             }
             return shape.contains(x, y);
+        }
+    }
+
+    public static void loadFonts() {
+        try {
+            GraphicsEnvironment ge =
+                    GraphicsEnvironment.getLocalGraphicsEnvironment();
+            ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("res/fonts/Bowlby_One/BowlbyOne-Regular.ttf")));
+        } catch (IOException|FontFormatException e) {
+            e.printStackTrace();
         }
     }
 }

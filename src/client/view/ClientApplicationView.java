@@ -8,6 +8,7 @@ import shared.SwingStylesheet;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 /**
  * The container for the client application view and its subviews.
@@ -41,40 +42,22 @@ public class ClientApplicationView extends JFrame {
      * The stylesheet.
      */
     private SwingStylesheet style = new SwingStylesheet();
+    /**
+     * The HomeView panel.
+     */
+    private HomeView homeView;
+    /**
+     * The LobbyView panel.
+     */
+    private LobbyView lobbyView;
+    /**
+     * THe GameRoom panel.
+     */
+    private GameRoomView gameRoomView;
 
     /**
      * Constructs a frame of ClientApplication View.
      */
-
-    private HomeView homeView;
-    private  LobbyView lobbyView;
-    private GameRoomView gameRoomView;
-
-    public HomeView getHomeView() {
-        return homeView;
-    }
-
-    public LobbyView getLobbyView() {
-        return lobbyView;
-    }
-
-    public GameRoomView getGameRoomView() {
-        return gameRoomView;
-    }
-
-    public void showLobby() {
-        cardLayout.show(pnlCards, "lobby");
-
-    }
-    public void showHome() {
-        cardLayout.show(pnlCards, "home");
-    }
-
-    public void showGameRoom() {
-        cardLayout.show(pnlCards, "gameroom");
-    }
-
-
     public ClientApplicationView() {
         super("Word Factory");
 
@@ -223,6 +206,51 @@ public class ClientApplicationView extends JFrame {
      */
     public void setLocationText(String text) {
         lblNavLocation.setText(text);
+    }
+
+    /**
+     * Retrieves the current HomeView.
+     * @return The current HomeView.
+     */
+    public HomeView getHomeView() {
+        return homeView;
+    }
+
+    /**
+     * Retrieves the current LobbyView.
+     * @return THe current LobbyView.
+     */
+    public LobbyView getLobbyView() {
+        return lobbyView;
+    }
+
+    /**
+     * Retrieves the current GameRoomView.
+     * @return The current GameRoomView.
+     */
+    public GameRoomView getGameRoomView() {
+        return gameRoomView;
+    }
+
+    /**
+     * Shows the LobbyView through the card layout.
+     */
+    public void showLobby() {
+        cardLayout.show(pnlCards, "lobby");
+    }
+
+    /**
+     * Shows the HomeView through the card layout.
+     */
+    public void showHome() {
+        cardLayout.show(pnlCards, "home");
+    }
+
+    /**
+     * Shows the GameRoomView through the card layout.
+     */
+    public void showGameRoom() {
+        cardLayout.show(pnlCards, "gameroom");
     }
 
     public static void main(String[] args) {
