@@ -15,49 +15,46 @@ public class GameRoomView extends JPanel {
      */
     private int roundNumber = 1;
     /**
-     * The score of the user.
+     * The round number.
      */
-    private int score = 10000;
+    private JLabel lblRoundNumber;
     /**
-     * The round JLabel.
+     * The toggle button to turn on/off the music.
      */
-    private JLabel lblRound;
+    private JButton btnMusicToggle;
     /**
-     * The panel holding each player inside pnlPlayers.
+     * The toggle button to turn on/off the sound.
      */
-    private JPanel pnlPlayersContainer;
+    private JButton btnSoundToggle;
     /**
-     * The round timer.
+     * The timer.
      */
     private JLabel lblTimer;
     /**
-     * The given letter set.
+     * The progressbar for the timer.
      */
-    private LeftPanel.LettersPanel pnlLettersPanel;
+    private JProgressBar prgTimer;
     /**
-     * Error message for input.
-     */
-    private JLabel lblErrorMessage;
-    /**
-     * The input field of the user.
+     * The word input text field.
      */
     private JTextField txtWordInput;
     /**
-     * The clear input button.
+     * The chat input text field.
      */
-    private JButton btnClear;
+    private JTextField txtChatInput;
     /**
-     * The score of the user in the game.
+     * The text area containing the player input.
      */
-    private JLabel lblScore;
+    private JTextArea txaPlayerInputs;
     /**
-     * The text area of the leaderboard stats.
+     * The text area containing the player chat.
      */
-    private JTextArea txaLeaderboard;
+    private JTextArea txaPlayerChat;
     /**
-     * The text area of the player's entered words.
+     * The LeaderBoard panel containing the players' ranks.
      */
-    private JTextArea txaEnteredWords;
+    private LeaderboardPanel pnlLeaderboard;
+
     /**
      * The stylesheet.
      */
@@ -67,287 +64,251 @@ public class GameRoomView extends JPanel {
      * Constructs a panel of GameRoomView.
      */
     public GameRoomView() {
-        this.setBackground(style.white);
-        this.setLayout(new BorderLayout());
+        this.setBackground(style.deepSkyBlue);
+        this.setBorder(style.padding);
+        this.setLayout(new BorderLayout(0,0));
 
         add(new LeftPanel(), BorderLayout.WEST);
-        add(new RightPanel(), BorderLayout.EAST);
+
+        JPanel pnlRight = new JPanel();
+        pnlRight.setLayout(new BorderLayout());
+        pnlRight.setPreferredSize(new Dimension(800,750));
+        add(pnlRight, BorderLayout.EAST);
+
+        pnlRight.add(new TopRightPanel(), BorderLayout.NORTH);
+        pnlRight.add(new BottomRightPanel(), BorderLayout.SOUTH);
 
         this.setPreferredSize(new Dimension(1300,750));
     }
 
     /**
-     * Holds the game elements.
+     * Holds the leaderboard and players.
      */
     class LeftPanel extends JPanel {
         /**
          * Constructs a panel of LeftPanel.
          */
         public LeftPanel() {
-            this.setBackground(style.white);
-            this.setLayout(new BorderLayout());
-            this.setBorder(style.padding);
+            this.setBackground(style.deepSkyBlue);
 
-            JPanel pnlTop = new JPanel();
-            pnlTop.setLayout(new FlowLayout());
-            pnlTop.setBackground(style.white);
-            pnlTop.setPreferredSize(new Dimension(900,40));
-            add(pnlTop, BorderLayout.NORTH);
+            JLayeredPane layeredPane = new JLayeredPane();
+            layeredPane.setLayout(null);
+            layeredPane.setPreferredSize(new Dimension(400,750));
+            add(layeredPane);
 
-            JPanel pnlRound = style.createPnlRounded(150,35,style.goldenTainoi, style.white);
-            pnlRound.setPreferredSize(new Dimension(150,35));
-            pnlRound.setBackground(style.white);
-            pnlRound.setLayout(new BorderLayout());
-            pnlTop.add(pnlRound);
+            JPanel pnlHeader = style.createPnlRounded(200,50,style.goldenTainoi, style.white);
+            pnlHeader.setBackground(style.white);
+            pnlHeader.setBounds(100,0,200,45);
+            layeredPane.add(pnlHeader, new Integer(1));
 
-            lblRound = style.createLblH2("Round " + roundNumber, style.white);
-            lblRound.setHorizontalAlignment(SwingConstants.CENTER);
-            pnlRound.add(lblRound, BorderLayout.CENTER);
+            lblRoundNumber = style.createLblH2("Round " + roundNumber, style.white);
+            lblRoundNumber.setVerticalAlignment(SwingConstants.CENTER);
+            lblRoundNumber.setHorizontalAlignment(SwingConstants.CENTER);
+            pnlHeader.add(lblRoundNumber);
 
-            add(new PlayersPanel(), BorderLayout.CENTER);
-            add(new InputPanel(), BorderLayout.SOUTH);
+            JPanel container = style.createPnlRounded(400,660,style.white, style.deepSkyBlue);
+            container.setBorder(style.padding);
+            container.setBounds(0,20,400,660);
+            container.setBackground(style.deepSkyBlue);
+            layeredPane.add(container, new Integer(0));
 
-            this.setPreferredSize(new Dimension(900,750));
-        }
-
-        /**
-         * Holds the players currently in the game.
-         */
-        public class PlayersPanel extends JPanel {
-            /**
-             * Constructs a panel of PlayersPanel
-             */
-            public PlayersPanel() {
-                this.setBackground(style.white);
-                this.setLayout(new BorderLayout());
-
-                pnlPlayersContainer = new JPanel(new FlowLayout(FlowLayout.LEFT, 30, 40));
-                pnlPlayersContainer.setBackground(style.white);
-                pnlPlayersContainer.setBorder(style.padding);
-                pnlPlayersContainer.setPreferredSize(new Dimension(1100,100));
-
-                JScrollPane scroll = new JScrollPane(pnlPlayersContainer);
-                scroll.setBorder(BorderFactory.createEmptyBorder());
-                scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-                add(scroll, BorderLayout.CENTER);
-
-                this.setPreferredSize(new Dimension(900, 160));
-            }
-        }
-
-        /**
-         * Holds the input/output components.
-         */
-        class InputPanel extends JPanel {
-            /**
-             * Constructs a panel of InputPanel.
-             */
-            public InputPanel() {
-                this.setBackground(style.white);
-                this.setLayout(new GridBagLayout());
-
-                GridBagConstraints gbc = new GridBagConstraints();
-                gbc.fill = GridBagConstraints.NONE;
-                gbc.anchor = GridBagConstraints.CENTER;
-                gbc.gridwidth = 1;
-                gbc.insets = new Insets(15,10,15,10);
-
-                gbc.gridx = 0;
-                gbc.gridy = 0;
-                JPanel pnlTimer = style.createPnlRounded(120,30,style.red,style.white);
-                pnlTimer.setBackground(style.white);
-                add(pnlTimer, gbc);
-
-                lblTimer = style.createLblP("00:30", style.white);
-                lblTimer.setIcon(style.iconTimerWhite);
-                lblTimer.setVerticalTextPosition(SwingConstants.CENTER);
-                pnlTimer.add(lblTimer);
-
-                gbc.gridy = 1;
-                gbc.weightx = 400;
-                add(new LettersPanel(), gbc);
-
-                gbc.gridy = 2;
-                lblErrorMessage = style.createLblH3("Invalid word.", style.red);
-                lblErrorMessage.setHorizontalAlignment(SwingConstants.CENTER);
-                add(lblErrorMessage, gbc);
-
-                gbc.gridx = 0;
-                gbc.gridy = 3;
-                gbc.gridwidth = 5;
-                gbc.weightx = 500;
-                gbc.fill = GridBagConstraints.HORIZONTAL;
-                JPanel pnlInputComponents = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 0));
-                pnlInputComponents.setBackground(style.white);
-                add(pnlInputComponents, gbc);
-
-                txtWordInput = style.createTxtRounded("Enter word here.", style.lightGray, style.gray, 20);
-                txtWordInput.setPreferredSize(new Dimension(330,30));
-                pnlInputComponents.add(txtWordInput);
-
-                btnClear = style.createBtnIconOnly(style.iconClear, 26,26);
-                pnlInputComponents.add(btnClear, gbc);
-
-                this.setPreferredSize(new Dimension(900,400));
-            }
-        }
-
-        /**
-         * Holds the stylized letter set.
-         * The stylized letter set is a JavaFX component.
-         */
-        public class LettersPanel extends JPanel {
-            /**
-             * Constructs a panel of LettersPanel.
-             */
-            public LettersPanel() {
-                this.setBackground(style.white);
-
-                JLabel label = new JLabel("");
-                add(label);
-
-                this.setPreferredSize(new Dimension(700,400));
-            }
-        }
-    }
-
-    /**
-     * Holds the score, leaderboard, and entered words panel.
-     */
-    class RightPanel extends JPanel {
-        /**
-         * Constructs a panel of RightPanel.
-         */
-        public RightPanel() {
-            this.setBackground(style.lightGray);
-            this.setLayout(new BorderLayout(0,20));
-            this.setBorder(new EmptyBorder(20,20,20,20));
-
-            JPanel pnlTop = new JPanel();
-            pnlTop.setLayout(new FlowLayout(FlowLayout.CENTER, 35, 0));
-            pnlTop.setBackground(style.lightGray);
-            add(pnlTop, BorderLayout.NORTH);
-
-            JPanel pnlScore = style.createPnlRounded(200,35, style.deepSkyBlue, style.lightGray);
-            pnlTop.add(pnlScore);
-
-            lblScore = style.createLblH3("Score " + score, style.white);
-            lblScore.setHorizontalAlignment(SwingConstants.CENTER);
-            pnlScore.add(lblScore);
-
-            JPanel pnlMiddle = new JPanel();
-            pnlMiddle.setLayout(new BorderLayout());
-            pnlMiddle.setBackground(style.lightGray);
-            pnlMiddle.setPreferredSize(new Dimension(350,250));
-            add(pnlMiddle, BorderLayout.CENTER);
-
-            JPanel pnlLeaderboard = style.createPnlRounded(350,250,style.white, style.lightGray);
-            pnlLeaderboard.setLayout(new BorderLayout());
-            pnlLeaderboard.setBorder(style.padding);
-            pnlLeaderboard.setPreferredSize(new Dimension(350,700));
-            pnlMiddle.add(pnlLeaderboard, BorderLayout.CENTER);
-
-            JLabel lblLeaderboard = style.createLblH3("Leaderboard", style.black);
-            lblLeaderboard.setHorizontalAlignment(SwingConstants.CENTER);
-            pnlLeaderboard.add(lblLeaderboard, BorderLayout.NORTH);
-
-            /*
-            JScrollPane scrollPaneLeaderboard = new JScrollPane(pnlLeaderboard);
-            scrollPaneLeaderboard.setBorder(BorderFactory.createEmptyBorder());
-            scrollPaneLeaderboard.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            pnlMiddle.add(pnlLeaderboard);
-
-             */
-
-            JPanel pnlBottom = new JPanel();
-            pnlBottom.setLayout(new BorderLayout());
-            pnlBottom.setBackground(style.lightGray);
-            pnlBottom.setPreferredSize(new Dimension(350,350));
-            add(pnlBottom, BorderLayout.SOUTH);
-
-            JPanel pnlEnteredWords = style.createPnlRounded(350,350,style.white, style.lightGray);
-            pnlEnteredWords.setLayout(new BorderLayout(0,20));
-            pnlEnteredWords.setBorder(new EmptyBorder(10,20,10,0));
-            pnlEnteredWords.setPreferredSize(new Dimension(350,700));
-            pnlBottom.add(pnlEnteredWords, BorderLayout.CENTER);
-
-            JLabel lblEnteredWords = style.createLblH3("Entered Words", style.black);
-            lblEnteredWords.setHorizontalAlignment(SwingConstants.CENTER);
-            pnlEnteredWords.add(lblEnteredWords, BorderLayout.NORTH);
-
-            txaEnteredWords = new JTextArea();
-            txaEnteredWords.setFont(new Font("Arial", Font.PLAIN, 14));
-            txaEnteredWords.setText("words, words, words, words, words, words, words, words, words, words");
-            txaEnteredWords.setPreferredSize(new Dimension(350, 700));
-            txaEnteredWords.setWrapStyleWord(true);
-            txaEnteredWords.setLineWrap(true);
-            txaEnteredWords.setOpaque(false);
-            txaEnteredWords.setEditable(false);
-            txaEnteredWords.setFocusable(false);
-            txaEnteredWords.setForeground(style.black);
-
-            JScrollPane scrollPaneEnteredWords = new JScrollPane(txaEnteredWords);
-            scrollPaneEnteredWords.setBorder(BorderFactory.createEmptyBorder());
-            scrollPaneEnteredWords.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            pnlEnteredWords.add(scrollPaneEnteredWords, BorderLayout.CENTER);
+            JScrollPane scrollPane = new JScrollPane(pnlLeaderboard);
+            scrollPane.setBorder(BorderFactory.createEmptyBorder());
+            scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            container.add(scrollPane, BorderLayout.CENTER);
 
             this.setPreferredSize(new Dimension(400,750));
         }
     }
 
-    public int getRoundNumber() {
-        return roundNumber;
+    /**
+     * Holds the player leaderboard.
+     */
+    class LeaderboardPanel extends JPanel {
+        /**
+         * Constructs a panel of LeaderboardPanel.
+         */
+        public LeaderboardPanel() {
+
+        }
     }
 
-    public int getScore() {
-        return score;
+    /**
+     * Holds the player information.
+     */
+    class PlayerPanel extends JPanel {
+        /**
+         * Constructs a panel of PlayerPanel.
+         */
+        public PlayerPanel() {
+
+        }
     }
 
-    public JLabel getLblRound() {
-        return lblRound;
+    /**
+     * Holds the letter set, timer, and toggle buttons.
+     */
+    class TopRightPanel extends JPanel {
+        /**
+         * Constructs a panel of TopRightPanel.
+         */
+        public TopRightPanel() {
+            this.setBackground(style.deepSkyBlue);
+
+            JLayeredPane layeredPane = new JLayeredPane();
+            layeredPane.setLayout(null);
+            layeredPane.setPreferredSize(new Dimension(900,400));
+            add(layeredPane);
+
+            JPanel pnlHeader = style.createPnlRounded(200,50,style.goldenTainoi, style.white);
+            pnlHeader.setBackground(style.white);
+            pnlHeader.setBounds(350,4,200,45);
+            layeredPane.add(pnlHeader, new Integer(1));
+
+            JLabel lblLetterSet = style.createLblH2("Letter Set",style.white);
+            lblLetterSet.setVerticalAlignment(SwingConstants.CENTER);
+            lblLetterSet.setHorizontalAlignment(SwingConstants.CENTER);
+            pnlHeader.add(lblLetterSet);
+
+            JPanel container = style.createPnlRounded(900,380,style.white, style.deepSkyBlue);
+            container.setBorder(style.padding);
+            container.setBounds(50,20,800,375);
+            container.setBackground(style.deepSkyBlue);
+            container.setLayout(new BorderLayout(0,10));
+            layeredPane.add(container, new Integer(0));
+
+            container.add(new ButtonsPanel(), BorderLayout.NORTH);
+            container.add(new LetterSetPanel(), BorderLayout.CENTER);
+            container.add(new TimerPanel(), BorderLayout.SOUTH);
+
+            this.setPreferredSize(new Dimension(900,400));
+        }
     }
 
-    public JPanel getPnlPlayersContainer() {
-        return pnlPlayersContainer;
+    /**
+     * Holds the toggle buttons.
+     */
+    class ButtonsPanel extends JPanel {
+        /**
+         * Constructs a panel of ButtonsPanel.
+         */
+        public ButtonsPanel() {
+           this.setBackground(style.white);
+           this.setLayout(new FlowLayout(FlowLayout.LEFT, 0,0));
+
+           btnMusicToggle = style.createBtnIconOnly(style.iconMusicOn, 25,25);
+           add(btnMusicToggle);
+
+           btnSoundToggle = style.createBtnIconOnly(style.iconSoundOn, 25,25);
+           add(btnSoundToggle);
+        }
     }
 
-    public JLabel getLblTimer() {
-        return lblTimer;
+    /**
+     * Holds the given letter set.
+     */
+    class LetterSetPanel extends JPanel {
+        /**
+         * Constructs a panel of LetterSetPanel
+         */
+        public LetterSetPanel() {
+            this.setBackground(style.white);
+            this.setLayout(new GridLayout(2,10, 5,0));
+
+            for (int i = 0; i < 20; i++) {
+                add(new LetterPanel(String.valueOf(i)));
+            }
+
+            this.setPreferredSize(new Dimension(800,50));
+        }
     }
 
-    public LeftPanel.LettersPanel getPnlLettersPanel() {
-        return pnlLettersPanel;
+    /**
+     * Holds a certain letter
+     */
+    class LetterPanel extends JPanel {
+        /**
+         * Constructs a panel of LetterPanel.
+         */
+        public LetterPanel(String letter) {
+            this.setBackground(style.white);
+
+            JPanel pnlLetter = style.createPnlRounded(80,80,style.deepSkyBlue,style.white);
+            add(pnlLetter);
+
+            JLabel lblLetter = style.createLblH1(letter, style.white);
+            lblLetter.setVerticalAlignment(SwingConstants.CENTER);
+            lblLetter.setVerticalTextPosition(SwingConstants.CENTER);
+            lblLetter.setHorizontalAlignment(SwingConstants.CENTER);
+            lblLetter.setHorizontalTextPosition(SwingConstants.CENTER);
+            pnlLetter.add(lblLetter);
+
+            this.setPreferredSize(new Dimension(80,80));
+        }
     }
 
-    public JLabel getLblErrorMessage() {
-        return lblErrorMessage;
+    /**
+     * Holds the timer and progress bar.
+     */
+    class TimerPanel extends JPanel {
+        /**
+         * Constructs a panel of TimerPanel.
+         */
+        public TimerPanel() {
+            this.setBackground(style.white);
+
+            JPanel pnlTimer = style.createPnlRounded(100,100,style.deepSkyBlue, style.white);
+            pnlTimer.setBorder(style.padding);
+            pnlTimer.setLayout(new BorderLayout());
+            add(pnlTimer);
+
+            JPanel pnlProgressBar = style.createPnlRounded(600,40,style.deepSkyBlue,style.white);
+            pnlProgressBar.setPreferredSize(new Dimension(610,40));
+            add(pnlProgressBar);
+
+            prgTimer = new JProgressBar(0,800);
+            prgTimer.setStringPainted(true);
+            prgTimer.setBorderPainted(false);
+            prgTimer.setUI(new SwingStylesheet.FancyProgressBar());
+            prgTimer.setPreferredSize(new Dimension(600,30));
+            pnlProgressBar.add(prgTimer);
+
+            this.setPreferredSize(new Dimension(900, 100));
+        }
     }
 
-    public JTextField getTxtWordInput() {
-        return txtWordInput;
-    }
+    /**
+     * Holds the inputs and text areas containing the chat and the word inputs.
+     */
+    class BottomRightPanel extends JPanel {
+        /**
+         * Constructs a panel of BottomRightPanel.
+         */
+        public BottomRightPanel() {
+            this.setBackground(style.deepSkyBlue);
 
-    public JButton getBtnClear() {
-        return btnClear;
-    }
+            JLayeredPane layeredPane = new JLayeredPane();
+            layeredPane.setLayout(null);
+            layeredPane.setPreferredSize(new Dimension(900,350));
+            add(layeredPane);
 
-    public JLabel getLblScore() {
-        return lblScore;
-    }
+            JPanel pnlHeader = style.createPnlRounded(170,50,style.goldenTainoi, style.white);
+            pnlHeader.setBackground(style.white);
+            pnlHeader.setBounds(360,68,170,45);
+            layeredPane.add(pnlHeader, new Integer(1));
 
-    public JTextArea getTxaLeaderboard() {
-        return txaLeaderboard;
-    }
+            JLabel lblLetterSet = style.createLblH2("Answers",style.white);
+            lblLetterSet.setVerticalAlignment(SwingConstants.CENTER);
+            lblLetterSet.setHorizontalAlignment(SwingConstants.CENTER);
+            pnlHeader.add(lblLetterSet);
 
-    public JTextArea getTxaEnteredWords() {
-        return txaEnteredWords;
-    }
+            JPanel container = style.createPnlRounded(900,250,style.white, style.deepSkyBlue);
+            container.setBorder(style.padding);
+            container.setBounds(50,88,800,250);
+            container.setBackground(style.deepSkyBlue);
+            layeredPane.add(container, new Integer(0));
 
-    public void setRoundNumber(int roundNumber) {
-        this.roundNumber = roundNumber;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
+            this.setPreferredSize(new Dimension(900,350));
+        }
     }
 }
