@@ -26,6 +26,14 @@ public class SettingsView extends JPanel{
     private JPasswordField confirmPasswordTextField; // the password field for the confirmed password
     private JLabel errorMessageLabel; // the label for the error message
     private JButton btnChangePass; // the change password button
+    private JLabel titleLabel; // the label of the stats panel
+    private JLabel gamesPlayedLabel; // the label of the games played
+    private JLabel gplValue; // the label of the games played's value
+    private JLabel gamesWonLabel; // the label of the games won
+    private JLabel gwlValue; // the label of the games won's value
+    private JLabel totalPointsLabel; // the label of the total points
+    private JLabel tplValue; // the label of the total points' value
+    private JPanel statsPanel; // the panel for the stats
     private SwingStylesheet style = new SwingStylesheet(); // the stylesheet
     private final int arcWidth = 20; // the width for the rounded corner
 
@@ -39,31 +47,37 @@ public class SettingsView extends JPanel{
         gbc.gridx = 0;
         gbc.gridy = 0;
         profileLabel = style.createLblH5("PROFILE", style.white);
-        gbc.insets = new Insets(-180, 0, 0, 0);
+        gbc.insets = new Insets(-10, 0, 0, 0);
         this.add(profileLabel, gbc);
 
         gbc.gridy++;
         ProfPanel profPanel = new ProfPanel();
-        gbc.insets = new Insets(-120, 0, 0, 0);
+        gbc.insets = new Insets(0, 0, 0, 0);
         this.add(profPanel, gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
         securityLabel = style.createLblH5("SECURITY", style.white);
-        gbc.insets = new Insets(-180, 100, 0, 0);
+        gbc.insets = new Insets(-10, 100, 0, 0);
         this.add(securityLabel, gbc);
 
         gbc.gridy++;
         SecPanel secPanel = new SecPanel();
-        gbc.insets = new Insets(-120, 100, 0, 0);
+        gbc.insets = new Insets(0, 100, 0, 0);
         this.add(secPanel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        StatsPanel statsPanel = new StatsPanel();
+        gbc.insets = new Insets(20, 30, 0, 0);
+        this.add(statsPanel, gbc);
 
         this.setPreferredSize(new Dimension(1200, 550));
     }
 
     class ProfPanel extends JPanel {
         public ProfPanel() {
-            this.setBackground(Color.WHITE);
+            this.setBackground(style.white);
             this.setLayout(new GridBagLayout());
             this.setOpaque(false);
 
@@ -96,7 +110,7 @@ public class SettingsView extends JPanel{
 
             gbc.gridx++;
             gbc.insets = new Insets(20, 20, 0, 0);
-            currentAvatarLabel = style.createLblH2("Current Avatar", style.black);
+            currentAvatarLabel = style.createLblH1("Current Avatar", style.black);
             this.add(currentAvatarLabel, gbc);
 
             gbc.gridy++;
@@ -159,7 +173,7 @@ public class SettingsView extends JPanel{
             int width = getWidth();
             int height = getHeight();
 
-            g2d.setColor(style.lightYellow);
+            g2d.setColor(style.white);
 
             g2d.fillRoundRect(0, 0, width, height, arcWidth, arcWidth);
 
@@ -243,7 +257,93 @@ public class SettingsView extends JPanel{
             int width = getWidth();
             int height = getHeight();
 
-            g2d.setColor(style.lightYellow);
+            g2d.setColor(style.white);
+
+            g2d.fillRoundRect(0, 0, width, height, arcWidth, arcWidth);
+
+            g2d.dispose();
+        }
+    }
+
+    class StatsPanel extends JPanel {
+        public StatsPanel() {
+            this.setBackground(style.white);
+            this.setLayout(new GridBagLayout());
+            this.setOpaque(false);
+
+            titleLabel = style.createLblH1("Player Stats", style.black);
+            titleLabel.setHorizontalAlignment(JLabel.CENTER);
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.gridwidth = 2;
+            gbc.fill = GridBagConstraints.WEST;
+            gbc.insets = new Insets(10, 10, 10, 100);
+            this.add(titleLabel, gbc);
+
+            gamesPlayedLabel = style.createLblH3("Games Played: ", style.black);
+            gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 1;
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.insets = new Insets(0, 10, 0, 10);
+            this.add(gamesPlayedLabel, gbc);
+
+            gplValue = style.createLblH3("50", style.black);
+            gbc = new GridBagConstraints();
+            gbc.gridx = 1;
+            gbc.gridy = 1;
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.insets = new Insets(0, 0, 0, 10);
+            this.add(gplValue, gbc);
+
+            gamesWonLabel = style.createLblH3("Games Won: ", style.black);
+            gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 2;
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.insets = new Insets(0, 10, 0, 10);
+            this.add(gamesWonLabel, gbc);
+
+            gwlValue = style.createLblH3("12", style.black);
+            gbc = new GridBagConstraints();
+            gbc.gridx = 1;
+            gbc.gridy = 2;
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.insets = new Insets(0, 0, 0, 10);
+            this.add(gwlValue, gbc);
+
+            totalPointsLabel = style.createLblH3("Total Points: ", style.black);
+            gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 3;
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.insets = new Insets(0, 10, 10, 10);
+            this.add(totalPointsLabel, gbc);
+
+            tplValue = style.createLblH3("42069", style.black);
+            gbc = new GridBagConstraints();
+            gbc.gridx = 1;
+            gbc.gridy = 3;
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.insets = new Insets(0, 0, 10, 10);
+            this.add(tplValue, gbc);
+
+            this.setPreferredSize(new Dimension(350, 170));
+            this.setMaximumSize(new Dimension(350, 170));
+            this.setMinimumSize(new Dimension(350, 170));
+        }
+
+        // enables the panel to have rounded corners
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+            Graphics2D g2d = (Graphics2D) g.create();
+
+            int width = getWidth();
+            int height = getHeight();
+
+            g2d.setColor(style.white);
 
             g2d.fillRoundRect(0, 0, width, height, arcWidth, arcWidth);
 
@@ -293,5 +393,20 @@ public class SettingsView extends JPanel{
     // sets a specified action listener for btnChangePass
     public void setChangePassListener(ActionListener actionListener) {
         btnChangePass.addActionListener(actionListener);
+    }
+
+    // sets a specified text for gplValue
+    public void setGamesPlayedText(String text) {
+        gplValue.setText(text);
+    }
+
+    // sets a specified text for gwlValue
+    public void setGamesWonText(String text) {
+        gwlValue.setText(text);
+    }
+
+    // sets a specified text for tplValue
+    public void setTotalPointsText(String text) {
+        tplValue.setText(text);
     }
 }
