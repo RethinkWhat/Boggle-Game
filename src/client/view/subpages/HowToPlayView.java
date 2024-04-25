@@ -19,6 +19,10 @@ public class HowToPlayView extends JPanel {
      */
     private JButton btnJoinGame;
     /**
+     * The back to home button.
+     */
+    private JButton btnBack;
+    /**
      * The stylesheet.
      */
     private SwingStylesheet style = new SwingStylesheet();
@@ -125,7 +129,7 @@ public class HowToPlayView extends JPanel {
             add(lblInstructionOne, gbc);
 
             gbc.gridy = 3;
-            lblInstructionTwo = style.createLblP("<html>2. Each player is given 30 seconds in a single round to form as many unique English words possible.</html>", style.black);
+            lblInstructionTwo = style.createLblP("<html>2. Each player is given " + roundDuration + "seconds in a single round to form as many unique English words possible.</html>", style.black);
             add(lblInstructionTwo, gbc);
 
             gbc.gridy = 4;
@@ -143,12 +147,48 @@ public class HowToPlayView extends JPanel {
 
             gbc.gridy = 9;
             gbc.anchor = GridBagConstraints.CENTER;
-            btnJoinGame = style.createBtnRoundedH1("JOIN GAME", style.deepSkyBlue, style.white, 10);
+            btnJoinGame = style.createBtnRoundedH1("JOIN GAME", style.deepSkyBlue, style.black, 10);
             btnJoinGame.setPreferredSize(new Dimension(300,100));
             add(btnJoinGame, gbc);
 
+            gbc.gridy = 10;
+            btnBack = style.createBtnTxtOnly("Back to Home", style.deepSkyBlue);
+            add(btnBack, gbc);
+
             this.setPreferredSize(new Dimension(450,550));
         }
+    }
+
+    /**
+     * Retrieves the current round duration.
+     * @return The current round duration.
+     */
+    public int getRoundDuration() {
+        return roundDuration;
+    }
+
+    /**
+     * Retrieves the current JButton of btnJoinGame.
+     * @return The current btnJoinGame.
+     */
+    public JButton getBtnJoinGame() {
+        return btnJoinGame;
+    }
+
+    /**
+     * Retrieves the current JButton of btnBack.
+     * @return The current btnBack.
+     */
+    public JButton getBtnBack() {
+        return btnBack;
+    }
+
+    /**
+     * Sets a new round duration.
+     * @param roundDuration The new round duration.
+     */
+    public void setRoundDuration(int roundDuration) {
+        this.roundDuration = roundDuration;
     }
 
     /**
@@ -157,5 +197,13 @@ public class HowToPlayView extends JPanel {
      */
     public void setJoinGameListener(ActionListener actionListener) {
         btnJoinGame.addActionListener(actionListener);
+    }
+
+    /**
+     * Sets a specified action listener for btnBack.
+     * @param actionListener The specified action listener.
+     */
+    public void setBackListener(ActionListener actionListener) {
+        btnBack.addActionListener(actionListener);
     }
 }
