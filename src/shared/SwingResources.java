@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 /**
- * The SwingResources provide implementation to Swing UI components.
+ * The SwingResources provide implementation to Swing I/O components.
  */
 public class SwingResources {
     /**
@@ -21,6 +21,10 @@ public class SwingResources {
          * The specified placeholder text.
          */
         private String placeholder;
+        /**
+         * The specified error message.
+         */
+        private JLabel lblErrorMessage;
 
         /**
          * Constructs an object of PasswordFocus with a specified password field, show password text box and
@@ -36,16 +40,34 @@ public class SwingResources {
         }
 
         /**
+         * Constructs an object of PasswordFocus with a specified password field, show password text box and
+         * placeholder text.
+         *
+         * @param passwordField The specified password field.
+         * @param placeholder   The specified placeholder text.
+         * @param lblErrorMessage The specified error message.
+         */
+        public PasswordFocus(JPasswordField passwordField, String placeholder, JLabel lblErrorMessage) {
+            this.passwordField = passwordField;
+            this.placeholder = placeholder;
+            this.passwordField.setText(placeholder);
+            this.lblErrorMessage = lblErrorMessage;
+        }
+
+        /**
          * Processes the event when focused. Clears the password field of its placeholder text.
          *
          * @param e the event to be processed
          */
         @Override
         public void focusGained(FocusEvent e) {
-            passwordField.setEchoChar('●');
-            if (String.valueOf(passwordField.getPassword()).equals(placeholder)) {
-                passwordField.setText("");
-            }
+            SwingUtilities.invokeLater(() -> {
+                lblErrorMessage.setText("");
+                passwordField.setEchoChar('●');
+                if (String.valueOf(passwordField.getPassword()).equals(placeholder)) {
+                    passwordField.setText("");
+                }
+            });
         }
 
         /**
@@ -56,12 +78,14 @@ public class SwingResources {
          */
         @Override
         public void focusLost(FocusEvent e) {
-            if (String.valueOf(passwordField.getPassword()).isEmpty()) {
-                passwordField.setText(placeholder);
-                passwordField.setEchoChar((char) 0);
-            } else {
-                passwordField.setEchoChar('●');
-            }
+            SwingUtilities.invokeLater(() -> {
+                if (String.valueOf(passwordField.getPassword()).isEmpty()) {
+                    passwordField.setText(placeholder);
+                    passwordField.setEchoChar((char) 0);
+                } else {
+                    passwordField.setEchoChar('●');
+                }
+            });
         }
     }
 
@@ -82,6 +106,10 @@ public class SwingResources {
          * The specified placeholder text.
          */
         private String placeholder;
+        /**
+         * The specified error message.
+         */
+        private JLabel lblErrorMessage;
 
         /**
          * Constructs an object of PasswordFocus with a specified password field, show password text box and
@@ -98,18 +126,36 @@ public class SwingResources {
         }
 
         /**
+         * Constructs an object of PasswordFocus with a specified password field, show password text box and
+         * placeholder text.
+         * @param passwordField The specified password field.
+         * @param chkShowPassword The specified show password checkbox.
+         * @param placeholder The specified placeholder text.
+         */
+        public PasswordFocusWithCheckbox(JPasswordField passwordField, JCheckBox chkShowPassword, String placeholder, JLabel lblErrorMessage) {
+            this.passwordField = passwordField;
+            this.placeholder = placeholder;
+            this.passwordField.setText(placeholder);
+            this.chkShowPassword = chkShowPassword;
+            this.lblErrorMessage = lblErrorMessage;
+        }
+
+        /**
          * Processes the event when focused. The checkbox is overridden and hides the password input, and clears
          * the password field of its placeholder text.
          * @param e the event to be processed
          */
         @Override
         public void focusGained(FocusEvent e) {
-            if (!chkShowPassword.isSelected()) {
-                passwordField.setEchoChar('●');
-            }
-            if (String.valueOf(passwordField.getPassword()).equals(placeholder)) {
-                passwordField.setText("");
-            }
+            SwingUtilities.invokeLater(() -> {
+                lblErrorMessage.setText("");
+                if (!chkShowPassword.isSelected()) {
+                    passwordField.setEchoChar('●');
+                }
+                if (String.valueOf(passwordField.getPassword()).equals(placeholder)) {
+                    passwordField.setText("");
+                }
+            });
         }
 
         /**
@@ -119,13 +165,15 @@ public class SwingResources {
          */
         @Override
         public void focusLost(FocusEvent e) {
-            if (!chkShowPassword.isSelected()) {
-                passwordField.setEchoChar('●');
-            }
-            if (String.valueOf(passwordField.getPassword()).isEmpty()) {
-                passwordField.setText(placeholder);
-                passwordField.setEchoChar((char) 0);
-            }
+            SwingUtilities.invokeLater(() -> {
+                if (!chkShowPassword.isSelected()) {
+                    passwordField.setEchoChar('●');
+                }
+                if (String.valueOf(passwordField.getPassword()).isEmpty()) {
+                    passwordField.setText(placeholder);
+                    passwordField.setEchoChar((char) 0);
+                }
+            });
         }
     }
 
@@ -158,16 +206,15 @@ public class SwingResources {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (checkBox.isSelected()) {
-                passwordField.setEchoChar((char) 0); // shows password in characters
-            } else if (!checkBox.isSelected()) {
-                passwordField.setEchoChar('●');
-            }
+            SwingUtilities.invokeLater(() -> {
+                if (checkBox.isSelected()) {
+                    passwordField.setEchoChar((char) 0); // shows password in characters
+                } else {
+                    passwordField.setEchoChar('●');
+                }
+            });
         }
     }
-
-
-
 
     /**
      * Clears the text in a specified JTextField when it is focused, and inserts a specified placeholder
@@ -182,6 +229,10 @@ public class SwingResources {
          * The specified placeholder text.
          */
         private String placeholder;
+        /**
+         * The specified error message.
+         */
+        private JLabel lblErrorMessage;
 
         /**
          * Constructs an object of TextFieldFocus with a specified text field and placeholder text.
@@ -195,15 +246,31 @@ public class SwingResources {
         }
 
         /**
+         * Constructs an object of TextFieldFocus with a specified text field and placeholder text.
+         *
+         * @param textField   The specified text field.
+         * @param placeholder The specified placeholder text.
+         */
+        public TextFieldFocus(JTextField textField, String placeholder, JLabel lblErrorMessage) {
+            this.textField = textField;
+            this.placeholder = placeholder;
+            this.lblErrorMessage = lblErrorMessage;
+        }
+
+        /**
          * Processes the event when focused. The text field contents are cleared to accommodate user input.
          *
          * @param e the event to be processed
          */
         @Override
         public void focusGained(FocusEvent e) {
-            if (textField.getText().equals(placeholder)) {
-                textField.setText("");
-            }
+            SwingUtilities.invokeLater(() -> {
+                lblErrorMessage.setText("");
+                if (textField.getText().equals(placeholder)) {
+                    textField.setText("");
+                }
+            });
+
         }
 
         /**
@@ -213,11 +280,14 @@ public class SwingResources {
          */
         @Override
         public void focusLost(FocusEvent e) {
-            if (textField.getText().isEmpty()) {
-                textField.setText(placeholder);
-            }
+            SwingUtilities.invokeLater(() -> {
+                if (textField.getText().isEmpty()) {
+                    textField.setText(placeholder);
+                }
+            });
         }
     }
+
     /**
      * Changes the Cursor when hovered to a specific UI component.
      */
@@ -243,7 +313,7 @@ public class SwingResources {
          */
         @Override
         public void mouseEntered(MouseEvent e) {
-            button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+            SwingUtilities.invokeLater(() -> button.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)));
         }
 
         /**
@@ -253,8 +323,7 @@ public class SwingResources {
          */
         @Override
         public void mouseExited(MouseEvent e) {
-            button.setCursor(Cursor.getDefaultCursor());
+            SwingUtilities.invokeLater(() -> button.setCursor(Cursor.getDefaultCursor()));
         }
     }
-
 }
