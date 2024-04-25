@@ -2,20 +2,25 @@ package client.view.subpages;
 
 import shared.SwingStylesheet;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class SettingsView extends JPanel{
     private JLabel profileLabel; // the label of the profile panel
+    private JButton btnAccMa; // the manage account button
+    private JButton btnDelAcc; // the delete account button
+    private JButton btnMusic; // the music toggle button
     private JPanel avatarPanel; // the panel for the avatar image
     private JLabel currentAvatarLabel; // the label of the current avatar
     private JButton btnChangeAvatar; // the change avatar button
     private JLabel personalInfoLabel; // the label of the personal info
     private JLabel fullNameLabel; // the label of the full name
     private JTextField fullNameTextField; // the text field for the full name
-    private JButton btnEdit; // the edit button
-    private JButton btnSaveChanges; // the save changes button
     private JLabel securityLabel; // the label of the security panel
     private JLabel passwordLabel; // the label of the password
     private JLabel currentPasswordLabel; // the label of the current password
@@ -25,10 +30,12 @@ public class SettingsView extends JPanel{
     private JLabel confirmPasswordLabel; // the label of the confirmed password
     private JPasswordField confirmPasswordTextField; // the password field for the confirmed password
     private JLabel errorMessageLabel; // the label for the error message
+    private JButton btnEdit; // the edit button
+    private JButton btnSaveChanges; // the save changes button
     private JButton btnChangePass; // the change password button
-    private JLabel titleLabel; // the label of the stats panel
+    private JLabel statsLabel; // the label of the stats panel
     private JLabel gamesPlayedLabel; // the label of the games played
-    private JLabel gplValue; // the label of the games played's value
+    private JLabel gplValue; // the label of the games played value
     private JLabel gamesWonLabel; // the label of the games won
     private JLabel gwlValue; // the label of the games won's value
     private JLabel totalPointsLabel; // the label of the total points
@@ -37,7 +44,7 @@ public class SettingsView extends JPanel{
     private SwingStylesheet style = new SwingStylesheet(); // the stylesheet
     private final int arcWidth = 20; // the width for the rounded corner
 
-
+    // constructor for the SettingsView
     public SettingsView(){
         this.setBackground(style.deepSkyBlue);
         this.setLayout(new GridBagLayout());
@@ -46,8 +53,16 @@ public class SettingsView extends JPanel{
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-       profileLabel = style.createLblH5("PROFILE", style.white);
-        gbc.insets = new Insets(-10, 0, 0, 0);
+        gbc.gridheight = 3;
+        gbc.insets = new Insets(-21, -71, 0, 50);
+        LeftPanel leftPanel = new LeftPanel();
+        this.add(leftPanel, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridheight = 1;
+        profileLabel = style.createLblH5("PROFILE", style.white);
+        gbc.insets = new Insets(5, 0, 0, 0);
         this.add(profileLabel, gbc);
 
         gbc.gridy++;
@@ -58,24 +73,85 @@ public class SettingsView extends JPanel{
         gbc.gridx = 1;
         gbc.gridy = 0;
         securityLabel = style.createLblH5("SECURITY", style.white);
-        gbc.insets = new Insets(-10, 100, 0, 0);
+        gbc.insets = new Insets(5, 500, 0, 0);
         this.add(securityLabel, gbc);
 
         gbc.gridy++;
         SecPanel secPanel = new SecPanel();
-        gbc.insets = new Insets(0, 100, 0, 0);
+        gbc.insets = new Insets(0, 500, 0, 0);
         this.add(secPanel, gbc);
 
-        gbc.gridx = 0;
+        gbc.gridx = 1;
         gbc.gridy = 2;
-        StatsPanel statsPanel = new StatsPanel();
-        gbc.insets = new Insets(20, 30, 0, 0);
+        statsPanel = new StatsPanel();
+        gbc.insets = new Insets(20, 0, 0, 0);
         this.add(statsPanel, gbc);
 
         this.setPreferredSize(new Dimension(1200, 550));
     }
 
-    class ProfPanel extends JPanel {
+    public class LeftPanel extends JPanel {
+        // constructs a panel of LeftPanel
+        public LeftPanel() {
+            this.setBackground(style.mustard);
+            this.setLayout(new BorderLayout());
+
+            JPanel leftPanelContainer = new JPanel(new BorderLayout());
+            leftPanelContainer.setBackground(style.mustard);
+
+            JPanel container = new JPanel();
+            container.setLayout(new GridBagLayout());
+            container.setBackground(style.mustard);
+            container.setBorder(style.padding);
+
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.anchor = GridBagConstraints.WEST;
+
+            gbc.gridy++;
+            gbc.insets = new Insets(0, -10, 10, 0);
+            btnAccMa = navButtonWithLabel(container, style.iconAccMan, "Account Management", gbc);
+
+            gbc.gridy++;
+            gbc.insets = new Insets(0, -10, 15, 0);
+            btnDelAcc = navButtonWithLabel(container, style.iconAccMan, "Delete Account", gbc);
+
+            gbc.gridy++;
+            gbc.insets = new Insets(0, -10, 0, 0);
+            btnMusic = navButtonWithLabel(container, style.iconMusic, "Music: " + "ON", gbc);
+
+            leftPanelContainer.add(container, BorderLayout.CENTER);
+
+            this.add(leftPanelContainer, BorderLayout.NORTH);
+
+            this.setPreferredSize(new Dimension(260, 714));
+        }
+
+        // joins the buttons' icons and text labels in a container
+        private JButton navButtonWithLabel(JPanel container, Icon icon, String labelText, GridBagConstraints gbc) {
+            JButton button = style.createBtnIconOnly((ImageIcon) icon, 30, 30);
+
+            JLabel label = new JLabel(labelText);
+            label.setFont(new Font("Arial", Font.BOLD, 16));
+            label.setForeground(style.white);
+
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.gridx = 0;
+            gbc.insets = new Insets(10, -10, 0, 0);
+            container.add(button, gbc);
+
+            gbc.gridx = 1;
+            gbc.insets = new Insets(10, -10, 0, 0);
+            container.add(label, gbc);
+
+            return button;
+        }
+    }
+
+    public class ProfPanel extends JPanel {
+        // constructs a panel of ProfPanel
         public ProfPanel() {
             this.setBackground(style.white);
             this.setLayout(new GridBagLayout());
@@ -100,13 +176,23 @@ public class SettingsView extends JPanel{
                     g2d.setColor(style.white);
                     g2d.fillOval(x, y, diameter, diameter);
 
+                    try {
+                        BufferedImage image = ImageIO.read(new File("res/drawable/images/pfp-male-1.png"));
+                        int newWidth = (int) (diameter * 1.1);
+                        int newHeight = (int) (diameter * 1.1);
+                        int newX = x + (diameter - newWidth) / 2;
+                        int newY = y + (diameter - newHeight) / 2;
+                        g2d.drawImage(image, newX, newY, newWidth, newHeight, null);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     g2d.dispose();
                 }
             };
             avatarPanel.setPreferredSize(new Dimension(110, 110));
             avatarPanel.setBackground(style.white);
-            avatarPanel.setBorder(BorderFactory.createLineBorder(style.deepSkyBlue,3));
-            this.add(avatarPanel, gbc); // initial placeholder for the avatar image
+            this.add(avatarPanel, gbc);
 
             gbc.gridx++;
             gbc.insets = new Insets(20, 10, 0, 0);
@@ -120,7 +206,7 @@ public class SettingsView extends JPanel{
             this.add(btnChangeAvatar, gbc);
 
             gbc.gridy++;
-            gbc.insets = new Insets(40, -100, 10, 10);
+            gbc.insets = new Insets(20, -100, 10, 10);
             personalInfoLabel = style.createLblH2("Personal Information", style.black);
             this.add(personalInfoLabel, gbc);
 
@@ -130,34 +216,46 @@ public class SettingsView extends JPanel{
             this.add(fullNameLabel, gbc);
 
             gbc.gridy++;
-            gbc.insets = new Insets(10, -100, 0, 0);
-            fullNameTextField = new JTextField(20);
+            gbc.insets = new Insets(10, -100, 0, -50);
+            fullNameTextField = new JTextField(25);
+            fullNameTextField.setText("Ramon, Ang Tagabantay");
             fullNameTextField.setPreferredSize(new Dimension(300, 30));
             fullNameTextField.setEnabled(false);
             this.add(fullNameTextField, gbc);
 
-            gbc.gridx = 2;
+            gbc.gridx = 1;
+            gbc.anchor = GridBagConstraints.EAST;
             gbc.insets = new Insets(10, -130, 0, 0);
             btnEdit = style.createBtnIconOnly(style.iconEdit, 20,20);
             this.add(btnEdit, gbc);
+
+            gbc.gridy++;
+            gbc.anchor = GridBagConstraints.CENTER;
+            errorMessageLabel = new JLabel("Full name must only contain");
+            errorMessageLabel.setForeground(Color.RED);
+            errorMessageLabel.setVisible(true);
+            gbc.insets = new Insets(40, -120, -10, 0);
+            this.add(errorMessageLabel, gbc);
+
+            gbc.gridy++;
+            gbc.anchor = GridBagConstraints.CENTER;
+            errorMessageLabel = new JLabel("alphanumeric characters.");
+            errorMessageLabel.setForeground(Color.RED);
+            errorMessageLabel.setVisible(true);
+            gbc.insets = new Insets(5, -120, -10, 0);
+            this.add(errorMessageLabel, gbc);
 
             // resets grid x-position and increment y-position
             gbc.gridx = 0;
             gbc.gridy++;
             gbc.gridwidth = 3;
             gbc.anchor = GridBagConstraints.CENTER;
-            gbc.insets = new Insets(55, 0, 0, 0);
+            gbc.insets = new Insets(20, 0, 0, 0);
 
             btnSaveChanges = style.createBtnRounded("SAVE CHANGES", style.deepSkyBlue, style.white, 10);
-            btnSaveChanges.setPreferredSize(new Dimension(180,40));
+            btnSaveChanges.setPreferredSize(new Dimension(200,40));
             this.add(btnSaveChanges, gbc);
             this.setFocusable(true);
-
-            gbc.gridy++;
-            errorMessageLabel = style.createLblH3("Full name must only contain alphanumeric characters.", style.black);
-            errorMessageLabel.setForeground(Color.RED);
-            errorMessageLabel.setVisible(false); // initially hides the error message
-            this.add(errorMessageLabel, gbc);
 
             this.setPreferredSize(new Dimension(400, 400));
             this.setMaximumSize(new Dimension(400, 400));
@@ -181,7 +279,8 @@ public class SettingsView extends JPanel{
         }
     }
 
-    class SecPanel extends JPanel{
+    public class SecPanel extends JPanel{
+        // constructs a panel of SecPanel
         public SecPanel() {
             this.setBackground(style.white);
             this.setLayout(new GridBagLayout());
@@ -203,7 +302,7 @@ public class SettingsView extends JPanel{
             this.add(currentPasswordLabel, gbc);
 
             gbc.gridy++;
-            currentPasswordTextField = new JPasswordField(25);
+            currentPasswordTextField = style.createPwdRounded(style.white, style.black, 25);
             currentPasswordTextField.setPreferredSize(new Dimension(300, 30));
             this.add(currentPasswordTextField, gbc);
 
@@ -212,7 +311,7 @@ public class SettingsView extends JPanel{
             this.add(newPasswordLabel, gbc);
 
             gbc.gridy++;
-            newPasswordTextField = new JPasswordField(25);
+            newPasswordTextField = style.createPwdRounded(style.white, style.black, 25);
             newPasswordTextField.setPreferredSize(new Dimension(300, 30));
             this.add(newPasswordTextField, gbc);
 
@@ -221,14 +320,15 @@ public class SettingsView extends JPanel{
             this.add(confirmPasswordLabel, gbc);
 
             gbc.gridy++;
-            confirmPasswordTextField = new JPasswordField(25);
+            confirmPasswordTextField = style.createPwdRounded(style.white, style.black, 25);
             confirmPasswordTextField.setPreferredSize(new Dimension(300, 30));
             this.add(confirmPasswordTextField, gbc);
 
             gbc.gridy++;
             errorMessageLabel = new JLabel("Passwords do not match. Try again.");
             errorMessageLabel.setForeground(Color.RED);
-            errorMessageLabel.setVisible(false); // initially hides the error message
+            errorMessageLabel.setVisible(true);
+            gbc.insets = new Insets(20, 50, 0, 0);
             this.add(errorMessageLabel, gbc);
 
             // resets grid x-position and increment y-position
@@ -236,7 +336,7 @@ public class SettingsView extends JPanel{
             gbc.gridy++;
             gbc.gridwidth = 3;
             gbc.anchor = GridBagConstraints.CENTER;
-            gbc.insets = new Insets(55, 0, 0, 0);
+            gbc.insets = new Insets(20, 0, 0, 0);
 
             btnChangePass = style.createBtnRounded("CHANGE PASSWORD", style.deepSkyBlue, style.white, 10);
             btnChangePass.setPreferredSize(new Dimension(200,40));
@@ -265,21 +365,22 @@ public class SettingsView extends JPanel{
         }
     }
 
-    class StatsPanel extends JPanel {
+    public class StatsPanel extends JPanel {
+        // constructs a panel of StatsPanel
         public StatsPanel() {
             this.setBackground(style.white);
             this.setLayout(new GridBagLayout());
             this.setOpaque(false);
 
-            titleLabel = style.createLblH1("Player Stats", style.black);
-            titleLabel.setHorizontalAlignment(JLabel.CENTER);
+            statsLabel = style.createLblH1("Player Stats", style.black);
+            statsLabel.setHorizontalAlignment(JLabel.CENTER);
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = 0;
             gbc.gridy = 0;
             gbc.gridwidth = 2;
             gbc.fill = GridBagConstraints.WEST;
             gbc.insets = new Insets(10, 10, 10, 100);
-            this.add(titleLabel, gbc);
+            this.add(statsLabel, gbc);
 
             gamesPlayedLabel = style.createLblH3("Games Played: ", style.black);
             gbc = new GridBagConstraints();
@@ -351,6 +452,36 @@ public class SettingsView extends JPanel{
         }
     }
 
+    //retrieves the current JButton of btnAccMa
+    public JButton getBtnAccMa(){
+        return btnAccMa;
+    }
+
+    // sets a specified action listener for btnAccMa
+    public void setAccountManagementListener(ActionListener actionListener) {
+        btnAccMa.addActionListener(actionListener);
+    }
+
+    //retrieves the current JButton of btnAccMa
+    public JButton getBtnDelAcc(){
+        return btnDelAcc;
+    }
+
+    // sets a specified action listener for btnDelAcc
+    public void setDeleteAccountListener(ActionListener actionListener) {
+        btnDelAcc.addActionListener(actionListener);
+    }
+
+    //retrieves the current JButton of btnAccMa
+    public JButton getBtnMusic(){
+        return btnMusic;
+    }
+
+    // sets a specified action listener for btnMusic
+    public void setMusicListener(ActionListener actionListener) {
+        btnMusic.addActionListener(actionListener);
+    }
+
     // retrieves the current JButton of btnChangeAvatar
     // return the current btnChangeAvatar
     public JButton getBtnChangeAvatar() {
@@ -362,17 +493,6 @@ public class SettingsView extends JPanel{
         btnChangeAvatar.addActionListener(actionListener);
     }
 
-    // retrieves the current JButton of btnEdit
-    // return the current btnEdit
-    public JButton getBtnEdit() {
-        return btnEdit;
-    }
-
-    // sets a specified action listener for btnEdit
-    public void setEditListener(ActionListener actionListener) {
-        btnEdit.addActionListener(actionListener);
-    }
-
     // retrieves the current JButton of btnSaveChanges
     // return the current btnSaveChanges
     public JButton getBtnSaveChanges() {
@@ -382,6 +502,17 @@ public class SettingsView extends JPanel{
     // sets a specified action listener for btnSaveChanges
     public void setSaveChangesListener(ActionListener actionListener) {
         btnSaveChanges.addActionListener(actionListener);
+    }
+
+    // retrieves the current JButton of btnEdit
+    // return the current btnEdit
+    public JButton getBtnEditChanges() {
+        return btnEdit;
+    }
+
+    // sets a specified action listener for btnEdit
+    public void setEditListener(ActionListener actionListener) {
+        btnEdit.addActionListener(actionListener);
     }
 
     // retrieves the current JButton of btnChangePass
