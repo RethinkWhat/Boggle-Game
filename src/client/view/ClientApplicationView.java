@@ -280,6 +280,13 @@ public class ClientApplicationView extends JFrame {
     }
 
     /**
+     * Shows the HowToPlayView through the card layout.
+     */
+    public void showTutorial() {
+        SwingUtilities.invokeLater(() -> cardLayout.show(pnlCards, "tutorial"));
+    }
+
+    /**
      * Sets the text for lblNavLocation.
      * @param text The specified location of the application proper.
      */

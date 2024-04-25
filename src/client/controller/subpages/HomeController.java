@@ -59,7 +59,8 @@ public class HomeController {
         this.parent = parent;
 
         // action listeners
-        view.setJoinListener(new JoinGameListener());
+        view.setJoinListener(new JoinGameListener(parent));
+        view.setTutorialListener(e -> parent.getView().showTutorial());
 
         // mouse listeners
         view.getBtnJoinGame().addMouseListener(new SwingResources.CursorChanger(view.getBtnJoinGame()));
@@ -68,9 +69,22 @@ public class HomeController {
     }
 
     /**
-     * Processes the joining of a lobby
+     * Processes the joining of a lobby.
      */
-    class JoinGameListener implements ActionListener {
+    static class JoinGameListener implements ActionListener {
+        /**
+         * The parent controller.
+         */
+        private ClientApplicationController parent;
+
+        /**
+         * Constructs a JOin
+         * @param parent
+         */
+        public JoinGameListener(ClientApplicationController parent) {
+            this.parent = parent;
+        }
+
         @Override
         public void actionPerformed(ActionEvent e) {
             SwingUtilities.invokeLater(() -> {
