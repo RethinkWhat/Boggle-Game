@@ -38,6 +38,7 @@ public class ClientApplicationController {
         @Override
         public void actionPerformed(ActionEvent e) {
             view.showLobby();
+            System.out.println("creating new lobby");
             new LobbyController(new LobbyModel(model.getUsername(), model.getWfImpl()), view.getLobbyView(), view);
             /*
             BooleanHolder startGame = new BooleanHolder(false);

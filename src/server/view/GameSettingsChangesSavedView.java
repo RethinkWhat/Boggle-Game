@@ -41,7 +41,7 @@ public class GameSettingsChangesSavedView extends JFrame {
         panel.add(successIconLabel, gbc);
 
         gbc.gridy++;
-        firstLabel = style.createLblH5("CHANGES SAVED", style.goldenTainoi);
+        //firstLabel = style.createLblH5("CHANGES SAVED", style.goldenTainoi);
         firstLabel.setHorizontalAlignment(SwingConstants.CENTER);
         gbc.insets = new Insets(12, 12, 6, 12);
         panel.add(firstLabel, gbc);
