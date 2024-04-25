@@ -49,7 +49,7 @@ public class ServerStatusView extends JPanel {
             container.add(lblLogoAnimated, gbc);
 
             gbc.gridy = 1;
-            lblServerStatus = style.createLblH1("OFFLINE", style.red);
+            lblServerStatus = style.createLblStatus("OFFLINE", style.red);
             lblServerStatus.setHorizontalAlignment(SwingConstants.CENTER);
             container.add(lblServerStatus, gbc);
 
@@ -100,16 +100,5 @@ public class ServerStatusView extends JPanel {
 
         // Stop the logo animation
         lblLogoAnimated.setIcon(null);
-    }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Server Status View");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.getContentPane().add(new ServerStatusView());
-            frame.pack();
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        });
     }
 }
