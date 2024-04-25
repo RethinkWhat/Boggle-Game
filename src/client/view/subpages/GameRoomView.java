@@ -5,6 +5,7 @@ import shared.SwingStylesheet;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * The GameRoomView contains the game elements where the main game takes place.
@@ -47,10 +48,6 @@ public class GameRoomView extends JPanel {
      */
     private JButton btnClear;
     /**
-     * The chat input text field.
-     */
-    private JTextField txtChatInput;
-    /**
      * The text area containing the player input.
      */
     private JEditorPane edtPlayerInputs;
@@ -58,7 +55,6 @@ public class GameRoomView extends JPanel {
      * The LeaderBoard panel containing the players' ranks.
      */
     private LeaderboardPanel pnlLeaderboard;
-
     /**
      * The stylesheet.
      */
@@ -409,5 +405,141 @@ public class GameRoomView extends JPanel {
         }
     }
 
+    /**
+     * Retrieves the current round number.
+     * @return The current round number.
+     */
+    public int getRoundNumber() {
+        return roundNumber;
+    }
 
+    /**
+     * Retrieves the current round duration.
+     * @return The current round duration.
+     */
+    public int getRoundDuration() {
+        return roundDuration;
+    }
+
+    /**
+     * Retrieves the current JLabel of lblRoundNumber.
+     * @return The current lblRoundNumber.
+     */
+    public JLabel getLblRoundNumber() {
+        return lblRoundNumber;
+    }
+
+    /**
+     * Retrieves the current JButton of btnMusicToggle.
+     * @return The current btnMusicToggle.
+     */
+    public JButton getBtnMusicToggle() {
+        return btnMusicToggle;
+    }
+
+    /**
+     * Retrieves the current JButton of btnSoundToggle.
+     * @return The current btnSoundToggle.
+     */
+    public JButton getBtnSoundToggle() {
+        return btnSoundToggle;
+    }
+
+    /**
+     * Retrieves the current JLabel of lblTimer.
+     * @return The current lblTimer.
+     */
+    public JLabel getLblTimer() {
+        return lblTimer;
+    }
+
+    /**
+     * Retrieves the current JProgressBar of prgTimer.
+     * @return The current prgTimer.
+     */
+    public JProgressBar getPrgTimer() {
+        return prgTimer;
+    }
+
+    /**
+     * Retrieves the current JTextField of txtWordInput.
+     * @return The current txtWordInput.
+     */
+    public JTextField getTxtWordInput() {
+        return txtWordInput;
+    }
+
+    /**
+     * Retrieves the current JButton of btnClear.
+     * @return The current btnClear.
+     */
+    public JButton getBtnClear() {
+        return btnClear;
+    }
+
+    /**
+     * Retrieves the current LeaderboardPanel of pnlLeaderboard.
+     * @return The current pnlLeaderboard.
+     */
+    public LeaderboardPanel getPnlLeaderboard() {
+        return pnlLeaderboard;
+    }
+
+    /**
+     * Sets a new round number.
+     * @param roundNumber The new round number.
+     */
+    public void setRoundNumber(int roundNumber) {
+        this.roundNumber = roundNumber;
+    }
+
+    /**
+     * Sets a new round duration.
+     * @param roundDuration The new round duration.
+     */
+    public void setRoundDuration(int roundDuration) {
+        this.roundDuration = roundDuration;
+    }
+
+    /**
+     * Sets a specified action listener for btnMusicToggle.
+     * @param actionListener The specified action listener.
+     */
+    public void setMusicToggleListener(ActionListener actionListener) {
+        btnMusicToggle.addActionListener(actionListener);
+    }
+
+    /**
+     * Sets a specified action listener for btnSoundToggle.
+     * @param actionListener The specified action listener.
+     */
+    public void setSoundToggleListener(ActionListener actionListener) {
+        btnSoundToggle.addActionListener(actionListener);
+    }
+
+    /**
+     * Sets a specified max value for prgTimer as a starting point for the progress bar decrement.
+     * @param maxValue The specified maxValue.
+     */
+    public void setPrgTimerMaxValue(int maxValue) {
+        prgTimer.setMaximum(maxValue);
+    }
+
+    /**
+     * Sets a specified action listener for btnClear.
+     * @param actionListener The specified action listener.
+     */
+    public void setClearListener(ActionListener actionListener) {
+        btnClear.addActionListener(actionListener);
+    }
+
+    /**
+     * Adds a specified player in the game leaderboard.
+     * @param username The specified player username.
+     * @param pfpURL The specified player profile picture URL.
+     * @param points The specified player points accumulated from the previous rounds.
+     */
+    public void addPlayerInLeaderboard(String username, String pfpURL, int points) {
+        pnlLeaderboard.add(new PlayerPanel(pfpURL, username, points));
+    }
 }
