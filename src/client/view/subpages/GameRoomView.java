@@ -630,6 +630,25 @@ public class GameRoomView extends JPanel {
         lblTimer.setText(duration + "s");
     }
 
+    /**
+     * Sets a specified icon to btnMusic.
+     * @param icon The specified icon.
+     */
+    public void setBtnMusicIcon(ImageIcon icon) {
+        Image scaledImage = icon.getImage().getScaledInstance(25,25,Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        SwingUtilities.invokeLater(() -> btnMusicToggle.setIcon(scaledIcon));
+    }
+
+    /**
+     * Sets a specified icon to btnSound.
+     * @param icon The specified icon.
+     */
+    public void setBtnSoundIcon(ImageIcon icon) {
+        Image scaledImage = icon.getImage().getScaledInstance(25,25,Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        SwingUtilities.invokeLater(() -> btnSoundToggle.setIcon(scaledIcon));
+    }
 
 
 }
