@@ -32,6 +32,7 @@ public class GameRoomView extends JPanel {
      * The toggle button to turn on/off the sound.
      */
     private JButton btnSoundToggle;
+
     /**
      * The progressbar for the timer.
      */
@@ -68,14 +69,14 @@ public class GameRoomView extends JPanel {
     public GameRoomView() {
         this.setBackground(style.deepSkyBlue);
         this.setBorder(style.padding);
-        this.setLayout(new BorderLayout(0, 0));
+        this.setLayout(new BorderLayout(0,0));
 
         pnlLeft = new LeftPanel();
         add(pnlLeft, BorderLayout.WEST);
 
         pnlRight = new JPanel();
         pnlRight.setLayout(new BorderLayout());
-        pnlRight.setPreferredSize(new Dimension(800, 750));
+        pnlRight.setPreferredSize(new Dimension(800,750));
         add(pnlRight, BorderLayout.EAST);
 
         pnlTopRight = new TopRightPanel();
@@ -83,13 +84,31 @@ public class GameRoomView extends JPanel {
         pnlRight.add(pnlTopRight, BorderLayout.NORTH);
         pnlRight.add(pnlBottomRight, BorderLayout.SOUTH);
 
-        this.setPreferredSize(new Dimension(1300, 750));
+        this.setPreferredSize(new Dimension(1300,750));
+    }
+    public JPanel getPnlRight() {
+        return pnlRight;
+    }
+    public TopRightPanel getPnlTopRight() {
+        return pnlTopRight;
+    }
+
+    public void setPnlTopRight(TopRightPanel pnlTopRight) {
+        this.pnlTopRight = pnlTopRight;
+    }
+
+    public BottomRightPanel getPnlBottomRight() {
+        return pnlBottomRight;
+    }
+
+    public void setPnlBottomRight(BottomRightPanel pnlBottomRight) {
+        this.pnlBottomRight = pnlBottomRight;
     }
 
     /**
      * Holds the leaderboard and players.
      */
-    class LeftPanel extends JPanel {
+    public class LeftPanel extends JPanel {
         /**
          * Constructs a panel of LeftPanel.
          */
@@ -136,7 +155,7 @@ public class GameRoomView extends JPanel {
     /**
      * Holds the player leaderboard.
      */
-    class LeaderboardPanel extends JPanel {
+    public class LeaderboardPanel extends JPanel {
         /**
          * Constructs a panel of LeaderboardPanel.
          */
@@ -152,7 +171,7 @@ public class GameRoomView extends JPanel {
     /**
      * Holds the player information.
      */
-    class PlayerPanel extends JPanel {
+    public class PlayerPanel extends JPanel {
         /**
          * Constructs a panel of PlayerPanel.
          */
@@ -190,7 +209,10 @@ public class GameRoomView extends JPanel {
     /**
      * Holds the letter set, timer, and toggle buttons.
      */
-    class TopRightPanel extends JPanel {
+    public class TopRightPanel extends JPanel {
+        TimerPanel timerPanel;
+        ButtonsPanel buttonsPanel;
+        LetterSetPanel letterSetPanel;
         /**
          * Constructs a panel of TopRightPanel.
          */
@@ -219,18 +241,45 @@ public class GameRoomView extends JPanel {
             container.setLayout(new BorderLayout(0,10));
             layeredPane.add(container, new Integer(0));
 
-            container.add(new ButtonsPanel(), BorderLayout.NORTH);
-            container.add(new LetterSetPanel(), BorderLayout.CENTER);
-            container.add(new TimerPanel(), BorderLayout.SOUTH);
+            timerPanel = new TimerPanel();
+            buttonsPanel = new ButtonsPanel();
+            letterSetPanel = new LetterSetPanel();
+            container.add(buttonsPanel, BorderLayout.NORTH);
+            container.add(letterSetPanel, BorderLayout.CENTER);
+            container.add(timerPanel, BorderLayout.SOUTH);
 
             this.setPreferredSize(new Dimension(900,400));
+        }
+
+        public TimerPanel getTimerPanel() {
+            return timerPanel;
+        }
+
+        public void setTimerPanel(TimerPanel timerPanel) {
+            this.timerPanel = timerPanel;
+        }
+
+        public ButtonsPanel getButtonsPanel() {
+            return buttonsPanel;
+        }
+
+        public void setButtonsPanel(ButtonsPanel buttonsPanel) {
+            this.buttonsPanel = buttonsPanel;
+        }
+
+        public LetterSetPanel getLetterSetPanel() {
+            return letterSetPanel;
+        }
+
+        public void setLetterSetPanel(LetterSetPanel letterSetPanel) {
+            this.letterSetPanel = letterSetPanel;
         }
     }
 
     /**
      * Holds the toggle buttons.
      */
-    class ButtonsPanel extends JPanel {
+    public class ButtonsPanel extends JPanel {
         /**
          * Constructs a panel of ButtonsPanel.
          */
@@ -249,7 +298,7 @@ public class GameRoomView extends JPanel {
     /**
      * Holds the given letter set.
      */
-    class LetterSetPanel extends JPanel {
+    public class LetterSetPanel extends JPanel {
         /**
          * Constructs a panel of LetterSetPanel
          */
@@ -268,7 +317,7 @@ public class GameRoomView extends JPanel {
     /**
      * Holds a certain letter
      */
-    class LetterPanel extends JPanel {
+    public class LetterPanel extends JPanel {
         /**
          * Constructs a panel of LetterPanel.
          */
@@ -292,10 +341,16 @@ public class GameRoomView extends JPanel {
     /**
      * Holds the timer and progress bar.
      */
-    class TimerPanel extends JPanel {
+
+    public class TimerPanel extends JPanel {
         /**
          * Constructs a panel of TimerPanel.
          */
+
+        /**
+         * The timer.
+         */
+
         public TimerPanel() {
             this.setBackground(style.white);
             this.setLayout(new FlowLayout(FlowLayout.CENTER, -6,0));
@@ -305,7 +360,7 @@ public class GameRoomView extends JPanel {
             pnlTimer.setLayout(new BorderLayout());
             add(pnlTimer);
 
-            lblTimer = style.createLblH1(roundDuration + "s", style.white);
+            lblTimer = style.createLblH1(  " ", style.white);
             lblTimer.setIcon(style.iconRoundTimer);
             lblTimer.setVerticalAlignment(SwingConstants.CENTER);
             lblTimer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -331,7 +386,7 @@ public class GameRoomView extends JPanel {
     /**
      * Holds the inputs and text areas containing the chat and the word inputs.
      */
-    class BottomRightPanel extends JPanel {
+   public class BottomRightPanel extends JPanel {
         /**
          * Constructs a panel of BottomRightPanel.
          */
@@ -368,7 +423,7 @@ public class GameRoomView extends JPanel {
     /**
      * Holds the text field and text area.
      */
-    class InputPanel extends JPanel {
+    public class InputPanel extends JPanel {
         /**
          * Constructs a panel of InputPanel.
          */
@@ -567,22 +622,14 @@ public class GameRoomView extends JPanel {
         SwingUtilities.invokeLater(() -> txaPlayerInputs.append(username + ": " + input + "\n"));
     }
 
-    public JPanel getPnlRight() {
-        return pnlRight;
-    }
-    public TopRightPanel getPnlTopRight() {
-        return pnlTopRight;
+    public JLabel getLblTimer() {
+        return lblTimer;
     }
 
-    public void setPnlTopRight(TopRightPanel pnlTopRight) {
-        this.pnlTopRight = pnlTopRight;
+    public void setLblTimerTxt(long duration) {
+        lblTimer.setText(duration + "s");
     }
 
-    public BottomRightPanel getPnlBottomRight() {
-        return pnlBottomRight;
-    }
 
-    public void setPnlBottomRight(BottomRightPanel pnlBottomRight) {
-        this.pnlBottomRight = pnlBottomRight;
-    }
+
 }
