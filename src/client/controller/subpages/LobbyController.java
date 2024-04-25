@@ -49,7 +49,7 @@ public class LobbyController {
             System.out.println("THIS IS TIMER VAL: " + timerVal);
             if (startLobby.value) {
                 parentView.showGameRoom();
-                new GameRoomController(new GameRoomModel(model.getUsername(), model.getWfImpl()), new GameRoomView());
+                new GameRoomController(new GameRoomModel(model.getUsername(), model.getWfImpl()), parentView.getGameRoomView());
             } else {
                 parentView.showHome();
             }

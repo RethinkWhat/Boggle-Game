@@ -6,6 +6,7 @@ import org.omg.CORBA.LongHolder;
 import org.omg.CORBA.StringHolder;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 public class GameRoomModel {
@@ -22,12 +23,16 @@ public class GameRoomModel {
     private char[] vowelSet = new char[7];
     private char[] consonantSet = new char[13];
 
+    private Set<String> wordSet;
+
     public GameRoomModel(String username, BoggleClient wfImpl) {
         this.username = username;
         this.wfImpl = wfImpl;
         LongHolder durHolder = new LongHolder(0);
         gameRoomID = wfImpl.joinGameRoom(durHolder);
         duration = durHolder.value;
+
+        wordSet = new HashSet<>();
 
         nextRound();
     }
@@ -105,5 +110,13 @@ public class GameRoomModel {
 
     public void setConsonantSet(char[] consonantSet) {
         this.consonantSet = consonantSet;
+    }
+
+    public Set<String> getWordSet() {
+        return wordSet;
+    }
+
+    public void setWordSet(Set<String> wordSet) {
+        this.wordSet = wordSet;
     }
 }
