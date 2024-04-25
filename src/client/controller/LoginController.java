@@ -10,9 +10,10 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Arrays;
 
 /**
- * TODO: Documentation
+ * The LoginController processes user requests when trying to access the application through their existing account.
  */
 public class LoginController {
     /**
@@ -35,13 +36,17 @@ public class LoginController {
 
         // action listeners
         view.setLoginListener(new LoginListener());
-        
+        view.setShowPasswordListener(new SwingResources.ShowPasswordListener(view.getChkShowPassword(),
+                view.getTxtPassword()));
+
         // mouse listeners
         view.getBtnLogin().addMouseListener(new SwingResources.CursorChanger(view.getBtnLogin()));
 
         // focus listeners
-        view.getTxtUsername().addFocusListener(new SwingResources.TextFieldFocus(view.getTxtUsername(), "Username"));
-        view.getTxtPassword().addFocusListener(new SwingResources.PasswordFocusWithCheckbox(view.getTxtPassword(), view.getChkShowPassword(), "Password"));
+        view.getTxtUsername().addFocusListener(new SwingResources.TextFieldFocus(view.getTxtUsername(),
+                "Username", view.getLblErrorMessage()));
+        view.getTxtPassword().addFocusListener(new SwingResources.PasswordFocusWithCheckbox(view.getTxtPassword(),
+                view.getChkShowPassword(), "Password", view.getLblErrorMessage()));
 
         view.revalidate();
         view.repaint();
@@ -59,34 +64,24 @@ public class LoginController {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-
             String username = view.getTxtUsername().getText();
-
             try {
-                if (model.validateAccount(view.getTxtUsername().getText(), view.getTxtPassword().getText())){
-                    new ClientApplicationController(new ClientApplicationView(), new ClientApplicationModel(username, model.getWfImpl()));
+                if (model.validateAccount(view.getTxtUsername().getText(), Arrays.toString(view.getTxtPassword().getPassword()))){
+                    SwingUtilities.invokeLater(() -> new ClientApplicationController(new ClientApplicationView(),
+                            new ClientApplicationModel(username, model.getWfImpl())));
                     view.dispose();
-                }else {
-                    //Error message na gagawin palang ni pat
+                } else {
+                    SwingUtilities.invokeLater(() -> {
+                        view.setErrorMessage("Wrong credentials. Try again.");
+                        view.getTxtPassword().setText("Password");
+                        view.getTxtPassword().setEchoChar((char) 0);
+                    });
                 }
-            }catch (SQLException sqle){
+            } catch (SQLException sqle){
                 sqle.printStackTrace();
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
-
-            /*
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    final ClientApplicationView view = new ClientApplicationView();
-                    final ClientApplicationModel model = new ClientApplicationModel(username);
-                    final ClientApplicationController controller = new ClientApplicationController(view, model);
-                }
-            });
-            view.dispose();
-
-             */
         }
     }
 }
