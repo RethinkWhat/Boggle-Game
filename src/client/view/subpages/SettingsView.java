@@ -46,7 +46,7 @@ public class SettingsView extends JPanel{
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-       // profileLabel = style.createLblH5("PROFILE", style.white);
+       profileLabel = style.createLblH5("PROFILE", style.white);
         gbc.insets = new Insets(-10, 0, 0, 0);
         this.add(profileLabel, gbc);
 
@@ -57,7 +57,7 @@ public class SettingsView extends JPanel{
 
         gbc.gridx = 1;
         gbc.gridy = 0;
-    //    securityLabel = style.createLblH5("SECURITY", style.white);
+        securityLabel = style.createLblH5("SECURITY", style.white);
         gbc.insets = new Insets(-10, 100, 0, 0);
         this.add(securityLabel, gbc);
 

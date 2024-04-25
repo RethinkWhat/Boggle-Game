@@ -95,9 +95,9 @@ public class ClientSettingsView extends JFrame{
             container.setBorder(style.padding);
             add(container);
 
-        //    btnAccMa = navButtonWithLabel(container, style.iconAccMan, "Account Management");
-         //   btnDelAcc = navButtonWithLabel(container, style.iconAccMan, "Delete Account");
-         //   btnMusic = navButtonWithLabel(container, style.iconMusic, "Music:");
+            btnAccMa = navButtonWithLabel(container, style.iconAccMan, "Account Management");
+            btnDelAcc = navButtonWithLabel(container, style.iconAccMan, "Delete Account");
+            btnMusic = navButtonWithLabel(container, style.iconMusic, "Music:");
 
             container.setPreferredSize(new Dimension(250, 300));
 
