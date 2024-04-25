@@ -32,10 +32,6 @@ public class LoginView extends JFrame {
      */
     private JButton btnLogin;
     /**
-     * The signup button.
-     */
-    private JButton btnSignup;
-    /**
      * The stylesheet for UI elements.
      */
     private final SwingStylesheet style = new SwingStylesheet();
@@ -129,7 +125,7 @@ public class LoginView extends JFrame {
 
             gbc.gridy = 6;
             gbc.ipady = 20;
-            lblErrorMessage = style.createLblH4("Wrong password. Try again.", style.red);
+            lblErrorMessage = style.createLblH4("", style.red);
             lblErrorMessage.setHorizontalAlignment(SwingConstants.CENTER);
             container.add(lblErrorMessage, gbc);
 
@@ -227,18 +223,10 @@ public class LoginView extends JFrame {
 
     /**
      * Retrieves the current JButton of btnLogin.
-     * @return THe current btnLogin.
+     * @return The current btnLogin.
      */
     public JButton getBtnLogin() {
         return btnLogin;
-    }
-
-    /**
-     * Retrieves the current JButton of btnSignup.
-     * @return The current btnSignup.
-     */
-    public JButton getBtnSignup() {
-        return btnSignup;
     }
 
     /**
@@ -250,11 +238,11 @@ public class LoginView extends JFrame {
     }
 
     /**
-     * Sets a specified action listener for btnSignup.
+     * Sets a specified action listener for chkPassword.
      * @param actionListener The specified action listener.
      */
-    public void setSignupListener(ActionListener actionListener) {
-        btnSignup.addActionListener(actionListener);
+    public void setShowPasswordListener(ActionListener actionListener) {
+        chkShowPassword.addActionListener(actionListener);
     }
 
     /**
@@ -262,10 +250,6 @@ public class LoginView extends JFrame {
      * @param text The new error message.
      */
     public void setErrorMessage(String text) {
-        lblErrorMessage.setText(text);
-    }
-
-    public static void main(String[] args) {
-        new LoginView();
+        SwingUtilities.invokeLater(() ->lblErrorMessage.setText(text));
     }
 }
