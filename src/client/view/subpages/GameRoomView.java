@@ -117,7 +117,10 @@ public class GameRoomView extends JPanel {
             layeredPane.add(container, new Integer(0));
 
             pnlLeaderboard = new LeaderboardPanel();
-            pnlLeaderboard.add(new PlayerPanel("res/drawable/images/pfp-male-1.png", "monem", 100));
+            pnlLeaderboard.add(new PlayerPanel("res/drawable/images/pfp-male-1.png", "asdwerfteq", 100));
+            pnlLeaderboard.add(new PlayerPanel("res/drawable/images/pfp-male-1.png", "gfgfewgwegewg", 100));
+            pnlLeaderboard.add(new PlayerPanel("res/drawable/images/pfp-male-1.png", "monfabdgaaem", 100));
+            pnlLeaderboard.add(new PlayerPanel("res/drawable/images/pfp-male-1.png", "mosdgg2gadf", 100));
 
             JScrollPane scrollPane = new JScrollPane(pnlLeaderboard);
             scrollPane.setBorder(BorderFactory.createEmptyBorder());
@@ -139,9 +142,9 @@ public class GameRoomView extends JPanel {
         public LeaderboardPanel() {
             this.setBackground(style.white);
             this.setBorder(style.padding);
-            this.setLayout(new FlowLayout(FlowLayout.CENTER, 300,20));
+            this.setLayout(new FlowLayout(FlowLayout.CENTER, 300,5));
 
-            this.setPreferredSize(new Dimension(350,1200));
+            this.setPreferredSize(new Dimension(360,1200));
         }
     }
 
@@ -152,29 +155,34 @@ public class GameRoomView extends JPanel {
         /**
          * Constructs a panel of PlayerPanel.
          */
-        public PlayerPanel(String username, String pfpURL, int points) {
+        public PlayerPanel(String pfpURL, String username, int points) {
             this.setBackground(style.white);
-            this.setLayout(new BorderLayout());
+            this.setBorder(style.padding);
+            this.setLayout(new GridBagLayout());
+
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.weightx = 60;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.gridwidth = 1;
 
             ImageIcon iconPfp = new ImageIcon(pfpURL);
 
+            gbc.gridx = 0;
+            gbc.gridy = 0;
             JLabel lblPlayerPfp = style.createLblIconOnly(iconPfp, 60,60);
-            lblPlayerPfp.setPreferredSize(new Dimension(60,60));
-            add(lblPlayerPfp, BorderLayout.WEST);
+            add(lblPlayerPfp, gbc);
 
-            JPanel pnlPlayerInfo = new JPanel();
-            pnlPlayerInfo.setBackground(style.white);
-            pnlPlayerInfo.setLayout(new FlowLayout(FlowLayout.LEFT, 500,10));
-            pnlPlayerInfo.setPreferredSize(new Dimension(300,80));
-            add(pnlPlayerInfo, BorderLayout.EAST);
+            gbc.weightx = 100;
+            gbc.gridx = 1;
+            gbc.gridwidth = 3;
+            gbc.anchor = GridBagConstraints.WEST;
+            JLabel lblUsername = style.createLblH3("<html>" + username +"<br>" + points + " pts" + "</html>",
+                    style.deepSkyBlue);
+            lblUsername.setHorizontalAlignment(SwingConstants.LEFT);
+            add(lblUsername, gbc);
 
-            JLabel lblUsername = style.createLblH2(username, style.deepSkyBlue);
-            pnlPlayerInfo.add(lblUsername);
-
-            JLabel lblPoints = style.createLblH3(points + " PTS", style.deepSkyBlue);
-            pnlPlayerInfo.add(lblPoints);
-
-            this.setPreferredSize(new Dimension(400,100));
+            this.setPreferredSize(new Dimension(360,100));
         }
     }
 
@@ -371,15 +379,18 @@ public class GameRoomView extends JPanel {
             edtPlayerInputs = new JEditorPane();
             edtPlayerInputs.setEditable(false);
             edtPlayerInputs.setContentType("text/html");
+            edtPlayerInputs.setFont(style.bowlbyOne.deriveFont(12f));
             edtPlayerInputs.setBackground(style.white);
             edtPlayerInputs.setBorder(style.padding);
             edtPlayerInputs.setPreferredSize(new Dimension(800,500));
 
+            edtPlayerInputs.setText("Monem: Hello \n Monem: Hello \n Monem: Hello \n Monem: Hello \n");
+
             JScrollPane scrollPane = new JScrollPane(edtPlayerInputs);
             scrollPane.setBorder(BorderFactory.createEmptyBorder());
             scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            scrollPane.setPreferredSize(new Dimension(850,100));
-            scrollPane.setMinimumSize(new Dimension(850,100));
+            scrollPane.setPreferredSize(new Dimension(800,100));
+            scrollPane.setMinimumSize(new Dimension(800,100));
             add(scrollPane, BorderLayout.CENTER);
 
             JPanel pnlButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 10,0));
@@ -397,4 +408,6 @@ public class GameRoomView extends JPanel {
             this.setPreferredSize(new Dimension(900,150));
         }
     }
+
+
 }
