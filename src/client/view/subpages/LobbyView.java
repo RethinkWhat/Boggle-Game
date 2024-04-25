@@ -216,7 +216,7 @@ public class LobbyView extends JPanel {
      * @param lblTimer The specified lblTimer.
      */
     public void setLblTimerTxt(String lblTimer) {
-        this.lblTimer.setText(lblTimer + "s");
+        SwingUtilities.invokeLater(() -> this.lblTimer.setText(lblTimer + "s"));
     }
 
     /**
@@ -225,6 +225,6 @@ public class LobbyView extends JPanel {
      * @param pfpURL The specified player profile picture URL.
      */
     public void addPlayerInUserPanel(String username, String pfpURL) {
-        pnlPlayerContainer.add(new UserPanel(username, pfpURL));
+        SwingUtilities.invokeLater(() -> pnlPlayerContainer.add(new UserPanel(username, pfpURL)));
     }
 }

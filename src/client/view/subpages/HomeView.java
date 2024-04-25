@@ -306,7 +306,7 @@ public class HomeView extends JPanel {
      * @param username The specified username.
      */
     public void setUsername(String username) {
-        lblUsername.setText(username);
+        SwingUtilities.invokeLater(() -> lblUsername.setText(username));
     }
 
     /**
@@ -316,6 +316,6 @@ public class HomeView extends JPanel {
      * @param totalPoints The specified total points.
      */
     public void addPlayerInLeaderboard(String username, String pfpURL, int totalPoints) {
-        pnlLeaderboard.add(new PlayerLeaderboardPanel(pfpURL, username, totalPoints));
+        SwingUtilities.invokeLater(() -> pnlLeaderboard.add(new PlayerLeaderboardPanel(pfpURL, username, totalPoints)));
     }
 }

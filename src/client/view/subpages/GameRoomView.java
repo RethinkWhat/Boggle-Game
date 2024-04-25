@@ -50,7 +50,7 @@ public class GameRoomView extends JPanel {
     /**
      * The text area containing the player input.
      */
-    private JEditorPane edtPlayerInputs;
+    private JTextArea txaPlayerInputs;
     /**
      * The LeaderBoard panel containing the players' ranks.
      */
@@ -369,33 +369,41 @@ public class GameRoomView extends JPanel {
          */
         public InputPanel() {
             this.setBackground(style.white);
-            this.setLayout(new BorderLayout());
+            this.setLayout(new GridBagLayout());
             this.setBorder(style.padding);
 
-            edtPlayerInputs = new JEditorPane();
-            edtPlayerInputs.setEditable(false);
-            edtPlayerInputs.setContentType("text/html");
-            edtPlayerInputs.setFont(style.bowlbyOne.deriveFont(12f));
-            edtPlayerInputs.setBackground(style.white);
-            edtPlayerInputs.setBorder(style.padding);
-            edtPlayerInputs.setPreferredSize(new Dimension(800,500));
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.weightx = 300;
+            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.fill = GridBagConstraints.BOTH;
+            gbc.gridwidth = 1;
 
-            edtPlayerInputs.setText("Monem: Hello \n Monem: Hello \n Monem: Hello \n Monem: Hello \n");
+            txaPlayerInputs = new JTextArea();
+            txaPlayerInputs.setEditable(false);
+            txaPlayerInputs.setFont(style.bowlbyOne.deriveFont(12f));
+            txaPlayerInputs.setBackground(style.white);
+            txaPlayerInputs.setBorder(style.padding);
+            txaPlayerInputs.setPreferredSize(new Dimension(300,500));
 
-            JScrollPane scrollPane = new JScrollPane(edtPlayerInputs);
+            txaPlayerInputs.setText("Monem: Hello \n Monem: Hello \n Monem: Hello \n Monem: Hello \n");
+
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            JScrollPane scrollPane = new JScrollPane(txaPlayerInputs);
             scrollPane.setBorder(BorderFactory.createEmptyBorder());
             scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-            scrollPane.setPreferredSize(new Dimension(800,100));
-            scrollPane.setMinimumSize(new Dimension(800,100));
-            add(scrollPane, BorderLayout.CENTER);
+            scrollPane.setPreferredSize(new Dimension(400,100));
+            scrollPane.setMinimumSize(new Dimension(400,100));
+            add(scrollPane, gbc);
 
+            gbc.gridy = 1;
             JPanel pnlButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 10,0));
             pnlButtons.setBackground(style.white);
             pnlButtons.setPreferredSize(new Dimension(900,60));
-            add(pnlButtons, BorderLayout.SOUTH);
+            add(pnlButtons, gbc);
 
             txtWordInput = style.createTxtRounded("Enter word here.", style.lightGray, style.gray, 20);
-            txtWordInput.setPreferredSize(new Dimension(800,40));
+            txtWordInput.setPreferredSize(new Dimension(300,40));
             pnlButtons.add(txtWordInput);
 
             btnClear = style.createBtnIconOnly(style.iconClear, 30,30);
@@ -459,6 +467,14 @@ public class GameRoomView extends JPanel {
      */
     public JProgressBar getPrgTimer() {
         return prgTimer;
+    }
+
+    /**
+     * Retrieves the current JTextArea of txaPlayerInputs.
+     * @return THe current txaPlayerInputs.
+     */
+    public JTextArea getTxaPlayerInputs() {
+        return txaPlayerInputs;
     }
 
     /**
@@ -540,6 +556,15 @@ public class GameRoomView extends JPanel {
      * @param points The specified player points accumulated from the previous rounds.
      */
     public void addPlayerInLeaderboard(String username, String pfpURL, int points) {
-        pnlLeaderboard.add(new PlayerPanel(pfpURL, username, points));
+        SwingUtilities.invokeLater(() -> pnlLeaderboard.add(new PlayerPanel(pfpURL, username, points)));
+    }
+
+    /**
+     * Adds a specified text in txaPlayerInputs.
+     * @param username The specified username.
+     * @param input The specified input (word).
+     */
+    public void addUserInput(String username, String input) {
+        SwingUtilities.invokeLater(() -> txaPlayerInputs.append(username + ": " + input + "\n"));
     }
 }
