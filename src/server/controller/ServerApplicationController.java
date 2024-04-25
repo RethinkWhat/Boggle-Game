@@ -22,15 +22,31 @@ public class ServerApplicationController {
         view.getServerStatusView().setServerListener(new ServerSwitchListener());
     }
 
-    class ServerSwitchListener implements ActionListener{
+    class ServerSwitchListener implements ActionListener {
+        private boolean isServerRunning = false;
+
         @Override
         public void actionPerformed(ActionEvent e) {
-            if (view.getServerStatusView().getServerStatus().getText().equalsIgnoreCase("OFFLINE")){
+
+            if (!isServerRunning) {
+                // If the server is not running, start it
                 view.getServerStatusView().setOnline();
-                server.run(args);
-            }else {
+
+                Thread thread = new Thread(() -> {
+                    server.run(args);
+                });
+
+                thread.start();
+                isServerRunning = true;
+            } else {
+                // If the server is running, stop it
                 view.getServerStatusView().setOffline();
-                server.stop();
+                try {
+                    server.stop();
+                }catch (Exception ignore){
+
+                }
+                isServerRunning = false;
             }
         }
     }
