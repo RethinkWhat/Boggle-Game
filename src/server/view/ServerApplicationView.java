@@ -80,10 +80,9 @@ public class ServerApplicationView extends JFrame {
         gameSettingsView = new GameSettingsView();
         playersView = new PlayersView();
         pnlCards.add( serverStatusView, "server");
-//        pnlCards.add( gameSettingsView, "gamesettings");
-//        pnlCards.add( playersView, "players");
+        pnlCards.add( gameSettingsView, "gamesettings");
+        pnlCards.add( playersView, "players");
 
-        cardLayout.show(pnlCards, "server");
 
         this.setContentPane(contentArea);
         this.pack();
@@ -226,6 +225,25 @@ public class ServerApplicationView extends JFrame {
         btnNavLogout.addActionListener(actionListener);
     }
 
+    /**
+     * Shows the ServerStatusView through the card layout.
+     */
+    public void showServerStatusPanel() {
+        cardLayout.show(pnlCards, "server");
+    }
+    /**
+     * Shows the GameSettingsView through the card layout.
+     */
+    public void showGameSettingsPanel() {
+        cardLayout.show(pnlCards, "gamesettings");
+    }
+
+    /**
+     * Shows the PlayersView through the card layout.
+     */
+    public void showPlayersPanel() {
+        cardLayout.show(pnlCards, "players");
+    }
     /**
      * Sets a specified text for lblNavLocation.
      * @param text The specified text.
