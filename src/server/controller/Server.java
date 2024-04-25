@@ -9,6 +9,9 @@ import org.omg.CosNaming.NamingContextPackage.InvalidName;
 import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
+import org.omg.PortableServer.POAPackage.ObjectNotActive;
+import org.omg.PortableServer.POAPackage.ServantNotActive;
+import org.omg.PortableServer.POAPackage.WrongPolicy;
 import server.model.BoggleApp.BoggleClient;
 import server.model.BoggleApp.BoggleClientHelper;
 import server.model.DataPB;
@@ -66,13 +69,15 @@ public class Server{
 
     public void stop(){
         try {
-            this.ncRef.unbind(this.pathname);
-        } catch (NotFound e) {
+            rootpoa.deactivate_object(rootpoa.servant_to_id(serverImpl));
+            System.out.println("Server is stopped.");
+        } catch (WrongPolicy e) {
             throw new RuntimeException(e);
-        } catch (CannotProceed e) {
+        } catch (ObjectNotActive e) {
             throw new RuntimeException(e);
-        } catch (InvalidName e) {
+        } catch (ServantNotActive e) {
             throw new RuntimeException(e);
         }
     }
+
 }
