@@ -4,6 +4,9 @@ import org.omg.CORBA.ORB;
 import org.omg.CosNaming.NameComponent;
 import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
+import org.omg.CosNaming.NamingContextPackage.CannotProceed;
+import org.omg.CosNaming.NamingContextPackage.InvalidName;
+import org.omg.CosNaming.NamingContextPackage.NotFound;
 import org.omg.PortableServer.POA;
 import org.omg.PortableServer.POAHelper;
 import server.model.BoggleApp.BoggleClient;
@@ -11,27 +14,45 @@ import server.model.BoggleApp.BoggleClientHelper;
 import server.model.DataPB;
 import server.model.ServerImplementation;
 
-public class Server {
+public class Server{
+
+    private ORB orb;
+
+    private POA rootpoa;
+
+    private ServerImplementation serverImpl;
+
+    org.omg.CORBA.Object ref;
+
+    BoggleClient href;
+
+    org.omg.CORBA.Object objRef;
+
+    NamingContextExt ncRef;
+
+    String path = "WordFactory";
+
+    NameComponent[] pathname;
 
     public void run(String[] args) {
         try {
-            ORB orb = ORB.init(args, null);
+            this.orb = ORB.init(args, null);
 
-            POA rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
+            this.rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
             rootpoa.the_POAManager().activate();
 
-            ServerImplementation serverImpl = new ServerImplementation();
+            this.serverImpl = new ServerImplementation();
 
-            org.omg.CORBA.Object ref = rootpoa.servant_to_reference(serverImpl);
-            BoggleClient href = BoggleClientHelper.narrow(ref);
+            this.ref = rootpoa.servant_to_reference(this.serverImpl);
+            this.href = BoggleClientHelper.narrow(this.ref);
 
-            org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
+            this.objRef = orb.resolve_initial_references("NameService");
 
-            NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
-            String path = "WordFactory";
-            NameComponent[] pathName = ncRef.to_name(path);
+            this.ncRef = NamingContextExtHelper.narrow(objRef);
+            this.path = "WordFactory";
+            this.pathname = ncRef.to_name(path);
 
-            ncRef.rebind(pathName, href);
+            ncRef.rebind(this.pathname, this.href);
 
             orb.run();
 
@@ -41,5 +62,17 @@ public class Server {
             e.printStackTrace();
         }
 
+    }
+
+    public void stop(){
+        try {
+            this.ncRef.unbind(this.pathname);
+        } catch (NotFound e) {
+            throw new RuntimeException(e);
+        } catch (CannotProceed e) {
+            throw new RuntimeException(e);
+        } catch (InvalidName e) {
+            throw new RuntimeException(e);
+        }
     }
 }
