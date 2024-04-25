@@ -10,6 +10,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.*;
+
 public class GameRoomController {
 
     /**
@@ -77,7 +79,7 @@ public class GameRoomController {
                     System.out.println(inSeconds);
                     while (inSeconds >= 0) {
                         Thread.sleep(1000);
-                        // view.setLblTimerTxt(inSeconds);
+                        view.setLblTimerTxt(inSeconds);
                         inSeconds -= 1;
                         System.out.println(inSeconds);
                     }
