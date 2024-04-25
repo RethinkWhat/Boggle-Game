@@ -236,6 +236,22 @@ public class ClientApplicationView extends JFrame {
     }
 
     /**
+     * Retrieves the current SettingsView.
+     * @return The current SettingsView.
+     */
+    public SettingsView getSettingsView() {
+        return settingsView;
+    }
+
+    /**
+     * Retrieves the current HowToPlayView.
+     * @return The current HowToPlayView.
+     */
+    public HowToPlayView getHowToPlayView() {
+        return howToPlayView;
+    }
+
+    /**
      * Shows the LobbyView through the card layout.
      */
     public void showLobby() {

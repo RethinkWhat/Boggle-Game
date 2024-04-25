@@ -1,16 +1,10 @@
 package client.controller.subpages;
 
-import client.controller.ClientApplicationController;
-import client.controller.GameRoomController;
-import client.model.ClientApplicationModel;
 import client.model.subpages.GameRoomModel;
 import client.model.subpages.LobbyModel;
 import client.view.ClientApplicationView;
-import client.view.subpages.GameRoomView;
 import client.view.subpages.LobbyView;
 import org.omg.CORBA.BooleanHolder;
-
-import javax.swing.*;
 
 public class LobbyController {
 

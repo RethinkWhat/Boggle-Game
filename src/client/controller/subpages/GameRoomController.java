@@ -1,4 +1,4 @@
-package client.controller;
+package client.controller.subpages;
 
 import client.model.subpages.GameRoomModel;
 import client.view.subpages.GameRoomView;
@@ -9,8 +9,6 @@ import javax.sound.sampled.AudioInputStream;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import javax.swing.*;
 
 public class GameRoomController {
 

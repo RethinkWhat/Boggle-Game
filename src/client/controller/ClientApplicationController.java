@@ -1,37 +1,44 @@
 package client.controller;
 
-import client.controller.subpages.LobbyController;
+import client.controller.subpages.HomeController;
+import client.controller.subpages.HowToPlayController;
+import client.controller.subpages.SettingsController;
 import client.model.ClientApplicationModel;
-import client.model.subpages.LobbyModel;
+import client.model.subpages.HomeModel;
+import client.model.subpages.HowToPlayModel;
+import client.model.subpages.SettingsModel;
 import client.view.ClientApplicationView;
 import shared.SwingResources;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
+/**
+ * The ClientApplicationController controls application navigation and holds all the sub-controllers that control
+ * their respective subviews and submodels.
+ */
 public class ClientApplicationController {
     /**
      * The view.
      */
     private ClientApplicationView view;
-
     /**
      * The model
      */
     private ClientApplicationModel model;
     /**
-     * The audio input stream for music.
+     * The home controller.
      */
-    private AudioInputStream audioMusicStream;
+    private HomeController homeController;
     /**
-     * The audio input stream for sfx.
+     * The how to play controller.
      */
-    private AudioInputStream audioSoundStream;
+    private HowToPlayController howToPlayController;
+    /**
+     * The setting controller.
+     */
+    private SettingsController settingsController;
 
     /**
      * Constructs a ClientApplicationController with a specified view.
@@ -41,64 +48,86 @@ public class ClientApplicationController {
         this.model = model;
         this.view = view;
 
-        initializeMusic();
+        SwingUtilities.invokeLater(() -> {
+            homeController = new HomeController(view.getHomeView(), new HomeModel(), this);
+            howToPlayController = new HowToPlayController(view.getHowToPlayView(), new HowToPlayModel());
+            settingsController = new SettingsController(view.getSettingsView(),
+                    new SettingsModel(model.getUsername(), model.getWfImpl()), view);
+        });
 
         // action listeners
-        this.view.getHomeView().setJoinListener(new JoinGameListener());
+        view.setSettingsListener(new SettingsListener());
+        view.setHomeListener(new HomeListener());
+        view.setLogoutListener(new LogOutListener());
 
         // mouse listeners
         view.getBtnNavHome().addMouseListener(new SwingResources.CursorChanger(view.getBtnNavHome()));
         view.getBtnNavSettings().addMouseListener(new SwingResources.CursorChanger(view.getBtnNavSettings()));
         view.getBtnNavLogout().addMouseListener(new SwingResources.CursorChanger(view.getBtnNavLogout()));
 
-
+        view.revalidate();
+        view.repaint();
     }
 
-    public class JoinGameListener implements ActionListener {
+    /**
+     * Navigates the application to the SettingsView.
+     */
+    class SettingsListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
+            // Switch to the settings view
             SwingUtilities.invokeLater(() -> {
-                view.showLobby();
-                view.setNavLocationText("Lobby");System.out.println("creating new lobby");
-                new LobbyController(new LobbyModel(model.getUsername(), model.getWfImpl()), view.getLobbyView(), view);view.getLobbyView().setExitLobbyListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-//                    model.getWfImpl().exitGameRoom(model.getUsername());
-                    view.showHome();
-                    view.setNavLocationText("Home");
-
-                }
+                // new SettingsController(new SettingsView(), new SettingsModel());
             });
-            // Add action listener to the exit lobby button
-                /*
-                BooleanHolder startGame = new BooleanHolder(false);
-                long id;
-                while (!startGame.value) {
-                    id = model.getWfImpl().attemptJoin("username", startGame);
-                    System.out.println("TIME REMAINING: " + id);
-                    if (startGame.value) {
-
-                        break;
-                    }try {
-                        Thread.sleep(1000);
-                    } catch (Exception p) {
-                    p.printStackTrace();}
-                }
-                */
-            });
+            view.showSettings();
+            view.setNavLocationText("Settings");
         }
     }
 
-    public void initializeMusic() {
-        String musicPath = "res/audio/music/8-bit-arcade-mode-158814.wav";
-        try {
-            audioMusicStream = AudioSystem.getAudioInputStream(new File(musicPath).getAbsoluteFile());
-            Clip clip = AudioSystem.getClip();
-            clip.open(audioMusicStream);
-            clip.start();
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (Exception e) {
-            e.printStackTrace();
+    /**
+     * Navigates the application to the HomeView.
+     */
+    class HomeListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            view.showHome();
+            view.setNavLocationText("Home");
         }
+    }
+
+    /**
+     * Logs the user out of the application.
+     */
+    class LogOutListener implements ActionListener {
+        //TEMPORARY PROMPT FOR LOGOUT
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int choice = JOptionPane.showConfirmDialog(
+                    view,
+                    "Are you sure you want to log out?",
+                    "TEMPORARY PROMPT",
+                    JOptionPane.YES_NO_OPTION
+            );
+
+            if (choice == JOptionPane.YES_OPTION) {
+                view.dispose();
+            }
+        }
+    }
+
+    /**
+     * Retrieves the current ClientApplicationView.
+     * @return The current view.
+     */
+    public ClientApplicationView getView() {
+        return view;
+    }
+
+    /**
+     * Retrieves the current ClientApplicationModel.
+     * @return The curren model.
+     */
+    public ClientApplicationModel getModel() {
+        return model;
     }
 }
