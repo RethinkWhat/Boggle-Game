@@ -10,13 +10,17 @@ import client.model.subpages.SettingsModel;
 import client.view.ClientApplicationView;
 import shared.SwingResources;
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * The ClientApplicationController controls application navigation and holds all the sub-controllers that control
- * their respective subviews and submodels.
+ * their respective subviews and submodels. This class also controls the music and sfx playback.
  */
 public class ClientApplicationController {
     /**
@@ -39,6 +43,34 @@ public class ClientApplicationController {
      * The setting controller.
      */
     private SettingsController settingsController;
+    /**
+     * The audio input stream for music.
+     */
+    private AudioInputStream audioMusicStream;
+    /**
+     * The audio input stream for sfx.
+     */
+    private AudioInputStream audioSfxStream;
+    /**
+     * The music clip.
+     */
+    private Clip musicClip;
+    /**
+     * The SFX clip.
+     */
+    private Clip sfxClip;
+    /**
+     * The default music file path.
+     */
+    private String defaultMusic = "res/audio/music/8-bit-arcade-mode-158814.wav";
+    /**
+     * The lobby music file path.
+     */
+    private String lobbyMusic = "res/audio/music/loading-screen-music.wav";
+    /**
+     * The game music file path.
+     */
+    private String gameMusic = "res/audio/music/gameroom-music-v2.wav";
 
     /**
      * Constructs a ClientApplicationController with a specified view.
@@ -47,6 +79,13 @@ public class ClientApplicationController {
     public ClientApplicationController(ClientApplicationView view, ClientApplicationModel model) {
         this.model = model;
         this.view = view;
+
+        try {
+            musicClip = AudioSystem.getClip();
+            sfxClip = AudioSystem.getClip();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         SwingUtilities.invokeLater(() -> {
             homeController = new HomeController(view.getHomeView(), new HomeModel(), this);
@@ -113,6 +152,52 @@ public class ClientApplicationController {
                 view.dispose();
             }
         }
+    }
+
+    /**
+     *
+     */
+    public void playDefaultMusic() {
+        try {
+            musicClip.stop();
+            audioMusicStream = AudioSystem.getAudioInputStream(new File(defaultMusic).getAbsoluteFile());
+            musicClip = AudioSystem.getClip();
+            musicClip.open(audioMusicStream);
+            musicClip.start();
+            musicClip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playLobbyMusic() {
+        try {
+            musicClip.stop();
+            audioMusicStream = AudioSystem.getAudioInputStream(new File(lobbyMusic).getAbsoluteFile());
+            musicClip = AudioSystem.getClip();
+            musicClip.open(audioMusicStream);
+            musicClip.start();
+            musicClip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void playGameMusic() {
+        try {
+            musicClip.stop();
+            audioMusicStream = AudioSystem.getAudioInputStream(new File(gameMusic).getAbsoluteFile());
+            musicClip = AudioSystem.getClip();
+            musicClip.open(audioMusicStream);
+            musicClip.start();
+            musicClip.loop(Clip.LOOP_CONTINUOUSLY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void stopMusic() {
+        musicClip.stop();
     }
 
     /**

@@ -1,5 +1,6 @@
 package client.controller.subpages;
 
+import client.controller.ClientApplicationController;
 import client.model.subpages.GameRoomModel;
 import client.model.subpages.LobbyModel;
 import client.view.ClientApplicationView;
@@ -11,12 +12,12 @@ public class LobbyController {
     private LobbyModel model;
     private LobbyView view;
 
-    private ClientApplicationView parentView;
+    private ClientApplicationController parent;
 
-    public LobbyController(LobbyModel lobbyModel, LobbyView lobbyView, ClientApplicationView clientApplicationView) {
+    public LobbyController(LobbyModel lobbyModel, LobbyView lobbyView, ClientApplicationController parent) {
         this.model = lobbyModel;
         this.view = lobbyView;
-        parentView = clientApplicationView;
+        this.parent = parent;
 
         Thread nT = new Thread(new Runnable() {
             @Override
@@ -42,10 +43,14 @@ public class LobbyController {
             }
             System.out.println("THIS IS TIMER VAL: " + timerVal);
             if (startLobby.value) {
-                parentView.showGameRoom();
-                new GameRoomController(new GameRoomModel(model.getUsername(), model.getWfImpl()), parentView.getGameRoomView());
+                parent.getView().showGameRoom();
+                parent.stopMusic();
+                parent.playGameMusic();
+                new GameRoomController(new GameRoomModel(model.getUsername(), model.getWfImpl()),
+                        parent.getView().getGameRoomView());
             } else {
-                parentView.showHome();
+                parent.getView().showHome();
+                parent.playDefaultMusic();
             }
         } catch (Exception e) {
             e.printStackTrace();

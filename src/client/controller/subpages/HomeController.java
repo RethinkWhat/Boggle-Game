@@ -6,13 +6,9 @@ import client.model.subpages.LobbyModel;
 import client.view.subpages.HomeView;
 import shared.SwingResources;
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 
 /**
  * The home controller processes user requests in joining the game, changing player profile picture, viewing
@@ -31,22 +27,6 @@ public class HomeController {
      * The model.
      */
     private HomeModel model;
-    /**
-     * The audio input stream for music.
-     */
-    private AudioInputStream audioMusicStream;
-    /**
-     * The audio input stream for sfx.
-     */
-    private AudioInputStream audioSoundStream;
-    /**
-     * The music clip.
-     */
-    private Clip musicClip;
-    /**
-     * The SFX clip.
-     */
-    private Clip sfxClip;
 
     /**
      * Constructs a HomeController with a specified view and model.
@@ -57,6 +37,8 @@ public class HomeController {
         this.view = view;
         this.model = model;
         this.parent = parent;
+
+        parent.playDefaultMusic();
 
         // action listeners
         view.setJoinListener(new JoinGameListener(parent));
@@ -91,8 +73,9 @@ public class HomeController {
                 parent.getView().showLobby();
                 parent.getView().setNavLocationText("Lobby");System.out.println("creating new lobby");
 
-                new LobbyController(new LobbyModel(parent.getModel().getUsername(), parent.getModel().getWfImpl()),
-                        parent.getView().getLobbyView(), parent.getView());
+                parent.playLobbyMusic();
+                LobbyController lobbyController = new LobbyController(new LobbyModel(parent.getModel().getUsername(), parent.getModel().getWfImpl()),
+                        parent.getView().getLobbyView(), parent);
 
                 parent.getView().getLobbyView().setExitLobbyListener(new ActionListener() {
                     @Override
@@ -100,6 +83,8 @@ public class HomeController {
 //                      parent.getModel().getWfImpl().exitGameRoom(model.getUsername());
                         parent.getView().showHome();
                         parent.getView().setNavLocationText("Home");
+                        parent.stopMusic();
+                        parent.playDefaultMusic();
                     }
                 });
 
@@ -120,22 +105,6 @@ public class HomeController {
                 }
                 */
             });
-        }
-    }
-
-    /**
-     * Initializes the music while in the home page.
-     */
-    public void initializeHomeMusic() {
-        String musicPath = "res/audio/music/8-bit-arcade-mode-158814.wav";
-        try {
-            audioMusicStream = AudioSystem.getAudioInputStream(new File(musicPath).getAbsoluteFile());
-            musicClip = AudioSystem.getClip();
-            musicClip.open(audioMusicStream);
-            musicClip.start();
-            musicClip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }
