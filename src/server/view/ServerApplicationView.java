@@ -79,8 +79,8 @@ public class ServerApplicationView extends JFrame {
         serverStatusView = new ServerStatusView();
         gameSettingsView = new GameSettingsView();
         playersView = new PlayersView();
-//        pnlCards.add( serverStatusView, "server");
-        pnlCards.add( gameSettingsView, "gamesettings");
+        pnlCards.add( serverStatusView, "server");
+//        pnlCards.add( gameSettingsView, "gamesettings");
 //        pnlCards.add( playersView, "players");
 
         cardLayout.show(pnlCards, "server");

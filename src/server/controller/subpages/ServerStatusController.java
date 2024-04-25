@@ -20,34 +20,9 @@ public class ServerStatusController {
     private ServerStatusView view;
     private ServerStatusModel  model;
 
-    private Server server = new Server();
-
-    private String[] args = {"-ORBINITIALHOST", "localhost", "-ORBINITIALPORT", "5000"};
-
     public ServerStatusController(ServerStatusView view, ServerStatusModel model) {
         this.view = view;
         this.model = model;
 
-        view.setServerListener(new ServerSwitchListener());
     }
-
-    class ServerSwitchListener implements ActionListener{
-
-
-        @Override
-        public void actionPerformed(ActionEvent e) {
-
-            if (view.getServerStatus().getText().equals("OFFLINE")){
-                try {
-                    view.setOnline();
-                    server.run(args);
-                }catch (Exception serverError){
-                    view.setOffline();
-                    server.stop();
-                }
-
-            }
-        }
-    }
-
 }
