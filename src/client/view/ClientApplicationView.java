@@ -249,6 +249,9 @@ public class ClientApplicationView extends JFrame {
     public void showLobby() {
         SwingUtilities.invokeLater(() -> cardLayout.show(pnlCards, "lobby"));
     }
+    public void showSettings(){
+        cardLayout.show(pnlCards,"settings");
+    }
 
     /**
      * Shows the HomeView through the card layout.
@@ -266,5 +269,8 @@ public class ClientApplicationView extends JFrame {
 
     public static void main(String[] args) {
         new ClientApplicationView();
+    }
+    public void setNavLocationText(String text) {
+        lblNavLocation.setText(text);
     }
 }
