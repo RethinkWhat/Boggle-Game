@@ -38,11 +38,14 @@ public class ServerStatusController {
         public void actionPerformed(ActionEvent e) {
 
             if (view.getServerStatus().getText().equals("OFFLINE")){
-                view.setOnline();
-                server.run(args);
-            }else {
-                view.setOffline();
-                server.stop();
+                try {
+                    view.setOnline();
+                    server.run(args);
+                }catch (Exception serverError){
+                    view.setOffline();
+                    server.stop();
+                }
+
             }
         }
     }
