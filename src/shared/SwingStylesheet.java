@@ -114,14 +114,6 @@ public class SwingStylesheet {
      */
     public final ImageIcon iconAdd = new ImageIcon("res/drawable/icons/add-blue-solid.png");
     /**
-     * The account management icon.
-     */
-    public final ImageIcon iconAccMan = new ImageIcon("res/drawable/icons/profile-white-solid.png");
-    /**
-     * The music/audio icon.
-     */
-    public final ImageIcon iconMusic = new ImageIcon("res/drawable/icons/audio-white-solid.png");
-    /**
      * The players icon.
      */
     public final ImageIcon iconPlayers = new ImageIcon("res/drawable/icons/players-white-solid.png");
