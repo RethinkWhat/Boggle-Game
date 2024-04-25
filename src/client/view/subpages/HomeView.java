@@ -83,10 +83,11 @@ public class HomeView extends JPanel {
             lblLeaderboard.setHorizontalAlignment(SwingConstants.CENTER);
             pnlHeader.add(lblLeaderboard);
 
-            JPanel container = style.createPnlRounded(550,520,style.white, style.deepSkyBlue);
+            JPanel container = style.createPnlRounded(550,500,style.white, style.deepSkyBlue);
             container.setBorder(style.padding);
             container.setBounds(0,20,550,500);
             container.setBackground(style.deepSkyBlue);
+            container.setLayout(new BorderLayout());
             layeredPane.add(container, new Integer(0));
 
             pnlLeaderboard = new LeaderboardPanel();
@@ -94,6 +95,7 @@ public class HomeView extends JPanel {
             JScrollPane scrollPane = new JScrollPane(pnlLeaderboard);
             scrollPane.setBorder(BorderFactory.createEmptyBorder());
             scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            scrollPane.setPreferredSize(new Dimension(500,500));
             container.add(scrollPane, BorderLayout.CENTER);
 
             this.setPreferredSize(new Dimension(550,500));
@@ -146,11 +148,13 @@ public class HomeView extends JPanel {
          */
         public LeaderboardPanel() {
             this.setBackground(style.white);
-            this.setLayout(new FlowLayout(FlowLayout.LEFT, 200,20));
+            this.setBorder(new EmptyBorder(0,0,0,0));
+            this.setLayout(new FlowLayout(FlowLayout.CENTER, 1000,10));
 
             add(new PlayerLeaderboardPanel("res/drawable/images/pfp-male-1.png", "monem", 100));
+            add(new PlayerLeaderboardPanel("res/drawable/images/pfp-male-1.png", "monem", 100));
 
-            this.setPreferredSize(new Dimension(550,1000));
+            this.setPreferredSize(new Dimension(480,1000));
         }
     }
 
@@ -171,8 +175,18 @@ public class HomeView extends JPanel {
             lblUsername.setHorizontalAlignment(SwingConstants.CENTER);
             add(lblUsername);
 
+            JPanel pnlEditPfp = new JPanel(new FlowLayout(FlowLayout.CENTER, 10,0));
+            pnlEditPfp.setBackground(style.white);
+            pnlEditPfp.setPreferredSize(new Dimension(690, 120));
+            add(pnlEditPfp);
+
             lblPlayerPfp = style.createLblIconOnly(style.iconPfpMale1, 120,120);
-            add(lblPlayerPfp);
+            pnlEditPfp.add(lblPlayerPfp);
+
+            btnEditPfp = style.createBtnIconOnly(style.iconEdit, 25,25);
+            btnEditPfp.setVerticalAlignment(SwingConstants.TOP);
+            btnEditPfp.setHorizontalAlignment(SwingConstants.LEFT);
+            pnlEditPfp.add(btnEditPfp);
 
             btnJoinGame = style.createBtnRounded("JOIN GAME", style.deepSkyBlue, style.black, 10);
             btnJoinGame.setPreferredSize(new Dimension(420,70));
@@ -196,26 +210,30 @@ public class HomeView extends JPanel {
         public PlayerLeaderboardPanel(String pfpURL, String username, int totalPoints) {
             this.setBackground(style.white);
             this.setBorder(style.padding);
-            this.setLayout(new BorderLayout());
+            this.setLayout(new GridBagLayout());
+
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.weightx = 10;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.gridwidth = 1;
 
             ImageIcon iconPfp = new ImageIcon(pfpURL);
 
+            gbc.gridx = 0;
+            gbc.gridy = 0;
             JLabel lblPlayerPfp = style.createLblIconOnly(iconPfp, 60,60);
-            add(lblPlayerPfp, BorderLayout.WEST);
+            add(lblPlayerPfp, gbc);
 
-            JPanel pnlPlayerInfo = new JPanel();
-            pnlPlayerInfo.setBackground(style.white);
-            pnlPlayerInfo.setLayout(new FlowLayout(FlowLayout.LEFT, 500,10));
-            pnlPlayerInfo.setPreferredSize(new Dimension(440,80));
-            add(pnlPlayerInfo, BorderLayout.EAST);
+            gbc.weightx = 20;
+            gbc.gridx = 1;
+            gbc.gridwidth = 3;
+            gbc.anchor = GridBagConstraints.WEST;
+            JLabel lblUsername = style.createLblH3("<html>" + username +"<br>" + totalPoints + " pts" + "</html>",
+                    style.deepSkyBlue);
+            add(lblUsername, gbc);
 
-            JLabel lblUsername = style.createLblH2(username, style.deepSkyBlue);
-            pnlPlayerInfo.add(lblUsername);
-
-            JLabel lblPoints = style.createLblH3((totalPoints) + " PTS", style.deepSkyBlue);
-            pnlPlayerInfo.add(lblPoints);
-
-            this.setPreferredSize(new Dimension(500,80));
+            this.setPreferredSize(new Dimension(400,80));
         }
     }
 
@@ -268,6 +286,14 @@ public class HomeView extends JPanel {
     }
 
     /**
+     * Sets a specified action listener for btnTutorial.
+     * @param actionListener The specified action listener.
+     */
+    public void setTutorialListener(ActionListener actionListener) {
+        btnTutorial.addActionListener(actionListener);
+    }
+
+    /**
      * Sets a specified action listener for btnEditPfp.
      * @param actionListener The specified action listener.
      */
@@ -281,5 +307,15 @@ public class HomeView extends JPanel {
      */
     public void setUsername(String username) {
         lblUsername.setText(username);
+    }
+
+    /**
+     * Adds a specified player in the global leaderboard panel (pnlLeaderboard).
+     * @param username The specified player username.
+     * @param pfpURL The specified player profile picture URL.
+     * @param totalPoints The specified total points.
+     */
+    public void addPlayerInLeaderboard(String username, String pfpURL, int totalPoints) {
+        pnlLeaderboard.add(new PlayerLeaderboardPanel(pfpURL, username, totalPoints));
     }
 }
