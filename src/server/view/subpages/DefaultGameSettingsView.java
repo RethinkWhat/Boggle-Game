@@ -48,7 +48,7 @@ public class DefaultGameSettingsView extends JPanel {
     // holds the dropdown boxes and edit button
     class Panel extends JPanel {
         public Panel() {
-            this.setBackground(style.lightYellow);
+            this.setBackground(style.white);
             this.setLayout(new GridBagLayout());
             this.setOpaque(false);
 

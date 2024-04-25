@@ -19,7 +19,6 @@ public class GameTimer implements Runnable {
     public void run() {
         while(toEdit > 0L) {
             try {
-                System.out.println(toEdit);
                 Thread.sleep(1000L);
                 toEdit -= 1000L;
             } catch (Exception var2) {

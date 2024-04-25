@@ -5,6 +5,7 @@ import shared.SwingStylesheet;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * The GameRoomView contains the game elements where the main game takes place.
@@ -14,6 +15,10 @@ public class GameRoomView extends JPanel {
      * The round number.
      */
     private int roundNumber = 1;
+    /**
+     * The round duration.
+     */
+    private int roundDuration = 30;
     /**
      * The round number.
      */
@@ -39,22 +44,17 @@ public class GameRoomView extends JPanel {
      */
     private JTextField txtWordInput;
     /**
-     * The chat input text field.
+     * The clear input button for txtWordInput.
      */
-    private JTextField txtChatInput;
+    private JButton btnClear;
     /**
      * The text area containing the player input.
      */
-    private JTextArea txaPlayerInputs;
-    /**
-     * The text area containing the player chat.
-     */
-    private JTextArea txaPlayerChat;
+    private JEditorPane edtPlayerInputs;
     /**
      * The LeaderBoard panel containing the players' ranks.
      */
     private LeaderboardPanel pnlLeaderboard;
-
     /**
      * The stylesheet.
      */
@@ -112,9 +112,16 @@ public class GameRoomView extends JPanel {
             container.setBackground(style.deepSkyBlue);
             layeredPane.add(container, new Integer(0));
 
+            pnlLeaderboard = new LeaderboardPanel();
+            pnlLeaderboard.add(new PlayerPanel("res/drawable/images/pfp-male-1.png", "asdwerfteq", 100));
+            pnlLeaderboard.add(new PlayerPanel("res/drawable/images/pfp-male-1.png", "gfgfewgwegewg", 100));
+            pnlLeaderboard.add(new PlayerPanel("res/drawable/images/pfp-male-1.png", "monfabdgaaem", 100));
+            pnlLeaderboard.add(new PlayerPanel("res/drawable/images/pfp-male-1.png", "mosdgg2gadf", 100));
+
             JScrollPane scrollPane = new JScrollPane(pnlLeaderboard);
             scrollPane.setBorder(BorderFactory.createEmptyBorder());
             scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            scrollPane.setPreferredSize(new Dimension(380,640));
             container.add(scrollPane, BorderLayout.CENTER);
 
             this.setPreferredSize(new Dimension(400,750));
@@ -129,7 +136,11 @@ public class GameRoomView extends JPanel {
          * Constructs a panel of LeaderboardPanel.
          */
         public LeaderboardPanel() {
+            this.setBackground(style.white);
+            this.setBorder(style.padding);
+            this.setLayout(new FlowLayout(FlowLayout.CENTER, 300,5));
 
+            this.setPreferredSize(new Dimension(360,1200));
         }
     }
 
@@ -140,8 +151,34 @@ public class GameRoomView extends JPanel {
         /**
          * Constructs a panel of PlayerPanel.
          */
-        public PlayerPanel() {
+        public PlayerPanel(String pfpURL, String username, int points) {
+            this.setBackground(style.white);
+            this.setBorder(style.padding);
+            this.setLayout(new GridBagLayout());
 
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.weightx = 60;
+            gbc.fill = GridBagConstraints.HORIZONTAL;
+            gbc.anchor = GridBagConstraints.WEST;
+            gbc.gridwidth = 1;
+
+            ImageIcon iconPfp = new ImageIcon(pfpURL);
+
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            JLabel lblPlayerPfp = style.createLblIconOnly(iconPfp, 60,60);
+            add(lblPlayerPfp, gbc);
+
+            gbc.weightx = 100;
+            gbc.gridx = 1;
+            gbc.gridwidth = 3;
+            gbc.anchor = GridBagConstraints.WEST;
+            JLabel lblUsername = style.createLblH3("<html>" + username +"<br>" + points + " pts" + "</html>",
+                    style.deepSkyBlue);
+            lblUsername.setHorizontalAlignment(SwingConstants.LEFT);
+            add(lblUsername, gbc);
+
+            this.setPreferredSize(new Dimension(360,100));
         }
     }
 
@@ -233,7 +270,7 @@ public class GameRoomView extends JPanel {
         public LetterPanel(String letter) {
             this.setBackground(style.white);
 
-            JPanel pnlLetter = style.createPnlRounded(80,80,style.deepSkyBlue,style.white);
+            JPanel pnlLetter = style.createPnlRounded(70,80,style.deepSkyBlue,style.white);
             add(pnlLetter);
 
             JLabel lblLetter = style.createLblH1(letter, style.white);
@@ -256,21 +293,30 @@ public class GameRoomView extends JPanel {
          */
         public TimerPanel() {
             this.setBackground(style.white);
+            this.setLayout(new FlowLayout(FlowLayout.CENTER, -6,0));
 
-            JPanel pnlTimer = style.createPnlRounded(100,100,style.deepSkyBlue, style.white);
+            JPanel pnlTimer = style.createPnlRounded(160,80,style.deepSkyBlue, style.white);
             pnlTimer.setBorder(style.padding);
             pnlTimer.setLayout(new BorderLayout());
             add(pnlTimer);
 
-            JPanel pnlProgressBar = style.createPnlRounded(600,40,style.deepSkyBlue,style.white);
-            pnlProgressBar.setPreferredSize(new Dimension(610,40));
+            lblTimer = style.createLblH1(roundDuration + "s", style.white);
+            lblTimer.setIcon(style.iconRoundTimer);
+            lblTimer.setVerticalAlignment(SwingConstants.CENTER);
+            lblTimer.setHorizontalAlignment(SwingConstants.CENTER);
+            pnlTimer.add(lblTimer, BorderLayout.CENTER);
+
+            JPanel pnlProgressBar = style.createPnlRounded(560,40,style.deepSkyBlue,style.white);
+            pnlProgressBar.setPreferredSize(new Dimension(560,40));
             add(pnlProgressBar);
 
-            prgTimer = new JProgressBar(0,800);
+            prgTimer = new JProgressBar(0,100);
+            prgTimer.setBackground(style.goldenTainoi);
             prgTimer.setStringPainted(true);
             prgTimer.setBorderPainted(false);
+            prgTimer.setValue(100);
             prgTimer.setUI(new SwingStylesheet.FancyProgressBar());
-            prgTimer.setPreferredSize(new Dimension(600,30));
+            prgTimer.setPreferredSize(new Dimension(550,30));
             pnlProgressBar.add(prgTimer);
 
             this.setPreferredSize(new Dimension(900, 100));
@@ -308,7 +354,192 @@ public class GameRoomView extends JPanel {
             container.setBackground(style.deepSkyBlue);
             layeredPane.add(container, new Integer(0));
 
+            container.add(new InputPanel());
+
             this.setPreferredSize(new Dimension(900,350));
         }
+    }
+
+    /**
+     * Holds the text field and text area.
+     */
+    class InputPanel extends JPanel {
+        /**
+         * Constructs a panel of InputPanel.
+         */
+        public InputPanel() {
+            this.setBackground(style.white);
+            this.setLayout(new BorderLayout());
+            this.setBorder(style.padding);
+
+            edtPlayerInputs = new JEditorPane();
+            edtPlayerInputs.setEditable(false);
+            edtPlayerInputs.setContentType("text/html");
+            edtPlayerInputs.setFont(style.bowlbyOne.deriveFont(12f));
+            edtPlayerInputs.setBackground(style.white);
+            edtPlayerInputs.setBorder(style.padding);
+            edtPlayerInputs.setPreferredSize(new Dimension(800,500));
+
+            edtPlayerInputs.setText("Monem: Hello \n Monem: Hello \n Monem: Hello \n Monem: Hello \n");
+
+            JScrollPane scrollPane = new JScrollPane(edtPlayerInputs);
+            scrollPane.setBorder(BorderFactory.createEmptyBorder());
+            scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+            scrollPane.setPreferredSize(new Dimension(800,100));
+            scrollPane.setMinimumSize(new Dimension(800,100));
+            add(scrollPane, BorderLayout.CENTER);
+
+            JPanel pnlButtons = new JPanel(new FlowLayout(FlowLayout.CENTER, 10,0));
+            pnlButtons.setBackground(style.white);
+            pnlButtons.setPreferredSize(new Dimension(900,60));
+            add(pnlButtons, BorderLayout.SOUTH);
+
+            txtWordInput = style.createTxtRounded("Enter word here.", style.lightGray, style.gray, 20);
+            txtWordInput.setPreferredSize(new Dimension(800,40));
+            pnlButtons.add(txtWordInput);
+
+            btnClear = style.createBtnIconOnly(style.iconClear, 30,30);
+            pnlButtons.add(btnClear);
+
+            this.setPreferredSize(new Dimension(900,150));
+        }
+    }
+
+    /**
+     * Retrieves the current round number.
+     * @return The current round number.
+     */
+    public int getRoundNumber() {
+        return roundNumber;
+    }
+
+    /**
+     * Retrieves the current round duration.
+     * @return The current round duration.
+     */
+    public int getRoundDuration() {
+        return roundDuration;
+    }
+
+    /**
+     * Retrieves the current JLabel of lblRoundNumber.
+     * @return The current lblRoundNumber.
+     */
+    public JLabel getLblRoundNumber() {
+        return lblRoundNumber;
+    }
+
+    /**
+     * Retrieves the current JButton of btnMusicToggle.
+     * @return The current btnMusicToggle.
+     */
+    public JButton getBtnMusicToggle() {
+        return btnMusicToggle;
+    }
+
+    /**
+     * Retrieves the current JButton of btnSoundToggle.
+     * @return The current btnSoundToggle.
+     */
+    public JButton getBtnSoundToggle() {
+        return btnSoundToggle;
+    }
+
+    /**
+     * Retrieves the current JLabel of lblTimer.
+     * @return The current lblTimer.
+     */
+    public JLabel getLblTimer() {
+        return lblTimer;
+    }
+
+    /**
+     * Retrieves the current JProgressBar of prgTimer.
+     * @return The current prgTimer.
+     */
+    public JProgressBar getPrgTimer() {
+        return prgTimer;
+    }
+
+    /**
+     * Retrieves the current JTextField of txtWordInput.
+     * @return The current txtWordInput.
+     */
+    public JTextField getTxtWordInput() {
+        return txtWordInput;
+    }
+
+    /**
+     * Retrieves the current JButton of btnClear.
+     * @return The current btnClear.
+     */
+    public JButton getBtnClear() {
+        return btnClear;
+    }
+
+    /**
+     * Retrieves the current LeaderboardPanel of pnlLeaderboard.
+     * @return The current pnlLeaderboard.
+     */
+    public LeaderboardPanel getPnlLeaderboard() {
+        return pnlLeaderboard;
+    }
+
+    /**
+     * Sets a new round number.
+     * @param roundNumber The new round number.
+     */
+    public void setRoundNumber(int roundNumber) {
+        this.roundNumber = roundNumber;
+    }
+
+    /**
+     * Sets a new round duration.
+     * @param roundDuration The new round duration.
+     */
+    public void setRoundDuration(int roundDuration) {
+        this.roundDuration = roundDuration;
+    }
+
+    /**
+     * Sets a specified action listener for btnMusicToggle.
+     * @param actionListener The specified action listener.
+     */
+    public void setMusicToggleListener(ActionListener actionListener) {
+        btnMusicToggle.addActionListener(actionListener);
+    }
+
+    /**
+     * Sets a specified action listener for btnSoundToggle.
+     * @param actionListener The specified action listener.
+     */
+    public void setSoundToggleListener(ActionListener actionListener) {
+        btnSoundToggle.addActionListener(actionListener);
+    }
+
+    /**
+     * Sets a specified max value for prgTimer as a starting point for the progress bar decrement.
+     * @param maxValue The specified maxValue.
+     */
+    public void setPrgTimerMaxValue(int maxValue) {
+        prgTimer.setMaximum(maxValue);
+    }
+
+    /**
+     * Sets a specified action listener for btnClear.
+     * @param actionListener The specified action listener.
+     */
+    public void setClearListener(ActionListener actionListener) {
+        btnClear.addActionListener(actionListener);
+    }
+
+    /**
+     * Adds a specified player in the game leaderboard.
+     * @param username The specified player username.
+     * @param pfpURL The specified player profile picture URL.
+     * @param points The specified player points accumulated from the previous rounds.
+     */
+    public void addPlayerInLeaderboard(String username, String pfpURL, int points) {
+        pnlLeaderboard.add(new PlayerPanel(pfpURL, username, points));
     }
 }

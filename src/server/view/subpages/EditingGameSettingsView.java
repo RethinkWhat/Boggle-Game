@@ -61,16 +61,16 @@ public class EditingGameSettingsView extends JPanel {
             gbc.anchor = GridBagConstraints.LINE_START;
             gbc.gridy++;
             gbc.gridwidth = 1;
-            gameDurationLabel = style.createLblH3("Game Duration", style.black);
+            gameDurationLabel = style.createLblP("Game Duration", style.black);
             gbc.gridx = 0;
             this.add(gameDurationLabel, gbc);
 
             gbc.gridx = 1;
-            waitingDurationLabel = style.createLblH3("Waiting Duration", style.black);
+            waitingDurationLabel = style.createLblP("Waiting Duration", style.black);
             this.add(waitingDurationLabel, gbc);
 
             gbc.gridx = 2;
-            numberOfPlayersLabel = style.createLblH3("Number of Players", style.black);
+            numberOfPlayersLabel = style.createLblP("Number of Players", style.black);
             this.add(numberOfPlayersLabel, gbc);
 
             gbc.insets = new Insets(10, 10, 10, 10);
