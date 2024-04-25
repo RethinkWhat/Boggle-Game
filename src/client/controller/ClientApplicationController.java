@@ -90,7 +90,7 @@ public class ClientApplicationController {
     }
 
     public void initializeMusic() {
-        String musicPath = "res/audio/music/lobby-music-v2.wav";
+        String musicPath = "res/audio/music/8-bit-arcade-mode-158814.wav";
         try {
             audioMusicStream = AudioSystem.getAudioInputStream(new File(musicPath).getAbsoluteFile());
             Clip clip = AudioSystem.getClip();
