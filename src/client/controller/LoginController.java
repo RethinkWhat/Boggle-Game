@@ -75,6 +75,7 @@ public class LoginController {
                         view.setErrorMessage("Wrong credentials. Try again.");
                         view.getTxtPassword().setText("Password");
                         view.getTxtPassword().setEchoChar((char) 0);
+                        view.getChkShowPassword().setSelected(false);
                     });
                 }
             } catch (SQLException sqle){
