@@ -28,7 +28,7 @@ public class GameRoomController {
                     System.out.println(inSeconds);
                     while (inSeconds >= 0) {
                         Thread.sleep(1000);
-                        view.setLblTimerTxt(inSeconds);
+                        // view.setLblTimerTxt(inSeconds);
                         inSeconds -= 1;
                         System.out.println(inSeconds);
                     }

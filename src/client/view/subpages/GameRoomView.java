@@ -33,10 +33,6 @@ public class GameRoomView extends JPanel {
      */
     private JButton btnSoundToggle;
     /**
-     * The timer.
-     */
-    private JLabel lblTimer;
-    /**
      * The progressbar for the timer.
      */
     private JProgressBar prgTimer;
@@ -72,14 +68,14 @@ public class GameRoomView extends JPanel {
     public GameRoomView() {
         this.setBackground(style.deepSkyBlue);
         this.setBorder(style.padding);
-        this.setLayout(new BorderLayout(0,0));
+        this.setLayout(new BorderLayout(0, 0));
 
         pnlLeft = new LeftPanel();
         add(pnlLeft, BorderLayout.WEST);
 
         pnlRight = new JPanel();
         pnlRight.setLayout(new BorderLayout());
-        pnlRight.setPreferredSize(new Dimension(800,750));
+        pnlRight.setPreferredSize(new Dimension(800, 750));
         add(pnlRight, BorderLayout.EAST);
 
         pnlTopRight = new TopRightPanel();
@@ -87,7 +83,7 @@ public class GameRoomView extends JPanel {
         pnlRight.add(pnlTopRight, BorderLayout.NORTH);
         pnlRight.add(pnlBottomRight, BorderLayout.SOUTH);
 
-        this.setPreferredSize(new Dimension(1300,750));
+        this.setPreferredSize(new Dimension(1300, 750));
     }
 
     /**
