@@ -3,6 +3,7 @@ package client.view.subpages;
 import shared.SwingStylesheet;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -18,10 +19,6 @@ public class LobbyView extends JPanel {
      * The exit lobby button.
      */
     private JButton btnExitLobby;
-    /**
-     * The panel containing the users joined.
-     */
-    private UsersPanel pnlUsers;
     /**
      * Panel holding the players.
      */
@@ -42,7 +39,6 @@ public class LobbyView extends JPanel {
         CenterPanel pnlCenter = new CenterPanel();
 
         add(pnlCenter, BorderLayout.CENTER);
-
     }
 
     /**
@@ -63,7 +59,7 @@ public class LobbyView extends JPanel {
 
             JPanel pnlHeader = style.createPnlRounded(200,45,style.goldenTainoi, style.white);
             pnlHeader.setBackground(style.white);
-            pnlHeader.setBounds(540,10,200,45);
+            pnlHeader.setBounds(540,18,200,45);
             layeredPane.add(pnlHeader, new Integer(0));
 
             JLabel lblLobby = style.createLblH2("LOBBY",style.white);
@@ -72,7 +68,7 @@ public class LobbyView extends JPanel {
             pnlHeader.add(lblLobby);
 
             JPanel container = style.createPnlRounded(1000,620,style.white, style.deepSkyBlue);
-            container.setBorder(style.padding);
+            container.setBorder(new EmptyBorder(30,10,10,10));
             container.setBounds(140,40,1000,620);
             container.setBackground(style.deepSkyBlue);
             container.setLayout(new BorderLayout(10,10));
@@ -101,7 +97,7 @@ public class LobbyView extends JPanel {
             add(pnlTimer, BorderLayout.SOUTH);
 
 
-            lblTimer = style.createLblP("00:10", style.white);
+            lblTimer = style.createLblP("10" + "s", style.white);
             lblTimer.setIcon(style.iconTimerWhite);
             lblTimer.setVerticalTextPosition(SwingConstants.CENTER);
             pnlTimer.add(lblTimer);
@@ -120,10 +116,22 @@ public class LobbyView extends JPanel {
             setBackground(style.white);
             setLayout(new BorderLayout());
 
-            pnlPlayerContainer = new JPanel(new FlowLayout(FlowLayout.LEFT, 50,30));
+            pnlPlayerContainer = new JPanel(new FlowLayout(FlowLayout.LEFT, 10,10));
             pnlPlayerContainer.setBackground(style.white);
             pnlPlayerContainer.setBorder(style.padding);
             pnlPlayerContainer.setPreferredSize(new Dimension(1100,920));
+
+            pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
+            pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
+            pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
+            pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
+            pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
+            pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
+            pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
+            pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
+            pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
+            pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
+
 
             JScrollPane scroll = new JScrollPane(pnlPlayerContainer);
             scroll.setBorder(BorderFactory.createEmptyBorder());
@@ -132,6 +140,41 @@ public class LobbyView extends JPanel {
             add(scroll, BorderLayout.CENTER);
 
             setPreferredSize(new Dimension(1300,500));
+        }
+    }
+
+    /**
+     * Holds the player profile picture and username.
+     */
+    public class UserPanel extends JPanel{
+        /**
+         * Constructs a panel of UserPanel.
+         */
+        public UserPanel(String pfpURL, String username) {
+            this.setBackground(style.white);
+            this.setBorder(style.padding);
+            this.setLayout(new GridBagLayout());
+
+            GridBagConstraints gbc = new GridBagConstraints();
+            gbc.fill = GridBagConstraints.BOTH;
+            gbc.anchor = GridBagConstraints.CENTER;
+            gbc.gridwidth = 1;
+
+            ImageIcon iconPfp = new ImageIcon(pfpURL);
+
+            gbc.gridx = 0;
+            gbc.gridy = 0;
+            gbc.weightx = 200;
+            JLabel lblUsername = style.createLblH4(username, style.deepSkyBlue);
+            lblUsername.setHorizontalAlignment(SwingConstants.CENTER);
+            lblUsername.setHorizontalTextPosition(SwingConstants.CENTER);
+            add(lblUsername, gbc);
+
+            gbc.gridy = 1;
+            JLabel lblPlayerPfp = style.createLblIconOnly(iconPfp, 120,120);
+            add(lblPlayerPfp, gbc);
+
+            this.setPreferredSize(new Dimension(180,180));
         }
     }
 
@@ -173,6 +216,15 @@ public class LobbyView extends JPanel {
      * @param lblTimer The specified lblTimer.
      */
     public void setLblTimerTxt(String lblTimer) {
-        this.lblTimer.setText(lblTimer);
+        SwingUtilities.invokeLater(() -> this.lblTimer.setText(lblTimer + "s"));
+    }
+
+    /**
+     * Adds a specified player in UsersPanel.
+     * @param username The specified player username.
+     * @param pfpURL The specified player profile picture URL.
+     */
+    public void addPlayerInUserPanel(String username, String pfpURL) {
+        SwingUtilities.invokeLater(() -> pnlPlayerContainer.add(new UserPanel(username, pfpURL)));
     }
 }

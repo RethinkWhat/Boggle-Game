@@ -83,7 +83,7 @@ public class ClientApplicationView extends JFrame {
 
         pnlCards.add( homeView, "home");
         pnlCards.add( lobbyView, "lobby");
-        pnlCards.add( howToPlayView, "howToPlay");
+        pnlCards.add( howToPlayView, "tutorial");
         pnlCards.add( gameRoomView, "gameroom");
         pnlCards.add( settingsView, "settings");
 
@@ -247,21 +247,21 @@ public class ClientApplicationView extends JFrame {
      * Shows the LobbyView through the card layout.
      */
     public void showLobby() {
-        cardLayout.show(pnlCards, "lobby");
+        SwingUtilities.invokeLater(() -> cardLayout.show(pnlCards, "lobby"));
     }
 
     /**
      * Shows the HomeView through the card layout.
      */
     public void showHome() {
-        cardLayout.show(pnlCards, "home");
+        SwingUtilities.invokeLater(() -> cardLayout.show(pnlCards, "home"));
     }
 
     /**
      * Shows the GameRoomView through the card layout.
      */
     public void showGameRoom() {
-        cardLayout.show(pnlCards, "gameroom");
+        SwingUtilities.invokeLater(() -> cardLayout.show(pnlCards, "gameroom"));
     }
 
     public static void main(String[] args) {
