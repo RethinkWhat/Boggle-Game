@@ -244,4 +244,19 @@ public class DataPB {
 
         return false;
     }
+
+    public void updatePoints(int gameID, int roundID, int roundNumber, String username, int newPoints) {
+        String query = "UPDATE round_details SET points = ? WHERE gameID = ? AND roundID = ? AND roundNumber = ? AND username = ?";
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, newPoints);
+            ps.setInt(2, gameID);
+            ps.setInt(3, roundID);
+            ps.setInt(4, roundNumber);
+            ps.setString(5, username);
+
+            ps.executeUpdate();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+    }
 }
