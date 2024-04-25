@@ -66,7 +66,7 @@ public class LoginController {
         public void actionPerformed(ActionEvent e) {
             String username = view.getTxtUsername().getText();
             try {
-                if (model.validateAccount(view.getTxtUsername().getText(), Arrays.toString(view.getTxtPassword().getPassword()))){
+                if (model.validateAccount(view.getTxtUsername().getText(), view.getTxtPassword().getText())) {
                     SwingUtilities.invokeLater(() -> new ClientApplicationController(new ClientApplicationView(),
                             new ClientApplicationModel(username, model.getWfImpl())));
                     view.dispose();
