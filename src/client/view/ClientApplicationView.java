@@ -87,7 +87,7 @@ public class ClientApplicationView extends JFrame {
         pnlCards.add( gameRoomView, "gameroom");
         pnlCards.add( settingsView, "settings");
 
-        cardLayout.show(pnlCards, "home");
+        cardLayout.show(pnlCards, "settings");
 
         this.setContentPane(contentArea);
         this.pack();
