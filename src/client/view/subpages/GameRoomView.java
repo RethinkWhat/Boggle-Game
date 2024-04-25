@@ -14,6 +14,7 @@ public class GameRoomView extends JPanel {
     /**
      * The round number.
      */
+    private JLabel lblTimer;
     private int roundNumber = 1;
     /**
      * The round duration.
@@ -60,6 +61,11 @@ public class GameRoomView extends JPanel {
      */
     private SwingStylesheet style = new SwingStylesheet();
 
+    private LeftPanel pnlLeft;
+    private JPanel pnlRight;
+    private TopRightPanel pnlTopRight;
+    private BottomRightPanel pnlBottomRight;
+
     /**
      * Constructs a panel of GameRoomView.
      */
@@ -68,15 +74,18 @@ public class GameRoomView extends JPanel {
         this.setBorder(style.padding);
         this.setLayout(new BorderLayout(0,0));
 
-        add(new LeftPanel(), BorderLayout.WEST);
+        pnlLeft = new LeftPanel();
+        add(pnlLeft, BorderLayout.WEST);
 
-        JPanel pnlRight = new JPanel();
+        pnlRight = new JPanel();
         pnlRight.setLayout(new BorderLayout());
         pnlRight.setPreferredSize(new Dimension(800,750));
         add(pnlRight, BorderLayout.EAST);
 
-        pnlRight.add(new TopRightPanel(), BorderLayout.NORTH);
-        pnlRight.add(new BottomRightPanel(), BorderLayout.SOUTH);
+        pnlTopRight = new TopRightPanel();
+        pnlBottomRight = new BottomRightPanel();
+        pnlRight.add(pnlTopRight, BorderLayout.NORTH);
+        pnlRight.add(pnlBottomRight, BorderLayout.SOUTH);
 
         this.setPreferredSize(new Dimension(1300,750));
     }
@@ -453,13 +462,7 @@ public class GameRoomView extends JPanel {
         return btnSoundToggle;
     }
 
-    /**
-     * Retrieves the current JLabel of lblTimer.
-     * @return The current lblTimer.
-     */
-    public JLabel getLblTimer() {
-        return lblTimer;
-    }
+
 
     /**
      * Retrieves the current JProgressBar of prgTimer.
@@ -568,23 +571,22 @@ public class GameRoomView extends JPanel {
         SwingUtilities.invokeLater(() -> txaPlayerInputs.append(username + ": " + input + "\n"));
     }
 
-    /**
-     * Sets a specified icon to btnMusic.
-     * @param icon The specified icon.
-     */
-    public void setBtnMusicIcon(ImageIcon icon) {
-        Image scaledImage = icon.getImage().getScaledInstance(25,25,Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-        SwingUtilities.invokeLater(() -> btnMusicToggle.setIcon(scaledIcon));
+    public JPanel getPnlRight() {
+        return pnlRight;
+    }
+    public TopRightPanel getPnlTopRight() {
+        return pnlTopRight;
     }
 
-    /**
-     * Sets a specified icon to btnSound.
-     * @param icon The specified icon.
-     */
-    public void setBtnSoundIcon(ImageIcon icon) {
-        Image scaledImage = icon.getImage().getScaledInstance(25,25,Image.SCALE_SMOOTH);
-        ImageIcon scaledIcon = new ImageIcon(scaledImage);
-        SwingUtilities.invokeLater(() -> btnSoundToggle.setIcon(scaledIcon));
+    public void setPnlTopRight(TopRightPanel pnlTopRight) {
+        this.pnlTopRight = pnlTopRight;
+    }
+
+    public BottomRightPanel getPnlBottomRight() {
+        return pnlBottomRight;
+    }
+
+    public void setPnlBottomRight(BottomRightPanel pnlBottomRight) {
+        this.pnlBottomRight = pnlBottomRight;
     }
 }

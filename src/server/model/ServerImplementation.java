@@ -86,6 +86,9 @@ public class ServerImplementation extends BoggleClientPOA {
         return 0;
     }
 
+    //TODO: Store the wordList of each user for the finished round in the game
+    //TODO: Compare the word lists. Considering the length of the words and the same words entered among players
+    //TODO: Call the DataPB.updatePoints() method and update the points of user for round
     @Override
     public String getRoundWinner(String username, int gameID, int roundID, String wordsEntered) {
         return null;
