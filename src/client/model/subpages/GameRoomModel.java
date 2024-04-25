@@ -40,11 +40,14 @@ public class GameRoomModel {
         int roundNumber = rnHolder.value;
         roundIDRoundNo.put(roundID, roundNumber);
 
+        String vowels = vHolder.value;
+        String cons = cHolder.value;
+
         for (int x =0; x<vHolder.value.length(); x++) {
-            vowelSet[x] = vHolder.value.charAt(x);
+            vowelSet[x] = vowels.charAt(x);
         }
         for (int x = 0; x <cHolder.value.length(); x++) {
-            consonantSet[x] = cHolder.value.charAt(x);
+            consonantSet[x] = cons.charAt(x);
         }
     }
 

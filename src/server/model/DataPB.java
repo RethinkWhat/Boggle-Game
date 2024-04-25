@@ -2,6 +2,7 @@ package server.model;
 
 import org.omg.CORBA.ORB;
 
+import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 
 public class DataPB {
@@ -40,13 +41,16 @@ public class DataPB {
 
     public static int createRound(String vowelSet, String consonantSet) {
         try {
-            String stmt = "INSERT INTO round(vowels,consonants) VALUES(?,?)";
-            PreparedStatement preparedStatement = con.prepareStatement(stmt);
+            System.out.println(consonantSet);
+            String stmt = "INSERT INTO round(vowel,consonant) VALUES(?,?)";
+            PreparedStatement preparedStatement = con.prepareStatement(stmt, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1,vowelSet);
             preparedStatement.setString(2,consonantSet);
             preparedStatement.execute();
             ResultSet rs = preparedStatement.getGeneratedKeys();
-            return rs.getInt(1);
+            if (rs.next())
+                return rs.getInt(1);
+            return -1;
         } catch (Exception e) {
             e.printStackTrace();
             return -1;
@@ -79,8 +83,8 @@ public class DataPB {
 
     public static int getLatestRound(int gameID) {
         try {
-            String stmt = "SELECT roundID FROM round_details(gameID) VALUES (?) ORDER BY roundID DESC";
-            PreparedStatement preparedStatement = con.prepareStatement(stmt);
+            String stmt = "SELECT roundID FROM round_details WHERE gameID=? ORDER BY roundID DESC";
+            PreparedStatement preparedStatement = con.prepareStatement(stmt, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1,gameID);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next())

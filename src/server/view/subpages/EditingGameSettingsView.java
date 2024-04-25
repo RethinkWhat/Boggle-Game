@@ -25,7 +25,7 @@ public class EditingGameSettingsView extends JPanel {
 
     // constructor panel for the EditingGameSettingsView
     public EditingGameSettingsView() {
-        this.setBackground(style.white);
+        this.setBackground(style.deepSkyBlue);
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -35,7 +35,7 @@ public class EditingGameSettingsView extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 10, 10, 10);
 
-        gameSettingsLabel = style.createLblH5("GAME SETTINGS", style.black);
+        gameSettingsLabel = style.createLblH5("GAME SETTINGS", style.white);
         gameSettingsLabel.setHorizontalAlignment(SwingConstants.CENTER);
         gameSettingsLabel.setVerticalAlignment(SwingConstants.CENTER);
         this.add(gameSettingsLabel, gbc);
@@ -111,14 +111,14 @@ public class EditingGameSettingsView extends JPanel {
             gbc.insets = new Insets(200, 10, 10, 10);
 
             sveChanges = style.createBtnRounded("SAVE CHANGES", style.deepSkyBlue, style.white, 10);
-            sveChanges.setPreferredSize(new Dimension(150,45));
+            sveChanges.setPreferredSize(new Dimension(170,45));
             sveChanges.setFocusable(false);
 
             btnCancel = style.createBtnRounded("CANCEL", style.red, style.white, 10);
             btnCancel.setPreferredSize(new Dimension(150,45));
             btnCancel.setFocusable(false);
 
-            btnBackToDefault = style.createBtnRounded("BACK TO DEFAULT", style.lightYellow, style.deepSkyBlue, 10);
+            btnBackToDefault = style.createBtnRounded("BACK TO DEFAULT", style.white, style.deepSkyBlue, 10);
             btnBackToDefault.setPreferredSize(new Dimension(180,35));
             btnBackToDefault.setFont(new Font("Arial", Font.BOLD, 15));
             btnBackToDefault.setFocusable(false);
@@ -128,7 +128,7 @@ public class EditingGameSettingsView extends JPanel {
             buttonPanel.add(sveChanges);
             buttonPanel.add(btnCancel);
             buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 0));
-            buttonPanel.setBackground(style.lightYellow);
+            buttonPanel.setBackground(style.white);
             this.add(buttonPanel, gbc);
 
             gbc.gridy++;
@@ -139,7 +139,7 @@ public class EditingGameSettingsView extends JPanel {
             backToDefaultPanel = new JPanel();
             backToDefaultPanel.add(btnBackToDefault);
             backToDefaultPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-            backToDefaultPanel.setBackground(style.lightYellow);
+            backToDefaultPanel.setBackground(style.white);
             this.add(backToDefaultPanel, gbc);
 
             this.setPreferredSize(new Dimension(1200, 550));

@@ -9,7 +9,10 @@ import java.awt.event.ActionListener;
 
 public class AdminDefaultGameSettingsView extends JFrame{
     private JLabel lblNavLocation; // the label showing the current page of the application
-    private JButton btnNavLogout; //the logout navigation button
+    private JButton btnNavPlayers; // the player's navigation button
+    private JButton btnNavGameSettings; // the game settings navigation button
+    private JButton btnNavServerSwitch; // the server switch navigation button
+    private JButton btnNavLogout; // the logout navigation button
     private JPanel pnlCards; // the panel holding other view components
     private CardLayout cardLayout; // the card layout that controls other components
     private SwingStylesheet style = new SwingStylesheet(); // the stylesheet
@@ -20,7 +23,7 @@ public class AdminDefaultGameSettingsView extends JFrame{
         super("Word Factory");
 
         Container contentArea = new JPanel(new BorderLayout());
-        contentArea.setBackground(style.white);
+        contentArea.setBackground(style.deepSkyBlue);
 
         contentArea.add(new AdminDefaultGameSettingsView.HeaderPanel(), BorderLayout.NORTH);
 
@@ -63,6 +66,15 @@ public class AdminDefaultGameSettingsView extends JFrame{
             pnlButtons.setBackground(style.goldenTainoi);
             container.add(pnlButtons);
 
+            btnNavServerSwitch = style.createBtnIconOnly(style.iconSwitch, 23,23);
+            pnlButtons.add(btnNavServerSwitch);
+
+            btnNavGameSettings = style.createBtnIconOnly(style.iconGameSettings, 23,23);
+            pnlButtons.add(btnNavGameSettings);
+
+            btnNavPlayers = style.createBtnIconOnly(style.iconPlayers, 23,23);
+            pnlButtons.add(btnNavPlayers);
+
             btnNavLogout = style.createBtnIconOnly(style.iconLogout, 20,20);
             pnlButtons.add(btnNavLogout);
 
@@ -73,6 +85,21 @@ public class AdminDefaultGameSettingsView extends JFrame{
     // retrieves the current JLabel of lblNavLocation
     public JLabel getLblNavLocation() {
         return lblNavLocation;
+    }
+
+    // retrieves the current JButton of btnNavServerSwitch
+    public JButton getBtnNavServerSwitch() {
+        return btnNavServerSwitch;
+    }
+
+    // retrieves the current JButton of btnNavGameSettings
+    public JButton getBtnNavGameSettings() {
+        return btnNavGameSettings;
+    }
+
+    // retrieves the current JButton of btnNavPlayers
+    public JButton getBtnNavPlayers() {
+        return btnNavPlayers;
     }
 
     // retrieves the current JButton of btnNavLogout
@@ -88,6 +115,21 @@ public class AdminDefaultGameSettingsView extends JFrame{
     // retrieves the current CardLayout of cardLayout
     public CardLayout getCardLayout() {
         return cardLayout;
+    }
+
+    // sets a specified action listener for btnNavServerSwitch
+    public void setServerSwitchListener(ActionListener actionListener) {
+        btnNavServerSwitch.addActionListener(actionListener);
+    }
+
+    // sets a specified action listener for btnNavGameSettings
+    public void setGameSettingsListener(ActionListener actionListener) {
+        btnNavGameSettings.addActionListener(actionListener);
+    }
+
+    // sets a specified action listener for btnNavPlayers
+    public void setPlayersListener(ActionListener actionListener) {
+        btnNavPlayers.addActionListener(actionListener);
     }
 
     // sets a specified action listener for btnNavLogout

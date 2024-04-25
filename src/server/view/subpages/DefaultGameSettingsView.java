@@ -22,7 +22,7 @@ public class DefaultGameSettingsView extends JPanel {
 
     // constructor panel for the DefaultGameSettingsView
     public DefaultGameSettingsView() {
-        this.setBackground(style.white);
+        this.setBackground(style.deepSkyBlue);
         this.setLayout(new GridBagLayout());
 
         GridBagConstraints gbc = new GridBagConstraints();
@@ -32,7 +32,7 @@ public class DefaultGameSettingsView extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 10, 10, 10);
 
-        gameSettingsLabel = style.createLblH5("GAME SETTINGS", style.black);
+        gameSettingsLabel = style.createLblH5("GAME SETTINGS", style.white);
         gameSettingsLabel.setHorizontalAlignment(SwingConstants.CENTER);
         gameSettingsLabel.setVerticalAlignment(SwingConstants.CENTER);
         this.add(gameSettingsLabel, gbc);
@@ -48,7 +48,7 @@ public class DefaultGameSettingsView extends JPanel {
     // holds the dropdown boxes and edit button
     class Panel extends JPanel {
         public Panel() {
-            this.setBackground(style.lightYellow);
+            this.setBackground(style.white);
             this.setLayout(new GridBagLayout());
             this.setOpaque(false);
 
@@ -56,7 +56,7 @@ public class DefaultGameSettingsView extends JPanel {
             gbc.insets = new Insets(10, 10, 10, 10);
 
             gbc.anchor = GridBagConstraints.CENTER;
-            headerLabel = style.createLblH1("Current Settings", style.black);
+            headerLabel = style.createLblH1("Current Settings", style.deepSkyBlue);
             gbc.gridx = 0;
             gbc.gridy = 0;
             gbc.gridwidth = 3;
@@ -67,16 +67,16 @@ public class DefaultGameSettingsView extends JPanel {
             gbc.anchor = GridBagConstraints.LINE_START;
             gbc.gridy++;
             gbc.gridwidth = 1;
-            gameDurationLabel = style.createLblP("Game Duration", style.black);
+            gameDurationLabel = style.createLblH3("Game Duration", style.black);
             gbc.gridx = 0;
             this.add(gameDurationLabel, gbc);
 
             gbc.gridx = 1;
-            waitingDurationLabel = style.createLblP("Waiting Duration", style.black);
+            waitingDurationLabel = style.createLblH3("Waiting Duration", style.black);
             this.add(waitingDurationLabel, gbc);
 
             gbc.gridx = 2;
-            numberOfPlayersLabel = style.createLblP("Number of Players", style.black);
+            numberOfPlayersLabel = style.createLblH3("Number of Players", style.black);
             this.add(numberOfPlayersLabel, gbc);
 
             gbc.insets = new Insets(10, 10, 10, 10);

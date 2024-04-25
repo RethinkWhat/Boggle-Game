@@ -2,6 +2,7 @@ package client.controller.subpages;
 
 import client.controller.ClientApplicationController;
 import client.controller.GameRoomController;
+import client.model.ClientApplicationModel;
 import client.model.subpages.GameRoomModel;
 import client.model.subpages.LobbyModel;
 import client.view.ClientApplicationView;
@@ -33,16 +34,25 @@ public class LobbyController {
     }
 
     public void timer() {
-        long timerVal = model.getWfImpl().attemptJoin();
+        view.setLblTimerTxt("00:" + 10000 / 1000);
+        long timerVal = -1;
         try {
-            while (timerVal!=0) {
-                timerVal = model.getWfImpl().getCurrLobbyTimerValue();
+            timerVal = model.getWfImpl().attemptJoin(model.getUsername());
+            Thread.sleep(1000);
+
+            BooleanHolder startLobby = new BooleanHolder(false);
+            while (timerVal != 0) {
+                timerVal = model.getWfImpl().getCurrLobbyTimerValue(startLobby);
                 System.out.println(timerVal);
-                view.setLblTimerTxt("00:" + timerVal / 1000);
-                Thread.sleep(1000);
+                view.setLblTimerTxt("00:0" + timerVal / 1000);
             }
-            parentView.showGameRoom();
-            new GameRoomController(new GameRoomModel(model.getUsername(), model.getWfImpl()), new GameRoomView());
+            System.out.println("THIS IS TIMER VAL: " + timerVal);
+            if (startLobby.value) {
+                parentView.showGameRoom();
+                new GameRoomController(new GameRoomModel(model.getUsername(), model.getWfImpl()), new GameRoomView());
+            } else {
+                parentView.showHome();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
