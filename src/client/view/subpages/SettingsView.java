@@ -82,7 +82,7 @@ public class SettingsView extends JPanel{
             this.setOpaque(false);
 
             GridBagConstraints gbc = new GridBagConstraints();
-            gbc.insets = new Insets(20, -30, 1, 1);
+            gbc.insets = new Insets(20, 15, 1, 1);
             gbc.anchor = GridBagConstraints.NORTHWEST;
 
             gbc.gridx = 0;
@@ -109,14 +109,14 @@ public class SettingsView extends JPanel{
             this.add(avatarPanel, gbc); // initial placeholder for the avatar image
 
             gbc.gridx++;
-            gbc.insets = new Insets(20, 20, 0, 0);
+            gbc.insets = new Insets(20, 10, 0, 0);
             currentAvatarLabel = style.createLblH1("Current Avatar", style.black);
             this.add(currentAvatarLabel, gbc);
 
             gbc.gridy++;
-            gbc.insets = new Insets(-70, 20, 0, 0);
+            gbc.insets = new Insets(-60, 20, 0, 0);
             btnChangeAvatar = style.createBtnRounded("CHANGE AVATAR", style.deepSkyBlue, style.white, 10);
-            btnChangeAvatar.setPreferredSize(new Dimension(150, 30));
+            btnChangeAvatar.setPreferredSize(new Dimension(180, 30));
             this.add(btnChangeAvatar, gbc);
 
             gbc.gridy++;
@@ -137,7 +137,7 @@ public class SettingsView extends JPanel{
             this.add(fullNameTextField, gbc);
 
             gbc.gridx = 2;
-            gbc.insets = new Insets(10, -40, 0, 0);
+            gbc.insets = new Insets(10, -130, 0, 0);
             btnEdit = style.createBtnIconOnly(style.iconEdit, 20,20);
             this.add(btnEdit, gbc);
 
@@ -148,9 +148,9 @@ public class SettingsView extends JPanel{
             gbc.anchor = GridBagConstraints.CENTER;
             gbc.insets = new Insets(55, 0, 0, 0);
 
-            btnChangePass = style.createBtnRounded("SAVE CHANGES", style.deepSkyBlue, style.white, 10);
-            btnChangePass.setPreferredSize(new Dimension(180,40));
-            this.add(btnChangePass, gbc);
+            btnSaveChanges = style.createBtnRounded("SAVE CHANGES", style.deepSkyBlue, style.white, 10);
+            btnSaveChanges.setPreferredSize(new Dimension(180,40));
+            this.add(btnSaveChanges, gbc);
             this.setFocusable(true);
 
             gbc.gridy++;
@@ -188,7 +188,7 @@ public class SettingsView extends JPanel{
             this.setOpaque(false);
 
             GridBagConstraints gbc = new GridBagConstraints();
-            gbc.insets = new Insets(10, -20, 5, 0);
+            gbc.insets = new Insets(5, -20, 5, 0);
 
             passwordLabel = style.createLblH1("Password", style.black);
             gbc.gridx = 0;
@@ -198,7 +198,7 @@ public class SettingsView extends JPanel{
 
             gbc.gridy++;
             gbc.gridwidth = 3;
-            gbc.insets = new Insets(15, -20, 0, 0);
+            gbc.insets = new Insets(10, -20, 0, 0);
             currentPasswordLabel = style.createLblH3("Current Password", style.black);
             this.add(currentPasswordLabel, gbc);
 
@@ -236,10 +236,10 @@ public class SettingsView extends JPanel{
             gbc.gridy++;
             gbc.gridwidth = 3;
             gbc.anchor = GridBagConstraints.CENTER;
-            gbc.insets = new Insets(35, 0, 0, 0);
+            gbc.insets = new Insets(55, 0, 0, 0);
 
             btnChangePass = style.createBtnRounded("CHANGE PASSWORD", style.deepSkyBlue, style.white, 10);
-            btnChangePass.setPreferredSize(new Dimension(180,40));
+            btnChangePass.setPreferredSize(new Dimension(200,40));
             this.add(btnChangePass, gbc);
             this.setFocusable(true);
 
