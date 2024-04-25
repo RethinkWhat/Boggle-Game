@@ -8,11 +8,13 @@ module BoggleApp {
     interface BoggleClient {
         boolean validateAccount(in string username, in string password);
 
-        long long attemptJoin();
+        long long attemptJoin(in string username);
 
         long joinGameRoom(out long long duration);
 
-        long getCurrLobbyTimerValue();
+        void exitGameRoom(in string username);
+
+        long long getCurrLobbyTimerValue(out boolean validLobby);
 
         long startRound(in string username, in long gameID, out long roundNumber, out string vowels, out string consonants);
 

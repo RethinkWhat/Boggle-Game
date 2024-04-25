@@ -35,7 +35,7 @@ public class EditingGameSettingsView extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 10, 10, 10);
 
-        gameSettingsLabel = style.createLblH5("GAME SETTINGS", style.black);
+  //      gameSettingsLabel = style.createLblH5("GAME SETTINGS", style.black);
         gameSettingsLabel.setHorizontalAlignment(SwingConstants.CENTER);
         gameSettingsLabel.setVerticalAlignment(SwingConstants.CENTER);
         this.add(gameSettingsLabel, gbc);
@@ -118,7 +118,7 @@ public class EditingGameSettingsView extends JPanel {
             btnCancel.setPreferredSize(new Dimension(150,45));
             btnCancel.setFocusable(false);
 
-            btnBackToDefault = style.createBtnRounded("BACK TO DEFAULT", style.lightYellow, style.deepSkyBlue, 10);
+         //   btnBackToDefault = style.createBtnRounded("BACK TO DEFAULT", style.lightYellow, style.deepSkyBlue, 10);
             btnBackToDefault.setPreferredSize(new Dimension(180,35));
             btnBackToDefault.setFont(new Font("Arial", Font.BOLD, 15));
             btnBackToDefault.setFocusable(false);
@@ -128,7 +128,7 @@ public class EditingGameSettingsView extends JPanel {
             buttonPanel.add(sveChanges);
             buttonPanel.add(btnCancel);
             buttonPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 50, 0));
-            buttonPanel.setBackground(style.lightYellow);
+         //   buttonPanel.setBackground(style.lightYellow);
             this.add(buttonPanel, gbc);
 
             gbc.gridy++;
@@ -139,7 +139,7 @@ public class EditingGameSettingsView extends JPanel {
             backToDefaultPanel = new JPanel();
             backToDefaultPanel.add(btnBackToDefault);
             backToDefaultPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
-            backToDefaultPanel.setBackground(style.lightYellow);
+         //   backToDefaultPanel.setBackground(style.lightYellow);
             this.add(backToDefaultPanel, gbc);
 
             this.setPreferredSize(new Dimension(1200, 550));

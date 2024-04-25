@@ -32,7 +32,7 @@ public class DefaultGameSettingsView extends JPanel {
         gbc.anchor = GridBagConstraints.CENTER;
         gbc.insets = new Insets(10, 10, 10, 10);
 
-        gameSettingsLabel = style.createLblH5("GAME SETTINGS", style.black);
+      //  gameSettingsLabel = style.createLblH5("GAME SETTINGS", style.black);
         gameSettingsLabel.setHorizontalAlignment(SwingConstants.CENTER);
         gameSettingsLabel.setVerticalAlignment(SwingConstants.CENTER);
         this.add(gameSettingsLabel, gbc);
@@ -48,7 +48,7 @@ public class DefaultGameSettingsView extends JPanel {
     // holds the dropdown boxes and edit button
     class Panel extends JPanel {
         public Panel() {
-            this.setBackground(style.lightYellow);
+     //       this.setBackground(style.lightYellow);
             this.setLayout(new GridBagLayout());
             this.setOpaque(false);
 

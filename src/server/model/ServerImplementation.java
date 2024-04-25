@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
 
+import org.omg.CORBA.BooleanHolder;
 import org.omg.CORBA.IntHolder;
 import org.omg.CORBA.LongHolder;
 import org.omg.CORBA.StringHolder;
@@ -13,14 +14,10 @@ import server.model.BoggleApp.BoggleClientPOA;
 import server.model.BoggleApp.Leaderboard;
 
 public class ServerImplementation extends BoggleClientPOA {
-    private int timeOfWaiting = 10000;
-    private long endTimeInMillis;
-    Set<String> gameRoomUsers = new HashSet();
-    ArrayList<Integer> gameIDList = new ArrayList();
-    int lastGameID = 0;
-    int gameIDForSession;
-    private long currTimeValue = 10000;
+    private final long currTimeValue = 10000L;
     private long gameDuration = 180000L;
+
+    private Set<String> currLobby = new HashSet<>();
 
     private ArrayList<GameTimer> gamesStarted;
 
@@ -36,15 +33,20 @@ public class ServerImplementation extends BoggleClientPOA {
         return DataPB.validateAccount(var1,var2);
     }
 
-    public long attemptJoin() {
-        if (this.currTimeValue <= 0L) {
-            return 0;
-        } else if (getCurrLobbyTimerValue() == 10000L) {
-            startLobbyTime(currTimeValue);
-            return 10000L;
-        } else {
-            return this.getCurrLobbyTimerValue();
-        }
+    public long attemptJoin(String username) {
+        currLobby.add(username);
+        if (lobbyTimer.getCurrValue() == 0L) {
+            lobbyTimer = new GameTimer(0, currTimeValue);
+            currLobby = new HashSet<>();
+            System.out.println("NEW TIMER VALUE: " + lobbyTimer.getCurrValue());
+        } if (lobbyTimer.getCurrValue() == 10000L)
+            startLobbyTime();
+        return -1;
+    }
+
+    @Override
+    public void exitGameRoom(String username) {
+        currLobby.remove(username);
     }
 
     @Override
@@ -53,22 +55,23 @@ public class ServerImplementation extends BoggleClientPOA {
         return DataPB.createGameRoom();
     }
 
-    public int getCurrLobbyTimerValue() {
-        return (int)lobbyTimer.getCurrValue();
+    public long getCurrLobbyTimerValue(BooleanHolder validLobby) {
+        validLobby.value = currLobby.size() > 1;
+        return lobbyTimer.getCurrValue();
     }
 
 
     @Override
-    public int startRound(String username, int gameID, IntHolder roundNumber, StringHolder vowels, StringHolder consonants) {
-        int roundID = DataPB.createRound(createRandomVowelSet(), createRandomConsonantSet());
+    public int startRound(String username, int gameID, IntHolder roundNumber, StringHolder vowelsHolder, StringHolder consonantsHolder) {
+        String cons = createRandomConsonantSet();
+        String vowel = createRandomVowelSet();
+        int roundID = DataPB.createRound(vowel, cons);
+
 
         int newRoundNumber = DataPB.getLatestRound(gameID) +1;
-        System.out.println("---- start round ----");
-        System.out.println("game ID: " + gameID);
-        System.out.println("roundID: " + roundID);
-        System.out.println("newRoundNumber: " + newRoundNumber);
-        System.out.println("username: " + username);
-        System.out.println("---- end round ----");
+        roundNumber.value = newRoundNumber;
+        vowelsHolder.value = vowel;
+        consonantsHolder.value = cons;
         int id = DataPB.createRoundDetails(gameID,roundID, newRoundNumber, username);
         startTimerForGame(gameID,  gameDuration);
 
@@ -145,7 +148,7 @@ public class ServerImplementation extends BoggleClientPOA {
         t.start();
     }
 
-    private void startLobbyTime(long duration) {
+    private void startLobbyTime() {
         Thread t = new Thread(lobbyTimer);
         t.start();
     }
@@ -165,7 +168,7 @@ public class ServerImplementation extends BoggleClientPOA {
         String consonant = "BCDFGHJKLMNPQRSTVWXYZ";
         StringBuilder sb = new StringBuilder();
         Random random = new Random();
-        for (int i = 0; i < 17; i++) {
+        for (int i = 0; i < 13; i++) {
             int index = random.nextInt(consonant.length());
             sb.append(consonant.charAt(index));
         }
