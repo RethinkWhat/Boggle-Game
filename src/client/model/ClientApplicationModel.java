@@ -1,8 +1,10 @@
 package client.model;
 
-import client.controller.ClientApplicationController;
 import client.model.BoggleApp.BoggleClient;
 
+/**
+ * The ClientApplicationModel sets the pertinent information of the current player.
+ */
 public class ClientApplicationModel {
     private String username;
     BoggleClient wfImpl;

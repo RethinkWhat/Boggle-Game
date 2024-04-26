@@ -87,7 +87,7 @@ public class ClientApplicationView extends JFrame {
         pnlCards.add( gameRoomView, "gameroom");
         pnlCards.add( settingsView, "settings");
 
-        cardLayout.show(pnlCards, "settings");
+        cardLayout.show(pnlCards, "home");
 
         this.setContentPane(contentArea);
         this.pack();
@@ -212,14 +212,6 @@ public class ClientApplicationView extends JFrame {
     }
 
     /**
-     * Sets a specified text for lblNavLocation.
-     * @param text The specified text.
-     */
-    public void setLocationText(String text) {
-        lblNavLocation.setText(text);
-    }
-
-    /**
      * Retrieves the current HomeView.
      * @return The current HomeView.
      */
@@ -244,13 +236,33 @@ public class ClientApplicationView extends JFrame {
     }
 
     /**
+     * Retrieves the current SettingsView.
+     * @return The current SettingsView.
+     */
+    public SettingsView getSettingsView() {
+        return settingsView;
+    }
+
+    /**
+     * Retrieves the current HowToPlayView.
+     * @return The current HowToPlayView.
+     */
+    public HowToPlayView getHowToPlayView() {
+        return howToPlayView;
+    }
+
+    /**
      * Shows the LobbyView through the card layout.
      */
     public void showLobby() {
         SwingUtilities.invokeLater(() -> cardLayout.show(pnlCards, "lobby"));
     }
+
+    /**
+     * Shows the SettingsView.
+     */
     public void showSettings(){
-        cardLayout.show(pnlCards,"settings");
+        SwingUtilities.invokeLater(() ->cardLayout.show(pnlCards,"settings"));
     }
 
     /**
@@ -267,10 +279,18 @@ public class ClientApplicationView extends JFrame {
         SwingUtilities.invokeLater(() -> cardLayout.show(pnlCards, "gameroom"));
     }
 
-    public static void main(String[] args) {
-        new ClientApplicationView();
+    /**
+     * Shows the HowToPlayView through the card layout.
+     */
+    public void showTutorial() {
+        SwingUtilities.invokeLater(() -> cardLayout.show(pnlCards, "tutorial"));
     }
+
+    /**
+     * Sets the text for lblNavLocation.
+     * @param text The specified location of the application proper.
+     */
     public void setNavLocationText(String text) {
-        lblNavLocation.setText(text);
+        SwingUtilities.invokeLater(() -> lblNavLocation.setText(text));
     }
 }
