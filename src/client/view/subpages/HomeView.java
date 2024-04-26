@@ -318,4 +318,10 @@ public class HomeView extends JPanel {
     public void addPlayerInLeaderboard(String username, String pfpURL, int totalPoints) {
         SwingUtilities.invokeLater(() -> pnlLeaderboard.add(new PlayerLeaderboardPanel(pfpURL, username, totalPoints)));
     }
+
+    public void clearPnlLeaderBoard() {
+        pnlLeaderboard.removeAll();
+    }
+
+
 }
