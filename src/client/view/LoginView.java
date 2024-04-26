@@ -238,6 +238,14 @@ public class LoginView extends JFrame {
     }
 
     /**
+     * Adds a specified action listener to txtPassword.
+     * @param actionListener The specified action listener.
+     */
+    public void setPasswordListener(ActionListener actionListener) {
+        txtPassword.addActionListener(actionListener);
+    }
+
+    /**
      * Sets a specified action listener for chkPassword.
      * @param actionListener The specified action listener.
      */

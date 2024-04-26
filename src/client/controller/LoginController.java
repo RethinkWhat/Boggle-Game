@@ -35,6 +35,7 @@ public class LoginController {
         this.model = model;
 
         // action listeners
+        view.setPasswordListener(new LoginListener());
         view.setLoginListener(new LoginListener());
         view.setShowPasswordListener(new SwingResources.ShowPasswordListener(view.getChkShowPassword(),
                 view.getTxtPassword()));
