@@ -352,27 +352,30 @@ public class PlayersView extends JPanel {
             gbc = new GridBagConstraints();
             gbc.insets = new Insets(2, 80, 2, 80);
             gbc.anchor = GridBagConstraints.CENTER;
-            gbc.fill = GridBagConstraints.BOTH;
             gbc.weightx = 2;
             gbc.ipady = 40;
             gbc.gridx = 0;
             gbc.gridy = 0;
 
-            lblAddPlayer = style.createLblH1("Add Player", style.deepSkyBlue);
+            lblAddPlayer = style.createLblStatus("Add Player", style.deepSkyBlue);
             lblAddPlayer.setHorizontalAlignment(SwingConstants.CENTER);
             add(lblAddPlayer, gbc);
 
-            gbc.ipady = 5;
+            gbc.ipady = 10;
             gbc.gridy = 1;
             lblAvatar = new JLabel(style.iconPfpMale1);
             add(lblAvatar, gbc);
 
             gbc.gridy = 2;
-            btnEdit = style.createBtnRounded("Edit", style.deepSkyBlue, style.white, 10);
+            gbc.gridwidth = 1;
+            gbc.fill = GridBagConstraints.NONE;
+            btnEdit = style.createBtnRoundedH3("EDIT", style.deepSkyBlue, style.white, 10);
+            btnEdit.setPreferredSize(new Dimension(150,30));
             add(btnEdit, gbc);
 
             gbc.gridy = 3;
             gbc.gridwidth = 2;
+            gbc.fill = GridBagConstraints.BOTH;
             txtUsername = style.createTxtRounded("Username", style.lightGray, style.gray, 20);
             add(txtUsername, gbc);
 
@@ -388,6 +391,7 @@ public class PlayersView extends JPanel {
 
             gbc.gridy = 6;
             chkPassword = new JCheckBox("Show Password");
+            chkPassword.setFont(new Font("Arial", Font.PLAIN, 14));
             chkPassword.setHorizontalAlignment(SwingConstants.LEFT);
             chkPassword.setBackground(style.lightGray);
             add(chkPassword, gbc);
@@ -400,6 +404,7 @@ public class PlayersView extends JPanel {
 
             gbc.gridy = 8;
             chkConfirmPassword = new JCheckBox("Show Password");
+            chkConfirmPassword.setFont(new Font("Arial", Font.PLAIN, 14));
             chkConfirmPassword.setHorizontalAlignment(SwingConstants.LEFT);
             chkConfirmPassword.setBackground(style.lightGray);
             add(chkConfirmPassword, gbc);
@@ -409,7 +414,7 @@ public class PlayersView extends JPanel {
             add(lblErrorMessage, gbc);
 
             gbc.gridy = 10;
-            btnCreate = style.createBtnRounded("Create Account", style.deepSkyBlue, style.white, 10);
+            btnCreate = style.createBtnRoundedH3("Create Account", style.deepSkyBlue, style.white, 10);
             add(btnCreate, gbc);
 
             gbc.gridy = 11;
@@ -424,6 +429,35 @@ public class PlayersView extends JPanel {
         public JLabel getLblErrorMessage() {
             return lblErrorMessage;
         }
+
+        public JTextField getTxtUsername() {
+            return txtUsername;
+        }
+
+        public JTextField getTxtFullName() {
+            return txtFullName;
+        }
+
+        public JPasswordField getTxtPassword() {
+            return txtPassword;
+        }
+
+        public JPasswordField getTxtConfirmPassword() {
+            return txtConfirmPassword;
+        }
+
+        public JCheckBox getChkPassword() {
+            return chkPassword;
+        }
+
+        public JCheckBox getChkConfirmPassword() {
+            return chkConfirmPassword;
+        }
+
+        public void setLblErrorMessage(String text) {
+            lblErrorMessage.setText(text);
+        }
+
         public void setBtnEditActionListener(ActionListener listener) {
             btnEdit.addActionListener(listener);
         }

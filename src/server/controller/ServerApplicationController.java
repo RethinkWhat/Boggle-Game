@@ -1,6 +1,8 @@
 package server.controller;
 
+import server.controller.subpages.PlayersController;
 import server.model.ServerApplicationModel;
+import server.model.subpages.PlayersModel;
 import server.view.ServerApplicationView;
 import shared.ExitDialog;
 import shared.SwingResources;
@@ -14,6 +16,7 @@ public class ServerApplicationController {
     private ServerApplicationView view;
 
     private ServerApplicationModel model;
+    private PlayersController playersController;
 
     private Server server;
     private String[] args = {"-ORBINITIALHOST", "localhost", "-ORBINITIALPORT", "5000"};
@@ -22,6 +25,10 @@ public class ServerApplicationController {
         this.view = view;
         this.model = model;
         this.server = new Server();
+
+        SwingUtilities.invokeLater(() -> {
+            playersController = new PlayersController(view.getPlayersView(), new PlayersModel());
+        });
 
         view.getServerStatusView().setServerListener(new ServerSwitchListener());
         view.setSwitchListener(new SwitchListener());
