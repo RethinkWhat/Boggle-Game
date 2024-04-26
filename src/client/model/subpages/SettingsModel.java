@@ -48,7 +48,7 @@ public class SettingsModel {
      * Returns the total matches of the player
      * @return
      */
-    public int getMatches(){
+    public int getMatches(){                        // POSSIBLE BUG HERE
         return wfImpl.getMatches(this.username);
     }
 
@@ -56,7 +56,19 @@ public class SettingsModel {
      * Returns the total wins of the player
      * @return
      */
-    public int getWins(){
+    public int getWins(){                           // POSSIBLE BUG HERE
         return wfImpl.getWins(this.username);
+    }
+
+    /**
+     * Returns the total points of the player
+     * @return
+     */
+    public int getUserPoints(){                         // THIS IS WORKING
+        return wfImpl.getUserPoints(this.username);
+    }
+
+    public boolean editPassword(String username, String oldPass, String newPass) throws Exception{
+        return wfImpl.editPassword(this.username, oldPass, newPass);
     }
 }
