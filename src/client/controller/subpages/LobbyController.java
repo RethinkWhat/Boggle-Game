@@ -47,7 +47,7 @@ public class LobbyController {
                 parent.stopMusic();
                 parent.playGameMusic();
                 new GameRoomController(new GameRoomModel(model.getUsername(), model.getWfImpl()),
-                        parent.getView().getGameRoomView());
+                        parent.getView().getGameRoomView(), parent);
             } else {
                 parent.getView().showHome();
                 parent.playDefaultMusic();

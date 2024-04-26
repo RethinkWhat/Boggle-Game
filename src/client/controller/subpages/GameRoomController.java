@@ -1,17 +1,27 @@
 package client.controller.subpages;
 
+import client.controller.ClientApplicationController;
 import client.model.subpages.GameRoomModel;
 import client.view.subpages.GameRoomView;
 import shared.SwingResources;
 import shared.SwingStylesheet;
 
 import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.io.File;
+import java.io.IOException;
 
+/**
+ * The GameRoomController processes user requests for specifying their inputs, computing and comparing scores,
+ * handling the local leaderboard, and concluding the current round and game.
+ */
 public class GameRoomController {
-
     /**
      * The view.
      */
@@ -21,6 +31,10 @@ public class GameRoomController {
      */
     private GameRoomModel model;
     /**
+     * The parent controller.
+     */
+    private ClientApplicationController parent;
+    /**
      * Specifies whether the music is turned on or off.
      */
     private boolean musicOn;
@@ -29,28 +43,60 @@ public class GameRoomController {
      */
     private boolean sfxOn;
     /**
-     * The audio input stream for music.
-     */
-    private AudioInputStream audioMusicStream;
-    /**
      * The audio input stream for sfx.
      */
     private AudioInputStream audioSoundStream;
     /**
+     * The SFX clip.
+     */
+    private Clip sfxClip;
+    /**
      * The stylesheet.
      */
-    private SwingStylesheet style = new SwingStylesheet();
+    private final SwingStylesheet style = new SwingStylesheet();
+    /**
+     * The bad input sfx file path.
+     */
+    private final String badInput = "res/audio/sfx/bad-input-sfx.wav";
+    /**
+     * The good input sfx file path.
+     */
+    private final String goodInput = "res/audio/sfx/good-input-sfx.wav";
+    /**
+     * The countdown sfx file path.
+     */
+    private final String countdown = "res/audio/sfx/countdown-10s-sfx.wav";
+    /**
+     * The round over sfx file path.
+     */
+    private final String roundOver = "res/audio/sfx/round-over-sfx.wav";
+    /**
+     * The lose sfx file path.
+     */
+    private final String lose = "res/audio/sfx/lose-sfx.wav";
+    /**
+     * The win sfx file path.
+     */
+    private final String win = "res/audio/sfx/winner-sfx.wav";
 
-    public GameRoomController(GameRoomModel model, GameRoomView view) {
+    /**
+     * Constructs a GameRoomController with a specified view, model, and parent controller.
+     *
+     * @param model The specified model.
+     * @param view  The specified view.
+     */
+    public GameRoomController(GameRoomModel model, GameRoomView view, ClientApplicationController parent) {
         this.model = model;
         this.view = view;
+        this.parent = parent;
 
-        musicOn = true; // default music on
-        sfxOn = true; // default sfx on
+        musicOn = true; // music on by default
+        sfxOn = true; // sfx on by default.
 
         // action listeners
         view.setMusicToggleListener(new MusicListener());
         view.setSoundToggleListener(new SoundListener());
+        view.setInputListener(new InputListener());
 
         // mouse listeners
         view.getBtnClear().addMouseListener(new SwingResources.CursorChanger(view.getBtnClear()));
@@ -90,6 +136,35 @@ public class GameRoomController {
     }
 
     /**
+     * Processes player inputting a word.
+     */
+    class InputListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            view.setErrorMessage("");
+            String input = view.getTxtWordInput().getText().trim();
+
+            if (!input.contains(" ")) {
+                if (!validateInput(input)) {
+                    view.setErrorMessage("Input must only contain LETTERS!");
+                    view.getTxtWordInput().setText("");
+                    playSFX("badInput");
+                } else {
+                    view.addUserInput(model.getUsername(), input);
+                    view.updateTxaHeight();
+                    model.getWordSet().add(input);
+                    view.getTxtWordInput().setText("");
+                    playSFX("goodInput");
+                }
+            } else {
+                view.setErrorMessage("Input must be a WORD!");
+                view.getTxtWordInput().setText("");
+                playSFX("badInput");
+            }
+        }
+    }
+
+    /**
      * Turns the music on or off.
      */
     class MusicListener implements ActionListener {
@@ -97,11 +172,15 @@ public class GameRoomController {
         public void actionPerformed(ActionEvent e) {
             SwingUtilities.invokeLater(() -> {
                 if (musicOn) {
-                    view.setBtnSoundIcon(style.iconMusicOff);
-                    // TODO: implementation wait lang ahh
+                    musicOn = false;
+                    view.setBtnMusicIcon(style.iconMusicOff);
+                    parent.getMusicClip().getMicrosecondPosition();
+                    parent.getMusicClip().stop();
                 } else {
-                    view.setBtnSoundIcon(style.iconMusicOn);
-                    // TODO: implementation wait lang ahh
+                    musicOn = true;
+                    view.setBtnMusicIcon(style.iconMusicOn);
+                    parent.getMusicClip().getMicrosecondPosition();
+                    parent.getMusicClip().start();
                 }
             });
         }
@@ -115,18 +194,100 @@ public class GameRoomController {
         public void actionPerformed(ActionEvent e) {
             SwingUtilities.invokeLater(() -> {
                 if (sfxOn) {
+                    sfxOn = false;
                     view.setBtnSoundIcon(style.iconSoundOff);
-                    // TODO: implementation wait lang ahh
+                    try {
+                        audioSoundStream.reset();
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
                 } else {
+                    sfxOn = true;
                     view.setBtnSoundIcon(style.iconSoundOn);
-                    // TODO: implementation wait lang ahh
                 }
             });
         }
     }
 
+    /**
+     * Validates each character of the input string to ensure that it is a valid word.
+     *
+     * @param input The specified player input.
+     * @return True if valid letter, false if any other character.
+     */
+    private boolean validateInput(String input) {
+        for (int i = 0; i < input.length(); i++) {
+            if (!Character.isLetter(input.charAt(i)) || Character.isWhitespace(input.charAt(i))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * TODO: To debug
+     * Plays an SFX based on the specified type.
+     *
+     * @param type The specified SFX type to play.
+     */
+    private void playSFX(String type) {
+        if (sfxOn) {
+            try {
+                audioSoundStream = AudioSystem.getAudioInputStream(new File(badInput));
+                sfxClip = AudioSystem.getClip();
+                sfxClip.open(audioSoundStream);
+                sfxClip.stop();
+                switch (type) {
+                    case "badInput": {
+                        sfxClip.stop();
+                        audioSoundStream = AudioSystem.getAudioInputStream(new File(badInput));
+                        sfxClip = AudioSystem.getClip();
+                        sfxClip.open(audioSoundStream);
+                        sfxClip.start();
+                    }
+                    case "goodInput": {
+                        sfxClip.stop();
+                        audioSoundStream = AudioSystem.getAudioInputStream(new File(goodInput));
+                        sfxClip = AudioSystem.getClip();
+                        sfxClip.open(audioSoundStream);
+                        sfxClip.start();
+                    }
+                    case "countdown": {
+                        sfxClip.stop();
+                        audioSoundStream = AudioSystem.getAudioInputStream(new File(countdown));
+                        sfxClip = AudioSystem.getClip();
+                        sfxClip.open(audioSoundStream);
+                        sfxClip.start();
+                    }
+                    case "roundOver": {
+                        sfxClip.stop();
+                        audioSoundStream = AudioSystem.getAudioInputStream(new File(roundOver));
+                        sfxClip = AudioSystem.getClip();
+                        sfxClip.open(audioSoundStream);
+                        sfxClip.start();
+                    }
+                    case "winner": {
+                        sfxClip.stop();
+                        audioSoundStream = AudioSystem.getAudioInputStream(new File(win));
+                        sfxClip = AudioSystem.getClip();
+                        sfxClip.open(audioSoundStream);
+                        sfxClip.start();
+                    }
+                    case "lose": {
+                        sfxClip.stop();
+                        audioSoundStream = AudioSystem.getAudioInputStream(new File(lose));
+                        sfxClip = AudioSystem.getClip();
+                        sfxClip.open(audioSoundStream);
+                        sfxClip.start();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     //TODO: Per user input, store in word set found in model
     //TODO: When timer above elapses, send word set to server using the getRoundWinner method
-    //TODO: update entered words shown on game UI
 
 }
