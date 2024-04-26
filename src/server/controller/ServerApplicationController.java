@@ -2,7 +2,10 @@ package server.controller;
 
 import server.model.ServerApplicationModel;
 import server.view.ServerApplicationView;
+import shared.ExitDialog;
+import shared.SwingStylesheet;
 
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,6 +23,57 @@ public class ServerApplicationController {
         this.server = new Server();
 
         view.getServerStatusView().setServerListener(new ServerSwitchListener());
+        view.setSwitchListener(new SwitchListener());
+        view.setGameSettingsListener(new GameSettingsListener());
+        view.setPlayersListener(new PlayersListener());
+        view.setLogoutListener(new LogoutListener());
+    }
+
+    // Action listener for switching to Server Status panel
+    class SwitchListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            view.showServerStatusPanel();
+            view.setLocationText("Server Status");
+        }
+    }
+
+    // Action listener for switching to Game Settings panel
+    class GameSettingsListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            view.showGameSettingsPanel();
+            view.setLocationText("Game Settings");
+        }
+    }
+
+    // Action listener for switching to Players panel
+    class PlayersListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            view.showPlayersPanel();
+            view.setLocationText("Players");
+        }
+    }
+
+    // Action listener for logging out
+    class LogoutListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            SwingStylesheet style = new SwingStylesheet();
+            ExitDialog exitDialog = new ExitDialog(
+                    "Exit Confirmation",
+                    new ImageIcon("res/drawable/icons/alert-red-solid.png"),
+                    "EXIT CONFIRMATION",
+                    "Are you sure you want to exit the game?.",
+                    "EXIT",
+                    style.red,
+                    style.white,
+                    style.black,
+                    style.red
+            );
+        }
     }
 
     class ServerSwitchListener implements ActionListener {
@@ -50,6 +104,7 @@ public class ServerApplicationController {
             }
         }
     }
+
 
     public static void main(String[] args) {
         new ServerApplicationController(new ServerApplicationView(), new ServerApplicationModel());
