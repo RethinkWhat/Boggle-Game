@@ -3,6 +3,7 @@ package server.controller;
 import server.model.ServerApplicationModel;
 import server.view.ServerApplicationView;
 import shared.ExitDialog;
+import shared.SwingResources;
 import shared.SwingStylesheet;
 
 import javax.swing.*;
@@ -27,6 +28,11 @@ public class ServerApplicationController {
         view.setGameSettingsListener(new GameSettingsListener());
         view.setPlayersListener(new PlayersListener());
         view.setLogoutListener(new LogoutListener());
+
+        view.getBtnNavSwitch().addMouseListener(new SwingResources.CursorChanger(view.getBtnNavSwitch()));
+        view.getBtnNavGameSettings().addMouseListener(new SwingResources.CursorChanger(view.getBtnNavGameSettings()));
+        view.getBtnNavPlayers().addMouseListener(new SwingResources.CursorChanger(view.getBtnNavPlayers()));
+        view.getBtnNavLogout().addMouseListener(new SwingResources.CursorChanger(view.getBtnNavLogout()));
     }
 
     // Action listener for switching to Server Status panel

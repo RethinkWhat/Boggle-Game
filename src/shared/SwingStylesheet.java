@@ -407,6 +407,48 @@ public class SwingStylesheet {
     }
 
     /**
+     * Creates a new JButton with a specified text, background color, foreground color, and radius.
+     *
+     * @param text       The specified text.
+     * @param background The specified background.
+     * @param foreground The specified foreground.
+     * @param radius     The specified radius.
+     * @return The specified button.
+     */
+    public JButton createBtnRoundedH2(String text, Color background, Color foreground, int radius) {
+        JButton button = new JButton(text);
+        button.setBackground(background);
+        button.setForeground(foreground);
+        button.setFont(bowlbyOne.deriveFont(22f));
+        button.setBorder(new RoundedBorder(radius));
+        button.setVerticalTextPosition(SwingConstants.CENTER);
+        button.setHorizontalAlignment(SwingConstants.CENTER);
+        button.setBorderPainted(true);
+        return button;
+    }
+
+    /**
+     * Creates a new JButton with a specified text, background color, foreground color, and radius.
+     *
+     * @param text       The specified text.
+     * @param background The specified background.
+     * @param foreground The specified foreground.
+     * @param radius     The specified radius.
+     * @return The specified button.
+     */
+    public JButton createBtnRoundedH3(String text, Color background, Color foreground, int radius) {
+        JButton button = new JButton(text);
+        button.setBackground(background);
+        button.setForeground(foreground);
+        button.setFont(bowlbyOne.deriveFont(18f));
+        button.setBorder(new RoundedBorder(radius));
+        button.setVerticalTextPosition(SwingConstants.CENTER);
+        button.setHorizontalAlignment(SwingConstants.CENTER);
+        button.setBorderPainted(true);
+        return button;
+    }
+
+    /**
      * Creates a new JRadioButton with a specified text and foreground color.
      *
      * @param text       The specified text.

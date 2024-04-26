@@ -140,7 +140,6 @@ public class ClientApplicationController {
      * Logs the user out of the application.
      */
     class LogOutListener implements ActionListener {
-        //TEMPORARY PROMPT FOR LOGOUT
         @Override
         public void actionPerformed(ActionEvent e) {
 
