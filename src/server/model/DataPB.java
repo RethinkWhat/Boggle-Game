@@ -245,7 +245,7 @@ public class DataPB {
         return false;
     }
 
-    public void updatePoints(int gameID, int roundID, int roundNumber, String username, int newPoints) {
+    public static void updatePoints(int gameID, int roundID, int roundNumber, String username, int newPoints) {
         String query = "UPDATE round_details SET points = ? WHERE gameID = ? AND roundID = ? AND roundNumber = ? AND username = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, newPoints);
@@ -258,5 +258,23 @@ public class DataPB {
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
+    }
+
+    public static int getUserPoints(String username){
+        String query = "SELECT points FROM player WHERE username = ?";
+        int points = 0;
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, username);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    points = rs.getInt("points");
+                }
+            } catch (SQLException sqle) {
+                sqle.printStackTrace();
+            }
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        return points;
     }
 }

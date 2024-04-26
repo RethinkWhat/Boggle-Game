@@ -121,7 +121,8 @@ public class ServerImplementation extends BoggleClientPOA {
 
     @Override
     public int getUserPoints(String username) {
-        return 0;
+        int points = DataPB.getUserPoints(username);
+        return points;
     }
 
     @Override
