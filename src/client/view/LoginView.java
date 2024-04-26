@@ -118,7 +118,7 @@ public class LoginView extends JFrame {
             gbc.ipady = 10;
             chkShowPassword = new JCheckBox("Show Password");
             chkShowPassword.setBorderPaintedFlat(true);
-            chkShowPassword.setBackground(style.deepSkyBlue);
+            chkShowPassword.setBackground(style.white);
             chkShowPassword.setForeground(style.gray);
             chkShowPassword.setFont(new Font("Arial", Font.PLAIN, 12));
             container.add(chkShowPassword, gbc);
