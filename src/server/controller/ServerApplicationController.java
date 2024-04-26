@@ -104,9 +104,4 @@ public class ServerApplicationController {
             }
         }
     }
-
-
-    public static void main(String[] args) {
-        new ServerApplicationController(new ServerApplicationView(), new ServerApplicationModel());
-    }
 }

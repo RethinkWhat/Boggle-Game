@@ -116,7 +116,13 @@ public class ServerImplementation extends BoggleClientPOA {
 
     @Override
     public Leaderboard[] getLeaderboard() {
-        return new Leaderboard[0];
+        Leaderboard leaderboard = new Leaderboard("rithik", "res/drawable/images/pfp-male-1.png", 5000);
+        Leaderboard ramon = new Leaderboard("ramon", "res/drawable/images/pfp-male-1.png", 10000);
+
+        Leaderboard[] leaderboards = new Leaderboard[2];
+        leaderboards[0] = leaderboard;
+        leaderboards[1] = ramon;
+        return leaderboards;
     }
 
     @Override

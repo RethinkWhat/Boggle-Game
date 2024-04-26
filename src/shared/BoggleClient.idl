@@ -1,6 +1,7 @@
 module BoggleApp {
     struct Leaderboard {
         string username;
+        string pfpAddress;
         long points;
     };
     typedef sequence<Leaderboard> userRanking;

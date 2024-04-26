@@ -151,8 +151,8 @@ public class HomeView extends JPanel {
             this.setBorder(new EmptyBorder(0,0,0,0));
             this.setLayout(new FlowLayout(FlowLayout.CENTER, 1000,10));
 
-            add(new PlayerLeaderboardPanel("res/drawable/images/pfp-male-1.png", "monem", 100));
-            add(new PlayerLeaderboardPanel("res/drawable/images/pfp-male-1.png", "monem", 100));
+            //add(new PlayerLeaderboardPanel("res/drawable/images/pfp-male-1.png", "monem", 100));
+            ///add(new PlayerLeaderboardPanel("res/drawable/images/pfp-male-1.png", "monem", 100));
 
             this.setPreferredSize(new Dimension(480,1000));
         }
