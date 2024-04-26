@@ -88,7 +88,7 @@ public class ClientApplicationController {
         }
 
         SwingUtilities.invokeLater(() -> {
-            homeController = new HomeController(view.getHomeView(), new HomeModel(), this);
+            homeController = new HomeController(view.getHomeView(), new HomeModel(model.getUsername(), model.getWfImpl()), this);
             howToPlayController = new HowToPlayController(view.getHowToPlayView(), new HowToPlayModel(), this);
             settingsController = new SettingsController(view.getSettingsView(),
                     new SettingsModel(model.getUsername(), model.getWfImpl()), view);

@@ -1,6 +1,7 @@
 package client.controller.subpages;
 
 import client.controller.ClientApplicationController;
+import client.model.BoggleApp.Leaderboard;
 import client.model.subpages.HomeModel;
 import client.model.subpages.LobbyModel;
 import client.view.subpages.HomeView;
@@ -44,10 +45,21 @@ public class HomeController {
         view.setJoinListener(new JoinGameListener(parent));
         view.setTutorialListener(e -> parent.getView().showTutorial());
 
+        view.getLblUsername().setText(model.getUsername());
+
         // mouse listeners
         view.getBtnJoinGame().addMouseListener(new SwingResources.CursorChanger(view.getBtnJoinGame()));
         view.getBtnEditPfp().addMouseListener(new SwingResources.CursorChanger(view.getBtnEditPfp()));
         view.getBtnTutorial().addMouseListener(new SwingResources.CursorChanger(view.getBtnTutorial()));
+
+        populateLeaderboard();
+    }
+
+    public void populateLeaderboard() {
+        Leaderboard[] leaderboards = model.getLeaderboard();
+        for (Leaderboard leaderboard : leaderboards) {
+            view.addPlayerInLeaderboard(leaderboard.username, leaderboard.pfpAddress, leaderboard.points);
+        }
     }
 
     /**
@@ -60,7 +72,7 @@ public class HomeController {
         private ClientApplicationController parent;
 
         /**
-         * Constructs a JOin
+         * Constructs a Join
          * @param parent
          */
         public JoinGameListener(ClientApplicationController parent) {
