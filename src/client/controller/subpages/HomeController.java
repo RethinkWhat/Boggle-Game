@@ -57,6 +57,7 @@ public class HomeController {
 
     public void populateLeaderboard() {
         Leaderboard[] leaderboards = model.getLeaderboard();
+        view.clearPnlLeaderBoard();
         for (Leaderboard leaderboard : leaderboards) {
             view.addPlayerInLeaderboard(leaderboard.username, leaderboard.pfpAddress, leaderboard.points);
         }
@@ -99,23 +100,6 @@ public class HomeController {
                         parent.playDefaultMusic();
                     }
                 });
-
-                // Add action listener to the exit lobby button
-                /*
-                BooleanHolder startGame = new BooleanHolder(false);
-                long id;
-                while (!startGame.value) {
-                    id = model.getWfImpl().attemptJoin("username", startGame);
-                    System.out.println("TIME REMAINING: " + id);
-                    if (startGame.value) {
-
-                        break;
-                    }try {
-                        Thread.sleep(1000);
-                    } catch (Exception p) {
-                    p.printStackTrace();}
-                }
-                */
             });
         }
     }
