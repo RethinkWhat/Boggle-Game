@@ -144,15 +144,31 @@ public class SwingStylesheet {
     /**
      * The search icon.
      */
-    public final ImageIcon iconSearch = new ImageIcon("res/drawable/icons/search-solid.png");
+    public final ImageIcon iconSearch = new ImageIcon("res/drawable/icons/search-blue-solid.png");
     /**
      * The logo in GIF form.
      */
     public final ImageIcon iconLogoAnimated = new ImageIcon("res/drawable/gifs/logo.gif");
     /**
+     * The logo in GIF form.
+     */
+    public final ImageIcon iconLogoSteady = new ImageIcon("res/drawable/images/img-logo-wordFactory.png");
+    /**
      * The profile picture for male sample 1.
      */
     public final ImageIcon iconPfpMale1 = new ImageIcon("res/drawable/images/pfp-male-1.png");
+    /**
+     * The profile picture for male sample 1.
+     */
+    public final ImageIcon iconPfpMale2 = new ImageIcon("res/drawable/images/pfp-man-2.png");
+    /**
+     * The profile picture for male sample 1.
+     */
+    public final ImageIcon iconPfpWoman1 = new ImageIcon("res/drawable/images/pfp-woman-1.png");
+    /**
+     * The profile picture for male sample 1.
+     */
+    public final ImageIcon iconPfpWoman2 = new ImageIcon("res/drawable/images/pfp-woman-2.png");
     /**
      * Default padding for panels.
      */

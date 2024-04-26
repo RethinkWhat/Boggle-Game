@@ -28,9 +28,6 @@ public class ServerStatusView extends JPanel {
         this.setPreferredSize(new Dimension(1300, 750));
         this.setVisible(true);
 
-        // Initialize the timer for animating the logo
-        logoTimer = new Timer(100, e -> {});
-        logoTimer.start();
     }
 
     public class MainPanel extends JPanel {
@@ -44,7 +41,7 @@ public class ServerStatusView extends JPanel {
 
             gbc = new GridBagConstraints();
 
-            lblLogoAnimated = new JLabel(style.iconLogoAnimated);
+            lblLogoAnimated = new JLabel(style.iconLogoSteady);
             gbc.gridy = 0;
             container.add(lblLogoAnimated, gbc);
 
@@ -99,6 +96,6 @@ public class ServerStatusView extends JPanel {
         btnServerSwitch.setForeground(style.white);
 
         // Stop the logo animation
-        lblLogoAnimated.setIcon(null);
+        lblLogoAnimated.setIcon(style.iconLogoAnimated);
     }
 }
