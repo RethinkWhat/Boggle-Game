@@ -4,6 +4,8 @@ import org.omg.CORBA.ORB;
 
 import javax.swing.plaf.nimbus.State;
 import java.sql.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class DataPB {
     private static Connection con;
@@ -276,5 +278,20 @@ public class DataPB {
             sqle.printStackTrace();
         }
         return points;
+    }
+
+    public static Map<String, Integer> getTopPlayers() {
+        String query = "SELECT username, points FROM player ORDER BY points DESC LIMIT 10";
+        Map<String, Integer> topPlayers = new LinkedHashMap();
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                topPlayers.put(rs.getString("username"), rs.getInt("points"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return topPlayers;
     }
 }
