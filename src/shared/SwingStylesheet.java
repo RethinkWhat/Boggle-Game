@@ -78,6 +78,10 @@ public class SwingStylesheet {
      */
     public final ImageIcon iconSuccess = new ImageIcon("res/drawable/icons/success-tainoi-solid.png");
     /**
+     * The winner icon.
+     */
+    public final ImageIcon iconWinner = new ImageIcon("res/drawable/icons/celebrate-tainoi-solid.png");
+    /**
      * The home icon.
      */
     public final ImageIcon iconHome = new ImageIcon("res/drawable/icons/home-white-solid.png");
