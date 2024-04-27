@@ -12,12 +12,13 @@ import org.omg.CORBA.LongHolder;
 import org.omg.CORBA.StringHolder;
 import server.model.BoggleApp.BoggleClientPOA;
 import server.model.BoggleApp.Leaderboard;
+import server.model.BoggleApp.LobbyUser;
 
 public class ServerImplementation extends BoggleClientPOA {
     private final long currTimeValue = 10000L;
     private long gameDuration = 180000L;
 
-    private Set<String> currLobby = new HashSet<>();
+    private ArrayList<String> currLobby = new ArrayList<>();
 
     private ArrayList<GameTimer> gamesStarted;
 
@@ -29,6 +30,20 @@ public class ServerImplementation extends BoggleClientPOA {
 
     }
 
+    @Override
+    public LobbyUser[] getLobbyMembers() {
+        LobbyUser[] lobbyUsers = new LobbyUser[currLobby.size()];
+        for (int x =0; x < currLobby.size(); x++) {
+           // lobbyUsers[x] = new LobbyUser(currLobby.get(x)., DataPB.getPFPOfUser(currLobby.get(x))
+        }
+        return lobbyUsers;
+    }
+
+    @Override
+    public Leaderboard[] getCurrGameLeaderboard(int gameID) {
+        return new Leaderboard[0];
+    }
+
     public boolean validateAccount(String var1, String var2) {
         return DataPB.validateAccount(var1,var2);
     }
@@ -37,7 +52,7 @@ public class ServerImplementation extends BoggleClientPOA {
         currLobby.add(username);
         if (lobbyTimer.getCurrValue() == 0L) {
             lobbyTimer = new GameTimer(0, currTimeValue);
-            currLobby = new HashSet<>();
+            currLobby = new ArrayList<>();
             System.out.println("NEW TIMER VALUE: " + lobbyTimer.getCurrValue());
         } if (lobbyTimer.getCurrValue() == 10000L)
             startLobbyTime();
@@ -85,6 +100,7 @@ public class ServerImplementation extends BoggleClientPOA {
     public long getGameDurationVal(int gameID, int roundID) {
         return 0;
     }
+
 
     //TODO: Store the wordList of each user for the finished round in the game
     //TODO: Compare the word lists. Considering the length of the words and the same words entered among players

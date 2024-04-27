@@ -33,7 +33,7 @@ public class LobbyController {
         view.setLblTimerTxt("00:" + 10000 / 1000);
         long timerVal = -1;
         LobbyUser[] usersInLobby = model.getUsersInLobby();
-        populateLobby();
+        populateLobby(usersInLobby);
         try {
             timerVal = model.getWfImpl().attemptJoin(model.getUsername());
             Thread.sleep(1000);
