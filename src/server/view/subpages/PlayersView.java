@@ -5,6 +5,7 @@ import shared.SwingStylesheet;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * Panel for displaying and managing players.
@@ -31,6 +32,27 @@ public class PlayersView extends JPanel {
      */
     private SwingStylesheet style = new SwingStylesheet();
 
+    private ButtonPanel buttonPanel;
+    private FunctionPanel functionPanel;
+    private TablePanel tablePanel;
+    private AddPlayerPanel addPlayerPanel;
+
+    public ButtonPanel getButtonPanel() {
+        return buttonPanel;
+    }
+
+    public FunctionPanel getFunctionPanel() {
+        return functionPanel;
+    }
+
+    public TablePanel getTablePanel() {
+        return tablePanel;
+    }
+
+    public AddPlayerPanel getAddPlayerPanel() {
+        return addPlayerPanel;
+    }
+
     /**
      * Constructs a new PlayersView panel.
      * Initializes components, sets layout, and adds subpanels.
@@ -40,24 +62,15 @@ public class PlayersView extends JPanel {
         setLayout(new BorderLayout());
         setPreferredSize(new Dimension(1300, 750));
 
-        FunctionPanel functionPanel = new FunctionPanel();
-        TablePanel tablePanel = new TablePanel();
+        functionPanel = new FunctionPanel();
+        tablePanel = new TablePanel();
+        buttonPanel = new ButtonPanel();
 
-        pnlButtons = new JPanel();
-        btnRemove = style.createBtnRounded("REMOVE", style.red, style.white, 10);
-        btnCancel = style.createBtnRounded("CANCEL", style.goldenTainoi, style.white, 10);
+        add(functionPanel, BorderLayout.NORTH);
+        add(tablePanel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
 
-        // Add the buttons to pnlButtons
-        pnlButtons.setLayout(new FlowLayout());
-        pnlButtons.setPreferredSize(new Dimension(1100, 70));
-        pnlButtons.setBackground(style.deepSkyBlue);
-        pnlButtons.add(btnRemove);
-        pnlButtons.add(btnCancel);
-
-        // Add subpanels to the main panel
-        this.add(functionPanel, BorderLayout.NORTH);
-        this.add(tablePanel, BorderLayout.CENTER);
-        this.add(pnlButtons, BorderLayout.SOUTH);
+        buttonPanel.setVisible(true);
 
         this.setPreferredSize(new Dimension(1300, 750));
         this.setVisible(true);
@@ -67,7 +80,7 @@ public class PlayersView extends JPanel {
      * Panel for function buttons like search and add.
      * It contains text field for search, search button, add button, and add player button.
      */
-    class FunctionPanel extends JPanel {
+    public class FunctionPanel extends JPanel {
 
         /**
          * The textfield for the search bar.
@@ -121,12 +134,47 @@ public class PlayersView extends JPanel {
             btnAddPlayer = style.createBtnTxtOnly("ADD PLAYER", style.deepSkyBlue);
             pnlButton.add(btnAddPlayer);
         }
+
+        // Getters
+        public JTextField getTxtSearchbar() {
+            return txtSearchbar;
+        }
+
+        public JButton getBtnSearch() {
+            return btnSearch;
+        }
+
+        public JButton getBtnAdd() {
+            return btnAdd;
+        }
+
+        public JButton getBtnAddPlayer() {
+            return btnAddPlayer;
+        }
+
+        // Setters
+        public void setTxtSearchbarText(String text) {
+            txtSearchbar.setText(text);
+        }
+
+        // Action listeners
+        public void setSearchListener(ActionListener actionListener) {
+            btnSearch.addActionListener(actionListener);
+        }
+
+        public void setAddListener(ActionListener actionListener) {
+            btnAdd.addActionListener(actionListener);
+        }
+
+        public void setAddPlayerListener(ActionListener actionListener) {
+            btnAddPlayer.addActionListener(actionListener);
+        }
     }
 
     /**
      * Panel for displaying player information in a table.
      */
-    class TablePanel extends JPanel {
+    public class TablePanel extends JPanel {
         private JTable tblPlayers; // Table for displaying players
         private DefaultTableModel tblPlayersModel; // Table model for players data
         private JPanel pnlTable; // Panel for table
@@ -177,12 +225,65 @@ public class PlayersView extends JPanel {
             scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
             pnlTable.add(scrollPane, BorderLayout.CENTER);
         }
+        // Getters
+        public JTable getTblPlayers() {
+            return tblPlayers;
+        }
+
+        public DefaultTableModel getTblPlayersModel() {
+            return tblPlayersModel;
+        }
+
+        // Setters
+        public void setTblPlayersModel(DefaultTableModel model) {
+            tblPlayers.setModel(model);
+        }
+
+        // Methods
+        public void addRow(Object[] rowData) {
+            tblPlayersModel.addRow(rowData);
+        }
+
+        public void removeRow(int row) {
+            tblPlayersModel.removeRow(row);
+        }
+
+        public void clearTable() {
+            tblPlayersModel.setRowCount(0);
+        }
+    }
+
+    public class ButtonPanel extends JPanel {
+        private JButton btnRemove;
+        private JButton btnCancel;
+
+        public ButtonPanel() {
+            setBackground(style.deepSkyBlue);
+            setLayout(new FlowLayout());
+            setPreferredSize(new Dimension(1100, 70));
+
+            btnRemove = style.createBtnRoundedH2("REMOVE", style.red, style.white, 10);
+            btnRemove.setPreferredSize(new Dimension(150,50));
+            btnCancel = style.createBtnRoundedH2("CANCEL", style.goldenTainoi, style.white, 10);
+            btnCancel.setPreferredSize(new Dimension(150,50));
+
+            add(btnRemove);
+            add(btnCancel);
+        }
+
+        public void setBtnRemoveActionListener(ActionListener listener) {
+            btnRemove.addActionListener(listener);
+        }
+
+        public void setBtnCancelActionListener(ActionListener listener) {
+            btnCancel.addActionListener(listener);
+        }
     }
 
     /**
      * Dialog panel for adding a new player.
      */
-    class AddPlayerPanel extends JDialog {
+    public class AddPlayerPanel extends JDialog {
 
         /**
          * The layout for this dialog.
@@ -207,7 +308,7 @@ public class PlayersView extends JPanel {
         /**
          * The cancel text button.
          */
-        private JButton btnCancel;
+        private JButton btnTxtCancel;
         /**
          * The label for displaying the error message.
          */
@@ -251,27 +352,30 @@ public class PlayersView extends JPanel {
             gbc = new GridBagConstraints();
             gbc.insets = new Insets(2, 80, 2, 80);
             gbc.anchor = GridBagConstraints.CENTER;
-            gbc.fill = GridBagConstraints.BOTH;
             gbc.weightx = 2;
             gbc.ipady = 40;
             gbc.gridx = 0;
             gbc.gridy = 0;
 
-            lblAddPlayer = style.createLblH1("Add Player", style.deepSkyBlue);
+            lblAddPlayer = style.createLblStatus("Add Player", style.deepSkyBlue);
             lblAddPlayer.setHorizontalAlignment(SwingConstants.CENTER);
             add(lblAddPlayer, gbc);
 
-            gbc.ipady = 5;
+            gbc.ipady = 10;
             gbc.gridy = 1;
-            lblAvatar = new JLabel(style.iconAdd);
+            lblAvatar = new JLabel(style.iconPfpMale1);
             add(lblAvatar, gbc);
 
             gbc.gridy = 2;
-            btnEdit = style.createBtnRounded("Edit", style.deepSkyBlue, style.white, 10);
+            gbc.gridwidth = 1;
+            gbc.fill = GridBagConstraints.NONE;
+            btnEdit = style.createBtnRoundedH3("EDIT", style.deepSkyBlue, style.white, 10);
+            btnEdit.setPreferredSize(new Dimension(150,30));
             add(btnEdit, gbc);
 
             gbc.gridy = 3;
             gbc.gridwidth = 2;
+            gbc.fill = GridBagConstraints.BOTH;
             txtUsername = style.createTxtRounded("Username", style.lightGray, style.gray, 20);
             add(txtUsername, gbc);
 
@@ -282,13 +386,12 @@ public class PlayersView extends JPanel {
             gbc.gridy = 5;
             txtPassword = style.createPwdRounded(style.lightGray, style.gray, 20);
             txtPassword.setText("Password");
-            txtPassword.setFont(style.bowlbyOne.deriveFont(Font.BOLD, 14));
             txtPassword.setEchoChar((char) 0);
             add(txtPassword, gbc);
 
             gbc.gridy = 6;
             chkPassword = new JCheckBox("Show Password");
-            chkPassword.setFont(style.bowlbyOne.deriveFont(Font.BOLD, 14));
+            chkPassword.setFont(new Font("Arial", Font.PLAIN, 14));
             chkPassword.setHorizontalAlignment(SwingConstants.LEFT);
             chkPassword.setBackground(style.lightGray);
             add(chkPassword, gbc);
@@ -296,13 +399,12 @@ public class PlayersView extends JPanel {
             gbc.gridy = 7;
             txtConfirmPassword = style.createPwdRounded(style.lightGray, style.gray, 20);
             txtConfirmPassword.setText("Confirm Password");
-            txtConfirmPassword.setFont(style.bowlbyOne.deriveFont(Font.BOLD, 14));
             txtConfirmPassword.setEchoChar((char) 0);
             add(txtConfirmPassword, gbc);
 
             gbc.gridy = 8;
             chkConfirmPassword = new JCheckBox("Show Password");
-            chkConfirmPassword.setFont(style.bowlbyOne.deriveFont(Font.BOLD, 14));
+            chkConfirmPassword.setFont(new Font("Arial", Font.PLAIN, 14));
             chkConfirmPassword.setHorizontalAlignment(SwingConstants.LEFT);
             chkConfirmPassword.setBackground(style.lightGray);
             add(chkConfirmPassword, gbc);
@@ -312,15 +414,72 @@ public class PlayersView extends JPanel {
             add(lblErrorMessage, gbc);
 
             gbc.gridy = 10;
-            btnCreate = style.createBtnRounded("Create Account", style.deepSkyBlue, style.white, 10);
+            btnCreate = style.createBtnRoundedH3("Create Account", style.deepSkyBlue, style.white, 10);
             add(btnCreate, gbc);
 
             gbc.gridy = 11;
-            btnCancel = style.createBtnTxtOnly("Cancel.", style.red);
-            add(btnCancel, gbc);
+            btnTxtCancel = style.createBtnTxtOnly("Cancel.", style.red);
+            add(btnTxtCancel, gbc);
 
             pack();
             setVisible(true);
+            setLocationRelativeTo(null);
+        }
+
+        public JLabel getLblErrorMessage() {
+            return lblErrorMessage;
+        }
+
+        public JTextField getTxtUsername() {
+            return txtUsername;
+        }
+
+        public JTextField getTxtFullName() {
+            return txtFullName;
+        }
+
+        public JPasswordField getTxtPassword() {
+            return txtPassword;
+        }
+
+        public JPasswordField getTxtConfirmPassword() {
+            return txtConfirmPassword;
+        }
+
+        public JCheckBox getChkPassword() {
+            return chkPassword;
+        }
+
+        public JCheckBox getChkConfirmPassword() {
+            return chkConfirmPassword;
+        }
+
+        public void setLblErrorMessage(String text) {
+            lblErrorMessage.setText(text);
+        }
+
+        public void setBtnEditActionListener(ActionListener listener) {
+            btnEdit.addActionListener(listener);
+        }
+
+        public void setBtnCreateActionListener(ActionListener listener) {
+            btnCreate.addActionListener(listener);
+        }
+
+        public void setBtnTxtCancelActionListener(ActionListener actionListener) {
+            btnTxtCancel.addActionListener(actionListener);
         }
     }
+
+    public void showAddPlayerPanel() {
+        addPlayerPanel = new AddPlayerPanel();
+        addPlayerPanel.setVisible(true);
+        setEnabled(false);
+    }
+
+    public void hideAddPlayerPanel() {
+        addPlayerPanel.dispose();
+        setEnabled(true);
+    }
+
 }

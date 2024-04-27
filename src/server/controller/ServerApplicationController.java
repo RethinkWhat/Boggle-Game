@@ -1,8 +1,11 @@
 package server.controller;
 
+import server.controller.subpages.PlayersController;
 import server.model.ServerApplicationModel;
+import server.model.subpages.PlayersModel;
 import server.view.ServerApplicationView;
 import shared.ExitDialog;
+import shared.SwingResources;
 import shared.SwingStylesheet;
 
 import javax.swing.*;
@@ -13,6 +16,7 @@ public class ServerApplicationController {
     private ServerApplicationView view;
 
     private ServerApplicationModel model;
+    private PlayersController playersController;
 
     private Server server;
     private String[] args = {"-ORBINITIALHOST", "localhost", "-ORBINITIALPORT", "5000"};
@@ -22,11 +26,20 @@ public class ServerApplicationController {
         this.model = model;
         this.server = new Server();
 
+        SwingUtilities.invokeLater(() -> {
+            playersController = new PlayersController(view.getPlayersView(), new PlayersModel());
+        });
+
         view.getServerStatusView().setServerListener(new ServerSwitchListener());
         view.setSwitchListener(new SwitchListener());
         view.setGameSettingsListener(new GameSettingsListener());
         view.setPlayersListener(new PlayersListener());
         view.setLogoutListener(new LogoutListener());
+
+        view.getBtnNavSwitch().addMouseListener(new SwingResources.CursorChanger(view.getBtnNavSwitch()));
+        view.getBtnNavGameSettings().addMouseListener(new SwingResources.CursorChanger(view.getBtnNavGameSettings()));
+        view.getBtnNavPlayers().addMouseListener(new SwingResources.CursorChanger(view.getBtnNavPlayers()));
+        view.getBtnNavLogout().addMouseListener(new SwingResources.CursorChanger(view.getBtnNavLogout()));
     }
 
     // Action listener for switching to Server Status panel

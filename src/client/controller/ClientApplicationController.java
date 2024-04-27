@@ -8,7 +8,9 @@ import client.model.subpages.HomeModel;
 import client.model.subpages.HowToPlayModel;
 import client.model.subpages.SettingsModel;
 import client.view.ClientApplicationView;
+import shared.ExitDialog;
 import shared.SwingResources;
+import shared.SwingStylesheet;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -138,19 +140,21 @@ public class ClientApplicationController {
      * Logs the user out of the application.
      */
     class LogOutListener implements ActionListener {
-        //TEMPORARY PROMPT FOR LOGOUT
         @Override
         public void actionPerformed(ActionEvent e) {
-            int choice = JOptionPane.showConfirmDialog(
-                    view,
-                    "Are you sure you want to log out?",
-                    "TEMPORARY PROMPT",
-                    JOptionPane.YES_NO_OPTION
-            );
 
-            if (choice == JOptionPane.YES_OPTION) {
-                view.dispose();
-            }
+            SwingStylesheet style = new SwingStylesheet();
+            ExitDialog exitDialog = new ExitDialog(
+                    "Exit Confirmation",
+                    new ImageIcon("res/drawable/icons/alert-red-solid.png"),
+                    "EXIT CONFIRMATION",
+                    "Are you sure you want to exit the game?.",
+                    "EXIT",
+                    style.red,
+                    style.white,
+                    style.black,
+                    style.red
+            );
         }
     }
 

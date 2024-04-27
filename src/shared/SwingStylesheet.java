@@ -78,6 +78,10 @@ public class SwingStylesheet {
      */
     public final ImageIcon iconSuccess = new ImageIcon("res/drawable/icons/success-tainoi-solid.png");
     /**
+     * The winner icon.
+     */
+    public final ImageIcon iconWinner = new ImageIcon("res/drawable/icons/celebrate-tainoi-solid.png");
+    /**
      * The home icon.
      */
     public final ImageIcon iconHome = new ImageIcon("res/drawable/icons/home-white-solid.png");
@@ -144,15 +148,31 @@ public class SwingStylesheet {
     /**
      * The search icon.
      */
-    public final ImageIcon iconSearch = new ImageIcon("res/drawable/icons/search-solid.png");
+    public final ImageIcon iconSearch = new ImageIcon("res/drawable/icons/search-blue-solid.png");
     /**
      * The logo in GIF form.
      */
     public final ImageIcon iconLogoAnimated = new ImageIcon("res/drawable/gifs/logo.gif");
     /**
+     * The logo in GIF form.
+     */
+    public final ImageIcon iconLogoSteady = new ImageIcon("res/drawable/images/img-logo-wordFactory.png");
+    /**
      * The profile picture for male sample 1.
      */
     public final ImageIcon iconPfpMale1 = new ImageIcon("res/drawable/images/pfp-male-1.png");
+    /**
+     * The profile picture for male sample 1.
+     */
+    public final ImageIcon iconPfpMale2 = new ImageIcon("res/drawable/images/pfp-man-2.png");
+    /**
+     * The profile picture for male sample 1.
+     */
+    public final ImageIcon iconPfpWoman1 = new ImageIcon("res/drawable/images/pfp-woman-1.png");
+    /**
+     * The profile picture for male sample 1.
+     */
+    public final ImageIcon iconPfpWoman2 = new ImageIcon("res/drawable/images/pfp-woman-2.png");
     /**
      * Default padding for panels.
      */
@@ -383,6 +403,48 @@ public class SwingStylesheet {
         button.setBackground(background);
         button.setForeground(foreground);
         button.setFont(bowlbyOne.deriveFont(45f));
+        button.setBorder(new RoundedBorder(radius));
+        button.setVerticalTextPosition(SwingConstants.CENTER);
+        button.setHorizontalAlignment(SwingConstants.CENTER);
+        button.setBorderPainted(true);
+        return button;
+    }
+
+    /**
+     * Creates a new JButton with a specified text, background color, foreground color, and radius.
+     *
+     * @param text       The specified text.
+     * @param background The specified background.
+     * @param foreground The specified foreground.
+     * @param radius     The specified radius.
+     * @return The specified button.
+     */
+    public JButton createBtnRoundedH2(String text, Color background, Color foreground, int radius) {
+        JButton button = new JButton(text);
+        button.setBackground(background);
+        button.setForeground(foreground);
+        button.setFont(bowlbyOne.deriveFont(22f));
+        button.setBorder(new RoundedBorder(radius));
+        button.setVerticalTextPosition(SwingConstants.CENTER);
+        button.setHorizontalAlignment(SwingConstants.CENTER);
+        button.setBorderPainted(true);
+        return button;
+    }
+
+    /**
+     * Creates a new JButton with a specified text, background color, foreground color, and radius.
+     *
+     * @param text       The specified text.
+     * @param background The specified background.
+     * @param foreground The specified foreground.
+     * @param radius     The specified radius.
+     * @return The specified button.
+     */
+    public JButton createBtnRoundedH3(String text, Color background, Color foreground, int radius) {
+        JButton button = new JButton(text);
+        button.setBackground(background);
+        button.setForeground(foreground);
+        button.setFont(bowlbyOne.deriveFont(18f));
         button.setBorder(new RoundedBorder(radius));
         button.setVerticalTextPosition(SwingConstants.CENTER);
         button.setHorizontalAlignment(SwingConstants.CENTER);
