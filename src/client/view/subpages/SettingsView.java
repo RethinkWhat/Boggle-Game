@@ -203,6 +203,7 @@ public class SettingsView extends JPanel{
             gbc.insets = new Insets(-60, 20, 0, 0);
             btnChangeAvatar = style.createBtnRounded("CHANGE AVATAR", style.deepSkyBlue, style.white, 10);
             btnChangeAvatar.setPreferredSize(new Dimension(180, 30));
+            btnChangeAvatar.setFocusable(true);
             this.add(btnChangeAvatar, gbc);
 
             gbc.gridy++;
@@ -221,6 +222,7 @@ public class SettingsView extends JPanel{
             fullNameTextField.setText("Ramon, Ang Tagabantay");
             fullNameTextField.setPreferredSize(new Dimension(300, 30));
             fullNameTextField.setEnabled(false);
+            fullNameTextField.setFocusable(true);
             this.add(fullNameTextField, gbc);
 
             gbc.gridx = 1;
@@ -233,7 +235,7 @@ public class SettingsView extends JPanel{
             gbc.anchor = GridBagConstraints.CENTER;
             errorMessageLabel = new JLabel("Full name must only contain");
             errorMessageLabel.setForeground(Color.RED);
-            errorMessageLabel.setVisible(true);
+            errorMessageLabel.setVisible(false);
             gbc.insets = new Insets(40, -120, -10, 0);
             this.add(errorMessageLabel, gbc);
 
@@ -241,7 +243,7 @@ public class SettingsView extends JPanel{
             gbc.anchor = GridBagConstraints.CENTER;
             errorMessageLabel = new JLabel("alphanumeric characters.");
             errorMessageLabel.setForeground(Color.RED);
-            errorMessageLabel.setVisible(true);
+            errorMessageLabel.setVisible(false);
             gbc.insets = new Insets(5, -120, -10, 0);
             this.add(errorMessageLabel, gbc);
 
@@ -254,8 +256,8 @@ public class SettingsView extends JPanel{
 
             btnSaveChanges = style.createBtnRounded("SAVE CHANGES", style.deepSkyBlue, style.white, 10);
             btnSaveChanges.setPreferredSize(new Dimension(200,40));
+            btnSaveChanges.setFocusable(true);
             this.add(btnSaveChanges, gbc);
-            this.setFocusable(true);
 
             this.setPreferredSize(new Dimension(400, 400));
             this.setMaximumSize(new Dimension(400, 400));
@@ -304,6 +306,7 @@ public class SettingsView extends JPanel{
             gbc.gridy++;
             currentPasswordTextField = style.createPwdRounded(style.white, style.black, 25);
             currentPasswordTextField.setPreferredSize(new Dimension(300, 30));
+            currentPasswordTextField.setFocusable(true);
             this.add(currentPasswordTextField, gbc);
 
             gbc.gridy++;
@@ -313,6 +316,7 @@ public class SettingsView extends JPanel{
             gbc.gridy++;
             newPasswordTextField = style.createPwdRounded(style.white, style.black, 25);
             newPasswordTextField.setPreferredSize(new Dimension(300, 30));
+            newPasswordTextField.setFocusable(true);
             this.add(newPasswordTextField, gbc);
 
             gbc.gridy++;
@@ -322,12 +326,13 @@ public class SettingsView extends JPanel{
             gbc.gridy++;
             confirmPasswordTextField = style.createPwdRounded(style.white, style.black, 25);
             confirmPasswordTextField.setPreferredSize(new Dimension(300, 30));
+            confirmPasswordTextField.setFocusable(true);
             this.add(confirmPasswordTextField, gbc);
 
             gbc.gridy++;
             errorMessageLabel = new JLabel("Passwords do not match. Try again.");
             errorMessageLabel.setForeground(Color.RED);
-            errorMessageLabel.setVisible(true);
+            errorMessageLabel.setVisible(false);
             gbc.insets = new Insets(20, 50, 0, 0);
             this.add(errorMessageLabel, gbc);
 
@@ -526,18 +531,43 @@ public class SettingsView extends JPanel{
         btnChangePass.addActionListener(actionListener);
     }
 
+    // sets a specified text for fullNameTextField
+    public void setFullNameText(String text) {
+        fullNameTextField.setText(text);
+    }
+
     // sets a specified text for gplValue
-    public void setGamesPlayedText(String text) {
-        gplValue.setText(text);
+    public void setGamesPlayedText(int text)          {    // POSSIBLE BUG HERE
+        gplValue.setText(String.valueOf("50"));
     }
 
     // sets a specified text for gwlValue
-    public void setGamesWonText(String text) {
-        gwlValue.setText(text);
+    public void setGamesWonText(int text) {                 // POSSIBLE BUG HERE
+        gwlValue.setText(String.valueOf("50"));
     }
 
     // sets a specified text for tplValue
-    public void setTotalPointsText(String text) {
-        tplValue.setText(text);
+    public void setTotalPointsText(int text) {          // THIS IS WORKING
+        tplValue.setText(String.valueOf(text));
+    }
+
+    public String getCurrentPassword() {
+        return String.valueOf(currentPasswordTextField.getPassword());
+    }
+
+    public String getNewPassword() {
+        return String.valueOf(newPasswordTextField.getPassword());
+    }
+
+    public String getConfirmPassword(){
+        return String.valueOf(confirmPasswordTextField.getPassword());
+    }
+
+    public JTextField getFullNameTextField() {
+        return fullNameTextField;
+    }
+
+    public JLabel getErrorMessageLabel() {
+        return errorMessageLabel;
     }
 }
