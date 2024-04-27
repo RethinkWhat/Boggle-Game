@@ -12,8 +12,6 @@ import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
@@ -97,6 +95,10 @@ public class GameRoomController {
         view.setMusicToggleListener(new MusicListener());
         view.setSoundToggleListener(new SoundListener());
         view.setInputListener(new InputListener());
+        view.setClearListener(e -> {
+            view.getTxtWordInput().setText("");
+            view.setErrorMessage("");
+        });
 
         // mouse listeners
         view.getBtnClear().addMouseListener(new SwingResources.CursorChanger(view.getBtnClear()));
@@ -104,7 +106,8 @@ public class GameRoomController {
         view.getBtnSoundToggle().addMouseListener(new SwingResources.CursorChanger(view.getBtnSoundToggle()));
 
         // focus listeners
-        view.getTxtWordInput().addFocusListener(new SwingResources.TextFieldFocus(view.getTxtWordInput(), "Enter word here."));
+        view.getTxtWordInput().addFocusListener(new SwingResources.TextFieldFocus(view.getTxtWordInput(),
+                "Enter word here.", view.getLblErrorMessage()));
 
         view.revalidate();
         view.repaint();
@@ -120,12 +123,27 @@ public class GameRoomController {
                 try {
                     long duration = model.getDuration();
                     int inSeconds = (int) duration / 1000;
+                    view.setPrgTimerMaxVal(inSeconds);
                     System.out.println(inSeconds);
                     while (inSeconds >= 0) {
                         Thread.sleep(1000);
                         view.setLblTimerTxt(inSeconds);
                         inSeconds -= 1;
+                        view.setPrgTimerValue(inSeconds);
                         System.out.println(inSeconds);
+                        if (inSeconds == 10) {
+                            playSFX("countdown");
+                            SwingUtilities.invokeLater(() -> {
+                                view.getPrgTimer().setBackground(style.red);
+                                view.getLblTimer().setForeground(style.red);
+                            });
+                        } else if (inSeconds == 0) {
+                            playSFX("countdown");
+                            SwingUtilities.invokeLater(() -> {
+                                view.getPrgTimer().setBackground(style.goldenTainoi);
+                                view.getLblTimer().setForeground(style.white);
+                            });
+                        }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -144,7 +162,7 @@ public class GameRoomController {
             view.setErrorMessage("");
             String input = view.getTxtWordInput().getText().trim();
 
-            if (!input.contains(" ")) {
+            if (!input.contains(" ") && input.length() >= 4) {
                 if (!validateInput(input)) {
                     view.setErrorMessage("Input must only contain LETTERS!");
                     view.getTxtWordInput().setText("");
@@ -156,8 +174,12 @@ public class GameRoomController {
                     view.getTxtWordInput().setText("");
                     playSFX("goodInput");
                 }
+            } else if (input.length() < 4) {
+                view.setErrorMessage("Input must be at least 4 CHARACTERS!");
+                view.getTxtWordInput().setText("");
+                playSFX("badInput");
             } else {
-                view.setErrorMessage("Input must be a WORD!");
+                view.setErrorMessage("Input must only be a WORD!");
                 view.getTxtWordInput().setText("");
                 playSFX("badInput");
             }
@@ -287,7 +309,6 @@ public class GameRoomController {
         }
     }
 
-    //TODO: Per user input, store in word set found in model
     //TODO: When timer above elapses, send word set to server using the getRoundWinner method
 
 }

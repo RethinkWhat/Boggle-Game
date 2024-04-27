@@ -746,6 +746,27 @@ public class GameRoomView extends JPanel {
     }
 
     /**
+     * Sets a specified value of prgTimer.
+     *
+     * @param value The sepcified value.
+     */
+    public void setPrgTimerValue(int value) {
+        SwingUtilities.invokeLater(() -> prgTimer.setValue(value));
+    }
+
+    /**
+     * Sets a specified value of prgTimer.
+     *
+     * @param value The specified maximum value.
+     */
+    public void setPrgTimerMaxVal(int value) {
+        SwingUtilities.invokeLater(() -> {
+            prgTimer.setMaximum(value);
+            prgTimer.setMinimum(0);
+        });
+    }
+
+    /**
      * Updates the viewport of txaPlayerInputs.
      */
     public void updateTxaHeight() {
@@ -755,5 +776,13 @@ public class GameRoomView extends JPanel {
             repaint();
             revalidate();
         });
+    }
+
+    /**
+     * Retrieves the current JLabel of lblTimer.
+     * @return The current lblTimer.
+     */
+    public JLabel getLblTimer() {
+        return lblTimer;
     }
 }
