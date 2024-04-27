@@ -121,6 +121,7 @@ public class LobbyView extends JPanel {
             pnlPlayerContainer.setBorder(style.padding);
             pnlPlayerContainer.setPreferredSize(new Dimension(1100,920));
 
+            /*
             pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
             pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
             pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
@@ -131,6 +132,8 @@ public class LobbyView extends JPanel {
             pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
             pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
             pnlPlayerContainer.add(new UserPanel("res/drawable/images/pfp-male-1.png", "username"));
+
+             */
 
 
             JScrollPane scroll = new JScrollPane(pnlPlayerContainer);
@@ -226,5 +229,9 @@ public class LobbyView extends JPanel {
      */
     public void addPlayerInUserPanel(String username, String pfpURL) {
         SwingUtilities.invokeLater(() -> pnlPlayerContainer.add(new UserPanel(username, pfpURL)));
+    }
+
+    public void removePlayersInUserPanel() {
+        pnlPlayerContainer.removeAll();
     }
 }

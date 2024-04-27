@@ -1,6 +1,7 @@
 package client.model.subpages;
 
 import client.model.BoggleApp.BoggleClient;
+import client.model.BoggleApp.LobbyUser;
 import org.omg.CORBA.BooleanHolder;
 
 public class LobbyModel {
@@ -29,5 +30,9 @@ public class LobbyModel {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public LobbyUser[] getUsersInLobby() {
+        return wfImpl.getLobbyMembers();
     }
 }
