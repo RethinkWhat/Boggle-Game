@@ -333,6 +333,7 @@ public class SettingsView extends JPanel{
             errorMessageLabel = new JLabel("Passwords do not match. Try again.");
             errorMessageLabel.setForeground(Color.RED);
             errorMessageLabel.setVisible(false);
+            errorMessageLabel.setFocusable(true);
             gbc.insets = new Insets(20, 50, 0, 0);
             this.add(errorMessageLabel, gbc);
 
@@ -538,12 +539,12 @@ public class SettingsView extends JPanel{
 
     // sets a specified text for gplValue
     public void setGamesPlayedText(int text)          {    // POSSIBLE BUG HERE
-        gplValue.setText(String.valueOf("50"));
+        gplValue.setText(String.valueOf(text));
     }
 
     // sets a specified text for gwlValue
     public void setGamesWonText(int text) {                 // POSSIBLE BUG HERE
-        gwlValue.setText(String.valueOf("50"));
+        gwlValue.setText(String.valueOf(text));
     }
 
     // sets a specified text for tplValue
@@ -551,23 +552,40 @@ public class SettingsView extends JPanel{
         tplValue.setText(String.valueOf(text));
     }
 
+    // retrieves the current Password Field of currentPasswordTextField
+    // return the current currentPasswordTextField
     public String getCurrentPassword() {
         return String.valueOf(currentPasswordTextField.getPassword());
     }
 
+    // retrieves the current Password Field of newPasswordTextField
+    // return the current newPasswordTextField
     public String getNewPassword() {
         return String.valueOf(newPasswordTextField.getPassword());
     }
 
+    // retrieves the current Password Field of confirmPasswordTextField
+    // return the current confirmPasswordTextField
     public String getConfirmPassword(){
         return String.valueOf(confirmPasswordTextField.getPassword());
     }
 
+    // retrieves the current Text Field of fullNameTextField
+    // return the current fullNameTextField
     public JTextField getFullNameTextField() {
         return fullNameTextField;
     }
 
+    // retrieves the Text of errorMessageLabel
+    // return the errorMessageLabel
     public JLabel getErrorMessageLabel() {
         return errorMessageLabel;
+    }
+
+    // clears the password fields
+    public void clearPasswordFields() {
+        newPasswordTextField.setText("");
+        confirmPasswordTextField.setText("");
+        currentPasswordTextField.setText("");
     }
 }

@@ -21,6 +21,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.sql.SQLException;
 
 /**
  * The ClientApplicationController controls application navigation and holds all the sub-controllers that control
@@ -94,8 +95,12 @@ public class ClientApplicationController {
         SwingUtilities.invokeLater(() -> {
             homeController = new HomeController(view.getHomeView(), new HomeModel(model.getUsername(), model.getWfImpl()), this);
             howToPlayController = new HowToPlayController(view.getHowToPlayView(), new HowToPlayModel(), this);
-            settingsController = new SettingsController(view.getSettingsView(),
-                    new SettingsModel(model.getUsername(), model.getWfImpl()), view);
+            try {
+                settingsController = new SettingsController(view.getSettingsView(),
+                        new SettingsModel(model.getUsername(), model.getWfImpl()), view);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             new GameRoomController(new GameRoomModel(model.getUsername(), model.getWfImpl()), view.getGameRoomView(), this);
         });
 

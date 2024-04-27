@@ -3,28 +3,35 @@ package client.controller.subpages;
 import client.controller.LoginController;
 import client.model.subpages.SettingsModel;
 import client.view.ClientApplicationView;
+import client.view.prompts.ChangePassErrorView;
+import client.view.prompts.ChangeProfInfoErrorView;
+import client.view.prompts.PassChangeSuccessView;
 import client.view.prompts.ProfChangeSuccessView;
 import client.view.subpages.SettingsView;
 import shared.SwingResources;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.sql.SQLException;
 
 public class SettingsController {
     private SettingsView view;
     private SettingsModel model;
     private ClientApplicationView parentView;
     private ProfChangeSuccessView profChangeSuccessView;
+    private ChangeProfInfoErrorView changeProfInfoErrorView;
+    private PassChangeSuccessView passChangeSuccessView;
+    private ChangePassErrorView changePassErrorView;
 
-    public SettingsController(SettingsView view, SettingsModel model, ClientApplicationView parentView) {
+    public SettingsController(SettingsView view, SettingsModel model, ClientApplicationView parentView) throws SQLException {
         this.view = view;
         this.model = model;
         this.parentView = parentView;
 
         // set texts
-        this.view.setFullNameText(model.getUsername());         //TEMPORARY ONLY SINCE THERE IS NO GETFULLNAME IN MODEL
-        this.view.setGamesPlayedText(model.getMatches());       // POSSIBLE BUG HERE
-        this.view.setGamesWonText(model.getWins());             // POSSIBLE BUG HERE
+        this.view.setFullNameText(model.getUsername());     //TEMPORARY ONLY SINCE THERE IS NO GETFULLNAME IN MODEL
+        this.view.setGamesPlayedText(model.getMatchesPartTwo());       // POSSIBLE BUG HERE
+        this.view.setGamesWonText(model.getWinsPartTwo());             // POSSIBLE BUG HERE
         this.view.setTotalPointsText(model.getUserPoints());  // THIS IS WORKING
 
         // action listeners
@@ -34,9 +41,15 @@ public class SettingsController {
         this.view.setChangePassListener(new ChangePassListener());
 
         // mouse listeners
+        this.view.getBtnChangeAvatar().addMouseListener(new SwingResources.CursorChanger(view.getBtnChangeAvatar()));
+        this.view.getBtnEditChanges().addMouseListener(new SwingResources.CursorChanger(view.getBtnEditChanges()));
+        this.view.getBtnSaveChanges().addMouseListener(new SwingResources.CursorChanger(view.getBtnSaveChanges()));
+        this.view.getBtnChangePass().addMouseListener(new SwingResources.CursorChanger(view.getBtnChangePass()));
+        this.view.getBtnDelAcc().addMouseListener(new SwingResources.CursorChanger(view.getBtnDelAcc()));
+        this.view.getBtnMusic().addMouseListener(new SwingResources.CursorChanger(view.getBtnMusic()));
 
         // focus listeners
-
+        this.view.getFullNameTextField().addFocusListener(new FullNameTextFieldFocusListener());
     }
 
     class ChangeAvatarListener implements ActionListener {
@@ -53,7 +66,7 @@ public class SettingsController {
             );
 
             if (choice == JOptionPane.YES_OPTION) {
-                System.out.println("Avatar successfully changed...");
+                System.out.println("Avatar successfully changed!");
                 profChangeSuccessView.main();
             }
         }
@@ -63,54 +76,71 @@ public class SettingsController {
         @Override
         public void actionPerformed(ActionEvent e) {
             view.getFullNameTextField().setEnabled(true);
-            view.getErrorMessageLabel().setText("");
-
-            System.out.println("Editing full name...");
+            view.getFullNameTextField().setText("");
         }
     }
 
     class SaveChangesListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            int choice = JOptionPane.showConfirmDialog(
-                    view,
-                    "Are you sure you want to save changes?",
-                    "TEMPORARY PROMPT",
-                    JOptionPane.YES_NO_OPTION
-            );
-
-            if (choice == JOptionPane.YES_OPTION) {
-                System.out.println("Full name successfully changed...");
-
-                // LOGIC FOR FULL NAME CHANGE SOON
-
+            String newFullName = view.getFullNameTextField().getText();
+            boolean success = false;
+            try {
+                success = model.editInfo(model.getUsername(), "fullName", newFullName);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
+            if (success) {
+                System.out.println("FullName Change Success!");
+                view.setFullNameText(newFullName);
+                view.getFullNameTextField().setEnabled(false);
                 profChangeSuccessView.main();
+            } else {
+                System.out.println("FullName Change Failed!");
+                changeProfInfoErrorView.main();
             }
         }
     }
 
-    class ChangePassListener implements ActionListener {        //NEWPASS == CONFIRMPASS IS WORKING BUT NOT THE REST
+    class ChangePassListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String username = model.getUsername();
-            String oldPass = view.getCurrentPassword();
-            String newPass = view.getNewPassword();
-            String confirmPass = view.getConfirmPassword();
-
-            if (!newPass.equals(confirmPass)) {
-                System.out.println("New password and confirmation password do not match.");
-                return;
-            }
-
-            try {
-                if (model.editPassword(username, oldPass, newPass)) {
-                    System.out.println("Password changed successfully!");
-                } else {
-                    System.out.println("Failed to change password. Please try again.");
+            String newPassword = view.getNewPassword();
+            String confirmPassword = view.getConfirmPassword();
+            if (newPassword.equals(confirmPassword)) {
+                try {
+                    boolean success = model.editPassword(model.getUsername(), view.getCurrentPassword(), newPassword);
+                    if (success) {
+                        System.out.println("Change Password Success!");
+                        view.clearPasswordFields();
+                        passChangeSuccessView.main();
+                    } else {
+                        System.out.println("Change Password Failed!");
+                        view.clearPasswordFields();
+                        changePassErrorView.main();
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
                 }
-            } catch (Exception ex) {
-                System.out.println("An error occurred: " + ex.getMessage());
+            } else {
+                view.getErrorMessageLabel().setVisible(true);
+                view.getErrorMessageLabel().transferFocus();
+                view.clearPasswordFields();
+                System.out.println("Passwords Do Not Match!");
+                changePassErrorView.main();
             }
+        }
+    }
+
+    class FullNameTextFieldFocusListener implements FocusListener {
+        @Override
+        public void focusGained(FocusEvent e) {
+
+        }
+
+        @Override
+        public void focusLost(FocusEvent e) {
+            view.getFullNameTextField().setEnabled(false);
         }
     }
 }
