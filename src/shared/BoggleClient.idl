@@ -4,7 +4,13 @@ module BoggleApp {
         string pfpAddress;
         long points;
     };
+    struct LobbyUser {
+        string username;
+        string pfpAddress;
+    };
+
     typedef sequence<Leaderboard> userRanking;
+    typedef sequence<LobbyUser> lobbyUserList;
 
     interface BoggleClient {
         boolean validateAccount(in string username, in string password);
@@ -39,5 +45,8 @@ module BoggleApp {
         long getMatches(in string username);
         long getWins(in string username);
         boolean editPassword(in string username, in string oldPass, in string newPass);
+
+        lobbyUserList getLobbyMembers();
+        userRanking getCurrGameLeaderboard(in long gameID);
     };
 };

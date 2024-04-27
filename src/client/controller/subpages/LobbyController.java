@@ -1,6 +1,7 @@
 package client.controller.subpages;
 
 import client.controller.ClientApplicationController;
+import client.model.BoggleApp.LobbyUser;
 import client.model.subpages.GameRoomModel;
 import client.model.subpages.LobbyModel;
 import client.view.ClientApplicationView;
@@ -31,6 +32,8 @@ public class LobbyController {
     public void timer() {
         view.setLblTimerTxt("00:" + 10000 / 1000);
         long timerVal = -1;
+        LobbyUser[] usersInLobby = model.getUsersInLobby();
+        populateLobby(usersInLobby);
         try {
             timerVal = model.getWfImpl().attemptJoin(model.getUsername());
             Thread.sleep(1000);
@@ -38,10 +41,17 @@ public class LobbyController {
             BooleanHolder startLobby = new BooleanHolder(false);
             while (timerVal != 0) {
                 timerVal = model.getWfImpl().getCurrLobbyTimerValue(startLobby);
-                System.out.println(timerVal);
+
+                LobbyUser[] tempList = model.getUsersInLobby();
+
+                if (usersInLobby.length != tempList.length) {
+                    usersInLobby = tempList;
+                    populateLobby(usersInLobby);
+                }
+
+
                 view.setLblTimerTxt("00:0" + timerVal / 1000);
             }
-            System.out.println("THIS IS TIMER VAL: " + timerVal);
             if (startLobby.value) {
                 parent.getView().showGameRoom();
                 parent.stopMusic();
@@ -54,6 +64,13 @@ public class LobbyController {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public void populateLobby(LobbyUser[] users) {
+        view.removePlayersInUserPanel();
+        for (LobbyUser user : users) {
+            view.addPlayerInUserPanel(user.username, user.pfpAddress);
         }
     }
 }
