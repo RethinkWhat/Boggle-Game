@@ -11,6 +11,7 @@ import shared.SwingStylesheet;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 public class ServerApplicationController {
     private ServerApplicationView view;
