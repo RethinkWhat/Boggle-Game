@@ -1,9 +1,11 @@
 package client.controller;
 
+import client.controller.subpages.GameRoomController;
 import client.controller.subpages.HomeController;
 import client.controller.subpages.HowToPlayController;
 import client.controller.subpages.SettingsController;
 import client.model.ClientApplicationModel;
+import client.model.subpages.GameRoomModel;
 import client.model.subpages.HomeModel;
 import client.model.subpages.HowToPlayModel;
 import client.model.subpages.SettingsModel;
@@ -94,6 +96,7 @@ public class ClientApplicationController {
             howToPlayController = new HowToPlayController(view.getHowToPlayView(), new HowToPlayModel(), this);
             settingsController = new SettingsController(view.getSettingsView(),
                     new SettingsModel(model.getUsername(), model.getWfImpl()), view);
+            new GameRoomController(new GameRoomModel(model.getUsername(), model.getWfImpl()), view.getGameRoomView(), this);
         });
 
         // action listeners
@@ -159,7 +162,7 @@ public class ClientApplicationController {
     }
 
     /**
-     *
+     * Plays the default music for the home and settings page.
      */
     public void playDefaultMusic() {
         try {
@@ -174,6 +177,9 @@ public class ClientApplicationController {
         }
     }
 
+    /**
+     * Plays the lobby music.
+     */
     public void playLobbyMusic() {
         try {
             musicClip.stop();
@@ -187,6 +193,9 @@ public class ClientApplicationController {
         }
     }
 
+    /**
+     * Plays the game room music.
+     */
     public void playGameMusic() {
         try {
             musicClip.stop();
@@ -200,6 +209,9 @@ public class ClientApplicationController {
         }
     }
 
+    /**
+     * Stops the current music.
+     */
     public void stopMusic() {
         musicClip.stop();
     }
@@ -218,5 +230,21 @@ public class ClientApplicationController {
      */
     public ClientApplicationModel getModel() {
         return model;
+    }
+
+    /**
+     * Retrieves the current Clip of sfxClip.
+     * @return The current sfxClip.
+     */
+    public Clip getSfxClip() {
+        return sfxClip;
+    }
+
+    /**
+     * Retrieves the current Clip of musicClip.
+     * @return The current musicClip.
+     */
+    public Clip getMusicClip() {
+        return musicClip;
     }
 }

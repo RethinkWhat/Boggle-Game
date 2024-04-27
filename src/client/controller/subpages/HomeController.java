@@ -43,6 +43,7 @@ public class HomeController {
 
         // action listeners
         view.setJoinListener(new JoinGameListener(parent));
+        view.setEditListener(new EditPfpListener());
         view.setTutorialListener(e -> parent.getView().showTutorial());
 
         view.getLblUsername().setText(model.getUsername());
@@ -101,6 +102,16 @@ public class HomeController {
                     }
                 });
             });
+        }
+    }
+
+    /**
+     * Processes editing of player profile picture.
+     */
+    class EditPfpListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
         }
     }
 }

@@ -118,7 +118,7 @@ public class LoginView extends JFrame {
             gbc.ipady = 10;
             chkShowPassword = new JCheckBox("Show Password");
             chkShowPassword.setBorderPaintedFlat(true);
-            chkShowPassword.setBackground(style.deepSkyBlue);
+            chkShowPassword.setBackground(style.white);
             chkShowPassword.setForeground(style.gray);
             chkShowPassword.setFont(new Font("Arial", Font.PLAIN, 12));
             container.add(chkShowPassword, gbc);
@@ -235,6 +235,14 @@ public class LoginView extends JFrame {
      */
     public void setLoginListener(ActionListener actionListener) {
         btnLogin.addActionListener(actionListener);
+    }
+
+    /**
+     * Adds a specified action listener to txtPassword.
+     * @param actionListener The specified action listener.
+     */
+    public void setPasswordListener(ActionListener actionListener) {
+        txtPassword.addActionListener(actionListener);
     }
 
     /**

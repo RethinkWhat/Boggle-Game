@@ -129,11 +129,12 @@ public class HowToPlayView extends JPanel {
             add(lblInstructionOne, gbc);
 
             gbc.gridy = 3;
-            lblInstructionTwo = style.createLblP("<html>2. Each player is given " + roundDuration + "seconds in a single round to form as many unique English words possible.</html>", style.black);
+            lblInstructionTwo = style.createLblP("<html>2. Each player is given " + roundDuration + " seconds in a single round to form as many unique English words possible.</html>", style.black);
             add(lblInstructionTwo, gbc);
 
             gbc.gridy = 4;
-            lblInstructionThree = style.createLblP("<html>3. Scores are based on the length of the word(e.g., WORD = 4 points). Players who enter the same word will not be honored points.</html>", style.black);
+            lblInstructionThree = style.createLblP("<html>3. Scores are based on the length of the word (e.g., WORD = 4 points). " +
+                    "Players who enter the same word will not be honored points. Scores are computed after every round.</html>", style.black);
             lblInstructionThree.setPreferredSize(new Dimension(500, 30));
             add(lblInstructionThree, gbc);
 
