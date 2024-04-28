@@ -22,7 +22,7 @@ public class DelAccErrorView {
                 style.red,
                 style.black,
                 style.red,
-                true
+                false
         );
     }
 }

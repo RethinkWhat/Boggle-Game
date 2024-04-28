@@ -22,7 +22,7 @@ public class PassChangeSuccessView {
                 style.goldenTainoi,
                 style.black,
                 style.goldenTainoi,
-                true
+                false
         );
     }
 }
