@@ -4,6 +4,7 @@ import org.omg.CORBA.ORB;
 
 import javax.swing.plaf.nimbus.State;
 import java.sql.*;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -293,5 +294,42 @@ public class DataPB {
             e.printStackTrace();
         }
         return topPlayers;
+    }
+
+    public static Map<String,Integer> getTotalPointsRoundDetails(int gameID, String username){
+        Map<String,Integer> totalPointsMap = new HashMap<>();
+        String key = username+gameID;
+
+        String query = "SELECT sum(points)as total_points FROM round_details WHERE gameID =? AND username =?";
+        try(PreparedStatement ps = con.prepareStatement(query)){
+            ps.setInt(1,gameID);
+            ps.setString(2,username);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                int totalPoints = rs.getInt("total_points");
+                totalPointsMap.put(key, totalPoints);
+            }
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        return totalPointsMap;
+    }
+
+    public static String getPFPOfUser(String username){
+        String pfp = null;
+
+        String query = "SELECT pfp FROM player WHERE username =? ";
+        try(PreparedStatement ps = con.prepareStatement(query)){
+            ps.setString(1,username);
+            ResultSet rs=ps.executeQuery();
+
+            if (rs.next()){
+                pfp=rs.getString("pfp");
+            }
+        }catch (SQLException sqle){
+            sqle.printStackTrace();
+        }
+        return pfp;
     }
 }
