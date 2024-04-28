@@ -11,6 +11,8 @@ import java.io.File;
 import java.io.IOException;
 
 public class SettingsView extends JPanel{
+    private JLabel leftPnlLbl; // the label of the left panel's text
+    private JLabel leftPnlStateLbl; // the label of the left panel's state
     private JLabel profileLabel; // the label of the profile panel
     private JButton btnAccMa; // the manage account button
     private JButton btnDelAcc; // the delete account button
@@ -112,15 +114,15 @@ public class SettingsView extends JPanel{
 
             gbc.gridy++;
             gbc.insets = new Insets(0, -10, 10, 0);
-            btnAccMa = navButtonWithLabel(container, style.iconAccMan, "Account Management", gbc);
+            btnAccMa = navButtonWithLabel(container, style.iconAccMan, "Account Management", null, gbc);
 
             gbc.gridy++;
             gbc.insets = new Insets(0, -10, 15, 0);
-            btnDelAcc = navButtonWithLabel(container, style.iconAccMan, "Delete Account", gbc);
+            btnDelAcc = navButtonWithLabel(container, style.iconAccMan, "Delete Account", null, gbc);
 
             gbc.gridy++;
             gbc.insets = new Insets(0, -10, 0, 0);
-            btnMusic = navButtonWithLabel(container, style.iconMusic, "Music: " + "ON", gbc);
+            btnMusic = navButtonWithLabel(container, style.iconMusic, "Music:", "ON", gbc);
 
             leftPanelContainer.add(container, BorderLayout.CENTER);
 
@@ -130,12 +132,16 @@ public class SettingsView extends JPanel{
         }
 
         // joins the buttons' icons and text labels in a container
-        private JButton navButtonWithLabel(JPanel container, Icon icon, String labelText, GridBagConstraints gbc) {
+        private JButton navButtonWithLabel(JPanel container, Icon icon, String labelText, String stateText, GridBagConstraints gbc) {
             JButton button = style.createBtnIconOnly((ImageIcon) icon, 30, 30);
 
-            JLabel label = new JLabel(labelText);
-            label.setFont(new Font("Arial", Font.BOLD, 16));
-            label.setForeground(style.white);
+            leftPnlLbl = new JLabel(labelText);
+            leftPnlLbl.setFont(new Font("Arial", Font.BOLD, 16));
+            leftPnlLbl.setForeground(style.white);
+
+            leftPnlStateLbl = new JLabel(stateText);
+            leftPnlStateLbl.setFont(new Font("Arial", Font.BOLD, 16));
+            leftPnlStateLbl.setForeground(style.white);
 
             gbc.anchor = GridBagConstraints.WEST;
             gbc.gridx = 0;
@@ -143,8 +149,12 @@ public class SettingsView extends JPanel{
             container.add(button, gbc);
 
             gbc.gridx = 1;
-            gbc.insets = new Insets(10, -10, 0, 0);
-            container.add(label, gbc);
+            gbc.insets = new Insets(10, 0, 0, 0);
+            container.add(leftPnlLbl, gbc);
+
+            gbc.gridx = 2;
+            gbc.insets = new Insets(10, -100, 0, 0);
+            container.add(leftPnlStateLbl, gbc);
 
             return button;
         }
@@ -483,6 +493,17 @@ public class SettingsView extends JPanel{
         return btnMusic;
     }
 
+    // retrieves the current JLabel of leftPnlStateLbl
+    // return the current leftPnlStateLbl
+    public String getMusicState() {
+        return leftPnlStateLbl.getText();
+    }
+
+    // sets a specified text for leftPnlStateLbl
+    public void setMusicState(String text) {
+        leftPnlStateLbl.setText(text);
+    }
+
     // sets a specified action listener for btnMusic
     public void setMusicListener(ActionListener actionListener) {
         btnMusic.addActionListener(actionListener);
@@ -588,4 +609,6 @@ public class SettingsView extends JPanel{
         confirmPasswordTextField.setText("");
         currentPasswordTextField.setText("");
     }
+
+
 }

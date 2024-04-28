@@ -1,6 +1,6 @@
 package client.controller.subpages;
 
-import client.controller.LoginController;
+import client.controller.ClientApplicationController;
 import client.model.subpages.SettingsModel;
 import client.view.ClientApplicationView;
 import client.view.prompts.ChangePassErrorView;
@@ -18,15 +18,17 @@ public class SettingsController {
     private SettingsView view;
     private SettingsModel model;
     private ClientApplicationView parentView;
+    private ClientApplicationController parent;
     private ProfChangeSuccessView profChangeSuccessView;
     private ChangeProfInfoErrorView changeProfInfoErrorView;
     private PassChangeSuccessView passChangeSuccessView;
     private ChangePassErrorView changePassErrorView;
 
-    public SettingsController(SettingsView view, SettingsModel model, ClientApplicationView parentView) throws SQLException {
+    public SettingsController(SettingsView view, SettingsModel model, ClientApplicationView parentView, ClientApplicationController parent) throws SQLException {
         this.view = view;
         this.model = model;
         this.parentView = parentView;
+        this.parent = parent;
 
         // set texts
         this.view.setFullNameText(model.getUsername());     //TEMPORARY ONLY SINCE THERE IS NO GETFULLNAME IN MODEL
@@ -39,6 +41,7 @@ public class SettingsController {
         this.view.setEditListener(new EditFullNameListener());
         this.view.setSaveChangesListener(new SaveChangesListener());
         this.view.setChangePassListener(new ChangePassListener());
+        this.view.setMusicListener(new MusicButtonListener());
 
         // mouse listeners
         this.view.getBtnChangeAvatar().addMouseListener(new SwingResources.CursorChanger(view.getBtnChangeAvatar()));
@@ -49,7 +52,6 @@ public class SettingsController {
         this.view.getBtnMusic().addMouseListener(new SwingResources.CursorChanger(view.getBtnMusic()));
 
         // focus listeners
-        this.view.getFullNameTextField().addFocusListener(new FullNameTextFieldFocusListener());
     }
 
     class ChangeAvatarListener implements ActionListener {
@@ -77,6 +79,16 @@ public class SettingsController {
         public void actionPerformed(ActionEvent e) {
             view.getFullNameTextField().setEnabled(true);
             view.getFullNameTextField().setText("");
+
+            Timer timer = new Timer(4000, new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    view.getFullNameTextField().setText(model.getUsername());
+                    view.getFullNameTextField().setEnabled(false);
+                }
+            });
+            timer.setRepeats(false);
+            timer.start();
         }
     }
 
@@ -124,23 +136,34 @@ public class SettingsController {
                 }
             } else {
                 view.getErrorMessageLabel().setVisible(true);
-                view.getErrorMessageLabel().transferFocus();
                 view.clearPasswordFields();
                 System.out.println("Passwords Do Not Match!");
                 changePassErrorView.main();
+
+                Timer timer = new Timer(4000, new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent e) {
+                        view.getErrorMessageLabel().setVisible(false);
+                    }
+                });
+                timer.setRepeats(false);
+                timer.start();
             }
         }
     }
 
-    class FullNameTextFieldFocusListener implements FocusListener {
+    class MusicButtonListener implements ActionListener {
         @Override
-        public void focusGained(FocusEvent e) {
+        public void actionPerformed(ActionEvent e) {
+            String currentState = view.getMusicState();
 
-        }
-
-        @Override
-        public void focusLost(FocusEvent e) {
-            view.getFullNameTextField().setEnabled(false);
+            if (currentState.equals("ON")) {
+                view.setMusicState("OFF");
+                parent.stopMusic();
+            } else {
+                view.setMusicState("ON");
+                parent.playDefaultMusic();
+            }
         }
     }
 }

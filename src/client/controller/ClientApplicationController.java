@@ -97,7 +97,7 @@ public class ClientApplicationController {
             howToPlayController = new HowToPlayController(view.getHowToPlayView(), new HowToPlayModel(), this);
             try {
                 settingsController = new SettingsController(view.getSettingsView(),
-                        new SettingsModel(model.getUsername(), model.getWfImpl()), view);
+                        new SettingsModel(model.getUsername(), model.getWfImpl()), view, this);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
