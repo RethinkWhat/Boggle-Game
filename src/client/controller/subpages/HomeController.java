@@ -88,8 +88,9 @@ public class HomeController {
                 parent.getView().setNavLocationText("Lobby");System.out.println("creating new lobby");
 
                 parent.playLobbyMusic();
-                LobbyController lobbyController = new LobbyController(new LobbyModel(parent.getModel().getUsername(), parent.getModel().getWfImpl()),
+                new LobbyController(new LobbyModel(parent.getModel().getUsername(), parent.getModel().getWfImpl()),
                         parent.getView().getLobbyView(), parent);
+                System.out.println("new lobby created\n");
 
                 parent.getView().getLobbyView().setExitLobbyListener(new ActionListener() {
                     @Override

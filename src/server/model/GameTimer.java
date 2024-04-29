@@ -6,32 +6,32 @@ public class GameTimer implements Runnable {
 
     final private long timerDuration;
 
-    private long toEdit;
+    private long currTimerValue;
 
     public GameTimer(int gameID, long timerDuration) {
         this.gameID = gameID;
         this.timerDuration = timerDuration;
-        toEdit = timerDuration;
+        currTimerValue = timerDuration;
 
     }
 
     @Override
     public void run() {
-        while(toEdit > 0L) {
+        while(currTimerValue > 0L) {
             try {
                 Thread.sleep(1000L);
-                toEdit -= 1000L;
+                currTimerValue -= 1000L;
             } catch (Exception var2) {
                 var2.printStackTrace();
             }
         }
     }
 
-    public long getCurrValue() {
-        return toEdit;
+    public long getCurrTimerValue() {
+        return currTimerValue;
     }
 
     public void reset() {
-        toEdit = timerDuration;
+        currTimerValue = timerDuration;
     }
 }

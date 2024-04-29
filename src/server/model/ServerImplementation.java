@@ -15,14 +15,20 @@ import server.model.BoggleApp.Leaderboard;
 import server.model.BoggleApp.LobbyUser;
 
 public class ServerImplementation extends BoggleClientPOA {
-    private final long currTimeValue = 10000L;
-    private long gameDuration = 180000L;
 
+    /**
+     * Lobby Variables
+     */
+    private long lobbyTimerValue = 10000L;
+    private GameTimer lobbyTimer = new GameTimer(0, lobbyTimerValue);
     private ArrayList<String> currLobby = new ArrayList<>();
 
+
+
+
+    private long gameDuration = 180000L;
     private ArrayList<GameTimer> gamesStarted;
 
-    private GameTimer lobbyTimer = new GameTimer(0, currTimeValue);
 
     public ServerImplementation() {
         DataPB.setCon();
@@ -31,10 +37,10 @@ public class ServerImplementation extends BoggleClientPOA {
     }
 
     @Override
-    public LobbyUser[] getLobbyMembers() {
+    public synchronized LobbyUser[] getLobbyMembers() {
         LobbyUser[] lobbyUsers = new LobbyUser[currLobby.size()];
         for (int x =0; x < currLobby.size(); x++) {
-           // lobbyUsers[x] = new LobbyUser(currLobby.get(x)., DataPB.getPFPOfUser(currLobby.get(x))
+            lobbyUsers[x] = new LobbyUser(currLobby.get(x), DataPB.getPFPOfUser(currLobby.get(x)));
         }
         return lobbyUsers;
     }
@@ -48,16 +54,30 @@ public class ServerImplementation extends BoggleClientPOA {
         return DataPB.validateAccount(var1,var2);
     }
 
-    public long attemptJoin(String username) {
-        currLobby.add(username);
-        if (lobbyTimer.getCurrValue() == 0L) {
-            lobbyTimer = new GameTimer(0, currTimeValue);
+    //TODO: make void
+    public synchronized long attemptJoin(String username) {
+        if (lobbyTimer.getCurrTimerValue() == 0L) {
+            lobbyTimer = new GameTimer(0, lobbyTimerValue);
             currLobby = new ArrayList<>();
-            System.out.println("NEW TIMER VALUE: " + lobbyTimer.getCurrValue());
-        } if (lobbyTimer.getCurrValue() == 10000L)
+        } if (lobbyTimer.getCurrTimerValue() == 10000L)
             startLobbyTime();
+        currLobby.add(username);
+        System.out.println("Adding user: " + username);
+        System.out.println(currLobby);
         return -1;
     }
+
+    private void startLobbyTime() {
+        Thread t = new Thread(lobbyTimer);
+        t.start();
+    }
+
+    public long getCurrLobbyTimerValue(BooleanHolder validLobby) {
+        validLobby.value = currLobby.size() > 1;
+        return lobbyTimer.getCurrTimerValue();
+    }
+
+
 
     @Override
     public void exitGameRoom(String username) {
@@ -68,11 +88,6 @@ public class ServerImplementation extends BoggleClientPOA {
     public int joinGameRoom(LongHolder duration) {
         duration.value = gameDuration;
         return DataPB.createGameRoom();
-    }
-
-    public long getCurrLobbyTimerValue(BooleanHolder validLobby) {
-        validLobby.value = currLobby.size() > 1;
-        return lobbyTimer.getCurrValue();
     }
 
 
@@ -174,13 +189,9 @@ public class ServerImplementation extends BoggleClientPOA {
         t.start();
     }
 
-    private void startLobbyTime() {
-        Thread t = new Thread(lobbyTimer);
-        t.start();
-    }
     private String createRandomVowelSet() {
         String vowel = "AEIOU";
-        StringBuilder sb = new StringBuilder();
+       StringBuilder sb = new StringBuilder();
         Random random = new Random();
         for(int i = 0; i < 7; i++){
             int index= random.nextInt(vowel.length());
