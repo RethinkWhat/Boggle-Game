@@ -332,4 +332,24 @@ public class DataPB {
         }
         return pfp;
     }
+
+    /**
+     * Returns true if the updating of a profile picture is successful
+     * @param username
+     * @param newPFP
+     * @return
+     */
+    public static boolean changePFPOfUser(String username, String newPFP) {
+        try {
+            String query = "UPDATE player SET pfp = ? WHERE username = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, newPFP);
+            ps.setString(2, username);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
