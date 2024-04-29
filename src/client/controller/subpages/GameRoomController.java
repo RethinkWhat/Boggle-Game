@@ -3,6 +3,7 @@ package client.controller.subpages;
 import client.controller.ClientApplicationController;
 import client.model.subpages.GameRoomModel;
 import client.view.subpages.GameRoomView;
+import shared.CustomizedMessageDialog;
 import shared.SwingResources;
 import shared.SwingStylesheet;
 
@@ -112,8 +113,8 @@ public class GameRoomController {
         view.revalidate();
         view.repaint();
 
-    //    Thread timer = new Thread(gameTimer());
-    //    timer.start();
+        Thread timer = new Thread(gameTimer());
+        timer.start();
     }
 
     public Runnable gameTimer() {
@@ -142,6 +143,15 @@ public class GameRoomController {
                             SwingUtilities.invokeLater(() -> {
                                 view.getPrgTimer().setBackground(style.goldenTainoi);
                                 view.getLblTimer().setForeground(style.white);
+
+
+                               // model.getWfImpl().getRoundWinner()
+                                // TODO:  CustomizedMessageDialog to show winner
+                                // TODO: Call model.wfImpl.getOverallWinner if return value != "invalid" game has ended and we can declare winner
+                                // TODO: else
+                                    // TODO: Call model.nextRound()
+                                     // TODO: Start thread for next round... Thread timer = new Thread(gameTimer());
+                                     //TODO: timer.start();
                             });
                         }
                     }

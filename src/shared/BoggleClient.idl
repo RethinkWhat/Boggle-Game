@@ -15,7 +15,7 @@ module BoggleApp {
     interface BoggleClient {
         boolean validateAccount(in string username, in string password);
 
-        long long attemptJoin(in string username);
+        void attemptJoin(in string username);
 
         long joinGameRoom(out long long duration);
 
