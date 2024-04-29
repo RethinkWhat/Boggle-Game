@@ -114,4 +114,15 @@ public class SettingsModel {
         dataPB.setCon();
         return dataPB.editPassword(this.username, oldPass, newPass);
     }
+
+    /**
+     * Edits the profile picture of the player
+     * NOTE: THIS USES THE DATAPB INSTEAD OF THE BOGGLECLIENT. TLDR: IT WORKS, BUT IS ONLY TEMPORARY
+     * @return
+     */
+    public String getPFPOfUser(String username){
+        DataPB dataPB = new DataPB();
+        dataPB.setCon();
+        return dataPB.getPFPOfUser(this.username);
+    }
 }

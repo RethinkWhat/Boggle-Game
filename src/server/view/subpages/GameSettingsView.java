@@ -167,7 +167,7 @@ public class GameSettingsView extends JPanel {
             this.setOpaque(false);
 
             GridBagConstraints gbc = new GridBagConstraints();
-            gbc.insets = new Insets(60, 10, 10, 10);
+            gbc.insets = new Insets(10, 10, 10, 10);
 
             gbc.anchor = GridBagConstraints.LINE_START;
             gbc.gridy++;
@@ -212,10 +212,11 @@ public class GameSettingsView extends JPanel {
 
             gbc.gridx = 2;
             numberOfPlayersComboBox = style.createCmbRounded(style.goldenTainoi, style.black, -6);
-            numberOfPlayersComboBox.setModel(new DefaultComboBoxModel<>(new String[]{" 2 players", " 3 players", " 4 players", " 5 players"}));
+            numberOfPlayersComboBox.setModel(new DefaultComboBoxModel<>(new String[]{" 2 players", " 3 players", " 4 players", " 5 players", " 6 players", " 7 players", " 8 players", " 9 players", " 10 players", " unlimited players"}));
             numberOfPlayersComboBox.setSelectedIndex(0);
             numberOfPlayersComboBox.setPreferredSize(new Dimension(180, 60));
             numberOfPlayersComboBox.setFont(new Font("Arial", Font.BOLD, 16));
+            numberOfPlayersComboBox.setMaximumRowCount(10);
             numberOfPlayersComboBox.setEnabled(true);
             numberOfPlayersComboBox.setFocusable(false);
             this.add(numberOfPlayersComboBox, gbc);
@@ -225,7 +226,7 @@ public class GameSettingsView extends JPanel {
             gbc.gridy++;
             gbc.gridwidth = 3;
             gbc.anchor = GridBagConstraints.CENTER;
-            gbc.insets = new Insets(200, 10, 10, 10);
+            gbc.insets = new Insets(220, 10, 10, 10);
 
             sveChanges = style.createBtnRounded("SAVE CHANGES", style.deepSkyBlue, style.white, 10);
             sveChanges.setPreferredSize(new Dimension(170,45));

@@ -14,7 +14,6 @@ public class SettingsView extends JPanel{
     private JLabel leftPnlLbl; // the label of the left panel's text
     private JLabel leftPnlStateLbl; // the label of the left panel's state
     private JLabel profileLabel; // the label of the profile panel
-    private JButton btnAccMa; // the manage account button
     private JButton btnDelAcc; // the delete account button
     private JButton btnMusic; // the music toggle button
     private JPanel avatarPanel; // the panel for the avatar image
@@ -113,16 +112,14 @@ public class SettingsView extends JPanel{
             gbc.anchor = GridBagConstraints.WEST;
 
             gbc.gridy++;
-            gbc.insets = new Insets(0, -10, 10, 0);
-            btnAccMa = navButtonWithLabel(container, style.iconAccMan, "Account Management", null, gbc);
-
-            gbc.gridy++;
             gbc.insets = new Insets(0, -10, 15, 0);
             btnDelAcc = navButtonWithLabel(container, style.iconAccMan, "Delete Account", null, gbc);
+            btnDelAcc.setFocusable(false);
 
             gbc.gridy++;
             gbc.insets = new Insets(0, -10, 0, 0);
             btnMusic = navButtonWithLabel(container, style.iconMusic, "Music:", "ON", gbc);
+            btnMusic.setFocusable(false);
 
             leftPanelContainer.add(container, BorderLayout.CENTER);
 
@@ -153,7 +150,7 @@ public class SettingsView extends JPanel{
             container.add(leftPnlLbl, gbc);
 
             gbc.gridx = 2;
-            gbc.insets = new Insets(10, -100, 0, 0);
+            gbc.insets = new Insets(10, -50, 0, 0);
             container.add(leftPnlStateLbl, gbc);
 
             return button;
@@ -185,18 +182,6 @@ public class SettingsView extends JPanel{
 
                     g2d.setColor(style.white);
                     g2d.fillOval(x, y, diameter, diameter);
-
-                    try {
-                        BufferedImage image = ImageIO.read(new File("res/drawable/images/pfp-male-1.png"));
-                        int newWidth = (int) (diameter * 1.1);
-                        int newHeight = (int) (diameter * 1.1);
-                        int newX = x + (diameter - newWidth) / 2;
-                        int newY = y + (diameter - newHeight) / 2;
-                        g2d.drawImage(image, newX, newY, newWidth, newHeight, null);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
                     g2d.dispose();
                 }
             };
@@ -213,7 +198,7 @@ public class SettingsView extends JPanel{
             gbc.insets = new Insets(-60, 20, 0, 0);
             btnChangeAvatar = style.createBtnRounded("CHANGE AVATAR", style.deepSkyBlue, style.white, 10);
             btnChangeAvatar.setPreferredSize(new Dimension(180, 30));
-            btnChangeAvatar.setFocusable(true);
+            btnChangeAvatar.setFocusable(false);
             this.add(btnChangeAvatar, gbc);
 
             gbc.gridy++;
@@ -239,6 +224,7 @@ public class SettingsView extends JPanel{
             gbc.anchor = GridBagConstraints.EAST;
             gbc.insets = new Insets(10, -130, 0, 0);
             btnEdit = style.createBtnIconOnly(style.iconEdit, 20,20);
+            btnEdit.setFocusable(false);
             this.add(btnEdit, gbc);
 
             gbc.gridy++;
@@ -266,7 +252,7 @@ public class SettingsView extends JPanel{
 
             btnSaveChanges = style.createBtnRounded("SAVE CHANGES", style.deepSkyBlue, style.white, 10);
             btnSaveChanges.setPreferredSize(new Dimension(200,40));
-            btnSaveChanges.setFocusable(true);
+            btnSaveChanges.setFocusable(false);
             this.add(btnSaveChanges, gbc);
 
             this.setPreferredSize(new Dimension(400, 400));
@@ -356,8 +342,8 @@ public class SettingsView extends JPanel{
 
             btnChangePass = style.createBtnRounded("CHANGE PASSWORD", style.deepSkyBlue, style.white, 10);
             btnChangePass.setPreferredSize(new Dimension(200,40));
+            btnChangePass.setFocusable(false);
             this.add(btnChangePass, gbc);
-            this.setFocusable(true);
 
             this.setPreferredSize(new Dimension(400, 400));
             this.setMaximumSize(new Dimension(400, 400));
@@ -466,16 +452,6 @@ public class SettingsView extends JPanel{
 
             g2d.dispose();
         }
-    }
-
-    //retrieves the current JButton of btnAccMa
-    public JButton getBtnAccMa(){
-        return btnAccMa;
-    }
-
-    // sets a specified action listener for btnAccMa
-    public void setAccountManagementListener(ActionListener actionListener) {
-        btnAccMa.addActionListener(actionListener);
     }
 
     //retrieves the current JButton of btnAccMa
@@ -610,5 +586,18 @@ public class SettingsView extends JPanel{
         currentPasswordTextField.setText("");
     }
 
-
+    // sets a specified image for avatarPanel
+    public void setAvatar(String pfp) {
+        try {
+            BufferedImage image = ImageIO.read(new File(pfp));
+            Image scaledImage = image.getScaledInstance(105, -1, Image.SCALE_SMOOTH);
+            avatarPanel.removeAll();
+            JLabel avatarLabel = new JLabel(new ImageIcon(scaledImage));
+            avatarPanel.add(avatarLabel);
+            avatarPanel.revalidate();
+            avatarPanel.repaint();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
