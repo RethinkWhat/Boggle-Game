@@ -16,6 +16,8 @@ import server.model.BoggleApp.LobbyUser;
 
 public class ServerImplementation extends BoggleClientPOA {
 
+    private ArrayList<String> loggedIn = new ArrayList<>();
+
     /**
      * Lobby Variables
      */
@@ -51,7 +53,11 @@ public class ServerImplementation extends BoggleClientPOA {
     }
 
     public boolean validateAccount(String var1, String var2) {
-        return DataPB.validateAccount(var1,var2);
+        boolean exists = DataPB.validateAccount(var1,var2);
+        boolean userIn = loggedIn.contains(var1);
+        if (!userIn)
+            loggedIn.add(var1);
+        return exists && !userIn;
     }
 
     //TODO: make void
