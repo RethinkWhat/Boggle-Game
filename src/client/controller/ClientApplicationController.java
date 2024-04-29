@@ -101,7 +101,6 @@ public class ClientApplicationController {
             } catch (SQLException e) {
                 throw new RuntimeException(e);
             }
-            new GameRoomController(new GameRoomModel(model.getUsername(), model.getWfImpl()), view.getGameRoomView(), this);
         });
 
         // action listeners
