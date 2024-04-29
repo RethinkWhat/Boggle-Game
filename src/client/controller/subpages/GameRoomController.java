@@ -112,8 +112,8 @@ public class GameRoomController {
         view.revalidate();
         view.repaint();
 
-        Thread timer = new Thread(gameTimer());
-        timer.start();
+    //    Thread timer = new Thread(gameTimer());
+    //    timer.start();
     }
 
     public Runnable gameTimer() {

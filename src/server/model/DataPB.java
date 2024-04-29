@@ -16,9 +16,9 @@ public class DataPB {
 
     public static void setCon() {
         try {
-            String var0 = "jdbc:mysql://localhost:8889/boggle";
+            String var0 = "jdbc:mysql://localhost:3306/boggle";
             String var1 = "root";
-            String var2 = "root";
+            String var2 = "";
             con = DriverManager.getConnection(var0, var1, var2);
         } catch (Exception var3) {
             var3.printStackTrace();

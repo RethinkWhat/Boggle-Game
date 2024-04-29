@@ -32,20 +32,29 @@ public class LobbyController {
     public void timer() {
         view.setLblTimerTxt("00:" + 10000 / 1000);
         long timerVal = -1;
-        LobbyUser[] usersInLobby = model.getUsersInLobby();
-        populateLobby(usersInLobby);
+        LobbyUser[] usersInLobby;
+        LobbyUser[] tempUsersInLobby;
         try {
-            timerVal = model.getWfImpl().attemptJoin(model.getUsername());
-            Thread.sleep(1000);
+            model.getWfImpl().attemptJoin(model.getUsername());
+            usersInLobby = model.getUsersInLobby();
+            populateLobby(usersInLobby);
 
             BooleanHolder startLobby = new BooleanHolder(false);
             while (timerVal != 0) {
                 timerVal = model.getWfImpl().getCurrLobbyTimerValue(startLobby);
+                System.out.println("TIMER VALUE: " + timerVal);
 
-                LobbyUser[] tempList = model.getUsersInLobby();
 
-                if (usersInLobby.length != tempList.length) {
-                    usersInLobby = tempList;
+                usersInLobby = model.getUsersInLobby();
+                for (int i = 0; i < usersInLobby.length; i++) {
+                    System.out.println("user sent: " + usersInLobby[i].username + " | " + usersInLobby[i].pfpAddress);
+                }
+
+
+                tempUsersInLobby = model.getUsersInLobby();
+                if (tempUsersInLobby.length != usersInLobby.length) {
+                    System.out.println("reached");
+                    usersInLobby = tempUsersInLobby;
                     populateLobby(usersInLobby);
                 }
 
@@ -70,7 +79,7 @@ public class LobbyController {
     public void populateLobby(LobbyUser[] users) {
         view.removePlayersInUserPanel();
         for (LobbyUser user : users) {
-            view.addPlayerInUserPanel(user.username, user.pfpAddress);
+            view.addPlayerInUserPanel(user.pfpAddress, user.username);
         }
     }
 }
