@@ -1,7 +1,9 @@
 package server.controller;
 
+import server.controller.subpages.GameSettingsController;
 import server.controller.subpages.PlayersController;
 import server.model.ServerApplicationModel;
+import server.model.subpages.GameSettingsModel;
 import server.model.subpages.PlayersModel;
 import server.view.ServerApplicationView;
 import shared.ExitDialog;
@@ -58,6 +60,7 @@ public class ServerApplicationController {
         public void actionPerformed(ActionEvent e) {
             view.showGameSettingsPanel();
             view.setLocationText("Game Settings");
+            new GameSettingsController(new GameSettingsModel(server.getServerImpl()), view.getGameSettingsView());
         }
     }
 

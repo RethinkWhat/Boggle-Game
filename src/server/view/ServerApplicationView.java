@@ -238,6 +238,7 @@ public class ServerApplicationView extends JFrame {
         cardLayout.show(pnlCards, "gamesettings");
     }
 
+
     /**
      * Shows the PlayersView through the card layout.
      */

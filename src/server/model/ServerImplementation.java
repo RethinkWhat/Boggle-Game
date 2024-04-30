@@ -218,4 +218,16 @@ public class ServerImplementation extends BoggleClientPOA {
         System.out.println(sb.toString());
         return sb.toString();
     }
+
+    public void setGameDuration(long time) {
+        gameDuration = time;
+    }
+
+    public void setLobbyTimerValue(long time) {
+        lobbyTimerValue = time;
+    }
+
+    public void setNumberOfPlayers(int number) {
+        //TODO:
+    }
 }
