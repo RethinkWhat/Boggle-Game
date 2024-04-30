@@ -80,4 +80,7 @@ public class Server{
         }
     }
 
+    public ServerImplementation getServerImpl() {
+        return serverImpl;
+    }
 }

@@ -1,4 +1,24 @@
 package server.model.subpages;
 
+import server.model.ServerImplementation;
+
 public class GameSettingsModel {
+
+    ServerImplementation serverImplementation;
+
+    public GameSettingsModel(ServerImplementation serverImplementation) {
+        this.serverImplementation = serverImplementation;
+    }
+
+    public void updateGameDuration(long newDuration) {
+        serverImplementation.setGameDuration(newDuration);
+    }
+
+    public void updateWaitingDuration(long newDuration) {
+        serverImplementation.setLobbyTimerValue(newDuration);
+    }
+
+    public void updateNumberOfPlayers(int newNumberOfPlayers) {
+        serverImplementation.setNumberOfPlayers(newNumberOfPlayers);
+    }
 }

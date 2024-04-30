@@ -135,6 +135,7 @@ public class GameSettingsView extends JPanel {
             btnEdit.setPreferredSize(new Dimension(150,45));
             btnEdit.setFocusable(false);
             this.add(btnEdit, gbc);
+            btnEdit.setVisible(true);
 
             this.setPreferredSize(new Dimension(1300, 700));
             this.setMaximumSize(new Dimension(1300, 700));
