@@ -68,6 +68,10 @@ public class GameRoomView extends JPanel {
      */
     private LeaderboardPanel pnlLeaderboard;
     /**
+     * The LetterSetPanel containing the given letter set for user input.
+     */
+    private LetterSetPanel pnlLetterSet;
+    /**
      * The stylesheet.
      */
     private SwingStylesheet style = new SwingStylesheet();
@@ -225,10 +229,6 @@ public class GameRoomView extends JPanel {
          * The buttons panel.
          */
         private ButtonsPanel buttonsPanel;
-        /**
-         * The letter set panel.
-         */
-        private LetterSetPanel letterSetPanel;
 
         /**
          * Constructs a panel of TopRightPanel.
@@ -260,9 +260,10 @@ public class GameRoomView extends JPanel {
 
             timerPanel = new TimerPanel();
             buttonsPanel = new ButtonsPanel();
-            letterSetPanel = new LetterSetPanel();
+            pnlLetterSet = new LetterSetPanel();
+
             container.add(buttonsPanel, BorderLayout.NORTH);
-            container.add(letterSetPanel, BorderLayout.CENTER);
+            container.add(pnlLetterSet, BorderLayout.CENTER);
             container.add(timerPanel, BorderLayout.SOUTH);
 
             this.setPreferredSize(new Dimension(900, 400));
@@ -279,10 +280,6 @@ public class GameRoomView extends JPanel {
 
         public ButtonsPanel getButtonsPanel() {
             return buttonsPanel;
-        }
-
-        public LetterSetPanel getLetterSetPanel() {
-            return letterSetPanel;
         }
     }
 
@@ -316,11 +313,6 @@ public class GameRoomView extends JPanel {
             this.setBackground(style.white);
             this.setLayout(new GridLayout(2, 10, 5, 0));
 
-            // to remove. just a sample.
-            for (int i = 0; i < 20; i++) {
-                add(new LetterPanel(String.valueOf(i)));
-            }
-
             this.setPreferredSize(new Dimension(800, 50));
         }
     }
@@ -332,10 +324,11 @@ public class GameRoomView extends JPanel {
         /**
          * Constructs a panel of LetterPanel.
          */
-        public LetterPanel(String letter) {
+        public LetterPanel(String letter, Color backgroundColor) {
             this.setBackground(style.white);
 
             JPanel pnlLetter = style.createPnlRounded(70, 80, style.deepSkyBlue, style.white);
+            pnlLetter.setBackground(backgroundColor);
             add(pnlLetter);
 
             JLabel lblLetter = style.createLblH1(letter, style.white);
@@ -735,6 +728,10 @@ public class GameRoomView extends JPanel {
         SwingUtilities.invokeLater(() -> pnlLeaderboard.add(new PlayerPanel(pfpURL, username, points)));
     }
 
+    public void addLetterToLetterSet(String letter, Color backgroundColor) {
+        SwingUtilities.invokeLater(() -> pnlLetterSet.add(new LetterPanel(letter, backgroundColor)));
+    }
+
     /**
      * Adds a specified text in txaPlayerInputs.
      *
@@ -784,5 +781,13 @@ public class GameRoomView extends JPanel {
      */
     public JLabel getLblTimer() {
         return lblTimer;
+    }
+
+    /**
+     * Retrieves the current LetterSetPanel of pnlLetterSet.
+     * @return The current pnlLetterSet.
+     */
+    public LetterSetPanel getPnlLetterSet() {
+        return pnlLetterSet;
     }
 }

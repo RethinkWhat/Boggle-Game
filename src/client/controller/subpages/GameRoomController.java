@@ -176,6 +176,7 @@ public class GameRoomController {
             view.setErrorMessage("");
             String input = view.getTxtWordInput().getText().trim();
 
+            // TODO: compare word to valid word list. If valid, accept; else, reject.
             if (!input.contains(" ") && input.length() >= 4) {
                 if (!validateInput(input)) {
                     view.setErrorMessage("Input must only contain LETTERS!");
@@ -348,8 +349,8 @@ public class GameRoomController {
     }
 
     /**
-     * Populates the letter set in the view by adding the elements of the specified vowel set and consonant set and
-     * randomizing its order.
+     * Populates the letter set in the view by adding the elements of the specified vowel set and consonant set, then
+     * randomizing its order of appearance.
      * @param vowelSet The specified vowel set.
      * @param consonantSet The specified consonant set.
      */
