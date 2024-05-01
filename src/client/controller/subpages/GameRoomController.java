@@ -340,7 +340,9 @@ public class GameRoomController {
         roundDetails.add(String.valueOf(model.getGameRoomID()));
         roundDetails.add(String.valueOf(roundNumber));
 
-        wordList.add(Arrays.toString(model.getWordSet().toArray()));
+        for (int i = 0; i < model.getWordSet().size(); i++) {
+            wordList.add(String.valueOf(model.getWordSet().toArray()[i]));
+        }
 
         mainList.add(roundDetails);
         mainList.add(wordList);
