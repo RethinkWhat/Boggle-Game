@@ -334,15 +334,11 @@ public class GameRoomController {
     public List<List<String>> getCurrentRoundWordList(int roundNumber) {
         List<List<String>> mainList = new ArrayList<>();
         List<String> roundDetails = new ArrayList<>();
-        List<String> wordList = new ArrayList<>();
+        List<String> wordList = new ArrayList<>(model.getWordSet());
 
         roundDetails.add(model.getUsername());
         roundDetails.add(String.valueOf(model.getGameRoomID()));
         roundDetails.add(String.valueOf(roundNumber));
-
-        for (int i = 0; i < model.getWordSet().size(); i++) {
-            wordList.add(String.valueOf(model.getWordSet().toArray()[i]));
-        }
 
         mainList.add(roundDetails);
         mainList.add(wordList);
