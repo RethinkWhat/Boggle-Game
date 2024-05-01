@@ -1,10 +1,8 @@
 package server.model;
 
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import org.omg.CORBA.BooleanHolder;
 import org.omg.CORBA.IntHolder;
@@ -124,7 +122,6 @@ public class ServerImplementation extends BoggleClientPOA {
 
 
     //TODO: Store the wordList of each user for the finished round in the game
-    //TODO: Compare the word lists. Considering the length of the words and the same words entered among players
     //TODO: Call the DataPB.updatePoints() method and update the points of user for round
     @Override
     public String getRoundWinner(String username, int gameID, int roundID, String wordsEntered) {
@@ -229,5 +226,93 @@ public class ServerImplementation extends BoggleClientPOA {
 
     public void setNumberOfPlayers(int number) {
         //TODO:
+    }
+
+    /*
+    public List<HashMap<String, List<String>>> storeWordList(List<List<String>> wordList) {
+        for (String user : loggedIn) {
+            HashMap<String, List<String>> userWordMap = new HashMap<>();
+
+        }
+        String username = null;
+        List<String> words = new ArrayList<>();
+
+        for (List<String> elements : wordList) {
+            username = details.get(0);
+            words.addAll(elements.get(1));
+        }
+
+        userWordMap.put(username, words);
+    }
+
+     */
+
+    /**
+     * Compares and cleans the specified userWordMapList by:
+     *  1. Compiling all the word lists in one list/
+     *  2. Getting the duplicates and adding it into a list.
+     *  3. Set a current word from a user word list.
+     *  4.
+     *  5. If the word exists, it will be removed from all the word lists.
+     *  6. Repeat Step 1.
+     * @param userWordMapList The list of userWordMap (user as key, word list as value)
+     * @return The cleaned compiledWordLists.
+     */
+    public List<Map<String, List<String>>> compareAllWordLists(List<Map<String, List<String>>> userWordMapList) {
+        List<Map<String, List<String>>> cleanedUserWordList = new ArrayList<>();
+        List<String> allWordsFromAllPlayers = new ArrayList<>();
+
+        // adds all the elements of the players' word list in one list.
+        for (Map<String, List<String>> userWordMap : userWordMapList) {
+            for (Map.Entry<String, List<String>> entry : userWordMap.entrySet()) {
+                allWordsFromAllPlayers.addAll(entry.getValue());
+            }
+        }
+
+        // gets duplicate values from allWordFromAllPlayers list
+        HashSet<String> uniqueWords = new HashSet<>();
+        List<String> duplicates = allWordsFromAllPlayers.stream()
+                .filter(w -> !uniqueWords.add(w))
+                .collect(Collectors.toList());
+
+        // checks for duplicates and removes ("cleans") the duplicate words from the player's word list
+        for (Map<String, List<String>> userWordMap : userWordMapList) {
+            for (Map.Entry<String, List<String>> entry : userWordMap.entrySet()) {
+                String username = entry.getKey();
+                List<String> currUserWordList = entry.getValue();
+                for (String currWord : currUserWordList) {
+                    for (String duplicateWord : duplicates) {
+                        if (currWord.equals(duplicateWord)) {
+                            currUserWordList.remove(duplicateWord);
+                        }
+                    }
+                }
+                Map<String, List<String>> cleanedUserWordMap = new HashMap<>();
+                cleanedUserWordMap.put(username, currUserWordList);
+                cleanedUserWordList.add(cleanedUserWordMap);
+            }
+        }
+        return cleanedUserWordList;
+    }
+
+    /**
+     * After the word lists have undergone comparison and cleaning, invoke this method.
+     * Retrieves the total score of the user in a specified round by getting the length of the elements of the
+     * specified "cleaned" word list.
+     * Score for each word will be based on its length
+     * @param userWordMap The current user with their word list.
+     * @return The total score of the user of the specified round.
+     */
+    public int computeTotalScore(Map<String, List<String>> userWordMap) {
+        int totalScore = 0;
+
+        for (Map.Entry<String, List<String>> entry : userWordMap.entrySet()) {
+            List<String> currUserWordList = entry.getValue();
+            for (String word : currUserWordList) {
+                totalScore += word.length();
+            }
+        }
+
+        return totalScore;
     }
 }

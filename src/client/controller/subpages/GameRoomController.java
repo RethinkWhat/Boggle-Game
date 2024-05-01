@@ -15,9 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -324,13 +322,14 @@ public class GameRoomController {
         }
     }
 
+    /*
     /**
      * Creates an ArrayList containing the username, the gameID and the roundNumber, and the user's word set.
      * The list will be sent to the server for score comparison.
      * The list is in the following format:
      * [[username, gameID, roundNumber], [word1, word2, word3, word4, word5, ...]]
      * @return The main list containing the username, gameId, roundNumber, and the word set.
-     */
+
     public List<List<String>> getCurrentRoundWordList(int roundNumber) {
         List<List<String>> mainList = new ArrayList<>();
         List<String> roundDetails = new ArrayList<>();
@@ -344,6 +343,22 @@ public class GameRoomController {
         mainList.add(wordList);
 
         return mainList;
+    }
+
+     */
+
+    /**
+     * Creates a hash map containing the username as the key, and the value as the words set (words entered by the user).
+     * @return hash map of username as key, word set as value.
+     */
+    public Map<String, List<String>> getCurrentRoundWordList() {
+        Map<String, List<String>> userWordMap = new HashMap<>();
+        List<String> wordList = new ArrayList<>(model.getWordSet());
+        String username = model.getUsername();
+
+        userWordMap.put(username, wordList);
+
+        return userWordMap;
     }
 
     /**
