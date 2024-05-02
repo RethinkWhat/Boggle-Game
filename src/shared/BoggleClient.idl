@@ -35,6 +35,8 @@ module BoggleApp {
 
         long long getCurrLobbyTimerValue(out boolean validLobby);
 
+        long getGameID(in string username);
+
         string getLetters(in long gameID);
 
         long long getGameDurationVal(in long gameID);

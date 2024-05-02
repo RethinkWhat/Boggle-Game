@@ -1,4 +1,4 @@
-module server.model.client.model.server.model.client.model.BoggleApp {
+module server.model.client.model.server.model.client.model.server.model.client.model.BoggleApp {
     struct userInfo {
         string username;
         string pfpAddress;
