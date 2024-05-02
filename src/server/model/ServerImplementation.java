@@ -56,6 +56,7 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     public synchronized void attemptJoin(String username) {
         if (lobbyTimer.getCurrTimerValue() == 0L) {
+            joinGameRoom(currLobby);
             lobbyTimer = new GameTimer(0, lobbyTimerValue);
             currLobby = new ArrayList<>();
         } if (lobbyTimer.getCurrTimerValue() == lobbyTimerValue)
@@ -87,6 +88,15 @@ public class ServerImplementation extends BoggleClientPOA {
     public long getCurrLobbyTimerValue(BooleanHolder validLobby) {
         validLobby.value = currLobby.size() > 1;
         return lobbyTimer.getCurrTimerValue();
+    }
+
+    /**
+     * Method to get the ID of the ongoing game  the user is in.
+     * @param username
+     * @return
+     */
+    public int getGameID(String username) {
+        return DataPB.getGameID(username);
     }
 
     /**
