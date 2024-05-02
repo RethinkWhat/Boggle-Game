@@ -527,6 +527,29 @@ public class ServerImplementation extends BoggleClientPOA {
     }
 
     /**
+     * Creates a list of map, where the username is the key and the score as the value.
+     * Each element of the cleanedUserWordList will be used to create the new map of the list.
+     * @param cleanedUserWordList The specified list of map that have undergone comparison and filtering.
+     * @return The map of username as key and score as the value.
+     */
+    private List<Map<String, Integer>> putToUserScoreMap(List<Map<String, List<String>>> cleanedUserWordList) {
+        List<Map<String, Integer>> userScoreList = new ArrayList<>();
+        for (Map<String, List<String>> userWordMap : cleanedUserWordList) {
+            Map<String, Integer> scoreMap = new HashMap<>();
+            int score = computeTotalScore(userWordMap);
+            for (Map.Entry<String, List<String>> entry : userWordMap.entrySet()) {
+                String username = entry.getKey();
+
+                scoreMap.put(username, score);
+            }
+            userScoreList.add(scoreMap);
+        }
+        return userScoreList;
+    }
+
+    private void updatePoints(Map<List<String>, Integer> userScoreMap) {}
+
+    /**
      * After the word lists have undergone comparison and cleaning, invoke this method.
      * Retrieves the total score of the user in a specified round by getting the length of the elements of the
      * specified "cleaned" word list.

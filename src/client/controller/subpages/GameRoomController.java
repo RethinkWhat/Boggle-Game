@@ -356,7 +356,38 @@ public class GameRoomController {
 
         userWordMap.put(username, wordList);
 
+        // model.getWfImpl().sendUserWordList();
+
         return userWordMap;
+    }
+
+    /**
+     * Puts the current round details and the specified user word map into a map that will be sent to the server for
+     * end of round processing.
+     * Format of Map:
+     * <[gameID, roundID, roundNumber] : <username, [word1, word2, word3, word4, word5]>>
+     * @param userWordMap The specified userWordMap where the username is the key and the word list as the value.
+     * @return The map of the round details as the key and the userWordMap as the value.
+     */
+    public Map<List<String>, Map<String, List<String>>> sendRoundDetails(Map<String, List<String>> userWordMap) {
+        Map<List<String>, Map<String, List<String>>> roundUserWordMap = new HashMap<>();
+        List<String> roundDetails = new ArrayList<>();
+        int gameID = model.getGameRoomID();
+        int roundNumber = view.getRoundNumber();
+        int roundID = 0;
+
+        for (Map.Entry<Integer, Integer> entry : model.getRoundIDRoundNo().entrySet()) {
+            if (roundNumber == entry.getValue()) {
+                roundID = entry.getKey();
+            }
+        }
+        roundDetails.add(String.valueOf(gameID));
+        roundDetails.add(String.valueOf(roundID));
+        roundDetails.add(String.valueOf(roundNumber));
+
+        roundUserWordMap.put(roundDetails, userWordMap);
+
+        return roundUserWordMap;
     }
 
     /**
