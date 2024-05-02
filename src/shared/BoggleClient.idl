@@ -55,7 +55,7 @@ module BoggleApp {
         void editPassword(in string username, in string oldPass, in string newPass) raises (updateFailed);
 
         long getUserTotalPoints(in string username);
-        long getUserPointsOngoingGame(in gameID, in string username);
+        long getUserPointsOngoingGame(in long gameID, in string username);
         long getNumberOfMatches(in string username);
         long getNumberOfWins(in string username);
 
