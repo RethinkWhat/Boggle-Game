@@ -96,9 +96,7 @@ public class DataPB {
         return 0;
     }
 
-    public static int createGameRoom() {
-        Time time = new Time(0,3,0);
-        System.out.println(time);
+    public static int createGameRoom(Time time) {
         try {
             String insertStmt = "INSERT INTO game(duration) VALUES(?)";
 
@@ -195,16 +193,20 @@ public class DataPB {
      * @return
      * @throws SQLException
      */
-    public static int getWins(String username) throws SQLException{
+    public static int getWins(String username) {
         int size = 0;
-        String query = "SELECT winner FROM game WHERE winner = ? AND gameStatus = 'done'";
+        try {
+            String query = "SELECT winner FROM game WHERE winner = ? AND gameStatus = 'done'";
 
-        PreparedStatement ps = con.prepareStatement(query);
-        ps.setString(1, username);
-        ResultSet rs = ps.executeQuery();
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()){
-            ++size;
+            while (rs.next()) {
+                ++size;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return size;
@@ -265,7 +267,7 @@ public class DataPB {
         }
     }
 
-    public static int getUserPoints(String username){
+    public static int getUserGamePoints(String username){
         String query = "SELECT points FROM player WHERE username = ?";
         int points = 0;
         try (PreparedStatement ps = con.prepareStatement(query)) {

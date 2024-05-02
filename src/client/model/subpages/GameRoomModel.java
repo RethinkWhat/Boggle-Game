@@ -41,7 +41,7 @@ public class GameRoomModel {
         StringHolder vHolder = new StringHolder();
         StringHolder cHolder = new StringHolder();
         IntHolder rnHolder = new IntHolder(0);
-        int roundID = wfImpl.startRound(username, gameRoomID,rnHolder, vHolder, cHolder);
+        int roundID = wfImpl.startRound(username, gameRoomID,rnHolder, vHolder);
         int roundNumber = rnHolder.value;
         roundIDRoundNo.put(roundID, roundNumber);
 

@@ -22,8 +22,8 @@ public class ServerImplementation extends BoggleClientPOA {
     private ArrayList<String> currLobby = new ArrayList<>();
 
 
-    private long gameDuration = 180000L;
-    private ArrayList<GameTimer> gamesStarted;
+    private long roundDuration = 180000L;
+    public ArrayList<GameTimer> ongoingGameTimers;
 
 
     /**
@@ -31,7 +31,7 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     public ServerImplementation() {
         DataPB.setCon();
-        gamesStarted = new ArrayList<>();
+        ongoingGameTimers = new ArrayList<>();
 
     }
 
@@ -39,7 +39,7 @@ public class ServerImplementation extends BoggleClientPOA {
      * Handles the validation of an account upon logging in
      * @param var1
      * @param var2
-     * @throws wrongCredentials
+     * @throws accountLoggedIn
      * @throws accountDoesNotExist
      */
     public void validateAccount(String var1, String var2) throws accountLoggedIn, accountDoesNotExist {
@@ -90,50 +90,40 @@ public class ServerImplementation extends BoggleClientPOA {
     }
 
     /**
-     * Method to handle joining a game room
-     * @param duration
+     * Method to handle creating a game room and populating database
+     * @param players
      * @return
      */
-    @Override
-    public int joinGameRoom(LongHolder duration) {
-        //TODO: Fix issue: only one game room should be created, but per user it creates a separate game room
-        duration.value = gameDuration;
-        return DataPB.createGameRoom();
+    private void joinGameRoom(ArrayList<String> players) {
+
+        int gameRoomID =  DataPB.createGameRoom(new Time(roundDuration));
+
+        String letters = createRandomLetterSet();
+        int roundID = DataPB.createRound(letters);
+        for (String player : players) {
+            DataPB.createRoundDetails(gameRoomID,roundID, 1, player);
+        }
+
+        startTimerForRound(roundID,roundDuration);
+        ongoingGameTimers.add(new GameTimer(gameRoomID, lobbyTimerValue));
     }
 
-    /**
-     * Method that handles populating the round details database with users who are part of a round.
-     * It also returns the
-     * @param username
-     * @param gameID
-     * @param roundNumber
-     * @param lettersHolder
-     * @return roundID
-     */
-    //TODO: Fix issue: only one round should be created, but per call it creates a separate round
-    //@Override
-    public int createRoundDetails(String username, int gameID, IntHolder roundNumber, StringHolder lettersHolder) {
-        String cons = createRandomConsonantSet();
-        String vowel = createRandomVowelSet();
-        int roundID = DataPB.createRound(vowel, cons);
-
-
-        int newRoundNumber = DataPB.getLatestRound(gameID) +1;
-        roundNumber.value = newRoundNumber;
-        lettersHolder.value = vowel;
-        int id = DataPB.createRoundDetails(gameID,roundID, newRoundNumber, username);
-        startTimerForGame(gameID,  gameDuration);
-
-        roundNumber.value = newRoundNumber;
-        return id;
+    public String getLetters(int gameID) {
+        return DataPB.getLetters(gameID);
     }
+
 
     @Override
     /**
      * Method to get the current timer value of an ongoing game
      */
     public long getGameDurationVal(int gameID) {
-        return 0;
+        for (GameTimer ongoingGameTimer : ongoingGameTimers) {
+            if (ongoingGameTimer.getID() == gameID) {
+                return ongoingGameTimer.getCurrTimerValue();
+            }
+        }
+        return -1;
     }
 
     /**
@@ -144,16 +134,10 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     @Override
     public void sendUserWordList(int gameID, String username, String[] wordList) {
-            //TODO: define storing of worldList of a user
-    }
+        DataPB.addUserWordList(username, wordList);
 
-    /**
-     * If a user happens to exit the game while the game ongoing
-     * @param username
-     */
-    @Override
-    public void exitGameRoom(String username) {
-        //TODO: Define implementation
+        //TODO: do solving and store points in database
+
     }
 
     /**
@@ -166,6 +150,38 @@ public class ServerImplementation extends BoggleClientPOA {
     public String getRoundWinner(int gameID) {
         return DataPB.getWinnerOfLatestRound(gameID);
     }
+
+
+    /**
+     *  Method to get the letter set of the next round
+     */
+    private String getNextRoundLetterSet(int gameRoomID) {
+        synchronized (this) {
+            if (!DataPB.roundOngoing(gameRoomID)) {
+                String letters = createRandomLetterSet();
+                DataPB.createRound(letters);
+                int roundID = DataPB.createRound(letters);
+
+                ArrayList<String> players = DataPB.getPlayersInGame(gameRoomID);
+                for (String player : players) {
+                    DataPB.createRoundDetails(gameRoomID, roundID, 1, player);
+                }
+                return letters;
+            }
+        }
+        return DataPB.getLetterSet(gameRoomID);
+    }
+
+
+    /**
+     * If a user happens to exit the game while the game ongoing
+     * @param username
+     */
+    @Override
+    public void exitGameRoom(String username) {
+        //TODO: Define implementation
+    }
+
 
 
     /**
@@ -237,8 +253,20 @@ public class ServerImplementation extends BoggleClientPOA {
      * @return
      */
     @Override
-    public int getUserRoundPoints(String username) {
-        return DataPB.getUserPoints(username);
+    public int getUserTotalPoints(String username) {
+        return DataPB.getUserGamePoints(username);
+    }
+
+
+    /**
+     * Method to handle getting the points the user has collected thus far for an ongoing game
+     * @param gameID
+     * @param username
+     * @return
+     */
+    @Override
+    public int getUserPointsOngoingGame(int gameID, String username) {
+        return DataPB.getUserRoundPoints(username);
     }
 
     /**
@@ -251,61 +279,45 @@ public class ServerImplementation extends BoggleClientPOA {
         return DataPB.getMatches(username);
     }
 
+    /**
+     * Method to handle getting the wins a specific user has
+     * @param username
+     * @return
+     */
     @Override
     public int getNumberOfWins(String username) {
-        return 0;
+        return DataPB.getWins(username);
+    }
+
+    /**
+     * Method to get the leaderboard of an ongoing game
+     * @param gameID
+     * @return
+     */
+    @Override
+    public userInfo[] getCurrGameLeaderboard(int gameID) {
+        userInfo[] toReturn = DataPB.getCurrGameLeaderboard(gameID);
+        return toReturn;
     }
 
 
 
+    /** END of IDL methods */
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    /** PRIVATE Methods */
 
     private void startLobbyTime() {
         Thread t = new Thread(lobbyTimer);
         t.start();
     }
 
-
-
-
-
-
-    private void startTimerForGame(int gameID, long duration) {
+    private void startTimerForRound(int gameID, long duration) {
         GameTimer gameTimer = new GameTimer(gameID, duration);
         Thread t = new Thread(gameTimer);
-        gamesStarted.add(gameTimer);
+        ongoingGameTimers.add(gameTimer);
         t.start();
     }
 
@@ -359,17 +371,6 @@ public class ServerImplementation extends BoggleClientPOA {
         return sb.toString();
     }
 
-    public void setGameDuration(long time) {
-        gameDuration = time;
-    }
-
-    public void setLobbyTimerValue(long time) {
-        lobbyTimerValue = time;
-    }
-
-    public void setNumberOfPlayers(int number) {
-        //TODO:
-    }
 
     /*
     public List<HashMap<String, List<String>>> storeWordList(List<List<String>> wordList) {
@@ -458,4 +459,24 @@ public class ServerImplementation extends BoggleClientPOA {
 
         return totalScore;
     }
+
+
+
+    /**
+     * Method to handle setting the duration a game will go on for
+     * @param time : long
+     */
+    public void setRoundDuration(long time) {
+        roundDuration = time;
+    }
+
+    /**
+     * Method to handle setting the duration the waiting lobby will last
+     * @param time
+     */
+    public void setLobbyTimerValue(long time) {
+        lobbyTimerValue = time;
+    }
+
+
 }
