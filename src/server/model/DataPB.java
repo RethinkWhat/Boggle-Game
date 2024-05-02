@@ -1,5 +1,6 @@
 package server.model;
 
+import client.model.BoggleApp.userInfo;
 import org.omg.CORBA.ORB;
 
 import javax.swing.plaf.nimbus.State;
@@ -40,13 +41,12 @@ public class DataPB {
         }
     }
 
-    public static int createRound(String vowelSet, String consonantSet) {
+    public static int createRound(String letters) {
         try {
-            System.out.println(consonantSet);
-            String stmt = "INSERT INTO round(vowel,consonant) VALUES(?,?)";
+            System.out.println(letters);
+            String stmt = "INSERT INTO round(letters) VALUES(?)";
             PreparedStatement preparedStatement = con.prepareStatement(stmt, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1,vowelSet);
-            preparedStatement.setString(2,consonantSet);
+            preparedStatement.setString(1, letters);
             preparedStatement.execute();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if (rs.next())
@@ -372,5 +372,47 @@ public class DataPB {
         }
         return searchedUsernames;
     }
+
+    public static String getLetters (int gameID){
+        return null;
+    }
+    public static void addUserWordList(String username, String []wordList){
+
+    }
+
+    public static String getWinnerOfLatestRound(int gameID){
+        return null;
+    }
+
+    public static Boolean roundOngoing (int gameRoomID){
+        return true;
+    }
+
+    public static String getGameWinner (int gameID){
+        return null;
+    }
+    public static int getUserRoundPoints(int gameID, String username) {
+        int userPoints = 0; // Placeholder value, replace with actual logic to calculate points
+        return userPoints;
+    }
+
+    public static int getGameID(String username){
+        return 0;
+    }
+
+    public static String getLetterSet(int gameRoomID){
+        return null;
+    }
+
+    public static ArrayList<String> getPlayersInGame(int gameRoomID){
+        return null;
+    }
+
+    public static userInfo[] getCurrGameLeaderboard(int gameID) {
+        return null;
+    }
+
+
+
 
 }

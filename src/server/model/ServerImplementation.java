@@ -99,6 +99,7 @@ public class ServerImplementation extends BoggleClientPOA {
         int gameRoomID =  DataPB.createGameRoom(new Time(roundDuration));
 
         String letters = createRandomLetterSet();
+        //TODO:
         int roundID = DataPB.createRound(letters);
         for (String player : players) {
             DataPB.createRoundDetails(gameRoomID,roundID, 1, player);
@@ -134,6 +135,7 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     @Override
     public void sendUserWordList(int gameID, String username, String[] wordList) {
+        //TODO
         DataPB.addUserWordList(username, wordList);
 
         //TODO: do solving and store points in database
@@ -155,7 +157,7 @@ public class ServerImplementation extends BoggleClientPOA {
     /**
      *  Method to get the letter set of the next round
      */
-    private String getNextRoundLetterSet(int gameRoomID) {
+    public String getNextRoundLetterSet(int gameRoomID) {
         synchronized (this) {
             if (!DataPB.roundOngoing(gameRoomID)) {
                 String letters = createRandomLetterSet();
@@ -266,7 +268,7 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     @Override
     public int getUserPointsOngoingGame(int gameID, String username) {
-        return DataPB.getUserRoundPoints(username);
+        return DataPB.getUserRoundPoints(gameID, username);
     }
 
     /**
@@ -295,10 +297,11 @@ public class ServerImplementation extends BoggleClientPOA {
      * @return
      */
     @Override
-    public userInfo[] getCurrGameLeaderboard(int gameID) {
-        userInfo[] toReturn = DataPB.getCurrGameLeaderboard(gameID);
-        return toReturn;
+    public  userInfo[] getCurrGameLeaderboard(int gameID) {
+        List<userInfo> leaderboard = new ArrayList<>();
+        return leaderboard.toArray(new userInfo[0]);
     }
+
 
 
 
