@@ -1,5 +1,5 @@
 module BoggleApp {
-    struct Leaderboard {
+    struct userInfo {
         string username;
         string pfpAddress;
         long points;
@@ -9,44 +9,58 @@ module BoggleApp {
         string pfpAddress;
     };
 
-    typedef sequence<Leaderboard> userRanking;
+    typedef sequence<userInfo> leaderboards;
     typedef sequence<LobbyUser> lobbyUserList;
+    typedef sequence<string> wordList;
+
+    exception wrongCredentials {
+        string reason;
+    };
+
+    exception accountDoesNotExist {
+        string reason;
+    };
+
+    exception updateFailed {
+        string reason;
+    };
 
     interface BoggleClient {
-        boolean validateAccount(in string username, in string password);
+
+        void validateAccount(in string username, in string password) raises (wrongCredentials, accountDoesNotExist);
 
         void attemptJoin(in string username);
 
+        lobbyUserList getLobbyMembers();
+
+        long long getCurrLobbyTimerValue();
+
         long joinGameRoom(out long long duration);
+
+        void startRound(in long gameID, out long roundNumber, out string letterList);
+
+        long long getGameDurationVal(in long gameID);
+
+        void sendUserWordList(in long gameID, in string username, in wordList wordList);
 
         void exitGameRoom(in string username);
 
-        long long getCurrLobbyTimerValue(out boolean validLobby);
+        string getOverallWinner(in long gameID);
 
-        long startRound(in string username, in long gameID, out long roundNumber, out string vowels, out string consonants);
+        string getRoundWinner(in long gameID);
 
-        long long getGameDurationVal(in long gameID, in long roundID);
+        leaderboards getLeaderboard();
 
-        string getRoundWinner(in string username, in long gameID, in long roundID, in string wordsEntered);
-
-        string getOverallWinner(in long gameId);
-
-        long getPoints(in string username);
-
-        string getWinnerIfAny(in long gameID);
-
-        string getWordList(in long gameID, in long roundID);
-
-        userRanking getLeaderboard();
+        void editInfo(in string username, in string toEdit, in string newInfo) raises (updateFailed);
 
         long getUserPoints(in string username);
-
-        boolean editInfo(in string username, in string toEdit, in string newInfo);
         long getMatches(in string username);
         long getWins(in string username);
+
         boolean editPassword(in string username, in string oldPass, in string newPass);
 
-        lobbyUserList getLobbyMembers();
-        userRanking getCurrGameLeaderboard(in long gameID);
+        long getGamePoints(in string username);
+
+        leaderboards getCurrGameLeaderboard(in long gameID);
     };
 };

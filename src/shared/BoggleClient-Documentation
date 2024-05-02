@@ -1,0 +1,89 @@
+module BoggleApp {
+    struct userInfo {
+        string username;
+        string pfpAddress;
+        long points;
+    };
+    struct LobbyUser {
+        string username;
+        string pfpAddress;
+    };
+
+    typedef sequence<userInfo> leaderboards;
+    typedef sequence<LobbyUser> lobbyUserList;
+    typedef sequence<string> wordList;
+
+    /** When an account and password don't match */
+    exception wrongCredentials {
+        string reason;
+    }
+    
+    /** Invalid username and password match */
+    exception accountDoesNotExist {
+        string reason;
+    }
+    
+    /* User information update failed */
+    exception updateFailed {
+        string reason;
+    }
+
+    interface BoggleClient {
+
+    //Make return exception
+    /** Used in login to validate whether the account exists in the database */
+        void validateAccount(in string username, in string password) raises (wrongCredentials, accountDoesNotExist);
+
+    /** Handles user joining the waiting room */
+        void attemptJoin(in string username);
+
+    /** Get all the members that are in the lobby */
+        lobbyUserList getLobbyMembers();
+
+    /** Handles getting the curr timer value of the lobby, if the value is equal to 0 and there are more than
+        1 people in lobby the lobby the game will proceed else cancel */
+        long long getCurrLobbyTimerValue();
+
+    /** Returns the gameID of a game about to start and the duration the game will span */
+        long joinGameRoom(out long long duration);
+
+    // Fix implementation
+    /** Handles starting a round and populating necessary information on client side */
+        void startRound(in long gameID, out long roundNumber, out string letterList);
+
+    // Fix implementation
+    /** During the round, handles getting the curr timer value given a gameID */
+        long long getGameDurationVal(in long gameID);
+
+    /** At the end of the round, handles the player sending their word list to server */
+        void sendUserWordList(in long gameID, in string username, in wordList wordList);
+
+    /** Handles user leaving the game at any point */
+        void exitGameRoom(in string username);
+
+    /** Handles getting the overall winner of a game, if there is a winner */
+        string getOverallWinner(in long gameID);
+
+    /** If there is no overall winner yet, call this method which handles getting the winner of the round that just finished. */
+        string getRoundWinner(in long gameID);
+
+    /** Get the leaderboard */
+        leaderboards getLeaderboard();
+
+        //Throws exception
+        void editInfo(in string username, in string toEdit, in string newInfo) raises updateFailed;
+
+        long getUserPoints(in string username);
+        long getMatches(in string username);
+        long getWins(in string username);
+
+        // Throws Exception
+        boolean editPassword(in string username, in string oldPass, in string newPass);
+
+        /** Get the points of the user across all games */
+        long getGamePoints(in string username);
+
+        /** For a game lobby get the current leaderboard */
+        userRanking getCurrGameLeaderboard(in long gameID);
+    };
+};
