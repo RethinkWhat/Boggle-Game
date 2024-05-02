@@ -29,7 +29,7 @@ public class GameRoomModel {
         this.username = username;
         this.wfImpl = wfImpl;
         LongHolder durHolder = new LongHolder(0);
-        gameRoomID = wfImpl.joinGameRoom(durHolder);
+      //  gameRoomID = wfImpl.joinGameRoom(durHolder);
         duration = durHolder.value;
 
         wordSet = new HashSet<>();
@@ -41,9 +41,9 @@ public class GameRoomModel {
         StringHolder vHolder = new StringHolder();
         StringHolder cHolder = new StringHolder();
         IntHolder rnHolder = new IntHolder(0);
-        int roundID = wfImpl.startRound(username, gameRoomID,rnHolder, vHolder);
+       // int roundID = wfImpl.startRound(username, gameRoomID,rnHolder, vHolder);
         int roundNumber = rnHolder.value;
-        roundIDRoundNo.put(roundID, roundNumber);
+//        roundIDRoundNo.put(roundID, roundNumber);
 
         String vowels = vHolder.value;
         String cons = cHolder.value;

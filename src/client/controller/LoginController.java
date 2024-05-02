@@ -67,20 +67,19 @@ public class LoginController {
         public void actionPerformed(ActionEvent e) {
             String username = view.getTxtUsername().getText();
             try {
-                if (model.validateAccount(view.getTxtUsername().getText(), view.getTxtPassword().getText())) {
+                String msg = model.validateAccount(view.getTxtUsername().getText(), view.getTxtPassword().getText());
+                if (msg.equals("valid")) {
                     SwingUtilities.invokeLater(() -> new ClientApplicationController(new ClientApplicationView(),
                             new ClientApplicationModel(username, model.getWfImpl())));
                     view.dispose();
                 } else {
                     SwingUtilities.invokeLater(() -> {
-                        view.setErrorMessage("Wrong credentials. Try again.");
+                        view.setErrorMessage(msg);
                         view.getTxtPassword().setText("Password");
                         view.getTxtPassword().setEchoChar((char) 0);
                         view.getChkShowPassword().setSelected(false);
                     });
                 }
-            } catch (SQLException sqle){
-                sqle.printStackTrace();
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
