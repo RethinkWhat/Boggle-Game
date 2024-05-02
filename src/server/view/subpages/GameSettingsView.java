@@ -25,13 +25,17 @@ public class GameSettingsView extends JPanel {
     private SwingStylesheet style = new SwingStylesheet(); // the stylesheet
     private final int arcWidth = 20; // the width for the rounded corner
 
+    private JPanel pnlMain;
+
+    private JPanel gameSettingsPanel;
+
     // constructor for the GameSettingsView
     public GameSettingsView() {
         setLayout(new BorderLayout());
         setBackground(style.deepSkyBlue);
         setBorder(new EmptyBorder(40, 40, 40, 40));
 
-        JPanel gameSettingsPanel = style.createPnlRounded(10, 10, style.goldenTainoi, style.goldenTainoi);
+        gameSettingsPanel = style.createPnlRounded(10, 10, style.goldenTainoi, style.goldenTainoi);
         gameSettingsPanel.setPreferredSize(new Dimension(300,50));
         gameSettingsPanel.setBackground(style.goldenTainoi);
         gameSettingsPanel.setLayout(new BorderLayout());
@@ -43,11 +47,11 @@ public class GameSettingsView extends JPanel {
         gameSettingsLabel.setPreferredSize(new Dimension(300, 50));
         gameSettingsPanel.add(gameSettingsLabel, BorderLayout.CENTER);
 
-//        GameSettingsView.DefaultGameSettings pnlMain = new GameSettingsView.DefaultGameSettings();
-//        add(pnlMain, BorderLayout.CENTER);
-
-        GameSettingsView.EditGameSettings pnlMain = new GameSettingsView.EditGameSettings();
+        pnlMain = new DefaultGameSettings();
         add(pnlMain, BorderLayout.CENTER);
+
+        //pnlMain = new EditGameSettings();
+        //add(pnlMain, BorderLayout.CENTER);
 
         this.setPreferredSize(new Dimension(1300, 750));
         this.setVisible(true);
@@ -131,7 +135,7 @@ public class GameSettingsView extends JPanel {
             gbc.anchor = GridBagConstraints.CENTER;
             gbc.insets = new Insets(200, 10, 10, 10);
 
-            btnEdit = style.createBtnRounded("EDIT", style.deepSkyBlue, style.white, 10);
+            btnEdit = style.createBtnRounded("EDIT", style.deepSkyBlue, style.deepSkyBlue, 10);
             btnEdit.setPreferredSize(new Dimension(150,45));
             btnEdit.setFocusable(false);
             this.add(btnEdit, gbc);
@@ -229,15 +233,15 @@ public class GameSettingsView extends JPanel {
             gbc.anchor = GridBagConstraints.CENTER;
             gbc.insets = new Insets(220, 10, 10, 10);
 
-            sveChanges = style.createBtnRounded("SAVE CHANGES", style.deepSkyBlue, style.white, 10);
+            sveChanges = style.createBtnRounded("SAVE CHANGES", style.deepSkyBlue, style.deepSkyBlue, 10);
             sveChanges.setPreferredSize(new Dimension(170,45));
             sveChanges.setFocusable(false);
 
-            btnCancel = style.createBtnRounded("CANCEL", style.red, style.white, 10);
+            btnCancel = style.createBtnRounded("CANCEL", style.red, style.deepSkyBlue, 10);
             btnCancel.setPreferredSize(new Dimension(150,45));
             btnCancel.setFocusable(false);
 
-            btnBackToDefault = style.createBtnRounded("BACK TO DEFAULT", style.white, style.deepSkyBlue, 10);
+            btnBackToDefault = style.createBtnRounded("BACK TO DEFAULT", style.deepSkyBlue, style.deepSkyBlue, 10);
             btnBackToDefault.setPreferredSize(new Dimension(180,35));
             btnBackToDefault.setFont(new Font("Arial", Font.BOLD, 15));
             btnBackToDefault.setFocusable(false);
@@ -358,5 +362,25 @@ public class GameSettingsView extends JPanel {
     // sets a specified action listener for btnBackToDefault
     public void setBackToDefaultListener(ActionListener actionListener) {
         btnBackToDefault.addActionListener(actionListener);
+    }
+
+    public void showEditView(){
+        this.remove(pnlMain);
+        pnlMain = new EditGameSettings();
+        this.add(pnlMain, BorderLayout.CENTER);
+        this.revalidate();
+        this.repaint();
+
+        // GameSettingsView.EditGameSettings pnlMain = new GameSettingsView.EditGameSettings();
+        //   add(pnlMain, BorderLayout.CENTER);
+
+    }
+
+    public void showSaved(){
+        this.remove(pnlMain);
+        pnlMain = new DefaultGameSettings();
+        this.add(pnlMain, BorderLayout.CENTER);
+        this.revalidate();
+        this.repaint();
     }
 }

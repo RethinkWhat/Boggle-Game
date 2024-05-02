@@ -96,6 +96,6 @@ public class ServerStatusView extends JPanel {
         btnServerSwitch.setForeground(style.white);
 
         // Stop the logo animation
-        lblLogoAnimated.setIcon(style.iconLogoAnimated);
+        lblLogoAnimated.setIcon(style.iconLogoSteady);
     }
 }

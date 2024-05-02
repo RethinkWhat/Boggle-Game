@@ -33,18 +33,25 @@ public class GameSettingsController {
         selectedPlayers = view.getNumberOfPlayersComboBox().getSelectedIndex();
 
 
-        view.getBtnSave().addActionListener(new SaveListener());
-        //view.getBtnEdit().addActionListener(new EditListener());
-        view.getBtnCancel().addActionListener(new CancelListener());
-        view.getBtnBackToDefault().addActionListener(new BackToDefaultListener());
+        view.getBtnEdit().addActionListener(new EditListener());
+
     }
 
     public class CancelListener implements ActionListener{
         @Override
         public void actionPerformed(ActionEvent e) {
-            view.getGameDurationComboBox().setSelectedIndex(selectedGameDur);
-            view.getWaitingDurationComboBox().setSelectedIndex(selectedWaitDur);
-            view.getNumberOfPlayersComboBox().setSelectedIndex(selectedPlayers);
+            view.showSaved();
+            view.getBtnEdit().addActionListener(new EditListener());
+        }
+    }
+    public class EditListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            System.out.println("button clicked");
+            view.showEditView();
+            view.getBtnCancel().addActionListener(new CancelListener());
+            view.getBtnSave().addActionListener(new SaveListener());
+            view.getBtnBackToDefault().addActionListener(new BackToDefaultListener());
         }
     }
 
