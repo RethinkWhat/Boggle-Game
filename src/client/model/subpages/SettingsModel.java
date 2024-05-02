@@ -52,7 +52,7 @@ public class SettingsModel {
      * @return
      */
     public int getMatches(){                        // POSSIBLE BUG HERE
-        return wfImpl.getMatches(this.username);
+        return wfImpl.getNumberOfMatches(this.username);
     }
 
     /**
@@ -71,7 +71,7 @@ public class SettingsModel {
      * @return
      */
     public int getWins(){                           // POSSIBLE BUG HERE
-        return wfImpl.getWins(this.username);
+        return wfImpl.getNumberOfWins(this.username);
     }
 
     /**
@@ -90,7 +90,7 @@ public class SettingsModel {
      * @return
      */
     public int getUserPoints(){                         // THIS IS WORKING
-        return wfImpl.getUserPoints(this.username);
+        return wfImpl.getUserTotalPoints(this.username);
     }
 
     /**

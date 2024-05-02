@@ -135,8 +135,7 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     @Override
     public void sendUserWordList(int gameID, String username, String[] wordList) {
-        //TODO
-        DataPB.addUserWordList(username, wordList);
+        DataPB.addUserWordList(gameID, username, wordList);
 
         //TODO: do solving and store points in database
 
@@ -161,7 +160,6 @@ public class ServerImplementation extends BoggleClientPOA {
         synchronized (this) {
             if (!DataPB.roundOngoing(gameRoomID)) {
                 String letters = createRandomLetterSet();
-                DataPB.createRound(letters);
                 int roundID = DataPB.createRound(letters);
 
                 ArrayList<String> players = DataPB.getPlayersInGame(gameRoomID);
@@ -171,7 +169,7 @@ public class ServerImplementation extends BoggleClientPOA {
                 return letters;
             }
         }
-        return DataPB.getLetterSet(gameRoomID);
+        return DataPB.getLetters(gameRoomID);
     }
 
 

@@ -1,6 +1,8 @@
 package client.model;
 
 import client.model.BoggleApp.BoggleClient;
+import client.model.BoggleApp.accountDoesNotExist;
+import client.model.BoggleApp.accountLoggedIn;
 import server.model.DataPB;
 
 public class LoginModel {
@@ -18,8 +20,15 @@ public class LoginModel {
      * @return
      * @throws Exception
      */
-    public boolean validateAccount(String username, String password) throws Exception{
-        return wfImpl.validateAccount(username, password);
+    public String validateAccount(String username, String password) {
+        try {
+            wfImpl.validateAccount(username, password);
+            return "valid";
+        } catch (accountLoggedIn e) {
+            return "Account logged in elsewhere.";
+        } catch (accountDoesNotExist e) {
+            return "Wrong credentials. Try again.";
+        }
     }
 
     public BoggleClient getWfImpl() {
