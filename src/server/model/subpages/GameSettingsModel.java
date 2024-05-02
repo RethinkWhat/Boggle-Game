@@ -11,7 +11,7 @@ public class GameSettingsModel {
     }
 
     public void updateGameDuration(long newDuration) {
-        serverImplementation.setGameDuration(newDuration);
+        serverImplementation.setRoundDuration(newDuration);
     }
 
     public void updateWaitingDuration(long newDuration) {

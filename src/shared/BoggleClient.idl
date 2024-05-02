@@ -33,32 +33,32 @@ module BoggleApp {
 
         lobbyUserList getLobbyMembers();
 
-        long long getCurrLobbyTimerValue();
+        long long getCurrLobbyTimerValue(out boolean validLobby);
 
-        long joinGameRoom(out long long duration);
-
-        void startRound(in long gameID, out long roundNumber, out string letterList);
+        string getLetters(in long gameID);
 
         long long getGameDurationVal(in long gameID);
 
         void sendUserWordList(in long gameID, in string username, in wordList wordList);
 
+        string getRoundWinner(in long gameID);
+
+        string getNextRoundLetterSet(in long gameRoomID);
+
         void exitGameRoom(in string username);
 
         string getOverallWinner(in long gameID);
-
-        string getRoundWinner(in long gameID);
 
         leaderboards getLeaderboard();
 
         void editInfo(in string username, in string toEdit, in string newInfo) raises (updateFailed);
         void editPassword(in string username, in string oldPass, in string newPass) raises (updateFailed);
 
-        long getGamePoints(in string username);
+        long getUserTotalPoints(in string username);
+        long getUserPointsOngoingGame(in gameID, in string username);
         long getNumberOfMatches(in string username);
         long getNumberOfWins(in string username);
 
-        long getUserRoundPoints(in string username);
 
         leaderboards getCurrGameLeaderboard(in long gameID);
     };
