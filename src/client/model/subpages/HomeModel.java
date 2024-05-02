@@ -1,7 +1,7 @@
 package client.model.subpages;
 
 import client.model.BoggleApp.BoggleClient;
-import client.model.BoggleApp.Leaderboard;
+import client.model.BoggleApp.userInfo;
 
 public class HomeModel {
     private String username;
@@ -29,7 +29,7 @@ public class HomeModel {
         this.wfImpl = wfImpl;
     }
 
-    public Leaderboard[] getLeaderboard() {
+    public userInfo[] getLeaderboard() {
         return wfImpl.getLeaderboard();
     }
 }
