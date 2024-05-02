@@ -4,9 +4,7 @@ import org.omg.CORBA.ORB;
 
 import javax.swing.plaf.nimbus.State;
 import java.sql.*;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class DataPB {
     private static Connection con;
@@ -356,4 +354,21 @@ public class DataPB {
             return false;
         }
     }
+    public static List<String> searchUsername(String username) {
+        List<String> searchedUsernames = new ArrayList<>();
+        try {
+            String query = "SELECT username FROM player WHERE username LIKE ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, "%" + username + "%");
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                searchedUsernames.add(rs.getString("username"));
+            }
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        return searchedUsernames;
+    }
+
 }
