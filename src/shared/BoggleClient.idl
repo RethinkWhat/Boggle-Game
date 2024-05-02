@@ -13,7 +13,7 @@ module BoggleApp {
     typedef sequence<LobbyUser> lobbyUserList;
     typedef sequence<string> wordList;
 
-    exception wrongCredentials {
+    exception accountLoggedIn {
         string reason;
     };
 
