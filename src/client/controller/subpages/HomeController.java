@@ -1,7 +1,7 @@
 package client.controller.subpages;
 
 import client.controller.ClientApplicationController;
-import client.model.BoggleApp.Leaderboard;
+import client.model.BoggleApp.userInfo;
 import client.model.subpages.HomeModel;
 import client.model.subpages.LobbyModel;
 import client.view.subpages.HomeView;
@@ -57,9 +57,9 @@ public class HomeController {
     }
 
     public void populateLeaderboard() {
-        Leaderboard[] leaderboards = model.getLeaderboard();
+        userInfo[] leaderboards = model.getLeaderboard();
         view.clearPnlLeaderBoard();
-        for (Leaderboard leaderboard : leaderboards) {
+        for (userInfo leaderboard : leaderboards) {
             view.addPlayerInLeaderboard(leaderboard.username, leaderboard.pfpAddress, leaderboard.points);
         }
     }

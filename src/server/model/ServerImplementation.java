@@ -8,9 +8,7 @@ import org.omg.CORBA.BooleanHolder;
 import org.omg.CORBA.IntHolder;
 import org.omg.CORBA.LongHolder;
 import org.omg.CORBA.StringHolder;
-import server.model.BoggleApp.BoggleClientPOA;
-import server.model.BoggleApp.Leaderboard;
-import server.model.BoggleApp.LobbyUser;
+import server.model.BoggleApp.*;
 
 public class ServerImplementation extends BoggleClientPOA {
 
@@ -24,79 +22,97 @@ public class ServerImplementation extends BoggleClientPOA {
     private ArrayList<String> currLobby = new ArrayList<>();
 
 
-
-
     private long gameDuration = 180000L;
     private ArrayList<GameTimer> gamesStarted;
 
 
+    /**
+     * Default constructor for server implementation object
+     */
     public ServerImplementation() {
         DataPB.setCon();
         gamesStarted = new ArrayList<>();
 
     }
 
-    @Override
-    public synchronized LobbyUser[] getLobbyMembers() {
-        LobbyUser[] lobbyUsers = new LobbyUser[currLobby.size()];
-        for (int x =0; x < currLobby.size(); x++) {
-            lobbyUsers[x] = new LobbyUser(currLobby.get(x), DataPB.getPFPOfUser(currLobby.get(x)));
-        }
-        return lobbyUsers;
+    /**
+     * Handles the validation of an account upon logging in
+     * @param var1
+     * @param var2
+     * @throws wrongCredentials
+     * @throws accountDoesNotExist
+     */
+    public void validateAccount(String var1, String var2) throws accountLoggedIn, accountDoesNotExist {
+        if (!DataPB.validateAccount(var1,var2))
+            throw new accountDoesNotExist();
+        if (loggedIn.contains(var1))
+            throw new accountLoggedIn();
     }
 
-    @Override
-    public Leaderboard[] getCurrGameLeaderboard(int gameID) {
-        return new Leaderboard[0];
-    }
-
-    public boolean validateAccount(String var1, String var2) {
-        boolean exists = DataPB.validateAccount(var1,var2);
-        boolean userIn = loggedIn.contains(var1);
-        if (!userIn)
-            loggedIn.add(var1);
-        return exists && !userIn;
-    }
-
-    //TODO: make void
-    public synchronized long attemptJoin(String username) {
+    /**
+     * Method that handles a user's attempt to join a game
+     * Creates the waiting room and is where the timer value is set
+     * @param username
+     */
+    public synchronized void attemptJoin(String username) {
         if (lobbyTimer.getCurrTimerValue() == 0L) {
             lobbyTimer = new GameTimer(0, lobbyTimerValue);
             currLobby = new ArrayList<>();
-        } if (lobbyTimer.getCurrTimerValue() == 10000L)
+        } if (lobbyTimer.getCurrTimerValue() == lobbyTimerValue)
             startLobbyTime();
         currLobby.add(username);
-        System.out.println("Adding user: " + username);
-        System.out.println(currLobby);
-        return -1;
     }
 
-    private void startLobbyTime() {
-        Thread t = new Thread(lobbyTimer);
-        t.start();
+    /**
+     * Method to get all the users that are in the waiting lobby alongside their pfp address
+     * @return
+     */
+    @Override
+    public synchronized LobbyUser[] getLobbyMembers() {
+        LobbyUser[] lobbyUsers = new LobbyUser[currLobby.size()];
+        for (int x =0; x < currLobby.size(); x++)
+            lobbyUsers[x] = new LobbyUser(currLobby.get(x), DataPB.getPFPOfUser(currLobby.get(x)));
+        return lobbyUsers;
     }
 
+    /**
+     * Method to return the current lobby timer value.
+     *
+     * The validLobby parameter acts as a way of validating whether there is more
+     * than 1 person in the lobby.
+     * @param validLobby
+     * @return currTimerValue
+     */
+   // @Override
     public long getCurrLobbyTimerValue(BooleanHolder validLobby) {
         validLobby.value = currLobby.size() > 1;
         return lobbyTimer.getCurrTimerValue();
     }
 
-
-
-    @Override
-    public void exitGameRoom(String username) {
-        currLobby.remove(username);
-    }
-
+    /**
+     * Method to handle joining a game room
+     * @param duration
+     * @return
+     */
     @Override
     public int joinGameRoom(LongHolder duration) {
+        //TODO: Fix issue: only one game room should be created, but per user it creates a separate game room
         duration.value = gameDuration;
         return DataPB.createGameRoom();
     }
 
-
-    @Override
-    public int startRound(String username, int gameID, IntHolder roundNumber, StringHolder vowelsHolder, StringHolder consonantsHolder) {
+    /**
+     * Method that handles populating the round details database with users who are part of a round.
+     * It also returns the
+     * @param username
+     * @param gameID
+     * @param roundNumber
+     * @param lettersHolder
+     * @return roundID
+     */
+    //TODO: Fix issue: only one round should be created, but per call it creates a separate round
+    //@Override
+    public int createRoundDetails(String username, int gameID, IntHolder roundNumber, StringHolder lettersHolder) {
         String cons = createRandomConsonantSet();
         String vowel = createRandomVowelSet();
         int roundID = DataPB.createRound(vowel, cons);
@@ -104,8 +120,7 @@ public class ServerImplementation extends BoggleClientPOA {
 
         int newRoundNumber = DataPB.getLatestRound(gameID) +1;
         roundNumber.value = newRoundNumber;
-        vowelsHolder.value = vowel;
-        consonantsHolder.value = cons;
+        lettersHolder.value = vowel;
         int id = DataPB.createRoundDetails(gameID,roundID, newRoundNumber, username);
         startTimerForGame(gameID,  gameDuration);
 
@@ -113,77 +128,179 @@ public class ServerImplementation extends BoggleClientPOA {
         return id;
     }
 
-
-
     @Override
-    public long getGameDurationVal(int gameID, int roundID) {
+    /**
+     * Method to get the current timer value of an ongoing game
+     */
+    public long getGameDurationVal(int gameID) {
         return 0;
     }
 
-
-    //TODO: Store the wordList of each user for the finished round in the game
-    //TODO: Call the DataPB.updatePoints() method and update the points of user for round
+    /**
+     * Acts as a way the user can send the word list at the end of a round
+     * @param gameID
+     * @param username
+     * @param wordList
+     */
     @Override
-    public String getRoundWinner(String username, int gameID, int roundID, String wordsEntered) {
-        return null;
+    public void sendUserWordList(int gameID, String username, String[] wordList) {
+            //TODO: define storing of worldList of a user
     }
 
+    /**
+     * If a user happens to exit the game while the game ongoing
+     * @param username
+     */
+    @Override
+    public void exitGameRoom(String username) {
+        //TODO: Define implementation
+    }
+
+    /**
+     * Method to get the winner of a specific round in a game.
+     * Call this method after every round to show who won finished round.
+     * @param gameID
+     * @return
+     */
+    @Override
+    public String getRoundWinner(int gameID) {
+        return DataPB.getWinnerOfLatestRound(gameID);
+    }
+
+
+    /**
+     * Method to get the overall winner of a GAME if there is any. Otherwise, the method returns undecided.
+     * Call this method after every round to check if there is already an overall winner.
+     * @param gameId
+     * @return winnerUsername
+     */
     @Override
     public String getOverallWinner(int gameId) {
-        return null;
+        DataPB.getGameWinner(gameId);
+        return "undecided";
+    }
+
+    /**
+     * Method to
+     * @return
+     */
+    @Override
+    public userInfo[] getLeaderboard() {
+        Map<String, Integer> userPointsMap = DataPB.getTopPlayers();
+        userInfo[] toReturn = new userInfo[userPointsMap.size()];
+        int x =0;
+        for (String key: userPointsMap.keySet()) {
+            userInfo curr = new userInfo(key, DataPB.getPFPOfUser(key), userPointsMap.get(key));
+            toReturn[x] = curr;
+            x++;
+        }
+        return toReturn;
+    }
+
+    /**
+     * Method to handle editing the personal information of a given user
+     * @param username
+     * @param toEdit
+     * @param newInfo
+     * @throws updateFailed
+     */
+    @Override
+    public void editInfo(String username, String toEdit, String newInfo) throws updateFailed {
+        try {
+            DataPB.editInfo(username, toEdit, newInfo);
+        } catch (Exception e) {
+            throw new updateFailed();
+        }
+    }
+
+    /**
+     * Method to handle editing the password of a given account. Also, validates whether the old password input is correct,
+     * prior to password change
+     * @param username
+     * @param oldPass
+     * @param newPass
+     * @throws updateFailed
+     */
+    @Override
+    public void editPassword(String username, String oldPass, String newPass) throws updateFailed {
+        try {
+            DataPB.editPassword(username,oldPass,newPass);
+        } catch (Exception e) {
+            throw new updateFailed();
+        }
+    }
+
+
+    /**
+     * Method to handle getting the points the user was able to accumulate throughout the round THUS FAR
+     * @param username
+     * @return
+     */
+    @Override
+    public int getUserRoundPoints(String username) {
+        return DataPB.getUserPoints(username);
+    }
+
+    /**
+     * Method to handle getting the number of matches a user has played
+     * @param username
+     * @return
+     */
+    @Override
+    public int getNumberOfMatches(String username) {
+        return DataPB.getMatches(username);
     }
 
     @Override
-    public int getPoints(String username) {
+    public int getNumberOfWins(String username) {
         return 0;
     }
 
-    @Override
-    public String getWinnerIfAny(int gameID) {
-        return null;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    private void startLobbyTime() {
+        Thread t = new Thread(lobbyTimer);
+        t.start();
     }
 
-    @Override
-    public String getWordList(int gameID, int roundID) {
-        return null;
-    }
 
-    @Override
-    public Leaderboard[] getLeaderboard() {
-        Leaderboard leaderboard = new Leaderboard("rithik", "res/drawable/images/pfp-male-1.png", 5000);
-        Leaderboard ramon = new Leaderboard("ramon", "res/drawable/images/pfp-male-1.png", 10000);
 
-        Leaderboard[] leaderboards = new Leaderboard[2];
-        leaderboards[0] = leaderboard;
-        leaderboards[1] = ramon;
-        return leaderboards;
-    }
 
-    @Override
-    public int getUserPoints(String username) {
-        int points = DataPB.getUserPoints(username);
-        return points;
-    }
 
-    @Override
-    public boolean editInfo(String username, String toEdit, String newInfo) {
-        return false;
-    }
-
-    @Override
-    public int getMatches(String username) {
-        return 0;
-    }
-
-    @Override
-    public int getWins(String username) {
-        return 0;
-    }
-
-    @Override
-    public boolean editPassword(String username, String oldPass, String newPass) {
-        return false;
-    }
 
     private void startTimerForGame(int gameID, long duration) {
         GameTimer gameTimer = new GameTimer(gameID, duration);

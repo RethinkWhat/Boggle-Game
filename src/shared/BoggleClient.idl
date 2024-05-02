@@ -13,7 +13,7 @@ module BoggleApp {
     typedef sequence<LobbyUser> lobbyUserList;
     typedef sequence<string> wordList;
 
-    exception wrongCredentials {
+    exception accountLoggedIn {
         string reason;
     };
 
@@ -27,7 +27,7 @@ module BoggleApp {
 
     interface BoggleClient {
 
-        void validateAccount(in string username, in string password) raises (wrongCredentials, accountDoesNotExist);
+        void validateAccount(in string username, in string password) raises (accountLoggedIn, accountDoesNotExist);
 
         void attemptJoin(in string username);
 
@@ -52,14 +52,13 @@ module BoggleApp {
         leaderboards getLeaderboard();
 
         void editInfo(in string username, in string toEdit, in string newInfo) raises (updateFailed);
-
-        long getUserPoints(in string username);
-        long getMatches(in string username);
-        long getWins(in string username);
-
-        boolean editPassword(in string username, in string oldPass, in string newPass);
+        void editPassword(in string username, in string oldPass, in string newPass) raises (updateFailed);
 
         long getGamePoints(in string username);
+        long getNumberOfMatches(in string username);
+        long getNumberOfWins(in string username);
+
+        long getUserRoundPoints(in string username);
 
         leaderboards getCurrGameLeaderboard(in long gameID);
     };

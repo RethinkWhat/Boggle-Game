@@ -168,20 +168,24 @@ public class DataPB {
      * @param username
      * @return
      */
-    public static int getMatches(String username) throws SQLException{
+    public static int getMatches(String username) {
         int noOfMatches = 0;
 
-        String query = "SELECT DISTINCT rd.gameID, rd.username, g.duration, g.gameStatus, g.winner AS gameWinner " +
-                "FROM round_details rd JOIN game g USING (gameID) " +
-                "WHERE username = ? AND g.gameStatus = 'done'";
+        try {
+            String query = "SELECT DISTINCT rd.gameID, rd.username, g.duration, g.gameStatus, g.winner AS gameWinner " +
+                    "FROM round_details rd JOIN game g USING (gameID) " +
+                    "WHERE username = ? AND g.gameStatus = 'done'";
 
-        PreparedStatement ps = con.prepareStatement(query);
-        ps.setString(1, username);
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, username);
 
-        ResultSet rs = ps.executeQuery();
+            ResultSet rs = ps.executeQuery();
 
-        while (rs.next()){
-            ++noOfMatches;
+            while (rs.next()) {
+                ++noOfMatches;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return noOfMatches;
