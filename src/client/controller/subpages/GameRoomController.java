@@ -3,7 +3,6 @@ package client.controller.subpages;
 import client.controller.ClientApplicationController;
 import client.model.subpages.GameRoomModel;
 import client.view.subpages.GameRoomView;
-import shared.CustomizedMessageDialog;
 import shared.SwingResources;
 import shared.SwingStylesheet;
 
@@ -11,10 +10,13 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
+import java.util.List;
 
 /**
  * The GameRoomController processes user requests for specifying their inputs, computing and comparing scores,
@@ -172,6 +174,7 @@ public class GameRoomController {
             view.setErrorMessage("");
             String input = view.getTxtWordInput().getText().trim();
 
+            // TODO: compare word to valid word list. If valid, accept; else, reject.
             if (!input.contains(" ") && input.length() >= 4) {
                 if (!validateInput(input)) {
                     view.setErrorMessage("Input must only contain LETTERS!");
@@ -319,6 +322,62 @@ public class GameRoomController {
         }
     }
 
-    //TODO: When timer above elapses, send word set to server using the getRoundWinner method
+    /*
+    /**
+     * Creates an ArrayList containing the username, the gameID and the roundNumber, and the user's word set.
+     * The list will be sent to the server for score comparison.
+     * The list is in the following format:
+     * [[username, gameID, roundNumber], [word1, word2, word3, word4, word5, ...]]
+     * @return The main list containing the username, gameId, roundNumber, and the word set.
 
+    public List<List<String>> getCurrentRoundWordList(int roundNumber) {
+        List<List<String>> mainList = new ArrayList<>();
+        List<String> roundDetails = new ArrayList<>();
+        List<String> wordList = new ArrayList<>(model.getWordSet());
+
+        roundDetails.add(model.getUsername());
+        roundDetails.add(String.valueOf(model.getGameRoomID()));
+        roundDetails.add(String.valueOf(roundNumber));
+
+        mainList.add(roundDetails);
+        mainList.add(wordList);
+
+        return mainList;
+    }
+
+     */
+
+    /**
+     * Creates a hash map containing the username as the key, and the value as the words set (words entered by the user).
+     * @return hash map of username as key, word set as value.
+     */
+    public Map<String, List<String>> getCurrentRoundWordList() {
+        Map<String, List<String>> userWordMap = new HashMap<>();
+        List<String> wordList = new ArrayList<>(model.getWordSet());
+        String username = model.getUsername();
+
+        userWordMap.put(username, wordList);
+
+        return userWordMap;
+    }
+
+    /**
+     * Populates the letter set in the view by adding the elements of the specified vowel set and consonant set, then
+     * randomizing its order of appearance.
+     * @param vowelSet The specified vowel set.
+     * @param consonantSet The specified consonant set.
+     */
+    private void populateLetterSet(char[] vowelSet, char[] consonantSet) {
+        List<String> letterSet = new ArrayList<>();
+        letterSet.add(Arrays.toString(vowelSet));
+        letterSet.add(Arrays.toString(consonantSet));
+        Color backgroundColor;
+
+        Collections.shuffle(letterSet);
+
+        for (String letter : letterSet) {
+            backgroundColor = letter.matches("[AEIOU]") ? style.deepSkyBlue : style.goldenTainoi;
+            view.addLetterToLetterSet(letter, backgroundColor);
+        }
+    }
 }
