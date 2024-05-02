@@ -309,6 +309,32 @@ public class ServerImplementation extends BoggleClientPOA {
         t.start();
     }
 
+    private static String createRandomLetterSet() {
+        int vowelCount= 7;
+        int consonantCount = 13;
+        String vowels = "AEIOU";
+        String consonants = "BCDFGHJKLMNPQRSTVWXYZ";
+        StringBuilder sb = new StringBuilder();
+        Random random = new Random();
+
+        for (int i = 0; i < vowelCount; i++) {
+            int index = random.nextInt(vowels.length());
+            sb.append(vowels.charAt(index));
+        }
+        for (int i = 0; i < consonantCount; i++) {
+            int index = random.nextInt(consonants.length());
+            sb.append(consonants.charAt(index));
+        }
+        for (int i = sb.length() - 1; i > 0; i--) {
+            int index = random.nextInt(i + 1);
+            char a = sb.charAt(index);
+            sb.setCharAt(index, sb.charAt(i));
+            sb.setCharAt(i, a);
+        }
+        return sb.toString();
+    }
+
+
     private String createRandomVowelSet() {
         String vowel = "AEIOU";
        StringBuilder sb = new StringBuilder();
