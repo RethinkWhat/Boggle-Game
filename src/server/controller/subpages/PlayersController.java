@@ -2,12 +2,16 @@ package server.controller.subpages;
 
 import server.model.DataPB;
 import server.model.subpages.PlayersModel;
+import server.view.subpages.AvatarOptionView;
 import server.view.subpages.PlayersView;
 import shared.CustomizedMessageDialog;
 import shared.Player;
 import shared.SwingResources;
 import shared.SwingStylesheet;
 
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -17,6 +21,7 @@ import java.util.List;
 public class PlayersController {
     private PlayersView view;
     private PlayersModel model;
+    private AvatarOptionView avatarOptionView;
 
     public PlayersController(PlayersModel model, PlayersView view) {
         this.view = view;
@@ -79,6 +84,8 @@ public class PlayersController {
 
             view.getAddPlayerPanel().setBtnCreateActionListener(new CreateAccountListener());
 
+            view.getAddPlayerPanel().setBtnEditActionListener(new EditAvatarListener());
+
             view.getAddPlayerPanel().setBtnTxtCancelActionListener(new CancelAddPlayerListener());
 
             view.getAddPlayerPanel().getTxtUsername().addFocusListener(new SwingResources.TextFieldFocus(view.getAddPlayerPanel().
@@ -140,6 +147,14 @@ public class PlayersController {
             } else {
                 System.out.println("Player adding failed!");
             }
+        }
+    }
+
+    // Inner class for handling Edit Avatar button click in AddPlayerPanel
+    class EditAvatarListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            avatarOptionView = new AvatarOptionView(view.getAddPlayerPanel().getStringUsername(), new DataPB(), view);
         }
     }
 
@@ -236,5 +251,4 @@ public class PlayersController {
             view.getButtonPanel().setVisible(false);
         }
     }
-
 }

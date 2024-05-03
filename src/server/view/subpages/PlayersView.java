@@ -366,7 +366,7 @@ public class PlayersView extends JPanel {
 
             gbc.ipady = 10;
             gbc.gridy = 1;
-            lblAvatar = new JLabel(style.iconPfpMale1);
+            lblAvatar = new JLabel(new ImageIcon("res/drawable/images/pfp-male-1.png"));
             add(lblAvatar, gbc);
 
             gbc.gridy = 2;
@@ -441,8 +441,19 @@ public class PlayersView extends JPanel {
             return null;
         }
 
+        public void setAvatarImagePath(String path) {
+            if (path != null) {
+                ImageIcon icon = new ImageIcon(path);
+                lblAvatar.setIcon(icon);
+            }
+        }
+
         public JTextField getTxtUsername() {
             return txtUsername;
+        }
+
+        public String getStringUsername(){
+            return txtUsername.getText();
         }
 
         public JTextField getTxtFullName() {
