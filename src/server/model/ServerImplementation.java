@@ -55,8 +55,13 @@ public class ServerImplementation extends BoggleClientPOA {
      * @param username
      */
     public synchronized void attemptJoin(String username) {
+        System.out.println("attempting join");
         if (lobbyTimer.getCurrTimerValue() == 0L) {
-            joinGameRoom(currLobby);
+            System.out.println("reached lobby");
+            if (currLobby.size() > 0) {
+                System.out.println("joining game room.");
+                joinGameRoom(currLobby);
+            }
             lobbyTimer = new GameTimer(0, lobbyTimerValue);
             currLobby = new ArrayList<>();
         } if (lobbyTimer.getCurrTimerValue() == lobbyTimerValue)
@@ -107,16 +112,17 @@ public class ServerImplementation extends BoggleClientPOA {
     private void joinGameRoom(ArrayList<String> players) {
 
         int gameRoomID =  DataPB.createGameRoom(new Time(roundDuration));
+        System.out.println("created game room " + gameRoomID);
 
         String letters = createRandomLetterSet();
-        //TODO:
         int roundID = DataPB.createRound(letters);
         for (String player : players) {
             DataPB.createRoundDetails(gameRoomID,roundID, 1, player);
         }
 
-        startTimerForRound(roundID,roundDuration);
-        ongoingGameTimers.add(new GameTimer(gameRoomID, lobbyTimerValue));
+        System.out.println(gameRoomID + " " + roundID);
+        ongoingGameTimers.add(new GameTimer(gameRoomID, roundDuration));
+        startTimerForRound(gameRoomID);
     }
 
     public String getLetters(int gameID) {
@@ -130,6 +136,7 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     public long getGameDurationVal(int gameID) {
         for (GameTimer ongoingGameTimer : ongoingGameTimers) {
+
             if (ongoingGameTimer.getID() == gameID) {
                 return ongoingGameTimer.getCurrTimerValue();
             }
@@ -325,11 +332,14 @@ public class ServerImplementation extends BoggleClientPOA {
         t.start();
     }
 
-    private void startTimerForRound(int gameID, long duration) {
-        GameTimer gameTimer = new GameTimer(gameID, duration);
-        Thread t = new Thread(gameTimer);
-        ongoingGameTimers.add(gameTimer);
-        t.start();
+    private void startTimerForRound(int gameID) {
+        for (GameTimer timer : ongoingGameTimers) {
+            if (timer.getID() == gameID) {
+                Thread t = new Thread(timer);
+                t.start();
+            }
+        }
+
     }
 
     private static String createRandomLetterSet() {

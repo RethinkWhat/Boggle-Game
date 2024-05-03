@@ -15,9 +15,9 @@ public class DataPB {
 
     public static void setCon() {
         try {
-            String var0 = "jdbc:mysql://localhost:8889/boggle";
+            String var0 = "jdbc:mysql://localhost:3306/boggle";
             String var1 = "root";
-            String var2 = "root";
+            String var2 = "";
             con = DriverManager.getConnection(var0, var1, var2);
         } catch (Exception var3) {
             var3.printStackTrace();
@@ -374,7 +374,7 @@ public class DataPB {
     }
 
     public static String getLetters (int gameID){
-        return null;
+        return "ABCDEFGIHJKLMNOPQRST";
     }
     public static void addUserWordList(int gameID, String username, String []wordList){
 
@@ -397,7 +397,7 @@ public class DataPB {
     }
 
     public static int getGameID(String username){
-        return 0;
+        return 14;
     }
 
     public static String getLetterSet(int gameRoomID){
