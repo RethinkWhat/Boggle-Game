@@ -138,7 +138,16 @@ public class ServerImplementation extends BoggleClientPOA {
         for (GameTimer ongoingGameTimer : ongoingGameTimers) {
 
             if (ongoingGameTimer.getID() == gameID) {
-                return ongoingGameTimer.getCurrTimerValue();
+                long timer = ongoingGameTimer.getCurrTimerValue();
+                if (timer == 0) {
+                    try {
+                        Thread.sleep(2000);
+                        solveRoundPoints(gameID);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                return timer;
             }
         }
         return -1;
@@ -153,9 +162,6 @@ public class ServerImplementation extends BoggleClientPOA {
     @Override
     public void sendUserWordList(int gameID, String username, String[] wordList) {
         DataPB.addUserWordList(gameID, username, wordList);
-
-        //TODO: do solving and store points in database
-
     }
 
     /**
@@ -411,6 +417,18 @@ public class ServerImplementation extends BoggleClientPOA {
     }
 
      */
+
+    /**
+     * Method to handle solving of points.
+     * At the moment this method is called, the database is already populated with the wordlist for a round that has finished
+     *      The points need to be solved.
+     *      To solve the points, given the gameID, find the most recent round that finished, get the wordList of ALL the users
+     *      from the said round, perform the computations, and eventually update the database.
+     * @param gameID
+     */
+    private void solveRoundPoints(int gameID) {
+        //TODO: do solving and store points in database
+    }
 
     /**
      * Compares and cleans the specified userWordMapList by:

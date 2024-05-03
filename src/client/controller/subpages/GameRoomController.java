@@ -151,7 +151,7 @@ public class GameRoomController {
                                 //TODO: Send wordlist to server using: sendUserWordList method
                                 //TODO: Get the winner of the round using: getRoundWinner()
                                 //TODO: Check if there is an overall winner, if there isn't return value will be undecided
-                                //TODO: Get the letterSet for the next round using the method: getNextRoundLetterSet
+                                //TODO: Get the letterSet for the next round using the method: getNextRoundLetterSet and start next round
                             });
                         }
                     }
