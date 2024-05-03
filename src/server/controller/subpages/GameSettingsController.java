@@ -15,11 +15,9 @@ public class GameSettingsController {
 
     private int[] gameDurationInMins = {1,2,3,4};
     private int[] waitTimeInSeconds = {10, 15, 20, 25};
-    private int[] noOfPlayers = {2,3,4,5,6,7,8,9, Integer.MAX_VALUE};
 
     int selectedGameDur;
     int selectedWaitDur;
-    int selectedPlayers;
 
 
 
@@ -30,8 +28,6 @@ public class GameSettingsController {
 
         selectedGameDur = view.getGameDurationComboBox().getSelectedIndex();
         selectedWaitDur = view.getWaitingDurationComboBox().getSelectedIndex();
-        selectedPlayers = view.getNumberOfPlayersComboBox().getSelectedIndex();
-
 
         view.getBtnEdit().addActionListener(new EditListener());
 
@@ -63,7 +59,6 @@ public class GameSettingsController {
             view.getNumberOfPlayersComboBox().setSelectedIndex(0);
             model.updateGameDuration(gameDurationInMins[0] * 60000L);
             model.updateWaitingDuration(waitTimeInSeconds[0] * 1000 );
-            model.updateNumberOfPlayers(noOfPlayers[0]);
         }
     }
 
@@ -77,10 +72,6 @@ public class GameSettingsController {
 
             int waitChoice = view.getWaitingDurationComboBox().getSelectedIndex();
             model.updateWaitingDuration(waitTimeInSeconds[waitChoice] * 1000L);
-
-            int noPlayersChoice = view.getNumberOfPlayersComboBox().getSelectedIndex();
-            model.updateNumberOfPlayers(noOfPlayers[noPlayersChoice]);
-
         }
     }
 

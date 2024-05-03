@@ -18,7 +18,4 @@ public class GameSettingsModel {
         serverImplementation.setLobbyTimerValue(newDuration);
     }
 
-    public void updateNumberOfPlayers(int newNumberOfPlayers) {
-        serverImplementation.setNumberOfPlayers(newNumberOfPlayers);
-    }
 }

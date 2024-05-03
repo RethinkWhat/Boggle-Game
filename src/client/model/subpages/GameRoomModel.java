@@ -27,6 +27,10 @@ public class GameRoomModel {
         letterList = wfImpl.getLetters(gameRoomID);
     }
 
+    public long getDuration() {
+        return wfImpl.getGameDurationVal(gameRoomID);
+    }
+
     public void sendUserWordList() {
         wfImpl.sendUserWordList(gameRoomID,username, (String[]) wordSet.toArray());
     }

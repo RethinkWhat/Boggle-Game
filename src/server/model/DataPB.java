@@ -376,7 +376,7 @@ public class DataPB {
     public static String getLetters (int gameID){
         return null;
     }
-    public static void addUserWordList(String username, String []wordList){
+    public static void addUserWordList(int gameID, String username, String []wordList){
 
     }
 
