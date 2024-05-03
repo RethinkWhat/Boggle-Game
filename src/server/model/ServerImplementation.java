@@ -1,6 +1,8 @@
 
 package server.model;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Time;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -426,6 +428,35 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     private void solveRoundPoints(int gameID) {
         //TODO: do solving and store points in database
+    }
+
+    /**
+     * Returns a map of the users and their corresponding submitted words on a given gameID's latest round
+     * EXAMPLE:
+     * Ramon : [Lorem, Ipsum]
+     * Shander: [Burger, Loan, Interest]
+     * Holy : [Burger]
+     * @param gameID
+     * @return
+     */
+    private Map<String, List<String>> getUsersWordlists(int gameID){
+        ResultSet rs = DataPB.getUsersWordlists(gameID);
+
+        Map<String, List<String>> usersWordListsMap = new HashMap<>();
+
+        try {
+            while (rs.next()){
+                String username = rs.getString(1);
+                String[] wordsArr = rs.getString(2).split(",");
+                List<String> wordsList = Arrays.asList(wordsArr);
+
+                usersWordListsMap.put(username, wordsList);
+            }
+        }catch (SQLException sqle){
+            sqle.printStackTrace();
+        }
+
+        return usersWordListsMap;
     }
 
     /**
