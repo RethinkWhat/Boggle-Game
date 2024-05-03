@@ -425,8 +425,9 @@ public class DataPB {
 
     public static void main(String[] args) {
         setCon();
-        System.out.println(getLetters(1));
+        System.out.println(getUsersWordlists(1));
     }
+
 
     public static void addUserWordList(String username, int gameID,String []wordList){
         try{
@@ -442,6 +443,7 @@ public class DataPB {
             sqle.printStackTrace();
         }
     }
+
 
     /**
      *status : WORKING
@@ -526,14 +528,6 @@ public class DataPB {
         return userPoints;
     }
 
-//    public static int getGameID(String username){
-//        return 14;
-//    }
-
-    public static String getLetterSet(int gameRoomID){
-        return null;
-    }
-
     public static ArrayList<String> getPlayersInGame(int gameRoomID){
         return null;
     }
@@ -546,7 +540,6 @@ public class DataPB {
 
         return 0;
     }
-
 
 }
 

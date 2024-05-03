@@ -103,6 +103,11 @@ public class ServerImplementation extends BoggleClientPOA {
         return DataPB.getGameID(username);
     }
 
+    @Override
+    public String getLetters(int gameID) {
+        return null;
+    }
+
     /**
      * Method to handle creating a game room and populating database
      * @param players
@@ -124,9 +129,6 @@ public class ServerImplementation extends BoggleClientPOA {
         startTimerForRound(gameRoomID);
     }
 
-    public String getLetters(int gameID) {
-        return DataPB.getLetters(gameID).toString();
-    }
 
 
     @Override
@@ -160,7 +162,7 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     @Override
     public void sendUserWordList(int gameID, String username, String[] wordList) {
-        DataPB.addUserWordList(gameID, username, wordList);
+        DataPB.addUserWordList(username,gameID, wordList);
     }
 
     /**
@@ -192,7 +194,7 @@ public class ServerImplementation extends BoggleClientPOA {
                 return letters;
             }
         }
-        return DataPB.getLetters(gameID).toString();
+        return DataPB.getUsersWordlists(gameID).toString();
     }
 
 
