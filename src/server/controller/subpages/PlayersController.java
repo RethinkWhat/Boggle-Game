@@ -5,10 +5,10 @@ import server.model.subpages.PlayersModel;
 import server.view.subpages.PlayersView;
 import shared.Player;
 import shared.SwingResources;
+import shared.SwingStylesheet;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusListener;
+import javax.swing.*;
+import java.awt.event.*;
 import java.util.List;
 
 public class PlayersController {
@@ -22,6 +22,38 @@ public class PlayersController {
         // Add ActionListener to the Add Player button
         view.getFunctionPanel().setAddPlayerListener(new AddPlayerListener());
 
+
+        view.getFunctionPanel().getTxtSearchbar().addKeyListener(new KeyAdapter() {
+            SwingStylesheet style = new SwingStylesheet();
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                // This will clear when you start typing
+                if (view.getFunctionPanel().getTxtSearchbar().getText().equals("Search Players")) {
+                    view.getFunctionPanel().getTxtSearchbar().setText("");
+                    view.getFunctionPanel().getTxtSearchbar().setForeground(style.black);
+                }
+
+
+                // If the text is empty, it will set it back to "Search Players"
+                if (view.getFunctionPanel().getTxtSearchbar().getText().isEmpty() && e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                    view.getFunctionPanel().getTxtSearchbar().setText("Search Players");
+                    view.getFunctionPanel().getTxtSearchbar().setForeground(style.gray);
+                }
+
+                // Prevent deletion of "Search Players"
+                if (view.getFunctionPanel().getTxtSearchbar().getText().equals("Search Players") && e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+                    e.consume();
+                }
+
+                // Trigger validation when Enter key is pressed
+                if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+                    performSearch();
+                }
+            }
+        });
+
+        view.getFunctionPanel().setSearchListener(new SearchListener());
         populatePlayersTable();
 
         view.hideAddPlayerPanel();
@@ -91,10 +123,44 @@ public class PlayersController {
         }
     }
 
+    class SearchListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            performSearch();
+        }
+    }
+
+    // Method to perform search
+    private void performSearch() {
+        String searchText = view.getFunctionPanel().getTxtSearchbar().getText();
+        if (!searchText.isEmpty()) {
+            if (searchText.equalsIgnoreCase("All")) {
+                populatePlayersTable();
+            } else {
+                List<String> searchedPlayers = DataPB.searchUsername(searchText);
+                updateTable(searchedPlayers);
+            }
+        } else {
+            populatePlayersTable();
+        }
+    }
+
+
     private void populatePlayersTable() {
+        view.getTablePanel().clearTable();
         List<Player> player = DataPB.getAllPlayers();
         for (Player players : player) {
             view.getTablePanel().addRow(new Object[]{ players.getPlayerID(), players.getUsername(), players.getFullName()});
         }
     }
+
+    private void updateTable(List<String> searchedUsernames) {
+        // Clear existing table data
+        view.getTablePanel().clearTable();
+
+        for (int i = 0; i < searchedUsernames.size(); i += 3) {
+            view.getTablePanel().addRow(new Object[]{searchedUsernames.get(i), searchedUsernames.get(i + 1), searchedUsernames.get(i + 2)});
+        }
+    }
+
 }

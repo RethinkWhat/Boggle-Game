@@ -401,13 +401,15 @@ public class DataPB {
     public static List<String> searchUsername(String username) {
         List<String> searchedUsernames = new ArrayList<>();
         try {
-            String query = "SELECT username FROM player WHERE username LIKE ?";
+            String query = "SELECT playerID, username, fullName FROM player WHERE username LIKE ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, "%" + username + "%");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
+                searchedUsernames.add(rs.getString("playerID"));
                 searchedUsernames.add(rs.getString("username"));
+                searchedUsernames.add(rs.getString("fullName"));
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
