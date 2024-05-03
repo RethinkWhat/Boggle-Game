@@ -1,3 +1,4 @@
+
 package server.model;
 
 import java.sql.Time;
@@ -56,7 +57,6 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     public synchronized void attemptJoin(String username) {
         if (lobbyTimer.getCurrTimerValue() == 0L) {
-            joinGameRoom(currLobby);
             lobbyTimer = new GameTimer(0, lobbyTimerValue);
             currLobby = new ArrayList<>();
         } if (lobbyTimer.getCurrTimerValue() == lobbyTimerValue)
@@ -84,17 +84,13 @@ public class ServerImplementation extends BoggleClientPOA {
      * @param validLobby
      * @return currTimerValue
      */
-   // @Override
+    // @Override
     public long getCurrLobbyTimerValue(BooleanHolder validLobby) {
         validLobby.value = currLobby.size() > 1;
         return lobbyTimer.getCurrTimerValue();
     }
 
-    /**
-     * Method to get the ID of the ongoing game  the user is in.
-     * @param username
-     * @return
-     */
+    @Override
     public int getGameID(String username) {
         return DataPB.getGameID(username);
     }
@@ -109,7 +105,6 @@ public class ServerImplementation extends BoggleClientPOA {
         int gameRoomID =  DataPB.createGameRoom(new Time(roundDuration));
 
         String letters = createRandomLetterSet();
-        //TODO:
         int roundID = DataPB.createRound(letters);
         for (String player : players) {
             DataPB.createRoundDetails(gameRoomID,roundID, 1, player);
@@ -120,7 +115,7 @@ public class ServerImplementation extends BoggleClientPOA {
     }
 
     public String getLetters(int gameID) {
-        return DataPB.getLetters(gameID);
+        return DataPB.getLetters(gameID).toString();
     }
 
 
@@ -145,8 +140,7 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     @Override
     public void sendUserWordList(int gameID, String username, String[] wordList) {
-        DataPB.addUserWordList(gameID, username, wordList);
-
+        DataPB.addUserWordList(username, gameID,wordList);
         //TODO: do solving and store points in database
 
     }
@@ -166,20 +160,21 @@ public class ServerImplementation extends BoggleClientPOA {
     /**
      *  Method to get the letter set of the next round
      */
-    public String getNextRoundLetterSet(int gameRoomID) {
+    public String getNextRoundLetterSet(int gameID) {
         synchronized (this) {
-            if (!DataPB.roundOngoing(gameRoomID)) {
+            if (!DataPB.roundOngoing(gameID)) {
                 String letters = createRandomLetterSet();
+                DataPB.createRound(letters);
                 int roundID = DataPB.createRound(letters);
 
-                ArrayList<String> players = DataPB.getPlayersInGame(gameRoomID);
+                ArrayList<String> players = DataPB.getPlayersInGame(gameID);
                 for (String player : players) {
-                    DataPB.createRoundDetails(gameRoomID, roundID, 1, player);
+                    DataPB.createRoundDetails(gameID, roundID, 1, player);
                 }
                 return letters;
             }
         }
-        return DataPB.getLetters(gameRoomID);
+        return DataPB.getLetters(gameID).toString();
     }
 
 
@@ -360,7 +355,7 @@ public class ServerImplementation extends BoggleClientPOA {
 
     private String createRandomVowelSet() {
         String vowel = "AEIOU";
-       StringBuilder sb = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         Random random = new Random();
         for(int i = 0; i < 7; i++){
             int index= random.nextInt(vowel.length());
@@ -490,4 +485,6 @@ public class ServerImplementation extends BoggleClientPOA {
     }
 
 
+
 }
+
