@@ -1,3 +1,4 @@
+
 package server.model;
 
 import client.model.BoggleApp.userInfo;
@@ -252,6 +253,14 @@ public class DataPB {
         return false;
     }
 
+    /**
+     * STATUS : WORKING
+     * @param gameID
+     * @param roundID
+     * @param roundNumber
+     * @param username
+     * @param newPoints
+     */
     public static void updatePoints(int gameID, int roundID, int roundNumber, String username, int newPoints) {
         String query = "UPDATE round_details SET points = ? WHERE gameID = ? AND roundID = ? AND roundNumber = ? AND username = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -267,6 +276,11 @@ public class DataPB {
         }
     }
 
+    /**
+     * STATUS : WORKING
+     * @param username
+     * @return
+     */
     public static int getUserGamePoints(String username){
         String query = "SELECT points FROM player WHERE username = ?";
         int points = 0;
@@ -285,6 +299,10 @@ public class DataPB {
         return points;
     }
 
+    /**
+     * STATUS : WORKING
+     * @return
+     */
     public static Map<String, Integer> getTopPlayers() {
         String query = "SELECT username, points FROM player ORDER BY points DESC LIMIT 10";
         Map<String, Integer> topPlayers = new LinkedHashMap();
@@ -300,6 +318,12 @@ public class DataPB {
         return topPlayers;
     }
 
+    /**
+     * STATUS : WORKING
+     * @param gameID
+     * @param username
+     * @return
+     */
     public static Map<String,Integer> getTotalPointsRoundDetails(int gameID, String username){
         Map<String,Integer> totalPointsMap = new HashMap<>();
         String key = username+gameID;
@@ -356,6 +380,12 @@ public class DataPB {
             return false;
         }
     }
+
+    /**
+     * STATUS : WORKING
+     * @param username
+     * @return
+     */
     public static List<String> searchUsername(String username) {
         List<String> searchedUsernames = new ArrayList<>();
         try {
@@ -373,23 +403,123 @@ public class DataPB {
         return searchedUsernames;
     }
 
-    public static String getLetters (int gameID){
-        return "ABCDEFGIHJKLMNOPQRST";
+    /**
+     * Status : Working (ramon Says)
+     * @param gameID
+     * @return
+     */
+    public static ResultSet getLetters(int gameID) {
+        ResultSet resultSet = null;
+        try {
+            String query = "SELECT username, words FROM round_details " +
+                    "WHERE gameID = ? AND roundNumber = (SELECT MAX(roundNumber) FROM round_details WHERE gameID = ?)";
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1, gameID);
+            preparedStatement.setInt(2, gameID);
+            resultSet = preparedStatement.executeQuery();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return resultSet;
     }
-    public static void addUserWordList(int gameID, String username, String []wordList){
 
+    public static void main(String[] args) {
+        setCon();
+        System.out.println(getLetters(1));
     }
 
-    public static String getWinnerOfLatestRound(int gameID){
-        return null;
+    public static void addUserWordList(String username, int gameID,String []wordList){
+        try{
+            String query = "UPDATE round_details SET words = ? WHERE gameID = ? AND username = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            String words = String.join("," , wordList);
+            ps.setString(1,words);
+            ps.setInt(2, gameID);
+            ps.setString(3, username);
+
+            ps.executeUpdate();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
     }
 
-    public static Boolean roundOngoing (int gameRoomID){
-        return true;
+    /**
+     *status : WORKING
+     * @param gameID
+     * @return winner
+     */
+    public static String getWinnerOfLatestRound(int gameID) {
+        String winner = null;
+        try {
+            String query = "SELECT r.winner FROM round_details rd JOIN round r ON rd.roundID = r.roundID " +
+                    "WHERE rd.gameID = ? ORDER BY rd.roundNumber DESC Limit 1";
+
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, gameID);
+
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                winner = rs.getString("winner");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return winner;
     }
 
-    public static String getGameWinner (int gameID){
-        return null;
+
+    /**
+     * STATUS : WORKING
+     * returns true if round is ongoing
+     * @param gameID
+     * @return
+     */
+    public static Boolean roundOngoing(int gameID) {
+        Boolean isOngoing = false;
+        try {
+            String query = "SELECT gameStatus FROM game WHERE gameID = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, gameID);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                String gameStatus = rs.getString("gameStatus");
+                if ("ongoing".equalsIgnoreCase(gameStatus)) {
+                    isOngoing = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return isOngoing;
+    }
+
+
+    /**
+     * STATUS : WORKING to be improved
+     * if the database is empty, it returns undecided by default
+     * @param gameID
+     * @return
+     */
+    public static String getGameWinner(int gameID) {
+        String winner = "undecided";
+        try {
+            String query = "SELECT winner FROM game WHERE gameID = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1, gameID);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                String dbWinner = rs.getString("winner");
+                if (dbWinner != null && !dbWinner.trim().isEmpty()) {
+                    winner = dbWinner;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return winner;
     }
     public static int getUserRoundPoints(int gameID, String username) {
         int userPoints = 0; // Placeholder value, replace with actual logic to calculate points
@@ -412,7 +542,11 @@ public class DataPB {
         return null;
     }
 
+    public static int getGameID(String username) {
 
+        return 0;
+    }
 
 
 }
+
