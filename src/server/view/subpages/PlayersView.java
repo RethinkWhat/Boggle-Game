@@ -65,6 +65,7 @@ public class PlayersView extends JPanel {
         functionPanel = new FunctionPanel();
         tablePanel = new TablePanel();
         buttonPanel = new ButtonPanel();
+        addPlayerPanel = new AddPlayerPanel();
 
         add(functionPanel, BorderLayout.NORTH);
         add(tablePanel, BorderLayout.CENTER);
@@ -428,6 +429,14 @@ public class PlayersView extends JPanel {
 
         public JLabel getLblErrorMessage() {
             return lblErrorMessage;
+        }
+
+        public String getAvatarImagePath() {
+            if (lblAvatar != null && lblAvatar.getIcon() != null && lblAvatar.getIcon() instanceof ImageIcon) {
+                ImageIcon icon = (ImageIcon) lblAvatar.getIcon();
+                return icon.getDescription();
+            }
+            return null;
         }
 
         public JTextField getTxtUsername() {
