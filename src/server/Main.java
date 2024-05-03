@@ -7,15 +7,16 @@ import server.model.ServerApplicationModel;
 import server.view.ServerApplicationView;
 
 public class Main {
+    /*
     public static void main(String[] var0) {
         new ServerApplicationController(new ServerApplicationView(), new ServerApplicationModel());
     }
 
-    /*
+     */
+
     public static void main(String[] args) {
         ORBInitializer.run();
         new ServerApplicationController(new ServerApplicationView(), new ServerApplicationModel());
     }
 
-     */
 }
