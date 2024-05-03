@@ -4,6 +4,7 @@ import shared.SwingStylesheet;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -71,7 +72,7 @@ public class PlayersView extends JPanel {
         add(tablePanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        buttonPanel.setVisible(true);
+        buttonPanel.setVisible(false);
 
         this.setPreferredSize(new Dimension(1300, 750));
         this.setVisible(true);
@@ -195,7 +196,7 @@ public class PlayersView extends JPanel {
 
             // Initialize table model and columns
             tblPlayersModel = new DefaultTableModel();
-            tblPlayersModel.addColumn("");
+            tblPlayersModel.addColumn("PLAYER ID");
             tblPlayersModel.addColumn("USERNAME");
             tblPlayersModel.addColumn("FULL NAME");
 
@@ -219,7 +220,8 @@ public class PlayersView extends JPanel {
             tblPlayers.setRowHeight(30);
 
             // Set background color
-            tblPlayers.setBackground(style.mustard);
+            tblPlayers.setBackground(style.white);
+            tblPlayers.setFont(style.bowlbyOne.deriveFont(Font.PLAIN, 14));
 
             // Add table to scrollable pane
             JScrollPane scrollPane = new JScrollPane(tblPlayers);
@@ -489,6 +491,14 @@ public class PlayersView extends JPanel {
     public void hideAddPlayerPanel() {
         addPlayerPanel.dispose();
         setEnabled(true);
+    }
+
+    public void showButtonPanel() {
+        buttonPanel.setVisible(true);
+    }
+
+    public void hideButtonPanel() {
+        buttonPanel.setVisible(false);
     }
 
 }

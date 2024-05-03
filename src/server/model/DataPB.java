@@ -3,6 +3,7 @@ package server.model;
 
 import client.model.BoggleApp.userInfo;
 import org.omg.CORBA.ORB;
+import shared.Player;
 
 import javax.swing.plaf.nimbus.State;
 import java.sql.*;
@@ -16,7 +17,7 @@ public class DataPB {
 
     public static void setCon() {
         try {
-            String var0 = "jdbc:mysql://localhost:3306/boggle";
+            String var0 = "jdbc:mysql://localhost:3306/boggles";
             String var1 = "root";
             String var2 = "";
             con = DriverManager.getConnection(var0, var1, var2);
@@ -400,13 +401,15 @@ public class DataPB {
     public static List<String> searchUsername(String username) {
         List<String> searchedUsernames = new ArrayList<>();
         try {
-            String query = "SELECT username FROM player WHERE username LIKE ?";
+            String query = "SELECT playerID, username, fullName FROM player WHERE username LIKE ?";
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, "%" + username + "%");
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
+                searchedUsernames.add(rs.getString("playerID"));
                 searchedUsernames.add(rs.getString("username"));
+                searchedUsernames.add(rs.getString("fullName"));
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -663,5 +666,40 @@ public class DataPB {
         }
         return gameID;
     }
+
+    public static List<Player> getAllPlayers() {
+        DataPB.setCon();
+        List<Player> players = new ArrayList<>();
+        try {
+            String query = "SELECT playerID, username, fullName FROM player";
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                Player player = new Player();
+                player.setPlayerID(resultSet.getInt("playerID"));
+                player.setUsername(resultSet.getString("username"));
+                player.setFullName(resultSet.getString("fullName"));
+                players.add(player);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return players;
+    }
+
+    public static boolean removePlayer(int playerID) {
+        try {
+            String query = "DELETE FROM player WHERE playerID = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, playerID);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
 
