@@ -136,13 +136,13 @@ public class GameRoomController {
                         view.setPrgTimerValue(inSeconds);
                         System.out.println(inSeconds);
                         if (inSeconds == 10) {
-                            playSFX("countdown");
+                            sfxCountdown();
                             SwingUtilities.invokeLater(() -> {
                                 view.getPrgTimer().setBackground(style.red);
                                 view.getLblTimer().setForeground(style.red);
                             });
                         } else if (inSeconds == 0) {
-                            playSFX("countdown");
+                            sfxRoundOver();
                             SwingUtilities.invokeLater(() -> {
                                 view.getPrgTimer().setBackground(style.goldenTainoi);
                                 view.getLblTimer().setForeground(style.white);
@@ -177,22 +177,22 @@ public class GameRoomController {
                 if (!validateInput(input)) {
                     view.setErrorMessage("Input must only contain LETTERS!");
                     view.getTxtWordInput().setText("");
-                    playSFX("badInput");
+                    sfxBadInput();
                 } else {
                     view.addUserInput(model.getUsername(), input);
                     view.updateTxaHeight();
                     model.getWordSet().add(input);
                     view.getTxtWordInput().setText("");
-                    playSFX("goodInput");
+                    sfxGoodInput();
                 }
             } else if (input.length() < 4) {
                 view.setErrorMessage("Input must be at least 4 CHARACTERS!");
                 view.getTxtWordInput().setText("");
-                playSFX("badInput");
+                sfxBadInput();
             } else {
                 view.setErrorMessage("Input must only be a WORD!");
                 view.getTxtWordInput().setText("");
-                playSFX("badInput");
+                sfxBadInput();
             }
         }
     }
@@ -257,69 +257,6 @@ public class GameRoomController {
         return true;
     }
 
-    /**
-     * TODO: To debug
-     * Plays an SFX based on the specified type.
-     *
-     * @param type The specified SFX type to play.
-     */
-    private void playSFX(String type) {
-        if (sfxOn) {
-            try {
-                audioSoundStream = AudioSystem.getAudioInputStream(new File(badInput));
-                sfxClip = AudioSystem.getClip();
-                sfxClip.open(audioSoundStream);
-                sfxClip.stop();
-                switch (type) {
-                    case "badInput": {
-                        sfxClip.stop();
-                        audioSoundStream = AudioSystem.getAudioInputStream(new File(badInput));
-                        sfxClip = AudioSystem.getClip();
-                        sfxClip.open(audioSoundStream);
-                        sfxClip.start();
-                    }
-                    case "goodInput": {
-                        sfxClip.stop();
-                        audioSoundStream = AudioSystem.getAudioInputStream(new File(goodInput));
-                        sfxClip = AudioSystem.getClip();
-                        sfxClip.open(audioSoundStream);
-                        sfxClip.start();
-                    }
-                    case "countdown": {
-                        sfxClip.stop();
-                        audioSoundStream = AudioSystem.getAudioInputStream(new File(countdown));
-                        sfxClip = AudioSystem.getClip();
-                        sfxClip.open(audioSoundStream);
-                        sfxClip.start();
-                    }
-                    case "roundOver": {
-                        sfxClip.stop();
-                        audioSoundStream = AudioSystem.getAudioInputStream(new File(roundOver));
-                        sfxClip = AudioSystem.getClip();
-                        sfxClip.open(audioSoundStream);
-                        sfxClip.start();
-                    }
-                    case "winner": {
-                        sfxClip.stop();
-                        audioSoundStream = AudioSystem.getAudioInputStream(new File(win));
-                        sfxClip = AudioSystem.getClip();
-                        sfxClip.open(audioSoundStream);
-                        sfxClip.start();
-                    }
-                    case "lose": {
-                        sfxClip.stop();
-                        audioSoundStream = AudioSystem.getAudioInputStream(new File(lose));
-                        sfxClip = AudioSystem.getClip();
-                        sfxClip.open(audioSoundStream);
-                        sfxClip.start();
-                    }
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     /*
     /**
      * Creates an ArrayList containing the username, the gameID and the roundNumber, and the user's word set.
@@ -379,6 +316,96 @@ public class GameRoomController {
         for (String letter : letterSet) {
             backgroundColor = letter.matches("[AEIOU]") ? style.deepSkyBlue : style.goldenTainoi;
             view.addLetterToLetterSet(letter, backgroundColor);
+        }
+    }
+
+    /**
+     * Plays the bad input sfx.
+     */
+    private void sfxBadInput() {
+        try {
+            sfxClip.stop();
+            audioSoundStream = AudioSystem.getAudioInputStream(new File(badInput));
+            sfxClip = AudioSystem.getClip();
+            sfxClip.open(audioSoundStream);
+            sfxClip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Plays the good input sfx.
+     */
+    private void sfxGoodInput() {
+        try {
+            sfxClip.stop();
+            audioSoundStream = AudioSystem.getAudioInputStream(new File(goodInput));
+            sfxClip = AudioSystem.getClip();
+            sfxClip.open(audioSoundStream);
+            sfxClip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Plays the countdown sfx.
+     */
+    private void sfxCountdown() {
+        try {
+            sfxClip.stop();
+            audioSoundStream = AudioSystem.getAudioInputStream(new File(countdown));
+            sfxClip = AudioSystem.getClip();
+            sfxClip.open(audioSoundStream);
+            sfxClip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Plays the round over sfx.
+     */
+    private void sfxRoundOver() {
+        try {
+            sfxClip.stop();
+            audioSoundStream = AudioSystem.getAudioInputStream(new File(roundOver));
+            sfxClip = AudioSystem.getClip();
+            sfxClip.open(audioSoundStream);
+            sfxClip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Plays the winner sfx.
+     */
+    private void sfxWinner() {
+        try {
+            sfxClip.stop();
+            audioSoundStream = AudioSystem.getAudioInputStream(new File(win));
+            sfxClip = AudioSystem.getClip();
+            sfxClip.open(audioSoundStream);
+            sfxClip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Plays the lose sfx.
+     */
+    private void sfxLose() {
+        try {
+            sfxClip.stop();
+            audioSoundStream = AudioSystem.getAudioInputStream(new File(lose));
+            sfxClip = AudioSystem.getClip();
+            sfxClip.open(audioSoundStream);
+            sfxClip.start();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
