@@ -364,14 +364,15 @@ public class GameRoomController {
     /**
      * Populates the letter set in the view by adding the elements of the specified vowel set and consonant set, then
      * randomizing its order of appearance.
-     * @param vowelSet The specified vowel set.
-     * @param consonantSet The specified consonant set.
+     * @param letterList the specified letter list containing the random vowels and consonants.
      */
-    private void populateLetterSet(char[] vowelSet, char[] consonantSet) {
+    private void populateLetterSet(String letterList) {
         List<String> letterSet = new ArrayList<>();
-        letterSet.add(Arrays.toString(vowelSet));
-        letterSet.add(Arrays.toString(consonantSet));
         Color backgroundColor;
+
+        for (int i = 0; i < letterList.length(); i++) {
+            letterSet.add(letterList.substring(i, i + 1));
+        }
 
         Collections.shuffle(letterSet);
 
