@@ -3,6 +3,7 @@ package server.controller.subpages;
 import server.model.DataPB;
 import server.model.subpages.PlayersModel;
 import server.view.subpages.PlayersView;
+import shared.CustomizedMessageDialog;
 import shared.Player;
 import shared.SwingResources;
 import shared.SwingStylesheet;
@@ -61,6 +62,7 @@ public class PlayersController {
         view.getTablePanel().getTblPlayers().getSelectionModel().addListSelectionListener(new TableSelectionListener());
 
         view.getButtonPanel().setBtnRemoveActionListener(new RemovePlayerListener());
+        view.getButtonPanel().setBtnCancelActionListener(new CancelRemoveButtonListener());
 
         view.hideAddPlayerPanel();
 
@@ -195,10 +197,32 @@ public class PlayersController {
 
                 if (removed) {
                     view.getTablePanel().removeRow(selectedRow);
-                    //temp
-                    JOptionPane.showMessageDialog(view, "Player removed successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                    SwingStylesheet style = new SwingStylesheet();
+                    CustomizedMessageDialog playerRemoved = new CustomizedMessageDialog(
+                            "Player Removed",
+                            new ImageIcon("res/drawable/icons/success-tainoi-solid.png"),
+                            "PLAYER REMOVED",
+                            "You have successfully removed the player from the game.",
+                            "CLOSE",
+                            style.deepSkyBlue,
+                            style.goldenTainoi,
+                            style.black,
+                            style.goldenTainoi,
+                            false
+                    );
                 }
             }
         }
     }
+
+    class CancelRemoveButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            // Unselect the player
+            view.getTablePanel().getTblPlayers().clearSelection();
+            // Hide the button panel
+            view.getButtonPanel().setVisible(false);
+        }
+    }
+
 }
