@@ -30,7 +30,7 @@ public class ServerApplicationController {
         this.server = new Server();
 
         SwingUtilities.invokeLater(() -> {
-            playersController = new PlayersController(view.getPlayersView(), new PlayersModel());
+            playersController = new PlayersController(new PlayersModel(server.getServerImpl()), view.getPlayersView());
         });
 
         view.getServerStatusView().setServerListener(new ServerSwitchListener());

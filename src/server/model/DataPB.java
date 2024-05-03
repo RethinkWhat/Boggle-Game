@@ -415,7 +415,31 @@ public class DataPB {
     }
 
     /**
-     * STATUS : semi Working
+     * Adds player in the player column
+     * @param username
+     * @param password
+     * @param fullName
+     * @param pfp
+     * @return
+     */
+    public static boolean addPlayer(String username, String password, String fullName, String pfp) {
+        try {
+            String query = "INSERT INTO player(username, password, fullName, pfp) VALUES (?, ?, ?, ?)";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, username);
+            ps.setString(2, password);
+            ps.setString(3, fullName);
+            ps.setString(4, pfp);
+
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
      * Returns a result set of a given gameID's latest round containing the usernames and their corresponding submitted words.
      * @param gameID
      * @return
