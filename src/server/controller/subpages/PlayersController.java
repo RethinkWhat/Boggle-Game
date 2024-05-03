@@ -123,7 +123,19 @@ public class PlayersController {
             boolean added = model.addPlayer(username, password, fullName, view.getAddPlayerPanel().getAvatarImagePath());
 
             if (added) {
-                System.out.println("Player added successfully!");
+                SwingStylesheet style = new SwingStylesheet();
+                CustomizedMessageDialog playerCreated = new CustomizedMessageDialog(
+                        "Player Created",
+                        new ImageIcon("res/drawable/icons/success-tainoi-solid.png"),
+                        "PLAYER REMOVED",
+                        "You have successfully created an account for this player.",
+                        "CLOSE",
+                        style.deepSkyBlue,
+                        style.goldenTainoi,
+                        style.black,
+                        style.goldenTainoi,
+                        false
+                );
                 view.hideAddPlayerPanel();
             } else {
                 System.out.println("Player adding failed!");
