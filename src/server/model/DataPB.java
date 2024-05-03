@@ -3,6 +3,7 @@ package server.model;
 
 import client.model.BoggleApp.userInfo;
 import org.omg.CORBA.ORB;
+import shared.Player;
 
 import javax.swing.plaf.nimbus.State;
 import java.sql.*;
@@ -16,7 +17,7 @@ public class DataPB {
 
     public static void setCon() {
         try {
-            String var0 = "jdbc:mysql://localhost:3306/boggle";
+            String var0 = "jdbc:mysql://localhost:3306/boggles";
             String var1 = "root";
             String var2 = "";
             con = DriverManager.getConnection(var0, var1, var2);
@@ -662,6 +663,27 @@ public class DataPB {
             sqle.printStackTrace();
         }
         return gameID;
+    }
+
+    public static List<Player> getAllPlayers() {
+        DataPB.setCon();
+        List<Player> players = new ArrayList<>();
+        try {
+            String query = "SELECT playerID, username, fullName FROM player";
+            Statement statement = con.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                Player player = new Player();
+                player.setPlayerID(resultSet.getInt("playerID"));
+                player.setUsername(resultSet.getString("username"));
+                player.setFullName(resultSet.getString("fullName"));
+                players.add(player);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return players;
     }
 }
 

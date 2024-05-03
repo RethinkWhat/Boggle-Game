@@ -1,12 +1,15 @@
 package server.controller.subpages;
 
+import server.model.DataPB;
 import server.model.subpages.PlayersModel;
 import server.view.subpages.PlayersView;
+import shared.Player;
 import shared.SwingResources;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.FocusListener;
+import java.util.List;
 
 public class PlayersController {
     private PlayersView view;
@@ -18,6 +21,8 @@ public class PlayersController {
 
         // Add ActionListener to the Add Player button
         view.getFunctionPanel().setAddPlayerListener(new AddPlayerListener());
+
+        populatePlayersTable();
 
         view.hideAddPlayerPanel();
 
@@ -83,6 +88,13 @@ public class PlayersController {
             } else {
                 System.out.println("Player adding failed!");
             }
+        }
+    }
+
+    private void populatePlayersTable() {
+        List<Player> player = DataPB.getAllPlayers();
+        for (Player players : player) {
+            view.getTablePanel().addRow(new Object[]{ players.getPlayerID(), players.getUsername(), players.getFullName()});
         }
     }
 }

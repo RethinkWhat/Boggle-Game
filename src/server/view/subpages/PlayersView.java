@@ -4,6 +4,7 @@ import shared.SwingStylesheet;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 import java.awt.*;
 import java.awt.event.ActionListener;
 
@@ -195,7 +196,7 @@ public class PlayersView extends JPanel {
 
             // Initialize table model and columns
             tblPlayersModel = new DefaultTableModel();
-            tblPlayersModel.addColumn("");
+            tblPlayersModel.addColumn("PLAYER ID");
             tblPlayersModel.addColumn("USERNAME");
             tblPlayersModel.addColumn("FULL NAME");
 
@@ -219,7 +220,8 @@ public class PlayersView extends JPanel {
             tblPlayers.setRowHeight(30);
 
             // Set background color
-            tblPlayers.setBackground(style.mustard);
+            tblPlayers.setBackground(style.white);
+            tblPlayers.setFont(style.bowlbyOne.deriveFont(Font.PLAIN, 14));
 
             // Add table to scrollable pane
             JScrollPane scrollPane = new JScrollPane(tblPlayers);
