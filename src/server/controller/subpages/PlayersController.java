@@ -8,6 +8,8 @@ import shared.SwingResources;
 import shared.SwingStylesheet;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.*;
 import java.util.List;
 
@@ -55,6 +57,10 @@ public class PlayersController {
 
         view.getFunctionPanel().setSearchListener(new SearchListener());
         populatePlayersTable();
+
+        view.getTablePanel().getTblPlayers().getSelectionModel().addListSelectionListener(new TableSelectionListener());
+
+        view.getButtonPanel().setBtnRemoveActionListener(new RemovePlayerListener());
 
         view.hideAddPlayerPanel();
 
@@ -145,7 +151,6 @@ public class PlayersController {
         }
     }
 
-
     private void populatePlayersTable() {
         view.getTablePanel().clearTable();
         List<Player> player = DataPB.getAllPlayers();
@@ -163,4 +168,37 @@ public class PlayersController {
         }
     }
 
+    class TableSelectionListener implements ListSelectionListener {
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            if (!e.getValueIsAdjusting()) {
+                // Check if any row is selected
+                if (view.getTablePanel().getTblPlayers().getSelectedRow() != -1) {
+                    // Show the ButtonPanel if a row is selected
+                    view.showButtonPanel();
+                } else {
+                    // Hide the ButtonPanel if no row is selected
+                    view.hideButtonPanel();
+                }
+            }
+        }
+    }
+
+    class RemovePlayerListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            int selectedRow = view.getTablePanel().getTblPlayers().getSelectedRow();
+            if (selectedRow != -1) {
+                int playerId = Integer.parseInt(view.getTablePanel().getTblPlayers().getValueAt(selectedRow, 0).toString());
+
+                boolean removed = DataPB.removePlayer(playerId);
+
+                if (removed) {
+                    view.getTablePanel().removeRow(selectedRow);
+                    //temp
+                    JOptionPane.showMessageDialog(view, "Player removed successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+            }
+        }
+    }
 }

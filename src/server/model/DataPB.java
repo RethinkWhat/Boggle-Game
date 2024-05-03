@@ -687,5 +687,19 @@ public class DataPB {
         }
         return players;
     }
+
+    public static boolean removePlayer(int playerID) {
+        try {
+            String query = "DELETE FROM player WHERE playerID = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, playerID);
+            int rowsAffected = ps.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 }
 

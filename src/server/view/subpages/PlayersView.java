@@ -72,7 +72,7 @@ public class PlayersView extends JPanel {
         add(tablePanel, BorderLayout.CENTER);
         add(buttonPanel, BorderLayout.SOUTH);
 
-        buttonPanel.setVisible(true);
+        buttonPanel.setVisible(false);
 
         this.setPreferredSize(new Dimension(1300, 750));
         this.setVisible(true);
@@ -491,6 +491,14 @@ public class PlayersView extends JPanel {
     public void hideAddPlayerPanel() {
         addPlayerPanel.dispose();
         setEnabled(true);
+    }
+
+    public void showButtonPanel() {
+        buttonPanel.setVisible(true);
+    }
+
+    public void hideButtonPanel() {
+        buttonPanel.setVisible(false);
     }
 
 }
