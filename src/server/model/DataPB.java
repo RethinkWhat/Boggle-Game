@@ -255,6 +255,7 @@ public class DataPB {
 
     /**
      * STATUS : WORKING
+     * This query updates the points of a user
      * @param gameID
      * @param roundID
      * @param roundNumber
@@ -278,6 +279,7 @@ public class DataPB {
 
     /**
      * STATUS : WORKING
+     * This query gets the points of a user.
      * @param username
      * @return
      */
@@ -301,6 +303,7 @@ public class DataPB {
 
     /**
      * STATUS : WORKING
+     * This query gets the top 10 players based on their points
      * @return
      */
     public static Map<String, Integer> getTopPlayers() {
@@ -320,6 +323,7 @@ public class DataPB {
 
     /**
      * STATUS : WORKING
+     * This query totals the points of a user given gameID and username
      * @param gameID
      * @param username
      * @return
@@ -344,6 +348,12 @@ public class DataPB {
         return totalPointsMap;
     }
 
+    /**
+     * Status : WORKING
+     * This query retrieves the profile picture of a user "location path"
+     * @param username
+     * @return
+     */
     public static String getPFPOfUser(String username){
         String pfp = null;
 
@@ -383,6 +393,7 @@ public class DataPB {
 
     /**
      * STATUS : WORKING
+     * This query simply searches a username
      * @param username
      * @return
      */
@@ -404,6 +415,7 @@ public class DataPB {
     }
 
     /**
+     * STATUS : semi Working
      * Returns a result set of a given gameID's latest round containing the usernames and their corresponding submitted words.
      * @param gameID
      * @return
@@ -423,12 +435,12 @@ public class DataPB {
         return resultSet;
     }
 
-    public static void main(String[] args) {
-        setCon();
-        System.out.println(getUsersWordlists(1));
-    }
-
-
+    /**
+     * Status :
+     * @param username
+     * @param gameID
+     * @param wordList
+     */
     public static void addUserWordList(String username, int gameID,String []wordList){
         try{
             String query = "UPDATE round_details SET words = ? WHERE gameID = ? AND username = ?";
@@ -446,7 +458,8 @@ public class DataPB {
 
 
     /**
-     *status : WORKING
+     * Status : WORKING
+     * This query gets the winner of the latest round.
      * @param gameID
      * @return winner
      */
@@ -473,7 +486,7 @@ public class DataPB {
 
     /**
      * STATUS : WORKING
-     * returns true if round is ongoing
+     * This query returns true if round is ongoing
      * @param gameID
      * @return
      */
@@ -500,6 +513,7 @@ public class DataPB {
 
     /**
      * STATUS : WORKING to be improved
+     * This query shows the current game winner given gameID.
      * if the database is empty, it returns undecided by default
      * @param gameID
      * @return
@@ -523,23 +537,107 @@ public class DataPB {
         }
         return winner;
     }
+
+    /**
+     * STATUS : WORKING
+     * This query retrieves the points of a user in a current game given gameID and username
+     * @param gameID
+     * @param username
+     * @return
+     */
     public static int getUserRoundPoints(int gameID, String username) {
-        int userPoints = 0; // Placeholder value, replace with actual logic to calculate points
-        return userPoints;
+        int totalPoints = 0;
+        try {
+            String query = "SELECT points FROM round_details WHERE gameID = ? AND username = ?";
+            PreparedStatement preparedStatement = con.prepareStatement(query);
+            preparedStatement.setInt(1, gameID);
+            preparedStatement.setString(2, username);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                int points = rs.getInt("points");
+                totalPoints += points;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return totalPoints;
     }
 
-    public static ArrayList<String> getPlayersInGame(int gameRoomID){
-        return null;
+
+    /**
+     * STATUS : WORKING
+     * @param gameID
+     * @return
+     */
+    public static ArrayList<String> getPlayersInGame(int gameID) {
+        ArrayList<String> players = new ArrayList<>();
+        try {
+            String query = "SELECT DISTINCT username FROM round_details WHERE gameID = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, gameID);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String username = rs.getString("username");
+                players.add(username);
+            }
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        return players;
     }
 
+
+    /**
+     * STATUS : WORKING
+     * This query provides a leaderboard from current game.
+     * @param gameID
+     * @return
+     */
     public static userInfo[] getCurrGameLeaderboard(int gameID) {
-        return null;
+        String sql = "SELECT username, SUM(points) AS total_points FROM round_details WHERE gameID = ? GROUP BY username";
+
+        List<userInfo> leaderboardList = new ArrayList<>();
+
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, gameID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String username = rs.getString("username");
+                int totalPoints = rs.getInt("total_points");
+                String pfpAddress = getPFPOfUser(username);
+                userInfo user = new userInfo(username, pfpAddress, totalPoints);
+                leaderboardList.add(user);
+            }
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+
+        userInfo[] leaderboard = leaderboardList.toArray(new userInfo[0]);
+
+        return leaderboard;
     }
 
+    /**
+     * STATUS : WORKING
+     * This query locates what game a current user is in.
+     * @param username
+     * @return
+     */
     public static int getGameID(String username) {
-
-        return 0;
+        int gameID = 0;
+        String sql = "SELECT gameID FROM round_details WHERE username = ? ORDER BY roundIdentifier DESC LIMIT 1";
+        try (PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                gameID = rs.getInt("gameID");
+            }
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+        return gameID;
     }
-
 }
 
