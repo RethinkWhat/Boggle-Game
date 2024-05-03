@@ -404,11 +404,11 @@ public class DataPB {
     }
 
     /**
-     * Status : Working (ramon Says)
+     * Returns a result set of a given gameID's latest round containing the usernames and their corresponding submitted words.
      * @param gameID
      * @return
      */
-    public static ResultSet getLetters(int gameID) {
+    public static ResultSet getUsersWordlists(int gameID) {
         ResultSet resultSet = null;
         try {
             String query = "SELECT username, words FROM round_details " +
@@ -526,9 +526,9 @@ public class DataPB {
         return userPoints;
     }
 
-    public static int getGameID(String username){
-        return 14;
-    }
+//    public static int getGameID(String username){
+//        return 14;
+//    }
 
     public static String getLetterSet(int gameRoomID){
         return null;
