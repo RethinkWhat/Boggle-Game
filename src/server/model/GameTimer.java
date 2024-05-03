@@ -21,6 +21,7 @@ public class GameTimer implements Runnable {
             try {
                 Thread.sleep(1000L);
                 currTimerValue -= 1000L;
+                System.out.println("CURR TIME VALUE: " + currTimerValue);
             } catch (Exception var2) {
                 var2.printStackTrace();
             }

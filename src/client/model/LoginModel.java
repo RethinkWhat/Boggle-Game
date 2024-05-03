@@ -26,7 +26,7 @@ public class LoginModel {
             return "valid";
         } catch (accountLoggedIn e) {
             return "Account logged in elsewhere.";
-        } catch (accountDoesNotExist e) {
+        } catch (accountDoesNotExist er) {
             return "Wrong credentials. Try again.";
         }
     }

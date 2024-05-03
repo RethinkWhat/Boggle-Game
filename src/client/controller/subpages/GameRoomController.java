@@ -119,19 +119,20 @@ public class GameRoomController {
         timer.start();
     }
 
+
     public Runnable gameTimer() {
         Runnable toReturn = new Runnable() {
             @Override
             public void run() {
                 try {
-                    long duration = model.getDuration();
-                    int inSeconds = (int) duration / 1000;
+                    int inSeconds = (int) model.getWfImpl().getGameDurationVal(model.getGameRoomID() / 1000);
+                    System.out.println("IN SECONDS: " + inSeconds);
                     view.setPrgTimerMaxVal(inSeconds);
                     System.out.println(inSeconds);
                     while (inSeconds >= 0) {
                         Thread.sleep(1000);
                         view.setLblTimerTxt(inSeconds);
-                        inSeconds -= 1;
+                        inSeconds = (int) model.getWfImpl().getGameDurationVal(model.getGameRoomID() / 1000);
                         view.setPrgTimerValue(inSeconds);
                         System.out.println(inSeconds);
                         if (inSeconds == 10) {
@@ -147,13 +148,10 @@ public class GameRoomController {
                                 view.getLblTimer().setForeground(style.white);
 
 
-                               // model.getWfImpl().getRoundWinner()
-                                // TODO:  CustomizedMessageDialog to show winner
-                                // TODO: Call model.wfImpl.getOverallWinner if return value != "invalid" game has ended and we can declare winner
-                                // TODO: else
-                                    // TODO: Call model.nextRound()
-                                     // TODO: Start thread for next round... Thread timer = new Thread(gameTimer());
-                                     //TODO: timer.start();
+                                //TODO: Send wordlist to server using: sendUserWordList method
+                                //TODO: Get the winner of the round using: getRoundWinner()
+                                //TODO: Check if there is an overall winner, if there isn't return value will be undecided
+                                //TODO: Get the letterSet for the next round using the method: getNextRoundLetterSet and start next round
                             });
                         }
                     }

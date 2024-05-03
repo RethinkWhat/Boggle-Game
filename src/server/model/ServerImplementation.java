@@ -56,7 +56,13 @@ public class ServerImplementation extends BoggleClientPOA {
      * @param username
      */
     public synchronized void attemptJoin(String username) {
+        System.out.println("attempting join");
         if (lobbyTimer.getCurrTimerValue() == 0L) {
+            System.out.println("reached lobby");
+            if (currLobby.size() > 0) {
+                System.out.println("joining game room.");
+                joinGameRoom(currLobby);
+            }
             lobbyTimer = new GameTimer(0, lobbyTimerValue);
             currLobby = new ArrayList<>();
         } if (lobbyTimer.getCurrTimerValue() == lobbyTimerValue)
@@ -103,6 +109,7 @@ public class ServerImplementation extends BoggleClientPOA {
     private void joinGameRoom(ArrayList<String> players) {
 
         int gameRoomID =  DataPB.createGameRoom(new Time(roundDuration));
+        System.out.println("created game room " + gameRoomID);
 
         String letters = createRandomLetterSet();
         int roundID = DataPB.createRound(letters);
@@ -110,8 +117,9 @@ public class ServerImplementation extends BoggleClientPOA {
             DataPB.createRoundDetails(gameRoomID,roundID, 1, player);
         }
 
-        startTimerForRound(roundID,roundDuration);
-        ongoingGameTimers.add(new GameTimer(gameRoomID, lobbyTimerValue));
+        System.out.println(gameRoomID + " " + roundID);
+        ongoingGameTimers.add(new GameTimer(gameRoomID, roundDuration));
+        startTimerForRound(gameRoomID);
     }
 
     public String getLetters(int gameID) {
@@ -125,8 +133,18 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     public long getGameDurationVal(int gameID) {
         for (GameTimer ongoingGameTimer : ongoingGameTimers) {
+
             if (ongoingGameTimer.getID() == gameID) {
-                return ongoingGameTimer.getCurrTimerValue();
+                long timer = ongoingGameTimer.getCurrTimerValue();
+                if (timer == 0) {
+                    try {
+                        Thread.sleep(2000);
+                        solveRoundPoints(gameID);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                return timer;
             }
         }
         return -1;
@@ -140,9 +158,7 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     @Override
     public void sendUserWordList(int gameID, String username, String[] wordList) {
-        DataPB.addUserWordList(username, gameID,wordList);
-        //TODO: do solving and store points in database
-
+        DataPB.addUserWordList(gameID, username, wordList);
     }
 
     /**
@@ -320,11 +336,14 @@ public class ServerImplementation extends BoggleClientPOA {
         t.start();
     }
 
-    private void startTimerForRound(int gameID, long duration) {
-        GameTimer gameTimer = new GameTimer(gameID, duration);
-        Thread t = new Thread(gameTimer);
-        ongoingGameTimers.add(gameTimer);
-        t.start();
+    private void startTimerForRound(int gameID) {
+        for (GameTimer timer : ongoingGameTimers) {
+            if (timer.getID() == gameID) {
+                Thread t = new Thread(timer);
+                t.start();
+            }
+        }
+
     }
 
     private static String createRandomLetterSet() {
@@ -396,6 +415,18 @@ public class ServerImplementation extends BoggleClientPOA {
     }
 
      */
+
+    /**
+     * Method to handle solving of points.
+     * At the moment this method is called, the database is already populated with the wordlist for a round that has finished
+     *      The points need to be solved.
+     *      To solve the points, given the gameID, find the most recent round that finished, get the wordList of ALL the users
+     *      from the said round, perform the computations, and eventually update the database.
+     * @param gameID
+     */
+    private void solveRoundPoints(int gameID) {
+        //TODO: do solving and store points in database
+    }
 
     /**
      * Compares and cleans the specified userWordMapList by:

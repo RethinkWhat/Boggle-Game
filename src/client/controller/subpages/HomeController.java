@@ -53,7 +53,8 @@ public class HomeController {
         view.getBtnEditPfp().addMouseListener(new SwingResources.CursorChanger(view.getBtnEditPfp()));
         view.getBtnTutorial().addMouseListener(new SwingResources.CursorChanger(view.getBtnTutorial()));
 
-        populateLeaderboard();
+        //TODO: DEBUG
+        // populateLeaderboard();
     }
 
     public void populateLeaderboard() {
@@ -62,6 +63,8 @@ public class HomeController {
         for (userInfo leaderboard : leaderboards) {
             view.addPlayerInLeaderboard(leaderboard.username, leaderboard.pfpAddress, leaderboard.points);
         }
+        view.revalidate();
+        view.repaint();
     }
 
     /**

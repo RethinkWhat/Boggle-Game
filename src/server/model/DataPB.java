@@ -526,6 +526,14 @@ public class DataPB {
         return userPoints;
     }
 
+    public static int getGameID(String username){
+        return 14;
+    }
+
+    public static String getLetterSet(int gameRoomID){
+        return null;
+    }
+
     public static ArrayList<String> getPlayersInGame(int gameRoomID){
         return null;
     }
