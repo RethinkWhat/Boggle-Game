@@ -339,6 +339,12 @@ public class ServerImplementation extends BoggleClientPOA {
         return DataPB.getFullName(username);
     }
 
+    @Override
+    public boolean isValidWord(String word) {
+        //TODO: return DataPB.isValidWord(word);
+        return false;
+    }
+
     /** END of IDL methods */
 
 

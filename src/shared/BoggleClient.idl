@@ -65,5 +65,7 @@ module BoggleApp {
 
         string getPFPOFUser(in string username);
         string getFullName(in string username);
+
+        boolean isValidWord(in string word);
     };
 };
