@@ -47,14 +47,21 @@ public class HomeController {
         view.setTutorialListener(e -> parent.getView().showTutorial());
 
         view.getLblUsername().setText(model.getUsername());
+      //  view.getLblPlayerPfp().set
 
+       // ImageIcon iconPfp = new ImageIcon(model.getWfImpl().getP);
+
+       // gbc.gridx = 0;
+       // gbc.gridy = 0;
+       // JLabel lblPlayerPfp = style.createLblIconOnly(iconPfp, 60,60);
+        //add(lblPlayerPfp, gbc);
         // mouse listeners
         view.getBtnJoinGame().addMouseListener(new SwingResources.CursorChanger(view.getBtnJoinGame()));
         view.getBtnEditPfp().addMouseListener(new SwingResources.CursorChanger(view.getBtnEditPfp()));
         view.getBtnTutorial().addMouseListener(new SwingResources.CursorChanger(view.getBtnTutorial()));
 
         //TODO: DEBUG
-        // populateLeaderboard();
+         populateLeaderboard();
     }
 
     public void populateLeaderboard() {

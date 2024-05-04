@@ -34,7 +34,7 @@ public class SettingsController {
         this.parentController = parentController;
 
         // set texts
-        this.view.setFullNameText(model.getUsername());     //TEMPORARY ONLY SINCE THERE IS NO GETFULLNAME IN MODEL
+        this.view.setFullNameText("");// this.view.setFullNameText(model.getWfImpl().getFullName());     //TEMPORARY ONLY SINCE THERE IS NO GETFULLNAME IN MODEL
         this.view.setGamesPlayedText(model.getMatchesPartTwo());       // POSSIBLE BUG HERE SO I USED A TEMP METHOD
         this.view.setGamesWonText(model.getWinsPartTwo());             // POSSIBLE BUG HERE SO I USED A TEMP METHOD
         this.view.setTotalPointsText(model.getUserPoints());  // THIS IS WORKING
