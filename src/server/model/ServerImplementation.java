@@ -329,8 +329,15 @@ public class ServerImplementation extends BoggleClientPOA {
         return leaderboard.toArray(new userInfo[0]);
     }
 
+    @Override
+    public String getPFPOFUser(String username) {
+        return DataPB.getPFPOfUser(username);
+    }
 
-
+    @Override
+    public String getFullName(String username) {
+        return DataPB.getFullName(username);
+    }
 
     /** END of IDL methods */
 

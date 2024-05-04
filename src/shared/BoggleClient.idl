@@ -61,7 +61,9 @@ module BoggleApp {
         long getNumberOfMatches(in string username);
         long getNumberOfWins(in string username);
 
-
         leaderboards getCurrGameLeaderboard(in long gameID);
+
+        string getPFPOFUser(in string username);
+        string getFullName(in string username);
     };
 };

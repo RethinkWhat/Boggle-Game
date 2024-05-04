@@ -17,9 +17,9 @@ public class DataPB {
 
     public static void setCon() {
         try {
-            String var0 = "jdbc:mysql://localhost:3306/boggle";
+            String var0 = "jdbc:mysql://localhost:8889/boggle";
             String var1 = "root";
-            String var2 = "";
+            String var2 = "root";
             con = DriverManager.getConnection(var0, var1, var2);
         } catch (Exception var3) {
             var3.printStackTrace();
@@ -369,7 +369,25 @@ public class DataPB {
         }catch (SQLException sqle){
             sqle.printStackTrace();
         }
+        System.out.println("THIS IS PFP: " + pfp);
         return pfp;
+    }
+
+    public static String getFullName(String username){
+        String name = null;
+
+        String query = "SELECT fullName FROM player WHERE username =? ";
+        try (PreparedStatement ps = con.prepareStatement(query)){
+            ps.setString(1,username);
+            ResultSet rs=ps.executeQuery();
+
+            if (rs.next()){
+                name=rs.getString("fullName");
+            }
+        }catch (SQLException sqle){
+            sqle.printStackTrace();
+        }
+        return name;
     }
 
     /**

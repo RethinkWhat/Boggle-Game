@@ -133,8 +133,8 @@ public class SettingsModel {
      */
     public String getPFPOfUser(String username){
         try {
-            return "";
-            //return wfImpl.getPFPOfUser(username);
+            System.out.println("PFP: " + wfImpl.getPFPOFUser(username));
+            return wfImpl.getPFPOFUser(username);
         } catch (Exception e) {
             return "";
         }
