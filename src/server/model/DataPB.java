@@ -255,23 +255,16 @@ public class DataPB {
     }
 
     /**
-     * STATUS : WORKING
-     * This query updates the points of a user
-     * @param gameID
-     * @param roundID
-     * @param roundNumber
-     * @param username
+     * STATUS: WORKING
+     * Updates the points of the user
+     * @param roundIdentifier
      * @param newPoints
      */
-    public static void updatePoints(int gameID, int roundID, int roundNumber, String username, int newPoints) {
-        String query = "UPDATE round_details SET points = ? WHERE gameID = ? AND roundID = ? AND roundNumber = ? AND username = ?";
+    public static void updatePoints(int roundIdentifier, int newPoints) {
+        String query = "UPDATE round_details SET points = ? WHERE roundIdentifier = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, newPoints);
-            ps.setInt(2, gameID);
-            ps.setInt(3, roundID);
-            ps.setInt(4, roundNumber);
-            ps.setString(5, username);
-
+            ps.setInt(2, roundIdentifier);
             ps.executeUpdate();
         } catch (SQLException sqle) {
             sqle.printStackTrace();
@@ -719,5 +712,42 @@ public class DataPB {
         }
     }
 
+    /**
+     * STATUS: WORKING
+     * @param word
+     * @return
+     */
+    public static boolean isValidWord(String word) {
+        boolean isValid = false;
+        String query = "SELECT COUNT(*) FROM words WHERE words = ?";
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, word);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                isValid = (count > 0);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return isValid;
+    }
+
+    /**
+     * STATUS WORKING
+     */
+    public static void defineWordList() {
+        String query = "SELECT words FROM words";
+        try (PreparedStatement ps = con.prepareStatement(query);
+             ResultSet rs = ps.executeQuery()) {
+            while (rs.next()) {
+                String word = rs.getString("words");
+                System.out.println(word);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
 
