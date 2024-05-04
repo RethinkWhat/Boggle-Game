@@ -1,6 +1,7 @@
 package client.model.subpages;
 
 import client.model.BoggleApp.BoggleClient;
+import client.model.BoggleApp.updateFailed;
 import server.model.DataPB;
 
 import java.sql.SQLException;
@@ -61,9 +62,11 @@ public class SettingsModel {
      * @return
      */
     public int getMatchesPartTwo() throws SQLException {
-        DataPB dataPB = new DataPB();
-        dataPB.setCon();
-        return dataPB.getMatches(this.username);
+        try {
+            return wfImpl.getNumberOfMatches(username);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     /**
@@ -80,9 +83,11 @@ public class SettingsModel {
      * @return
      */
     public int getWinsPartTwo() throws SQLException {
-        DataPB dataPB = new DataPB();
-        dataPB.setCon();
-        return dataPB.getWins(this.username);
+        try {
+            return wfImpl.getNumberOfWins(username);
+        }catch (Exception e) {
+            return 0;
+        }
     }
 
     /**
@@ -99,9 +104,12 @@ public class SettingsModel {
      * @return
      */
     public boolean editInfo (String username, String toEdit, String newInfo) throws SQLException{
-        DataPB dataPB = new DataPB();
-        dataPB.setCon();
-        return dataPB.editInfo(this.username, toEdit, newInfo);
+        try {
+            wfImpl.editInfo(username, toEdit, newInfo);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
@@ -110,9 +118,12 @@ public class SettingsModel {
      * @return
      */
     public boolean editPassword(String username, String oldPass, String newPass) throws SQLException{
-        DataPB dataPB = new DataPB();
-        dataPB.setCon();
-        return dataPB.editPassword(this.username, oldPass, newPass);
+        try {
+            wfImpl.editPassword(username, oldPass, newPass);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     /**
@@ -121,8 +132,11 @@ public class SettingsModel {
      * @return
      */
     public String getPFPOfUser(String username){
-        DataPB dataPB = new DataPB();
-        dataPB.setCon();
-        return dataPB.getPFPOfUser(this.username);
+        try {
+            System.out.println("PFP: " + wfImpl.getPFPOFUser(username));
+            return wfImpl.getPFPOFUser(username);
+        } catch (Exception e) {
+            return "";
+        }
     }
 }

@@ -47,14 +47,15 @@ public class HomeController {
         view.setTutorialListener(e -> parent.getView().showTutorial());
 
         view.getLblUsername().setText(model.getUsername());
+        //TODO: Set Profile Picture
+
 
         // mouse listeners
         view.getBtnJoinGame().addMouseListener(new SwingResources.CursorChanger(view.getBtnJoinGame()));
         view.getBtnEditPfp().addMouseListener(new SwingResources.CursorChanger(view.getBtnEditPfp()));
         view.getBtnTutorial().addMouseListener(new SwingResources.CursorChanger(view.getBtnTutorial()));
 
-        //TODO: DEBUG
-        // populateLeaderboard();
+         populateLeaderboard();
     }
 
     public void populateLeaderboard() {

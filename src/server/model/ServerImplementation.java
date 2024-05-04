@@ -217,8 +217,7 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     @Override
     public String getOverallWinner(int gameId) {
-        DataPB.getGameWinner(gameId);
-        return "undecided";
+        return DataPB.getGameWinner(gameId);
     }
 
     /**
@@ -231,7 +230,12 @@ public class ServerImplementation extends BoggleClientPOA {
         userInfo[] toReturn = new userInfo[userPointsMap.size()];
         int x =0;
         for (String key: userPointsMap.keySet()) {
-            userInfo curr = new userInfo(key, DataPB.getPFPOfUser(key), userPointsMap.get(key));
+            String pfp = DataPB.getPFPOfUser(key);
+            if (pfp == null)
+                pfp = "";
+            userInfo curr = new userInfo(key, pfp, userPointsMap.get(key));
+
+            System.out.println("leaderboard: " + curr.username + " " + curr.pfpAddress + " " + userPointsMap.get(key));
             toReturn[x] = curr;
             x++;
         }
@@ -325,8 +329,15 @@ public class ServerImplementation extends BoggleClientPOA {
         return leaderboard.toArray(new userInfo[0]);
     }
 
+    @Override
+    public String getPFPOFUser(String username) {
+        return DataPB.getPFPOfUser(username);
+    }
 
-
+    @Override
+    public String getFullName(String username) {
+        return DataPB.getFullName(username);
+    }
 
     /** END of IDL methods */
 
