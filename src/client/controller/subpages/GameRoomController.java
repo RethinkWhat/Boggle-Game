@@ -179,7 +179,7 @@ public class GameRoomController {
                                             usernameWinnerGame + " has won the game.", "EXIT GAME",
                                             style.deepSkyBlue, style.goldenTainoi, style.black,
                                             style.goldenTainoi, false);
-                                    dialog.setBtnDialogListener(e -> parent.getView().getCardLayout().show(parent.getView().getPnlCards(), "home"););
+                                    dialog.setBtnDialogListener(e -> parent.getView().getCardLayout().show(parent.getView().getPnlCards(), "home"));
                                 }
                             } else {
                                 sfxRoundOver();
