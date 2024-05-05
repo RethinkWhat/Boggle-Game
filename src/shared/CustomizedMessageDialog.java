@@ -2,6 +2,7 @@ package shared;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * A customizable message dialog.
@@ -187,4 +188,7 @@ public class CustomizedMessageDialog extends JDialog {
         lblBig.setForeground(titleMessageColor);
     }
 
+    public void setBtnDialogListener(ActionListener actionListener) {
+        btnDialog.addActionListener(actionListener);
+    }
 }
