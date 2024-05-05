@@ -271,6 +271,18 @@ public class DataPB {
         }
     }
 
+    public static void updatePoints(int roundIdentifier, int newPoints, String username) {
+        String query = "UPDATE round_details SET points = ? WHERE roundIdentifier = ? AND username = ?";
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, newPoints);
+            ps.setInt(2, roundIdentifier);
+            ps.setString(3, username); // Set username as the third parameter
+            ps.executeUpdate();
+        } catch (SQLException sqle) {
+            sqle.printStackTrace();
+        }
+    }
+
     /**
      * STATUS : WORKING
      * This query gets the points of a user.
