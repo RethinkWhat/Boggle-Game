@@ -398,17 +398,18 @@ public class DataPB {
     /**
      * Returns true if the updating of a profile picture is successful
      * @param username
-     * @param newPFP
+     * @param newPfpPath
      * @return
      */
-    public static boolean changePFPOfUser(String username, String newPFP) {
+    public static boolean changeProfilePicture(String username, String newPfpPath) {
         try {
             String query = "UPDATE player SET pfp = ? WHERE username = ?";
+            DataPB.setCon();
             PreparedStatement ps = con.prepareStatement(query);
-            ps.setString(1, newPFP);
+            ps.setString(1, newPfpPath);
             ps.setString(2, username);
-            int rowsAffected = ps.executeUpdate();
-            return rowsAffected > 0;
+            ps.executeUpdate();
+            return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
@@ -762,4 +763,3 @@ public class DataPB {
         }
     }
 }
-
