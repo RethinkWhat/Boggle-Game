@@ -41,13 +41,11 @@ module BoggleApp {
 
         long long getGameDurationVal(in long gameID);
 
-        void sendUserWordList(in long gameID, in string username, in wordList wordList);
+        void sendUserWordList(in long gameID, in string username, in wordList listOfWords);
 
         string getRoundWinner(in long gameID);
 
         string getNextRoundLetterSet(in long gameRoomID);
-
-        void exitGameRoom(in string username);
 
         string getOverallWinner(in long gameID);
 
