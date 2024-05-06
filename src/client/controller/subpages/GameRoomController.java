@@ -336,7 +336,7 @@ public class GameRoomController {
 
         for (int i = 0; i < word.length(); i++){
             if (cloneSet.contains(word.charAt(i))){
-                cloneSet.remove('e');
+                cloneSet.remove(word.charAt(i));
                 word.deleteCharAt(i);
             }
         }
