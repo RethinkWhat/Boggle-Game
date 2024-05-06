@@ -324,6 +324,27 @@ public class GameRoomController {
     }
 
     /**
+     * Compares the input word to the passed letter set
+     * Returns true if each character in the input conforms to the number of its occurrences with respect ot the letter set
+     * @param origSet
+     * @param input
+     * @return
+     */
+    private boolean compareWordToLetterset(List<Character> origSet, String input){
+        List<Character> cloneSet = origSet;
+        StringBuilder word = new StringBuilder(input);
+
+        for (int i = 0; i < word.length(); i++){
+            if (cloneSet.contains(word.charAt(i))){
+                cloneSet.remove('e');
+                word.deleteCharAt(i);
+            }
+        }
+
+        return word.length() == 0;
+    }
+
+    /**
      * Plays the bad input sfx.
      */
     private void sfxBadInput() {
