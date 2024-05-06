@@ -50,6 +50,8 @@ public class ServerImplementation extends BoggleClientPOA {
             throw new accountDoesNotExist();
         if (loggedIn.contains(var1))
             throw new accountLoggedIn();
+        else loggedIn.add(var1);
+
     }
 
     /**
