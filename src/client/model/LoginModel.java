@@ -20,14 +20,12 @@ public class LoginModel {
      * @return
      * @throws Exception
      */
-    public String validateAccount(String username, String password) {
+    public String validateAccount(String username, String password)throws accountLoggedIn,accountDoesNotExist {
         try {
             wfImpl.validateAccount(username, password);
             return "valid";
-        } catch (accountLoggedIn e) {
-            return "Account logged in elsewhere.";
-        } catch (accountDoesNotExist er) {
-            return "Wrong credentials. Try again.";
+        }catch (Exception e){
+            return "Already logged in or does not exist";
         }
     }
 
