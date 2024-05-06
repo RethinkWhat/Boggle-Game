@@ -341,8 +341,7 @@ public class ServerImplementation extends BoggleClientPOA {
 
     @Override
     public boolean isValidWord(String word) {
-        //TODO: return DataPB.isValidWord(word);
-        return false;
+        return DataPB.isValidWord(word);
     }
 
     /** END of IDL methods */
@@ -389,31 +388,6 @@ public class ServerImplementation extends BoggleClientPOA {
             sb.setCharAt(index, sb.charAt(i));
             sb.setCharAt(i, a);
         }
-        return sb.toString();
-    }
-
-
-    private String createRandomVowelSet() {
-        String vowel = "AEIOU";
-        StringBuilder sb = new StringBuilder();
-        Random random = new Random();
-        for(int i = 0; i < 7; i++){
-            int index= random.nextInt(vowel.length());
-            sb.append(vowel.charAt(index));
-        }
-        System.out.println(sb.toString());
-        return sb.toString();
-    }
-
-    private static String createRandomConsonantSet() {
-        String consonant = "BCDFGHJKLMNPQRSTVWXYZ";
-        StringBuilder sb = new StringBuilder();
-        Random random = new Random();
-        for (int i = 0; i < 13; i++) {
-            int index = random.nextInt(consonant.length());
-            sb.append(consonant.charAt(index));
-        }
-        System.out.println(sb.toString());
         return sb.toString();
     }
 
@@ -513,29 +487,6 @@ public class ServerImplementation extends BoggleClientPOA {
     }
 
     /**
-     * Creates a list of map, where the username is the key and the score as the value.
-     * Each element of the cleanedUserWordList will be used to create the new map of the list.
-     * @param cleanedUserWordList The specified list of map that have undergone comparison and filtering.
-     * @return The map of username as key and score as the value.
-     */
-    private List<Map<String, Integer>> putToUserScoreMap(List<Map<String, List<String>>> cleanedUserWordList) {
-        List<Map<String, Integer>> userScoreList = new ArrayList<>();
-        for (Map<String, List<String>> userWordMap : cleanedUserWordList) {
-            Map<String, Integer> scoreMap = new HashMap<>();
-            int score = computeTotalScore(userWordMap);
-            for (Map.Entry<String, List<String>> entry : userWordMap.entrySet()) {
-                String username = entry.getKey();
-
-                scoreMap.put(username, score);
-            }
-            userScoreList.add(scoreMap);
-        }
-        return userScoreList;
-    }
-
-    private void updatePoints(Map<List<String>, Integer> userScoreMap) {}
-
-    /**
      * After the word lists have undergone comparison and cleaning, invoke this method.
      * Retrieves the total score of the user in a specified round by getting the length of the elements of the
      * specified "cleaned" word list.
@@ -552,7 +503,6 @@ public class ServerImplementation extends BoggleClientPOA {
                 totalScore += word.length();
             }
         }
-
         return totalScore;
     }
 
@@ -573,8 +523,5 @@ public class ServerImplementation extends BoggleClientPOA {
     public void setLobbyTimerValue(long time) {
         lobbyTimerValue = time;
     }
-
-
-
 }
 

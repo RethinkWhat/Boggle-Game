@@ -3,6 +3,7 @@ package client.controller.subpages;
 import client.controller.ClientApplicationController;
 import client.model.subpages.GameRoomModel;
 import client.view.subpages.GameRoomView;
+import server.model.DataPB;
 import shared.CustomizedMessageDialog;
 import shared.SwingResources;
 import shared.SwingStylesheet;
@@ -179,7 +180,7 @@ public class GameRoomController {
                                             usernameWinnerGame + " has won the game.", "EXIT GAME",
                                             style.deepSkyBlue, style.goldenTainoi, style.black,
                                             style.goldenTainoi, false);
-                                    dialog.setBtnDialogListener(e -> parent.getView().getCardLayout().show(parent.getView().getPnlCards(), "home"););
+                                    dialog.setBtnDialogListener(e -> parent.getView().getCardLayout().show(parent.getView().getPnlCards(), "home"));
                                 }
                             } else {
                                 sfxRoundOver();
@@ -297,32 +298,8 @@ public class GameRoomController {
             if (!Character.isLetter(input.charAt(i)) || Character.isWhitespace(input.charAt(i))) {
                 return false;
             }
-            if (!queryValidWords(input)) {
-                return false;
-            }
         }
-        return true;
-    }
-
-    private boolean queryValidWords(String word) {
-        // TODO: Implementation
-        return false;
-    }
-
-    /**
-     * Creates a hash map containing the username as the key, and the value as the words set (words entered by the user).
-     * @return hash map of username as key, word set as value.
-     */
-    public Map<String, List<String>> getCurrentRoundWordList() {
-        Map<String, List<String>> userWordMap = new HashMap<>();
-        List<String> wordList = new ArrayList<>(model.getWordSet());
-        String username = model.getUsername();
-
-        userWordMap.put(username, wordList);
-
-        // model.getWfImpl().sendUserWordList();
-
-        return userWordMap;
+        return model.getWfImpl().isValidWord(input);
     }
 
     /**
