@@ -254,6 +254,17 @@ public class HomeView extends JPanel {
     }
 
     /**
+     * Sets the path of the avatar
+     * @param path
+     */
+    public void setAvatarImagePath(String path) {
+        if (path != null) {
+            ImageIcon icon = new ImageIcon(path);
+            lblPlayerPfp.setIcon(icon);
+        }
+    }
+
+    /**
      * Retrieves the current JButton of btnEditPfp.
      * @return The current btnEditPfp.
      */
@@ -322,6 +333,5 @@ public class HomeView extends JPanel {
     public void clearPnlLeaderBoard() {
         pnlLeaderboard.removeAll();
     }
-
 
 }

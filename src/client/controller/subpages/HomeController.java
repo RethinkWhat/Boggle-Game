@@ -4,7 +4,10 @@ import client.controller.ClientApplicationController;
 import client.model.BoggleApp.userInfo;
 import client.model.subpages.HomeModel;
 import client.model.subpages.LobbyModel;
+import client.view.subpages.AvatarSelectionView;
 import client.view.subpages.HomeView;
+import client.view.subpages.SettingsView;
+import server.model.DataPB;
 import shared.SwingResources;
 
 import javax.swing.*;
@@ -21,51 +24,61 @@ public class HomeController {
      */
     private ClientApplicationController parent;
     /**
-     * The view.
+     * The home view.
      */
-    private HomeView view;
+    private HomeView homeView;
     /**
      * The model.
      */
     private HomeModel model;
+    /**
+     * The avatar selection view.
+     */
+    private AvatarSelectionView avatarSelectionView;
+    /**
+     * The settings view.
+     */
+    private SettingsView settingsView;
 
     /**
      * Constructs a HomeController with a specified view and model.
-     * @param view The specified view.
-     * @param model The specified model.
+     * @param settingsView
+     * @param homeView
+     * @param model
+     * @param parent
      */
-    public HomeController(HomeView view, HomeModel model, ClientApplicationController parent) {
-        this.view = view;
+    public HomeController(SettingsView settingsView, HomeView homeView, HomeModel model, ClientApplicationController parent) {
+        this.settingsView = settingsView;
+        this.homeView = homeView;
         this.model = model;
         this.parent = parent;
 
         parent.playDefaultMusic();
 
         // action listeners
-        view.setJoinListener(new JoinGameListener(parent));
-        view.setEditListener(new EditPfpListener());
-        view.setTutorialListener(e -> parent.getView().showTutorial());
+        homeView.setJoinListener(new JoinGameListener(parent));
+        homeView.setEditListener(new EditPfpListener());
+        homeView.setTutorialListener(e -> parent.getView().showTutorial());
 
-        view.getLblUsername().setText(model.getUsername());
-        //TODO: Set Profile Picture
-
+        homeView.getLblUsername().setText(model.getUsername());
+        homeView.setAvatarImagePath(model.getPFPOFUser(model.getUsername()));
 
         // mouse listeners
-        view.getBtnJoinGame().addMouseListener(new SwingResources.CursorChanger(view.getBtnJoinGame()));
-        view.getBtnEditPfp().addMouseListener(new SwingResources.CursorChanger(view.getBtnEditPfp()));
-        view.getBtnTutorial().addMouseListener(new SwingResources.CursorChanger(view.getBtnTutorial()));
+        homeView.getBtnJoinGame().addMouseListener(new SwingResources.CursorChanger(homeView.getBtnJoinGame()));
+        homeView.getBtnEditPfp().addMouseListener(new SwingResources.CursorChanger(homeView.getBtnEditPfp()));
+        homeView.getBtnTutorial().addMouseListener(new SwingResources.CursorChanger(homeView.getBtnTutorial()));
 
          populateLeaderboard();
     }
 
     public void populateLeaderboard() {
         userInfo[] leaderboards = model.getLeaderboard();
-        view.clearPnlLeaderBoard();
+        homeView.clearPnlLeaderBoard();
         for (userInfo leaderboard : leaderboards) {
-            view.addPlayerInLeaderboard(leaderboard.username, leaderboard.pfpAddress, leaderboard.points);
+            homeView.addPlayerInLeaderboard(leaderboard.username, leaderboard.pfpAddress, leaderboard.points);
         }
-        view.revalidate();
-        view.repaint();
+        homeView.revalidate();
+        homeView.repaint();
     }
 
     /**
@@ -116,7 +129,7 @@ public class HomeController {
     class EditPfpListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-
+            avatarSelectionView = new AvatarSelectionView(model.getUsername(), new DataPB(), homeView, settingsView);
         }
     }
 }
