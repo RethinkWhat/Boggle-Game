@@ -25,7 +25,7 @@ public class LoginModel {
             wfImpl.validateAccount(username, password);
             return "valid";
         }catch (Exception e){
-            return "Already logged in or does not Exist";
+            return "Already logged in or does not exist";
         }
     }
 
