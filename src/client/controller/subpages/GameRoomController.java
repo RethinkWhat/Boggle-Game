@@ -233,10 +233,9 @@ public class GameRoomController {
             view.setErrorMessage("");
             String input = view.getTxtWordInput().getText().trim();
 
-            // TODO: check word text if it conforms to the letter set
             if (!input.contains(" ") && input.length() >= 4) {
                 if (!validateInput(input)) {
-                    view.setErrorMessage("Input must only contain LETTERS!");
+                    view.setErrorMessage("Input must CONFORM to the letter set!");
                     view.getTxtWordInput().setText("");
                     sfxBadInput();
                 } else {
