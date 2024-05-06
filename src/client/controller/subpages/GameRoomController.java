@@ -1,9 +1,9 @@
 package client.controller.subpages;
 
 import client.controller.ClientApplicationController;
+import client.model.BoggleApp.userInfo;
 import client.model.subpages.GameRoomModel;
 import client.view.subpages.GameRoomView;
-import server.model.DataPB;
 import shared.CustomizedMessageDialog;
 import shared.SwingResources;
 import shared.SwingStylesheet;
@@ -82,6 +82,10 @@ public class GameRoomController {
      */
     private final String win = "res/audio/sfx/winner-sfx.wav";
     /**
+     * List of user info for the cur game leaderboard.
+     */
+    private List<userInfo> currGameLeaderboard;
+    /**
      * The round number to update the view.
      */
     private int roundNumber;
@@ -100,6 +104,7 @@ public class GameRoomController {
         musicOn = true; // music on by default
         sfxOn = true; // sfx on by default.
 
+        currGameLeaderboard = new ArrayList<>();
         roundNumber = 1;
         view.setRoundNumber(roundNumber);
 
@@ -127,9 +132,20 @@ public class GameRoomController {
         startNextRound();
     }
 
+    /**
+     * Initiates the next round by instantiating the gameTimer thread and updating the game leaderboard.
+     */
     private void startNextRound() {
         Thread timer = new Thread(gameTimer());
         timer.start();
+
+        currGameLeaderboard.clear();
+        currGameLeaderboard = Arrays.asList(model.getWfImpl().getCurrGameLeaderboard(model.getGameRoomID()));
+
+        for (client.model.BoggleApp.userInfo userInfo : currGameLeaderboard) {
+            view.addPlayerInLeaderboard(userInfo.username, userInfo.pfpAddress,
+                    userInfo.points);
+        }
     }
 
 
@@ -217,10 +233,9 @@ public class GameRoomController {
             view.setErrorMessage("");
             String input = view.getTxtWordInput().getText().trim();
 
-            // TODO: check word text if it conforms to the letter set
             if (!input.contains(" ") && input.length() >= 4) {
                 if (!validateInput(input)) {
-                    view.setErrorMessage("Input must only contain LETTERS!");
+                    view.setErrorMessage("Input must CONFORM to the letter set!");
                     view.getTxtWordInput().setText("");
                     sfxBadInput();
                 } else {
@@ -294,12 +309,21 @@ public class GameRoomController {
      * @return True if valid letter, false if any other character.
      */
     private boolean validateInput(String input) {
+        List<Character> letterSetList = new ArrayList<>();
+        for (int i = 0; i < model.getLetterList().length(); i++) {
+            letterSetList.add(model.getLetterList().charAt(i));
+        }
+
         for (int i = 0; i < input.length(); i++) {
             if (!Character.isLetter(input.charAt(i)) || Character.isWhitespace(input.charAt(i))) {
                 return false;
             }
         }
-        return model.getWfImpl().isValidWord(input);
+
+        if (compareWordToLetterset(letterSetList, input)){
+            return model.getWfImpl().isValidWord(input);
+        }
+        return false;
     }
 
     /**
@@ -326,9 +350,9 @@ public class GameRoomController {
     /**
      * Compares the input word to the passed letter set
      * Returns true if each character in the input conforms to the number of its occurrences with respect ot the letter set
-     * @param origSet
-     * @param input
-     * @return
+     * @param origSet The original list of characters containing the letter set.
+     * @param input The user input.
+     * @return True if each character conforms to the letter list; false if otherwise.
      */
     private boolean compareWordToLetterset(List<Character> origSet, String input){
         List<Character> cloneSet = origSet;
