@@ -197,18 +197,6 @@ public class ServerImplementation extends BoggleClientPOA {
         return DataPB.getUsersWordlists(gameID).toString();
     }
 
-
-    /**
-     * If a user happens to exit the game while the game ongoing
-     * @param username
-     */
-    @Override
-    public void exitGameRoom(String username) {
-        //TODO: Define implementation
-    }
-
-
-
     /**
      * Method to get the overall winner of a GAME if there is any. Otherwise, the method returns undecided.
      * Call this method after every round to check if there is already an overall winner.
