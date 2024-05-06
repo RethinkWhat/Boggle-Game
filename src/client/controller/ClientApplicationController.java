@@ -93,10 +93,10 @@ public class ClientApplicationController {
         }
 
         SwingUtilities.invokeLater(() -> {
-            homeController = new HomeController(view.getHomeView(), new HomeModel(model.getUsername(), model.getWfImpl()), this);
+            homeController = new HomeController(view.getSettingsView(),view.getHomeView(), new HomeModel(model.getUsername(), model.getWfImpl()), this);
             howToPlayController = new HowToPlayController(view.getHowToPlayView(), new HowToPlayModel(), this);
             try {
-                settingsController = new SettingsController(view.getSettingsView(),
+                settingsController = new SettingsController(view.getHomeView(),view.getSettingsView(),
                         new SettingsModel(model.getUsername(), model.getWfImpl()), view, this);
             } catch (SQLException e) {
                 throw new RuntimeException(e);
