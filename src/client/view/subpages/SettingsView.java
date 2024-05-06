@@ -2,13 +2,9 @@ package client.view.subpages;
 
 import shared.SwingStylesheet;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class SettingsView extends JPanel{
     private JLabel leftPnlLbl; // the label of the left panel's text
@@ -16,7 +12,7 @@ public class SettingsView extends JPanel{
     private JLabel profileLabel; // the label of the profile panel
     private JButton btnDelAcc; // the delete account button
     private JButton btnMusic; // the music toggle button
-    private JPanel avatarPanel; // the panel for the avatar image
+    private JLabel lblPlayerPfp; // the player's current avatar
     private JLabel currentAvatarLabel; // the label of the current avatar
     private JButton btnChangeAvatar; // the change avatar button
     private JLabel personalInfoLabel; // the label of the personal info
@@ -165,54 +161,38 @@ public class SettingsView extends JPanel{
             this.setOpaque(false);
 
             GridBagConstraints gbc = new GridBagConstraints();
-            gbc.insets = new Insets(20, 15, 1, 1);
             gbc.anchor = GridBagConstraints.NORTHWEST;
 
             gbc.gridx = 0;
             gbc.gridy = 0;
-            avatarPanel = new JPanel() {
-                @Override
-                protected void paintComponent(Graphics g) {
-                    super.paintComponent(g);
-                    Graphics2D g2d = (Graphics2D) g.create();
-
-                    int diameter = Math.min(getWidth(), getHeight()) - 10;
-                    int x = (getWidth() - diameter) / 2;
-                    int y = (getHeight() - diameter) / 2;
-
-                    g2d.setColor(style.white);
-                    g2d.fillOval(x, y, diameter, diameter);
-                    g2d.dispose();
-                }
-            };
-            avatarPanel.setPreferredSize(new Dimension(110, 110));
-            avatarPanel.setBackground(style.white);
-            this.add(avatarPanel, gbc);
 
             gbc.gridx++;
-            gbc.insets = new Insets(20, 10, 0, 0);
+            gbc.insets = new Insets(20, 125, 0, 0);
             currentAvatarLabel = style.createLblH1("Current Avatar", style.black);
             this.add(currentAvatarLabel, gbc);
 
-            gbc.gridy++;
-            gbc.insets = new Insets(-60, 20, 0, 0);
+            gbc.insets = new Insets(0, -5, 0, 0);
+            lblPlayerPfp = style.createLblIconOnly(style.iconPfpMale1, 120, 120);
+            this.add(lblPlayerPfp, gbc);
+
+            gbc.insets = new Insets(70, 125, 0, 0);
             btnChangeAvatar = style.createBtnRounded("CHANGE AVATAR", style.deepSkyBlue, style.white, 10);
             btnChangeAvatar.setPreferredSize(new Dimension(180, 30));
             btnChangeAvatar.setFocusable(false);
             this.add(btnChangeAvatar, gbc);
 
             gbc.gridy++;
-            gbc.insets = new Insets(20, -100, 10, 10);
+            gbc.insets = new Insets(30, 10, 10, 10);
             personalInfoLabel = style.createLblH2("Personal Information", style.black);
             this.add(personalInfoLabel, gbc);
 
             gbc.gridy++;
-            gbc.insets = new Insets(5, -100, 0, 0);
+            gbc.insets = new Insets(5, 10, 0, 0);
             fullNameLabel = style.createLblH3("Full Name", style.black);
             this.add(fullNameLabel, gbc);
 
             gbc.gridy++;
-            gbc.insets = new Insets(10, -100, 0, -50);
+            gbc.insets = new Insets(10, 10, 0, -50);
             fullNameTextField = new JTextField(25);
             fullNameTextField.setText("Ramon, Ang Tagabantay");
             fullNameTextField.setPreferredSize(new Dimension(300, 30));
@@ -222,7 +202,7 @@ public class SettingsView extends JPanel{
 
             gbc.gridx = 1;
             gbc.anchor = GridBagConstraints.EAST;
-            gbc.insets = new Insets(10, -130, 0, 0);
+            gbc.insets = new Insets(10, -160, 0, 0);
             btnEdit = style.createBtnIconOnly(style.iconEdit, 20,20);
             btnEdit.setFocusable(false);
             this.add(btnEdit, gbc);
@@ -248,7 +228,7 @@ public class SettingsView extends JPanel{
             gbc.gridy++;
             gbc.gridwidth = 3;
             gbc.anchor = GridBagConstraints.CENTER;
-            gbc.insets = new Insets(20, 0, 0, 0);
+            gbc.insets = new Insets(50, 0, 0, 0);
 
             btnSaveChanges = style.createBtnRounded("SAVE CHANGES", style.deepSkyBlue, style.white, 10);
             btnSaveChanges.setPreferredSize(new Dimension(200,40));
@@ -586,18 +566,12 @@ public class SettingsView extends JPanel{
         currentPasswordTextField.setText("");
     }
 
-    // sets a specified image for avatarPanel
-    public void setAvatar(String pfp) {
-        try {
-            BufferedImage image = ImageIO.read(new File(pfp));
-            Image scaledImage = image.getScaledInstance(105, -1, Image.SCALE_SMOOTH);
-            avatarPanel.removeAll();
-            JLabel avatarLabel = new JLabel(new ImageIcon(scaledImage));
-            avatarPanel.add(avatarLabel);
-            avatarPanel.revalidate();
-            avatarPanel.repaint();
-        } catch (IOException e) {
-            e.printStackTrace();
+    // sets the path of the avatar
+    public void setAvatarImagePath(String path) {
+        if (path != null) {
+            ImageIcon icon = new ImageIcon(path);
+            lblPlayerPfp.setIcon(icon);
         }
     }
+
 }
