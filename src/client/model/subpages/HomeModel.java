@@ -32,4 +32,13 @@ public class HomeModel {
     public userInfo[] getLeaderboard() {
         return wfImpl.getLeaderboard();
     }
+
+    /**
+     * Gets the profile picture of the user
+     * @param username
+     * @return
+     */
+    public String getPFPOFUser(String username){
+        return wfImpl.getPFPOFUser(username);
+    }
 }

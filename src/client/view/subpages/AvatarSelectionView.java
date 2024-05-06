@@ -22,10 +22,14 @@ public class AvatarSelectionView extends JFrame {
     private String selectedAvatarPath; // the selected avatar state of the user
     private JButton[] avatarButtons; // the avatar buttons
     private AvatarChangedSuccessView avatarChangedSuccessView; // the avatar changed success prompt view
+    private HomeView homeView; // the home view
+    private SettingsView settingsView; // the settings view
 
-    public AvatarSelectionView(String username, DataPB dataPB) {
+    public AvatarSelectionView(String username, DataPB dataPB, HomeView homeView, SettingsView settingsView) {
         this.username = username;
         this.dataPB = dataPB;
+        this.homeView = homeView;
+        this.settingsView = settingsView;
 
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Avatar Selection");
@@ -123,7 +127,9 @@ public class AvatarSelectionView extends JFrame {
                 avatarButton.addActionListener(new AvatarSelectionListener());
             }
 
-            btnConfirm.addActionListener(new ConfirmButtonListener());
+            btnConfirm.addActionListener(new ConfirmButtonListener1());
+            btnConfirm.addActionListener(new ConfirmButtonListener2());
+
         });
     }
 
@@ -141,11 +147,12 @@ public class AvatarSelectionView extends JFrame {
         }
     }
 
-    private class ConfirmButtonListener implements ActionListener {
+    private class ConfirmButtonListener1 implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (selectedAvatarPath != null) {
-                boolean success = dataPB.changePFPOfUser(username, selectedAvatarPath);
+                DataPB.setCon();
+                boolean success = dataPB.changeProfilePicture(username, selectedAvatarPath);
                 if (success) {
                     System.out.println("Change Avatar Success!");
                 } else {
@@ -156,8 +163,15 @@ public class AvatarSelectionView extends JFrame {
                 avatarButton.setBackground(style.white);
             }
             SwingUtilities.getWindowAncestor(btnConfirm).dispose();
+        }
+    }
 
-            avatarChangedSuccessView.main();
+    private class ConfirmButtonListener2 implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            homeView.setAvatarImagePath(selectedAvatarPath);
+            settingsView.setAvatarImagePath(selectedAvatarPath);
+            SwingUtilities.getWindowAncestor(btnConfirm).dispose();
         }
     }
 }
