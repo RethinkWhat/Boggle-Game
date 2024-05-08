@@ -107,7 +107,7 @@ public class ServerImplementation extends BoggleClientPOA {
 
     @Override
     public String getLetters(int gameID) {
-        return null;
+        return DataPB.getLetters(gameID);
     }
 
     /**
