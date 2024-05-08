@@ -17,9 +17,9 @@ public class DataPB {
 
     public static void setCon() {
         try {
-            String var0 = "jdbc:mysql://localhost:8889/boggle";
+            String var0 = "jdbc:mysql://localhost:3306/boggle";
             String var1 = "root";
-            String var2 = "root";
+            String var2 = "";
             con = DriverManager.getConnection(var0, var1, var2);
         } catch (Exception var3) {
             var3.printStackTrace();
@@ -762,4 +762,24 @@ public class DataPB {
             e.printStackTrace();
         }
     }
+
+    public static String getLetters(int gameID) {
+        String letters = null;
+        try {
+            String query = "SELECT r.letters FROM round r JOIN round_details rd ON r.roundID = rd.roundID " +
+                    "WHERE rd.gameID = ? ORDER BY r.roundID DESC LIMIT 1";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, gameID);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                letters = rs.getString("letters");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return letters;
+    }
+
 }
