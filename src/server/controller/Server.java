@@ -17,6 +17,8 @@ import server.model.BoggleApp.BoggleClientHelper;
 import server.model.DataPB;
 import server.model.ServerImplementation;
 
+import java.util.Properties;
+
 public class Server{
 
     private ORB orb;
@@ -39,7 +41,12 @@ public class Server{
 
     public void run(String[] args) {
         try {
-            this.orb = ORB.init(args, null);
+            Properties props = new Properties();
+            props.put("org.omg.CORBA.ORBInitialPort","1500");//change as needed
+            props.put("org.omg.CORBA.ORBInitialHost", "localhost");//change as needed
+            this.orb = ORB.init(args, props);
+
+//            this.orb = ORB.init(args, null);
 
             this.rootpoa = POAHelper.narrow(orb.resolve_initial_references("RootPOA"));
             rootpoa.the_POAManager().activate();
