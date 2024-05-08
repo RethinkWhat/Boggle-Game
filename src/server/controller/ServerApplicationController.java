@@ -22,7 +22,7 @@ public class ServerApplicationController {
     private PlayersController playersController;
 
     private Server server;
-    private String[] args = {"-ORBINITIALHOST", "localhost", "-ORBINITIALPORT", "5000"};
+    private String[] args = {"-ORBInitialPort", "1500", "-ORBInitialHost", "192.168.1.2"};//change as needed
 
     public ServerApplicationController(ServerApplicationView view, ServerApplicationModel model) {
         this.view = view;
