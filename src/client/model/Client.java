@@ -8,6 +8,8 @@ import org.omg.CORBA.ORB;
 import org.omg.CosNaming.NamingContextExt;
 import org.omg.CosNaming.NamingContextExtHelper;
 
+import java.util.Properties;
+
 
 public class Client {
 
@@ -15,8 +17,12 @@ public class Client {
 
     public void run (String args[]) {
         try {
+            Properties props = new Properties();
+            props.put("org.omg.CORBA.ORBInitialPort","1500");//change the port
+            props.put("org.omg.CORBA.ORBInitialHost","192.168.1.2");//change the host
+            ORB orb = ORB.init(args, props);
             System.out.println("started");
-            ORB orb = ORB.init(args, null);
+//          ORB orb = ORB.init(args, null);
             System.out.println("orb initialized");
             org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
             System.out.println("name service made + " + objRef);
