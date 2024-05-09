@@ -45,12 +45,6 @@ public class LobbyController {
                 System.out.println("TIMER VALUE: " + timerVal);
 
 
-                usersInLobby = model.getUsersInLobby();
-                for (int i = 0; i < usersInLobby.length; i++) {
-                    System.out.println("user sent: " + usersInLobby[i].username + " | " + usersInLobby[i].pfpAddress);
-                }
-
-
                 tempUsersInLobby = model.getUsersInLobby();
                 if (tempUsersInLobby.length != usersInLobby.length) {
                     System.out.println("reached");
@@ -62,6 +56,7 @@ public class LobbyController {
                 view.setLblTimerTxt("00:0" + timerVal / 1000);
             }
             if (startLobby.value) {
+                System.out.println("start lobby is valid");
                 parent.getView().showGameRoom();
                 parent.stopMusic();
                 parent.playGameMusic();

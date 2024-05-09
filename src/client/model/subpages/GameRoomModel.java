@@ -19,18 +19,27 @@ public class GameRoomModel {
     private String letterList;
     private Set<String> wordSet;
 
+    private long duration;
+
     public GameRoomModel(String username, BoggleClient wfImpl) {
+        try {
+            Thread.sleep(1000);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         this.username = username;
         this.wfImpl = wfImpl;
         gameRoomID = wfImpl.getGameID(username);
+        duration = wfImpl.getGameDurationVal(gameRoomID);
+        System.out.println("duration: " + duration);
+        System.out.println("game room ID: " + gameRoomID);
         letterList = wfImpl.getLetters(gameRoomID);
+        System.out.println("letterList: " + letterList);
         wordSet = new HashSet<>();
     }
 
     public long getDuration() {
-        long dur =  wfImpl.getGameDurationVal(gameRoomID);
-        System.out.println(dur);
-        return dur;
+        return duration;
     }
 
     public void sendUserWordList() {

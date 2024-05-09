@@ -374,7 +374,6 @@ public class DataPB {
         }catch (SQLException sqle){
             sqle.printStackTrace();
         }
-        System.out.println("THIS IS PFP: " + pfp);
         return pfp;
     }
 
@@ -656,6 +655,8 @@ public class DataPB {
 
             while (rs.next()) {
                 String username = rs.getString("username");
+                System.out.println(gameID);
+                System.out.println("usernames: " + username);
                 int totalPoints = rs.getInt("total_points");
                 String pfpAddress = getPFPOfUser(username);
                 userInfo user = new userInfo(username, pfpAddress, totalPoints);

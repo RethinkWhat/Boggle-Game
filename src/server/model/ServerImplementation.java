@@ -18,20 +18,22 @@ public class ServerImplementation extends BoggleClientPOA {
      * Lobby Variables
      */
     private long lobbyTimerValue = 10000L;
-    private GameTimer lobbyTimer = new GameTimer(0, lobbyTimerValue);
+//    private Timer lobbyTimer = new Timer(0, lobbyTimerValue);
     private ArrayList<String> currLobby = new ArrayList<>();
 
 
     private long roundDuration = 180000L;
-    public ArrayList<GameTimer> ongoingGameTimers;
+    public ArrayList<Timer> ongoingGameTimers;
 
+
+    private long currLobbyTimerValue = lobbyTimerValue;
 
     /**
      * Default constructor for server implementation object
      */
     public ServerImplementation() {
         DataPB.setCon();
-        ongoingGameTimers = new ArrayList<>();
+        ongoingGameTimers = new ArrayList<Timer>();
 
     }
 
@@ -58,16 +60,10 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     public synchronized void attemptJoin(String username) {
         System.out.println("attempting join");
-        if (lobbyTimer.getCurrTimerValue() == 0L) {
-            System.out.println("reached lobby");
-            if (currLobby.size() > 0) {
-                System.out.println("joining game room.");
-                joinGameRoom(currLobby);
-            }
-            lobbyTimer = new GameTimer(0, lobbyTimerValue);
-            currLobby = new ArrayList<>();
-        } if (lobbyTimer.getCurrTimerValue() == lobbyTimerValue)
+        if (currLobbyTimerValue == lobbyTimerValue) {
+            System.out.println("starting lobby");
             startLobbyTime();
+        }
         currLobby.add(username);
     }
 
@@ -94,7 +90,7 @@ public class ServerImplementation extends BoggleClientPOA {
     // @Override
     public long getCurrLobbyTimerValue(BooleanHolder validLobby) {
         validLobby.value = currLobby.size() > 1;
-        return lobbyTimer.getCurrTimerValue();
+        return currLobbyTimerValue;
     }
 
     @Override
@@ -124,7 +120,7 @@ public class ServerImplementation extends BoggleClientPOA {
         }
 
         System.out.println(gameRoomID + " " + roundID);
-        ongoingGameTimers.add(new GameTimer(gameRoomID, roundDuration));
+        ongoingGameTimers.add(new Timer(gameRoomID, roundDuration));
         startTimerForRound(gameRoomID);
     }
 
@@ -135,7 +131,7 @@ public class ServerImplementation extends BoggleClientPOA {
      * Method to get the current timer value of an ongoing game
      */
     public long getGameDurationVal(int gameID) {
-        for (GameTimer ongoingGameTimer : ongoingGameTimers) {
+        for (Timer ongoingGameTimer : ongoingGameTimers) {
 
             if (ongoingGameTimer.getID() == gameID) {
                 long timer = ongoingGameTimer.getCurrTimerValue();
@@ -339,12 +335,27 @@ public class ServerImplementation extends BoggleClientPOA {
     /** PRIVATE Methods */
 
     private void startLobbyTime() {
-        Thread t = new Thread(lobbyTimer);
-        t.start();
+        Runnable t = () -> {
+            while (currLobbyTimerValue > 0L) {
+                try {
+                    Thread.sleep(1000L);
+                    currLobbyTimerValue -= 1000L;
+                } catch (Exception var2) {
+                    var2.printStackTrace();
+                }
+            }
+            if (currLobby.size() > 0) {
+                System.out.println("joining game room.");
+                joinGameRoom(currLobby);
+                currLobby = new ArrayList<>();
+                currLobbyTimerValue = lobbyTimerValue;
+            }
+        };
+        new Thread(t).start();
     }
 
     private void startTimerForRound(int gameID) {
-        for (GameTimer timer : ongoingGameTimers) {
+        for (Timer timer : ongoingGameTimers) {
             if (timer.getID() == gameID) {
                 Thread t = new Thread(timer);
                 t.start();

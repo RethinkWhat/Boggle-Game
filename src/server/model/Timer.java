@@ -1,6 +1,6 @@
 package server.model;
 
-public class GameTimer implements Runnable {
+public class Timer implements Runnable {
 
     private int id;
 
@@ -8,7 +8,7 @@ public class GameTimer implements Runnable {
 
     private long currTimerValue;
 
-    public GameTimer(int id, long timerDuration) {
+    public Timer(int id, long timerDuration) {
         this.id = id;
         this.timerDuration = timerDuration;
         currTimerValue = timerDuration;
@@ -21,12 +21,13 @@ public class GameTimer implements Runnable {
             try {
                 Thread.sleep(1000L);
                 currTimerValue -= 1000L;
-                System.out.println("CURR TIME VALUE: " + currTimerValue);
             } catch (Exception var2) {
                 var2.printStackTrace();
             }
         }
     }
+
+
 
     public long getCurrTimerValue() {
         return currTimerValue;

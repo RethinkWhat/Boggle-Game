@@ -139,31 +139,34 @@ public class GameRoomController {
         Thread timer = new Thread(gameTimer());
         timer.start();
 
+
         currGameLeaderboard.clear();
         currGameLeaderboard = Arrays.asList(model.getWfImpl().getCurrGameLeaderboard(model.getGameRoomID()));
 
-        for (client.model.BoggleApp.userInfo userInfo : currGameLeaderboard) {
+        for (userInfo userInfo : currGameLeaderboard) {
             view.addPlayerInLeaderboard(userInfo.username, userInfo.pfpAddress,
                     userInfo.points);
         }
+
     }
 
 
     public Runnable gameTimer() {
+        System.out.println("game timer reached");
         Runnable toReturn = new Runnable() {
             @Override
             public void run() {
                 try {
                     model.getWordSet().clear();
                     populateLetterSet(model.getLetterList());
-                    int inSeconds = (int) model.getWfImpl().getGameDurationVal(model.getGameRoomID() / 1000);
+                    int inSeconds = (int) model.getDuration() / 1000;
                     System.out.println("IN SECONDS: " + inSeconds);
                     view.setPrgTimerMaxVal(inSeconds);
                     System.out.println(inSeconds);
                     while (inSeconds >= 0) {
                         Thread.sleep(1000);
                         view.setLblTimerTxt(inSeconds);
-                        inSeconds = (int) model.getWfImpl().getGameDurationVal(model.getGameRoomID() / 1000);
+                        inSeconds = (int) model.getWfImpl().getGameDurationVal(model.getGameRoomID()) / 1000;
                         view.setPrgTimerValue(inSeconds);
                         System.out.println(inSeconds);
                         if (inSeconds == 10) {
@@ -233,11 +236,12 @@ public class GameRoomController {
             view.setErrorMessage("");
             String input = view.getTxtWordInput().getText().trim();
 
-            if (!input.contains(" ") && input.length() >= 4) {
+            if (input.length() >= 4 || !input.contains(" ")) {
+                System.out.println(input);
                 if (!validateInput(input)) {
                     view.setErrorMessage("Input must CONFORM to the letter set!");
                     view.getTxtWordInput().setText("");
-                    sfxBadInput();
+                    //sfxBadInput();
                 } else {
                     view.addUserInput(model.getUsername(), input);
                     view.updateTxaHeight();
@@ -245,17 +249,18 @@ public class GameRoomController {
                     view.getTxtWordInput().setText("");
                     sfxGoodInput();
                 }
-            } else if (input.length() < 4) {
+            } else if (input.contains(" ")){
+            view.setErrorMessage("Input must only be a WORD!");
+            view.getTxtWordInput().setText("");
+            sfxBadInput();
+        } else {
                 view.setErrorMessage("Input must be at least 4 CHARACTERS!");
-                view.getTxtWordInput().setText("");
-                sfxBadInput();
-            } else {
-                view.setErrorMessage("Input must only be a WORD!");
                 view.getTxtWordInput().setText("");
                 sfxBadInput();
             }
         }
     }
+
 
     /**
      * Turns the music on or off.
@@ -316,11 +321,13 @@ public class GameRoomController {
 
         for (int i = 0; i < input.length(); i++) {
             if (!Character.isLetter(input.charAt(i)) || Character.isWhitespace(input.charAt(i))) {
+                System.out.println("i: " + input.charAt(i));
                 return false;
             }
         }
 
         if (compareWordToLetterset(letterSetList, input)){
+            System.out.println("reached comaprison");
             return model.getWfImpl().isValidWord(input);
         }
         return false;
@@ -354,19 +361,24 @@ public class GameRoomController {
      * @param input The user input.
      * @return True if each character conforms to the letter list; false if otherwise.
      */
-    private boolean compareWordToLetterset(List<Character> origSet, String input){
-        List<Character> cloneSet = origSet;
+    private boolean compareWordToLetterset(List<Character> origSet, String input) {
+        List<Character> cloneSet = new ArrayList<>(origSet); // Create a copy of origSet
         StringBuilder word = new StringBuilder(input);
+        int i = 0;
 
-        for (int i = 0; i < word.length(); i++){
-            if (cloneSet.contains(word.charAt(i))){
-                cloneSet.remove(word.charAt(i));
-                word.deleteCharAt(i);
+        while (i < word.length()) {
+            char c = word.charAt(i);
+            if (cloneSet.contains(c)) {
+                cloneSet.remove((Character) c); // Remove the character from cloneSet
+                word.deleteCharAt(i); // Delete the character from word
+            } else {
+                i++; // Move to the next character if the current one is not in cloneSet
             }
         }
 
-        return word.length() == 0;
+        return word.length() == 0; // Return true if all characters are removed from word
     }
+
 
     /**
      * Plays the bad input sfx.
@@ -374,7 +386,7 @@ public class GameRoomController {
     private void sfxBadInput() {
         if (sfxOn) {
             try {
-                sfxClip.stop();
+               // sfxClip.stop();
                 audioSoundStream = AudioSystem.getAudioInputStream(new File(badInput));
                 sfxClip = AudioSystem.getClip();
                 sfxClip.open(audioSoundStream);
@@ -391,7 +403,7 @@ public class GameRoomController {
     private void sfxGoodInput() {
         if (sfxOn) {
             try {
-                sfxClip.stop();
+             //   sfxClip.stop();
                 audioSoundStream = AudioSystem.getAudioInputStream(new File(goodInput));
                 sfxClip = AudioSystem.getClip();
                 sfxClip.open(audioSoundStream);
