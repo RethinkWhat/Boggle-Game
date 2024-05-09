@@ -195,8 +195,8 @@ public class GameRoomController {
 
 
                 System.out.println("SENDING GAME ROOM ID: " + model.getGameRoomID());
-                String usernameWinnerRound = "rithik";//model.getWfImpl().getRoundWinner(model.getGameRoomID());
-                String usernameWinnerGame = model.getWfImpl().getOverallWinner(model.getGameRoomID());
+                String usernameWinnerRound = "rithik"; // TODO: BASTI model.getWfImpl().getRoundWinner(model.getGameRoomID());
+                String usernameWinnerGame = model.getWfImpl().getOverallWinner(model.getGameRoomID()); //TODO: BASTI method to populate db with who the winner is
 
                 // displays dialog messages and plays respective sfx.
                 if (!usernameWinnerGame.equals("undecided")) {
@@ -226,9 +226,12 @@ public class GameRoomController {
                                 "NEXT ROUND", style.deepSkyBlue, style.goldenTainoi, style.black,
                                 style.goldenTainoi, false);
                     }
+
+                    System.out.println("okay clicked");
                     model.setLetterList(model.getWfImpl().getNextRoundLetterSet(model.getGameRoomID()));
+                    System.out.println(model.getLetterList());
                     view.setRoundNumber(roundNumber++);
-                    startNextRound();
+                //    startNextRound();
                 }
 
             }

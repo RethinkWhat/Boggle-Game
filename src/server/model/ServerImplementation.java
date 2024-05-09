@@ -3,6 +3,7 @@ package server.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLOutput;
 import java.sql.Time;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -181,14 +182,17 @@ public class ServerImplementation extends BoggleClientPOA {
      *  Method to get the letter set of the next round
      */
     public String getNextRoundLetterSet(int gameID) {
+        System.out.println("Getting next letter set");
         synchronized (this) {
             if (!DataPB.roundOngoing(gameID)) {
                 String letters = createRandomLetterSet();
-                DataPB.createRound(letters);
                 int roundID = DataPB.createRound(letters);
 
+                System.out.println("NEW ROUND ID: " + roundID);
                 ArrayList<String> players = DataPB.getPlayersInGame(gameID);
+                System.out.println("PLAYERS IN GAME: " + players);
                 for (String player : players) {
+                    System.out.println("LATEST ROUND:" + DataPB.getLatestRound(gameID));
                     DataPB.createRoundDetails(gameID, roundID, 1, player);
                 }
                 return letters;
