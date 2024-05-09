@@ -8,9 +8,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import org.omg.CORBA.BooleanHolder;
-import org.omg.CORBA.IntHolder;
-import org.omg.CORBA.LongHolder;
-import org.omg.CORBA.StringHolder;
 import server.model.BoggleApp.*;
 
 public class ServerImplementation extends BoggleClientPOA {
@@ -310,13 +307,14 @@ public class ServerImplementation extends BoggleClientPOA {
 
     /**
      * Method to get the leaderboard of an ongoing game
+     *
      * @param gameID
      * @return
      */
     @Override
-    public  userInfo[] getCurrGameLeaderboard(int gameID) {
-        List<userInfo> leaderboard = new ArrayList<>();
-        return leaderboard.toArray(new userInfo[0]);
+    public client.model.BoggleApp.userInfo[] getCurrGameLeaderboard(int gameID) {
+        client.model.BoggleApp.userInfo[] currLeaderboard = DataPB.getCurrGameLeaderboard(gameID);
+        return currLeaderboard;
     }
 
     @Override

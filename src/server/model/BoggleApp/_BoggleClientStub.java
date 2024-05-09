@@ -383,7 +383,7 @@ public class _BoggleClientStub extends org.omg.CORBA.portable.ObjectImpl impleme
             }
   } // getNumberOfWins
 
-  public userInfo[] getCurrGameLeaderboard (int gameID)
+  public client.model.BoggleApp.userInfo[] getCurrGameLeaderboard (int gameID)
   {
             org.omg.CORBA.portable.InputStream $in = null;
             try {
