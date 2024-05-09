@@ -177,6 +177,7 @@ public class GameRoomController {
                             });
                         }
                     }
+                    view.setLblTimerTxt(inSeconds);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -186,7 +187,13 @@ public class GameRoomController {
                     view.getLblTimer().setForeground(style.white);
                 });
                 model.sendUserWordList();
+                try {
+                    Thread.sleep(3000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
 
+                System.out.println("SENDING GAME ROOM ID: " + model.getGameRoomID());
                 String usernameWinnerRound = model.getWfImpl().getRoundWinner(model.getGameRoomID());
                 String usernameWinnerGame = model.getWfImpl().getOverallWinner(model.getGameRoomID());
 

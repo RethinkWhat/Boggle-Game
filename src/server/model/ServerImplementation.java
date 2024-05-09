@@ -135,9 +135,10 @@ public class ServerImplementation extends BoggleClientPOA {
 
             if (ongoingGameTimer.getID() == gameID) {
                 long timer = ongoingGameTimer.getCurrTimerValue();
+                System.out.println(timer);
                 if (timer == 0) {
                     try {
-                        Thread.sleep(2000);
+                        System.out.println("this portion of the code solves the round points");
                         solveRoundPoints(gameID);
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -347,6 +348,11 @@ public class ServerImplementation extends BoggleClientPOA {
             if (currLobby.size() > 0) {
                 System.out.println("joining game room.");
                 joinGameRoom(currLobby);
+                try {
+                    Thread.sleep(1000);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 currLobby = new ArrayList<>();
                 currLobbyTimerValue = lobbyTimerValue;
             }
@@ -398,13 +404,16 @@ public class ServerImplementation extends BoggleClientPOA {
      * @param gameID
      */
     private void solveRoundPoints(int gameID) {
+        System.out.println("reached solve round points method");
         List<Map<String, List<String>>> uncleanedUserWordMapList = getUsersWordlists(gameID);
         List<Map<String, List<String>>> cleanedUserWordMapList = compareAllWordLists(uncleanedUserWordMapList);
 
         for (Map<String, List<String>> userWordMap : cleanedUserWordMapList) {
+            System.out.println("for looping");
             for (String username : userWordMap.keySet()) {
                 int prevScore = getUserPointsOngoingGame(gameID, username);
                 int currentTotalScore = computeTotalScore(userWordMap) + prevScore;
+                System.out.println("updating user points");
                 DataPB.updatePoints(gameID, currentTotalScore, username);
             }
         }
@@ -419,14 +428,14 @@ public class ServerImplementation extends BoggleClientPOA {
      * @param gameID
      * @return
      */
-    private List<Map<String, List<String>>> getUsersWordlists(int gameID){
+    private List<Map<String, List<String>>> getUsersWordlists(int gameID) {
         ResultSet rs = DataPB.getUsersWordlists(gameID);
 
         List<Map<String, List<String>>> userWordMapList = new ArrayList<>();
         Map<String, List<String>> usersWordListsMap = new HashMap<>();
 
         try {
-            while (rs.next()){
+            while (rs.next()) {
                 String username = rs.getString(1);
                 String[] wordsArr = rs.getString(2).split(",");
                 List<String> wordsList = Arrays.asList(wordsArr);
@@ -434,7 +443,7 @@ public class ServerImplementation extends BoggleClientPOA {
                 usersWordListsMap.put(username, wordsList);
                 userWordMapList.add(usersWordListsMap);
             }
-        }catch (SQLException sqle){
+        } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
 
