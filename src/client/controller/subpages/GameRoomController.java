@@ -175,54 +175,55 @@ public class GameRoomController {
                                 view.getPrgTimer().setBackground(style.red);
                                 view.getLblTimer().setForeground(style.red);
                             });
-                        } else if (inSeconds == 0) {
-                            SwingUtilities.invokeLater(() -> {
-                                view.getPrgTimer().setBackground(style.goldenTainoi);
-                                view.getLblTimer().setForeground(style.white);
-                            });
-                            model.sendUserWordList();
-
-                            String usernameWinnerRound = model.getWfImpl().getRoundWinner(model.getGameRoomID());
-                            String usernameWinnerGame = model.getWfImpl().getOverallWinner(model.getGameRoomID());
-
-                            // displays dialog messages and plays respective sfx.
-                            if (!usernameWinnerGame.equals("undecided")) {
-                                if (model.getUsername().equals(usernameWinnerGame)) {
-                                    sfxWinner();
-                                    new CustomizedMessageDialog("Game Winner", style.iconWinner, "YOU WON!",
-                                            "You have won the game.", "EXIT GAME", style.deepSkyBlue,
-                                            style.goldenTainoi, style.black, style.goldenTainoi, false);
-                                } else {
-                                    sfxLose();
-                                    CustomizedMessageDialog dialog = new CustomizedMessageDialog("Game Winner",
-                                            style.iconWinner, "WE HAVE A WINNER!",
-                                            usernameWinnerGame + " has won the game.", "EXIT GAME",
-                                            style.deepSkyBlue, style.goldenTainoi, style.black,
-                                            style.goldenTainoi, false);
-                                    dialog.setBtnDialogListener(e -> parent.getView().getCardLayout().show(parent.getView().getPnlCards(), "home"));
-                                }
-                            } else {
-                                sfxRoundOver();
-                                if (model.getUsername().equals(usernameWinnerRound)) {
-                                    new CustomizedMessageDialog("Round Winner", style.iconWinner, "YOU WON THE ROUND!",
-                                            "You had the most points this round.", "NEXT ROUND", style.deepSkyBlue,
-                                            style.goldenTainoi, style.black, style.goldenTainoi, false);
-                                } else {
-                                    new CustomizedMessageDialog("Round Done", style.iconWinner, "ROUND DONE",
-                                            usernameWinnerRound + " had the most points this round.",
-                                            "NEXT ROUND", style.deepSkyBlue, style.goldenTainoi, style.black,
-                                            style.goldenTainoi, false);
-                                }
-                                model.setLetterList(model.getWfImpl().getNextRoundLetterSet(model.getGameRoomID()));
-                                view.setRoundNumber(roundNumber++);
-                                startNextRound();
-                            }
                         }
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+
+                SwingUtilities.invokeLater(() -> {
+                    view.getPrgTimer().setBackground(style.goldenTainoi);
+                    view.getLblTimer().setForeground(style.white);
+                });
+                model.sendUserWordList();
+
+                String usernameWinnerRound = model.getWfImpl().getRoundWinner(model.getGameRoomID());
+                String usernameWinnerGame = model.getWfImpl().getOverallWinner(model.getGameRoomID());
+
+                // displays dialog messages and plays respective sfx.
+                if (!usernameWinnerGame.equals("undecided")) {
+                    if (model.getUsername().equals(usernameWinnerGame)) {
+                        sfxWinner();
+                        new CustomizedMessageDialog("Game Winner", style.iconWinner, "YOU WON!",
+                                "You have won the game.", "EXIT GAME", style.deepSkyBlue,
+                                style.goldenTainoi, style.black, style.goldenTainoi, false);
+                    } else {
+                        sfxLose();
+                        CustomizedMessageDialog dialog = new CustomizedMessageDialog("Game Winner",
+                                style.iconWinner, "WE HAVE A WINNER!",
+                                usernameWinnerGame + " has won the game.", "EXIT GAME",
+                                style.deepSkyBlue, style.goldenTainoi, style.black,
+                                style.goldenTainoi, false);
+                        dialog.setBtnDialogListener(e -> parent.getView().getCardLayout().show(parent.getView().getPnlCards(), "home"));
+                    }
+                } else {
+                    sfxRoundOver();
+                    if (model.getUsername().equals(usernameWinnerRound)) {
+                        new CustomizedMessageDialog("Round Winner", style.iconWinner, "YOU WON THE ROUND!",
+                                "You had the most points this round.", "NEXT ROUND", style.deepSkyBlue,
+                                style.goldenTainoi, style.black, style.goldenTainoi, false);
+                    } else {
+                        new CustomizedMessageDialog("Round Done", style.iconWinner, "ROUND DONE",
+                                usernameWinnerRound + " had the most points this round.",
+                                "NEXT ROUND", style.deepSkyBlue, style.goldenTainoi, style.black,
+                                style.goldenTainoi, false);
+                    }
+                    model.setLetterList(model.getWfImpl().getNextRoundLetterSet(model.getGameRoomID()));
+                    view.setRoundNumber(roundNumber++);
+                    startNextRound();
+                }
             }
+
         };
         return toReturn;
     }

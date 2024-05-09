@@ -22,7 +22,7 @@ public class ServerImplementation extends BoggleClientPOA {
     private ArrayList<String> currLobby = new ArrayList<>();
 
 
-    private long roundDuration = 180000L;
+    private long roundDuration = 30000L;
     public ArrayList<Timer> ongoingGameTimers;
 
 
