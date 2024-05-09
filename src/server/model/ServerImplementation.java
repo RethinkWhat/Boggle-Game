@@ -476,16 +476,15 @@ public class ServerImplementation extends BoggleClientPOA {
      * @return The cleaned compiledWordLists.
      */
     public static Map<String, List<String>> compareAllWordLists(Map<String, List<String>> userWordMapList) {
-        Map<String, List<String>> cleanedUserWordList = userWordMapList;
+        Map<String, List<String>> cleanedUserWordList = new HashMap<>();
         List<String> allWordsFromAllPlayers = new ArrayList<>();
 
 
         // adds all the elements of the players' word list in one list.
         for (String user : userWordMapList.keySet()) {
-            for (String wordList : userWordMapList.get(user)) {
-                allWordsFromAllPlayers.add(wordList);
-            }
+            allWordsFromAllPlayers.addAll(userWordMapList.get(user));
         }
+
 
         List<String> duplicateWords = allWordsFromAllPlayers.stream()
                 .collect(Collectors.groupingBy(word -> word, Collectors.counting()))
@@ -494,10 +493,16 @@ public class ServerImplementation extends BoggleClientPOA {
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
 
-            for (Map.Entry<String, List<String>> entry : cleanedUserWordList.entrySet()) {
-                if (duplicateWords.contains(entry))
-                    cleanedUserWordList.remove(entry.getKey());
+        System.out.println("DUPLICATE WORD LIST: " + duplicateWords);
+        for (String user : userWordMapList.keySet()) {
+            List<String> words = new ArrayList<>();
+            for (String word : userWordMapList.get(user)) {
+                if (!duplicateWords.contains(word)) {
+                    words.add(word);
+                }
             }
+            cleanedUserWordList.put(user, words);
+        }
         return cleanedUserWordList;
 
         /*
