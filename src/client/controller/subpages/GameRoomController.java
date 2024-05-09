@@ -193,6 +193,7 @@ public class GameRoomController {
                     e.printStackTrace();
                 }
 
+                /*
                 System.out.println("SENDING GAME ROOM ID: " + model.getGameRoomID());
                 String usernameWinnerRound = model.getWfImpl().getRoundWinner(model.getGameRoomID());
                 String usernameWinnerGame = model.getWfImpl().getOverallWinner(model.getGameRoomID());
@@ -229,8 +230,9 @@ public class GameRoomController {
                     view.setRoundNumber(roundNumber++);
                     startNextRound();
                 }
-            }
 
+                 */
+            }
         };
         return toReturn;
     }
