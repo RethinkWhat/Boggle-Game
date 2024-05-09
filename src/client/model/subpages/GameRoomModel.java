@@ -23,10 +23,8 @@ public class GameRoomModel {
         this.username = username;
         this.wfImpl = wfImpl;
         gameRoomID = wfImpl.getGameID(username);
-        System.out.println("GAME ROOM ID: " + gameRoomID);
-
         letterList = wfImpl.getLetters(gameRoomID);
-        System.out.println("LETTER SET: " + letterList);
+        wordSet = new HashSet<>();
     }
 
     public long getDuration() {
