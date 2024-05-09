@@ -28,7 +28,7 @@ public interface BoggleClientOperations
   int getUserPointsOngoingGame (int gameID, String username);
   int getNumberOfMatches (String username);
   int getNumberOfWins (String username);
-  client.model.BoggleApp.userInfo[] getCurrGameLeaderboard (int gameID);
+  userInfo[] getCurrGameLeaderboard (int gameID);
   String getPFPOFUser (String username);
   String getFullName (String username);
   boolean isValidWord (String word);

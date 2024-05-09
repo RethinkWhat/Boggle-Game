@@ -1,7 +1,7 @@
 
 package server.model;
 
-import client.model.BoggleApp.userInfo;
+import server.model.BoggleApp.userInfo;
 import org.omg.CORBA.ORB;
 import shared.Player;
 

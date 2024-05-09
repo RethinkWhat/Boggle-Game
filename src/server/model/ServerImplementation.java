@@ -312,9 +312,8 @@ public class ServerImplementation extends BoggleClientPOA {
      * @return
      */
     @Override
-    public client.model.BoggleApp.userInfo[] getCurrGameLeaderboard(int gameID) {
-        client.model.BoggleApp.userInfo[] currLeaderboard = DataPB.getCurrGameLeaderboard(gameID);
-        return currLeaderboard;
+    public userInfo[] getCurrGameLeaderboard(int gameID) {
+        return DataPB.getCurrGameLeaderboard(gameID);
     }
 
     @Override
