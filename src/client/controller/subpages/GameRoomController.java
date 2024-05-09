@@ -195,7 +195,7 @@ public class GameRoomController {
 
 
                 System.out.println("SENDING GAME ROOM ID: " + model.getGameRoomID());
-                String usernameWinnerRound = model.getWfImpl().getRoundWinner(model.getGameRoomID());
+                String usernameWinnerRound = "rithik";//model.getWfImpl().getRoundWinner(model.getGameRoomID());
                 String usernameWinnerGame = model.getWfImpl().getOverallWinner(model.getGameRoomID());
 
                 // displays dialog messages and plays respective sfx.

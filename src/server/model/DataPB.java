@@ -260,17 +260,6 @@ public class DataPB {
      * @param roundIdentifier
      * @param newPoints
      */
-    public static void updatePoints(int roundIdentifier, int newPoints) {
-        String query = "UPDATE round_details SET points = ? WHERE roundIdentifier = ?";
-        try (PreparedStatement ps = con.prepareStatement(query)) {
-            ps.setInt(1, newPoints);
-            ps.setInt(2, roundIdentifier);
-            ps.executeUpdate();
-        } catch (SQLException sqle) {
-            sqle.printStackTrace();
-        }
-    }
-
     public static void updatePoints(int gameID, int newPoints, String username) {
         String query = "UPDATE round_details SET points = ? WHERE gameID = ? AND username = ?";
         try (PreparedStatement ps = con.prepareStatement(query)) {
