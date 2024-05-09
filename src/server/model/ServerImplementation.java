@@ -409,18 +409,22 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     public static void solveRoundPoints(int gameID) {
         System.out.println("reached solve round points method");
-        List<Map<String, List<String>>> uncleanedUserWordMapList = getUsersWordlists(gameID);
-        List<Map<String, List<String>>> cleanedUserWordMapList = compareAllWordLists(uncleanedUserWordMapList);
+        Map<String, List<String>> uncleanedUserWordMapList = getUsersWordlists(gameID);
 
-        for (Map<String, List<String>> userWordMap : cleanedUserWordMapList) {
+        Map<String, List<String>> cleanedUserWordMapList = compareAllWordLists(uncleanedUserWordMapList);
+
+        for (String user : cleanedUserWordMapList.keySet()) {
+            System.out.println("User word map: " + user + ": " + cleanedUserWordMapList.get(user));
+        }
             System.out.println("for looping");
-            for (String username : userWordMap.keySet()) {
+            for (String username : cleanedUserWordMapList.keySet()) {
                 int prevScore = DataPB.getUserRoundPoints(gameID, username);
-                int currentTotalScore = computeTotalScore(userWordMap) + prevScore;
+                System.out.println(username + " previous score: " + prevScore);
+                int currentTotalScore = computeTotalScore(cleanedUserWordMapList.get(username)) + prevScore;
+                System.out.println("total score: " + currentTotalScore);
                 System.out.println("updating user points");
                 DataPB.updatePoints(gameID, currentTotalScore, username);
             }
-        }
     }
 
     /**
@@ -432,7 +436,7 @@ public class ServerImplementation extends BoggleClientPOA {
      * @param gameID
      * @return
      */
-    private static List<Map<String, List<String>>> getUsersWordlists(int gameID) {
+    private static Map<String, List<String>> getUsersWordlists(int gameID) {
         try {
             Thread.sleep(3000);
         } catch (InterruptedException e) {
@@ -440,7 +444,6 @@ public class ServerImplementation extends BoggleClientPOA {
         }
         ResultSet rs = DataPB.getUsersWordlists(gameID);
 
-        List<Map<String, List<String>>> userWordMapList = new ArrayList<>();
         Map<String, List<String>> usersWordListsMap = new HashMap<>();
 
         try {
@@ -452,13 +455,12 @@ public class ServerImplementation extends BoggleClientPOA {
                 List<String> wordsList = Arrays.asList(wordsArr);
 
                 usersWordListsMap.put(username, wordsList);
-                userWordMapList.add(usersWordListsMap);
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
 
-        return userWordMapList;
+        return usersWordListsMap;
     }
 
     /**
@@ -473,19 +475,36 @@ public class ServerImplementation extends BoggleClientPOA {
      * @param userWordMapList The list of userWordMap (user as key, word list as value)
      * @return The cleaned compiledWordLists.
      */
-    public static List<Map<String, List<String>>> compareAllWordLists(List<Map<String, List<String>>> userWordMapList) {
-        List<Map<String, List<String>>> cleanedUserWordList = new ArrayList<>();
+    public static Map<String, List<String>> compareAllWordLists(Map<String, List<String>> userWordMapList) {
+        Map<String, List<String>> cleanedUserWordList = userWordMapList;
         List<String> allWordsFromAllPlayers = new ArrayList<>();
 
+
         // adds all the elements of the players' word list in one list.
-        for (Map<String, List<String>> userWordMap : userWordMapList) {
-            for (Map.Entry<String, List<String>> entry : userWordMap.entrySet()) {
-                allWordsFromAllPlayers.addAll(entry.getValue());
+        for (String user : userWordMapList.keySet()) {
+            for (String wordList : userWordMapList.get(user)) {
+                allWordsFromAllPlayers.add(wordList);
             }
         }
 
-        // gets duplicate values from allWordFromAllPlayers list
+        List<String> duplicateWords = allWordsFromAllPlayers.stream()
+                .collect(Collectors.groupingBy(word -> word, Collectors.counting()))
+                .entrySet().stream()
+                .filter(entry -> entry.getValue() > 1)
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
+
+            for (Map.Entry<String, List<String>> entry : cleanedUserWordList.entrySet()) {
+                if (duplicateWords.contains(entry))
+                    cleanedUserWordList.remove(entry.getKey());
+            }
+        return cleanedUserWordList;
+
+        /*
+
+
         HashSet<String> uniqueWords = new HashSet<>();
+        // gets duplicate values from allWordFromAllPlayers list
         List<String> duplicates = allWordsFromAllPlayers.stream()
                 .filter(w -> !uniqueWords.add(w))
                 .collect(Collectors.toList());
@@ -512,6 +531,8 @@ public class ServerImplementation extends BoggleClientPOA {
         }
 
         return cleanedUserWordList;
+
+         */
     }
 
     /**
@@ -522,15 +543,13 @@ public class ServerImplementation extends BoggleClientPOA {
      * @param userWordMap The current user with their word list.
      * @return The total score of the user of the specified round.
      */
-    public static int computeTotalScore(Map<String, List<String>> userWordMap) {
+    public static int computeTotalScore(List<String> wordList) {
         int totalScore = 0;
 
-        for (Map.Entry<String, List<String>> entry : userWordMap.entrySet()) {
-            List<String> currUserWordList = entry.getValue();
-            for (String word : currUserWordList) {
+            for (String word : wordList) {
+                System.out.println("WORD: " + word);
                 totalScore += word.length();
             }
-        }
         return totalScore;
     }
 
