@@ -21,6 +21,9 @@ public class Timer implements Runnable {
             try {
                 Thread.sleep(1000L);
                 currTimerValue -= 1000L;
+                if (currTimerValue == 0) {
+                    ServerImplementation.solveRoundPoints(id);
+                }
             } catch (Exception var2) {
                 var2.printStackTrace();
             }

@@ -481,6 +481,7 @@ public class DataPB {
             resultSet = preparedStatement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
+            System.exit(0);
         }
         return resultSet;
     }
