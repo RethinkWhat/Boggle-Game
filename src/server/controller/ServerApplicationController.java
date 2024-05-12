@@ -29,6 +29,8 @@ public class ServerApplicationController {
         this.model = model;
         this.server = new Server();
 
+        view.getPlayersView().hideAddPlayerPanel();
+
         SwingUtilities.invokeLater(() -> {
             playersController = new PlayersController(new PlayersModel(server.getServerImpl()), view.getPlayersView());
         });
