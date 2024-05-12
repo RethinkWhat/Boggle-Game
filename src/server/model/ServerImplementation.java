@@ -558,7 +558,7 @@ public class ServerImplementation extends BoggleClientPOA {
      * Retrieves the total score of the user in a specified round by getting the length of the elements of the
      * specified "cleaned" word list.
      * Score for each word will be based on its length
-     * @param userWordMap The current user with their word list.
+     * @param wordList The current user with their word list.
      * @return The total score of the user of the specified round.
      */
     public static int computeTotalScore(List<String> wordList) {
