@@ -532,6 +532,7 @@ public class DataPB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        System.out.println(winner);
         return winner;
     }
 
@@ -782,6 +783,7 @@ public class DataPB {
         }
         if (winner != null) {
             if (!winner.equals("")) {
+                System.out.println("WINNNER: " + winner);
                 assignRoundWinner(roundID, winner);
             }
         }

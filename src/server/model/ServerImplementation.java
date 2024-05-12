@@ -450,11 +450,6 @@ public class ServerImplementation extends BoggleClientPOA {
      * @return
      */
     private static Map<String, List<String>> getUsersWordlists(int gameID) {
-        try {
-            Thread.sleep(3000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         ResultSet rs = DataPB.getUsersWordlists(gameID);
 
         Map<String, List<String>> usersWordListsMap = new HashMap<>();
@@ -464,10 +459,17 @@ public class ServerImplementation extends BoggleClientPOA {
                 System.out.println("getting user word list");
                 String username = rs.getString(1);
                 System.out.println(username);
-                String[] wordsArr = rs.getString(2).split(",");
-                List<String> wordsList = Arrays.asList(wordsArr);
+                String words = rs.getString(2);
+                if (words != null) {
+                    if (words.contains(",")) {
+                        String[] wordsArr = words.split(",");
+                        List<String> wordsList = Arrays.asList(wordsArr);
+                        usersWordListsMap.put(username, wordsList);
+                    } else {
+                        usersWordListsMap.put(username, Collections.singletonList(words));
+                    }
+                }
 
-                usersWordListsMap.put(username, wordsList);
             }
         } catch (SQLException sqle) {
             sqle.printStackTrace();
