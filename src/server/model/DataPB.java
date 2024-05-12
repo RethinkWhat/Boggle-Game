@@ -1,4 +1,3 @@
-
 package server.model;
 
 import server.model.BoggleApp.userInfo;
@@ -797,10 +796,24 @@ public class DataPB {
 
     public static void updateRoundWinner(int gameID) {
         int roundID = getLatestRound(gameID);
-        String query = ""; //TODO get the username and points of each player
-        String winner = ""; //TODO: get the username of the person with the highest points
-        assignRoundWinner(roundID, winner);
+        String query = "SELECT username, MAX(points) AS maxPoints FROM round_details WHERE gameID = ? AND roundID = ?";
+        String winner = "";
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, gameID);
+            ps.setInt(2, roundID);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                winner = rs.getString("username");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (!winner.isEmpty()) {
+            assignRoundWinner(roundID, winner);
+        }
     }
+
+
 
     public static void assignRoundWinner(int roundID, String winner) {
         try {
@@ -813,21 +826,32 @@ public class DataPB {
             e.printStackTrace();
         }
     }
-
     public static String checkGameWinner(int gameID) {
-        //TODO: Go through each round_details associated with gameID
-        //  TODO: Make statement: Group by username, COUNT(winner)
-        //      TODO: Sort Descending
-        //          TODO: Get username and highest value
+        String winner = "undecided";
+        try {
+            String query = "SELECT username, MAX(points) AS maxPoints " +
+                    "FROM round_details " +
+                    "WHERE gameID = ? " +
+                    "GROUP BY username " +
+                    "ORDER BY maxPoints DESC " +
+                    "LIMIT 1";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, gameID);
+            ResultSet rs = ps.executeQuery();
 
-        //TODO: if highest value >= 3
-                //TODO: assignGameWinner(gameID, winner);
-                //TODO: return username
-        //TODO: else
-                // return undecided
+            if (rs.next()) {
+                String topPlayer = rs.getString("username");
+                int maxPoints = rs.getInt("maxPoints");
 
-
-        return "undecided";
+                if (maxPoints >= 3) {
+                    winner = topPlayer;
+                    assignGameWinner(gameID, winner);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return winner;
     }
 
     public static void assignGameWinner(int gameID, String winner) {
@@ -841,4 +865,5 @@ public class DataPB {
             e.printStackTrace();
         }
     }
+
 }
