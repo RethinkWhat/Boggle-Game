@@ -195,11 +195,6 @@ public class ServerImplementation extends BoggleClientPOA {
         }
     }
 
-    @Override
-    public String getNextRoundLetterSet(int gameRoomID) {
-        return "";
-    }
-
     /**
      * Method to get the overall winner of a GAME if there is any. Otherwise, the method returns undecided.
      * Call this method after every round to check if there is already an overall winner.
@@ -266,6 +261,15 @@ public class ServerImplementation extends BoggleClientPOA {
         }
     }
 
+    @Override
+    public void exitLobby(String username) {
+        // TODO: Basti
+    }
+
+    @Override
+    public void logout(String username) {
+        //TODO: Basti
+    }
 
     /**
      * Method to handle getting the points the user was able to accumulate throughout the round THUS FAR

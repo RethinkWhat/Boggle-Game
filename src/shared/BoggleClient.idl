@@ -45,8 +45,6 @@ module BoggleApp {
 
         string getRoundWinner(in long gameID);
 
-        string getNextRoundLetterSet(in long gameRoomID);
-
         string getOverallWinner(in long gameID);
 
         leaderboards getLeaderboard();
