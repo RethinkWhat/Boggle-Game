@@ -17,17 +17,19 @@ public class Timer implements Runnable {
 
     @Override
     public void run() {
+        currTimerValue = timerDuration;
         while(currTimerValue > 0L) {
             try {
                 Thread.sleep(1000L);
                 currTimerValue -= 1000L;
-                if (currTimerValue == 0) {
-                    ServerImplementation.solveRoundPoints(id);
-                }
             } catch (Exception var2) {
                 var2.printStackTrace();
             }
         }
+        ServerImplementation.solveRoundPoints(id);
+        ServerImplementation.defineNextRound(id);
+        ServerImplementation.startTimerForRound(id);
+        //DataPB.assignWinner(id);
     }
 
 

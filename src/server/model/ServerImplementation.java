@@ -23,8 +23,8 @@ public class ServerImplementation extends BoggleClientPOA {
     private ArrayList<String> currLobby = new ArrayList<>();
 
 
-    private long roundDuration = 30000L;
-    public ArrayList<Timer> ongoingGameTimers;
+    static long roundDuration = 30000L;
+    public static ArrayList<Timer> ongoingGameTimers;
 
 
     private long currLobbyTimerValue = lobbyTimerValue;
@@ -177,28 +177,28 @@ public class ServerImplementation extends BoggleClientPOA {
         return DataPB.getWinnerOfLatestRound(gameID);
     }
 
+    public static void defineNextRound(int gameID) {
+        System.out.println("Defining next letter set");
+        if (DataPB.gameOngoing(gameID)) {
+            String letters = createRandomLetterSet();
+            int roundID = DataPB.createRound(letters);
+
+            System.out.println("NEW ROUND ID: " + roundID);
+            ArrayList<String> players = DataPB.getPlayersInGame(gameID);
+            System.out.println("PLAYERS IN GAME: " + players);
+            for (String player : players) {
+                System.out.println("LATEST ROUND:" + DataPB.getLatestRound(gameID));
+                DataPB.createRoundDetails(gameID, roundID, 1, player);
+            }
+        }
+    }
+
 
     /**
      *  Method to get the letter set of the next round
      */
     public String getNextRoundLetterSet(int gameID) {
-        System.out.println("Getting next letter set");
-        synchronized (this) {
-            if (!DataPB.roundOngoing(gameID)) {
-                String letters = createRandomLetterSet();
-                int roundID = DataPB.createRound(letters);
-
-                System.out.println("NEW ROUND ID: " + roundID);
-                ArrayList<String> players = DataPB.getPlayersInGame(gameID);
-                System.out.println("PLAYERS IN GAME: " + players);
-                for (String player : players) {
-                    System.out.println("LATEST ROUND:" + DataPB.getLatestRound(gameID));
-                    DataPB.createRoundDetails(gameID, roundID, 1, player);
-                }
-                return letters;
-            }
-        }
-        return DataPB.getUsersWordlists(gameID).toString();
+        return "TODO: REMOVE";
     }
 
     /**
@@ -368,7 +368,7 @@ public class ServerImplementation extends BoggleClientPOA {
         new Thread(t).start();
     }
 
-    private void startTimerForRound(int gameID) {
+    static void startTimerForRound(int gameID) {
         for (Timer timer : ongoingGameTimers) {
             if (timer.getID() == gameID) {
                 Thread t = new Thread(timer);

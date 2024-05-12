@@ -148,10 +148,12 @@ public class GameRoomView extends JPanel {
             layeredPane.add(container, new Integer(0));
 
             pnlLeaderboard = new LeaderboardPanel();
-            pnlLeaderboard.add(new PlayerPanel("res/drawable/images/pfp-male-1.png", "asdwerfteq", 100));
+       /*     pnlLeaderboard.add(new PlayerPanel("res/drawable/images/pfp-male-1.png", "asdwerfteq", 100));
             pnlLeaderboard.add(new PlayerPanel("res/drawable/images/pfp-male-1.png", "gfgfewgwegewg", 100));
             pnlLeaderboard.add(new PlayerPanel("res/drawable/images/pfp-male-1.png", "monfabdgaaem", 100));
             pnlLeaderboard.add(new PlayerPanel("res/drawable/images/pfp-male-1.png", "mosdgg2gadf", 100));
+
+        */
 
             JScrollPane scrollPane = new JScrollPane(pnlLeaderboard);
             scrollPane.setBorder(BorderFactory.createEmptyBorder());
@@ -728,8 +730,16 @@ public class GameRoomView extends JPanel {
         SwingUtilities.invokeLater(() -> pnlLeaderboard.add(new PlayerPanel(pfpURL, username, points)));
     }
 
+    public void removeAllInLeaderboard() {
+        pnlLeaderboard.removeAll();
+    }
+
     public void addLetterToLetterSet(String letter, Color backgroundColor) {
         SwingUtilities.invokeLater(() -> pnlLetterSet.add(new LetterPanel(letter, backgroundColor)));
+    }
+
+    public void removeAllLetters() {
+        pnlLetterSet.removeAll();
     }
 
     /**

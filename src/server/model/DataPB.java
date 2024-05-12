@@ -530,7 +530,7 @@ public class DataPB {
      * @param gameID
      * @return
      */
-    public static boolean roundOngoing(int gameID) {
+    public static boolean gameOngoing(int gameID) {
         boolean isOngoing = false;
         try {
             String query = "SELECT gameStatus FROM game WHERE gameID = ?";
@@ -548,9 +548,7 @@ public class DataPB {
             e.printStackTrace();
         }
 
-        //TODO: uncomment out if fixed BASTI
-        // return isOngoing;
-        return false;
+         return isOngoing;
     }
 
 

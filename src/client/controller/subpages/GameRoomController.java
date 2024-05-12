@@ -104,6 +104,7 @@ public class GameRoomController {
         musicOn = true; // music on by default
         sfxOn = true; // sfx on by default.
 
+        view.removeAllInLeaderboard();
         currGameLeaderboard = new ArrayList<>();
         roundNumber = 1;
         view.setRoundNumber(roundNumber);
@@ -140,9 +141,8 @@ public class GameRoomController {
         timer.start();
 
 
-        currGameLeaderboard.clear();
         currGameLeaderboard = Arrays.asList(model.getWfImpl().getCurrGameLeaderboard(model.getGameRoomID()));
-
+        view.removeAllInLeaderboard();
         for (userInfo userInfo : currGameLeaderboard) {
             view.addPlayerInLeaderboard(userInfo.username, userInfo.pfpAddress,
                     userInfo.points);
@@ -167,6 +167,7 @@ public class GameRoomController {
                         Thread.sleep(1000);
                         view.setLblTimerTxt(inSeconds);
                         inSeconds = (int) model.getWfImpl().getGameDurationVal(model.getGameRoomID()) / 1000;
+                        System.out.println(inSeconds);
                         view.setPrgTimerValue(inSeconds);
                         System.out.println(inSeconds);
                         if (inSeconds == 10) {
@@ -228,10 +229,10 @@ public class GameRoomController {
                     }
 
                     System.out.println("okay clicked");
-                    model.setLetterList(model.getWfImpl().getNextRoundLetterSet(model.getGameRoomID()));
+                    model.setLetterList(model.getWfImpl().getLetters(model.getGameRoomID()));
                     System.out.println(model.getLetterList());
                     view.setRoundNumber(roundNumber++);
-                //    startNextRound();
+                    startNextRound();
                 }
 
             }
@@ -359,7 +360,7 @@ public class GameRoomController {
         }
 
         Collections.shuffle(letterSet);
-
+        view.removeAllLetters();
         for (String letter : letterSet) {
             backgroundColor = letter.matches("[AEIOU]") ? style.deepSkyBlue : style.goldenTainoi;
             view.addLetterToLetterSet(letter, backgroundColor);
@@ -449,11 +450,11 @@ public class GameRoomController {
     private void sfxRoundOver() {
         if (sfxOn) {
             try {
-                sfxClip.stop();
-                audioSoundStream = AudioSystem.getAudioInputStream(new File(roundOver));
-                sfxClip = AudioSystem.getClip();
-                sfxClip.open(audioSoundStream);
-                sfxClip.start();
+               // sfxClip.stop();
+               // audioSoundStream = AudioSystem.getAudioInputStream(new File(roundOver));
+               // sfxClip = AudioSystem.getClip();
+               // sfxClip.open(audioSoundStream);
+                //   sfxClip.start();
             } catch (Exception e) {
                 e.printStackTrace();
             }
