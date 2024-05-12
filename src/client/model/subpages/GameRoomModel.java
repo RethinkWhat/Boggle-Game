@@ -45,7 +45,8 @@ public class GameRoomModel {
     public void sendUserWordList() {
         System.out.println(wordSet);
         System.out.println("sending word set");
-        wfImpl.sendUserWordList(gameRoomID,username, wordSet.toArray(new String[0]));
+        if (!wordSet.isEmpty())
+            wfImpl.sendUserWordList(gameRoomID,username, wordSet.toArray(new String[0]));
     }
 
 

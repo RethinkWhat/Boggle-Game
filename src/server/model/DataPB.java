@@ -780,8 +780,10 @@ public class DataPB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (!winner.isEmpty()) {
-            assignRoundWinner(roundID, winner);
+        if (winner != null) {
+            if (!winner.equals("")) {
+                assignRoundWinner(roundID, winner);
+            }
         }
     }
 
