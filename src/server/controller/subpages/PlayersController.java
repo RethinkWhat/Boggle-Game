@@ -110,6 +110,7 @@ public class PlayersController {
         public void actionPerformed(ActionEvent e) {
             // Close the AddPlayerPanel
             view.hideAddPlayerPanel();
+            view.closeAddPlayerPanel();
         }
     }
 
