@@ -91,6 +91,8 @@ public class ServerImplementation extends BoggleClientPOA {
     // @Override
     public long getCurrLobbyTimerValue(BooleanHolder validLobby) {
         validLobby.value = currLobby.size() > 1;
+        if (currLobby.size() == 0)
+                currLobbyTimerValue = lobbyTimerValue;
         return currLobbyTimerValue;
     }
 
@@ -193,12 +195,9 @@ public class ServerImplementation extends BoggleClientPOA {
         }
     }
 
-
-    /**
-     *  Method to get the letter set of the next round
-     */
-    public String getNextRoundLetterSet(int gameID) {
-        return "TODO: REMOVE";
+    @Override
+    public String getNextRoundLetterSet(int gameRoomID) {
+        return "";
     }
 
     /**

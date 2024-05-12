@@ -65,5 +65,8 @@ module BoggleApp {
         string getFullName(in string username);
 
         boolean isValidWord(in string word);
+
+        void exitLobby(in string username);
+        void logout(in string username);
     };
 };

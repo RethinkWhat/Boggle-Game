@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * The LoginController processes user requests when trying to access the application through their existing account.
@@ -70,7 +71,7 @@ public class LoginController {
                 String msg = model.validateAccount(view.getTxtUsername().getText(), view.getTxtPassword().getText());
                 if (msg.equals("valid")) {
                     SwingUtilities.invokeLater(() -> new ClientApplicationController(new ClientApplicationView(),
-                            new ClientApplicationModel(username, model.getWfImpl())));
+                            new ClientApplicationModel(username.toLowerCase(Locale.ROOT), model.getWfImpl())));
                     view.dispose();
                 } else {
                     SwingUtilities.invokeLater(() -> {
