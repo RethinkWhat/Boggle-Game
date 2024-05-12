@@ -293,4 +293,27 @@ public class ClientApplicationView extends JFrame {
     public void setNavLocationText(String text) {
         SwingUtilities.invokeLater(() -> lblNavLocation.setText(text));
     }
+
+    /**
+     * Sets the header panel's navigation buttons to invisible.
+     */
+    public void hideButtons() {
+        SwingUtilities.invokeLater(() -> {
+            btnNavHome.setVisible(false);
+            btnNavSettings.setVisible(false);
+            btnNavLogout.setVisible(false);
+        });
+    }
+
+    /**
+     * Sets the header panel's navigation buttons to visible.
+     */
+    public void showButtons() {
+        SwingUtilities.invokeLater(() -> {
+            btnNavHome.setVisible(true);
+            btnNavSettings.setVisible(true);
+            btnNavLogout.setVisible(true);
+        });
+    }
+
 }

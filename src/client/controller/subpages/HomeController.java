@@ -104,6 +104,8 @@ public class HomeController {
                 parent.getView().showLobby();
                 parent.getView().setNavLocationText("Lobby");System.out.println("creating new lobby");
 
+                parent.getView().hideButtons();
+
                 parent.playLobbyMusic();
                 new LobbyController(new LobbyModel(parent.getModel().getUsername(), parent.getModel().getWfImpl()),
                         parent.getView().getLobbyView(), parent);
@@ -115,6 +117,7 @@ public class HomeController {
 //                      parent.getModel().getWfImpl().exitGameRoom(model.getUsername());
                         parent.getView().showHome();
                         parent.getView().setNavLocationText("Home");
+                        parent.getView().showButtons();
                         parent.stopMusic();
                         parent.playDefaultMusic();
                     }
