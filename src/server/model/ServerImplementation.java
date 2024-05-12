@@ -29,6 +29,9 @@ public class ServerImplementation extends BoggleClientPOA {
 
     private long currLobbyTimerValue = lobbyTimerValue;
 
+
+    private Thread timerThread;
+
     /**
      * Default constructor for server implementation object
      */
@@ -91,8 +94,6 @@ public class ServerImplementation extends BoggleClientPOA {
     // @Override
     public long getCurrLobbyTimerValue(BooleanHolder validLobby) {
         validLobby.value = currLobby.size() > 1;
-        if (currLobby.size() == 0)
-                currLobbyTimerValue = lobbyTimerValue;
         return currLobbyTimerValue;
     }
 
@@ -263,7 +264,11 @@ public class ServerImplementation extends BoggleClientPOA {
 
     @Override
     public void exitLobby(String username) {
-        // TODO: Basti
+        currLobby.remove(username);
+        if (currLobby.size() == 0) {
+            currLobbyTimerValue = lobbyTimerValue;
+            timerThread.interrupt();
+        }
     }
 
     @Override
@@ -368,7 +373,8 @@ public class ServerImplementation extends BoggleClientPOA {
                 currLobbyTimerValue = lobbyTimerValue;
             }
         };
-        new Thread(t).start();
+        timerThread =  new Thread(t);
+        timerThread.start();
     }
 
     static void startTimerForRound(int gameID) {
