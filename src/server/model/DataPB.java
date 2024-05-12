@@ -2,10 +2,8 @@
 package server.model;
 
 import server.model.BoggleApp.userInfo;
-import org.omg.CORBA.ORB;
 import shared.Player;
 
-import javax.swing.plaf.nimbus.State;
 import java.sql.*;
 import java.util.*;
 
@@ -88,7 +86,7 @@ public class DataPB {
         try {
             String stmt = "SELECT roundID FROM round_details WHERE gameID=? ORDER BY roundID DESC";
             PreparedStatement preparedStatement = con.prepareStatement(stmt, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setInt(1,gameID);
+            preparedStatement.setInt(1, gameID);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next())
                 return rs.getInt(1);
@@ -103,7 +101,7 @@ public class DataPB {
             String insertStmt = "INSERT INTO game(duration) VALUES(?)";
 
             PreparedStatement stmt = con.prepareStatement(insertStmt, Statement.RETURN_GENERATED_KEYS);
-            stmt.setTime(1,time);
+            stmt.setTime(1, time);
             stmt.execute();
             ResultSet rs = stmt.getGeneratedKeys();
             while (rs.next()) {
@@ -137,13 +135,14 @@ public class DataPB {
     /**
      * Edits the info of a particular player
      * Returns true if the update is succesful, otherwise it returns falls
+     *
      * @param username
      * @param toEdit
      * @param newInfo
      * @return
      */
-    public static boolean editInfo(String username, String toEdit, String newInfo){
-        if (!(toEdit.equalsIgnoreCase("username") || toEdit.equalsIgnoreCase("fullName"))){
+    public static boolean editInfo(String username, String toEdit, String newInfo) {
+        if (!(toEdit.equalsIgnoreCase("username") || toEdit.equalsIgnoreCase("fullName"))) {
             return false;
         }
 
@@ -156,13 +155,14 @@ public class DataPB {
 
             ps.executeUpdate();
             return true;
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
     }
 
     /**
      * Returns the number of the completed matches of a specific user
+     *
      * @param username
      * @return
      */
@@ -191,6 +191,7 @@ public class DataPB {
 
     /**
      * Returns the total wins of a particular user
+     *
      * @param username
      * @return
      * @throws SQLException
@@ -216,12 +217,13 @@ public class DataPB {
 
     /**
      * Returns true if the updating of a password is successful
+     *
      * @param username
      * @param oldPass
      * @param newPass
      * @return
      */
-    public static boolean editPassword(String username, String oldPass, String newPass){
+    public static boolean editPassword(String username, String oldPass, String newPass) {
         try {
             String dbOldPass = "";
 
@@ -232,11 +234,11 @@ public class DataPB {
 
             ResultSet rs = ps1.executeQuery();
 
-            if (rs.next()){
+            if (rs.next()) {
                 dbOldPass = rs.getString(1);
             }
 
-            if (dbOldPass.equals(oldPass)){
+            if (dbOldPass.equals(oldPass)) {
                 String query2 = "UPDATE player SET password = ? WHERE username = ?";
 
                 PreparedStatement ps2 = con.prepareStatement(query2);
@@ -246,7 +248,7 @@ public class DataPB {
                 ps2.executeUpdate();
                 return true;
             }
-        }catch (SQLException sqle){
+        } catch (SQLException sqle) {
             sqle.printStackTrace();
             return false;
         }
@@ -257,6 +259,7 @@ public class DataPB {
     /**
      * STATUS: WORKING
      * Updates the points of the user
+     *
      * @param roundIdentifier
      * @param newPoints
      */
@@ -275,10 +278,11 @@ public class DataPB {
     /**
      * STATUS : WORKING
      * This query gets the points of a user.
+     *
      * @param username
      * @return
      */
-    public static int getUserGamePoints(String username){
+    public static int getUserGamePoints(String username) {
         String query = "SELECT points FROM player WHERE username = ?";
         int points = 0;
         try (PreparedStatement ps = con.prepareStatement(query)) {
@@ -299,6 +303,7 @@ public class DataPB {
     /**
      * STATUS : WORKING
      * This query gets the top 10 players based on their points
+     *
      * @return
      */
     public static Map<String, Integer> getTopPlayers() {
@@ -319,18 +324,19 @@ public class DataPB {
     /**
      * STATUS : WORKING
      * This query totals the points of a user given gameID and username
+     *
      * @param gameID
      * @param username
      * @return
      */
-    public static Map<String,Integer> getTotalPointsRoundDetails(int gameID, String username){
-        Map<String,Integer> totalPointsMap = new HashMap<>();
-        String key = username+gameID;
+    public static Map<String, Integer> getTotalPointsRoundDetails(int gameID, String username) {
+        Map<String, Integer> totalPointsMap = new HashMap<>();
+        String key = username + gameID;
 
         String query = "SELECT sum(points)as total_points FROM round_details WHERE gameID =? AND username =?";
-        try(PreparedStatement ps = con.prepareStatement(query)){
-            ps.setInt(1,gameID);
-            ps.setString(2,username);
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, gameID);
+            ps.setString(2, username);
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
@@ -346,38 +352,39 @@ public class DataPB {
     /**
      * Status : WORKING
      * This query retrieves the profile picture of a user "location path"
+     *
      * @param username
      * @return
      */
-    public static String getPFPOfUser(String username){
+    public static String getPFPOfUser(String username) {
         String pfp = null;
 
         String query = "SELECT pfp FROM player WHERE username =? ";
-        try(PreparedStatement ps = con.prepareStatement(query)){
-            ps.setString(1,username);
-            ResultSet rs=ps.executeQuery();
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
 
-            if (rs.next()){
-                pfp=rs.getString("pfp");
+            if (rs.next()) {
+                pfp = rs.getString("pfp");
             }
-        }catch (SQLException sqle){
+        } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
         return pfp;
     }
 
-    public static String getFullName(String username){
+    public static String getFullName(String username) {
         String name = null;
 
         String query = "SELECT fullName FROM player WHERE username =? ";
-        try (PreparedStatement ps = con.prepareStatement(query)){
-            ps.setString(1,username);
-            ResultSet rs=ps.executeQuery();
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setString(1, username);
+            ResultSet rs = ps.executeQuery();
 
-            if (rs.next()){
-                name=rs.getString("fullName");
+            if (rs.next()) {
+                name = rs.getString("fullName");
             }
-        }catch (SQLException sqle){
+        } catch (SQLException sqle) {
             sqle.printStackTrace();
         }
         return name;
@@ -385,6 +392,7 @@ public class DataPB {
 
     /**
      * Returns true if the updating of a profile picture is successful
+     *
      * @param username
      * @param newPfpPath
      * @return
@@ -407,6 +415,7 @@ public class DataPB {
     /**
      * STATUS : WORKING
      * This query simply searches a username
+     *
      * @param username
      * @return
      */
@@ -431,6 +440,7 @@ public class DataPB {
 
     /**
      * Adds player in the player column
+     *
      * @param username
      * @param password
      * @param fullName
@@ -456,6 +466,7 @@ public class DataPB {
 
     /**
      * Returns a result set of a given gameID's latest round containing the usernames and their corresponding submitted words.
+     *
      * @param gameID
      * @return
      */
@@ -477,16 +488,17 @@ public class DataPB {
 
     /**
      * Status :
+     *
      * @param username
      * @param gameID
      * @param wordList
      */
-    public static void addUserWordList(String username, int gameID,String []wordList){
-        try{
+    public static void addUserWordList(String username, int gameID, String[] wordList) {
+        try {
             String query = "UPDATE round_details SET words = ? WHERE gameID = ? AND username = ?";
             PreparedStatement ps = con.prepareStatement(query);
-            String words = String.join("," , wordList);
-            ps.setString(1,words);
+            String words = String.join(",", wordList);
+            ps.setString(1, words);
             ps.setInt(2, gameID);
             ps.setString(3, username);
 
@@ -500,6 +512,7 @@ public class DataPB {
     /**
      * Status : WORKING
      * This query gets the winner of the latest round.
+     *
      * @param gameID
      * @return winner
      */
@@ -527,6 +540,7 @@ public class DataPB {
     /**
      * STATUS : WORKING
      * This query returns true if round is ongoing
+     *
      * @param gameID
      * @return
      */
@@ -548,7 +562,7 @@ public class DataPB {
             e.printStackTrace();
         }
 
-         return isOngoing;
+        return isOngoing;
     }
 
 
@@ -556,6 +570,7 @@ public class DataPB {
      * STATUS : WORKING to be improved
      * This query shows the current game winner given gameID.
      * if the database is empty, it returns undecided by default
+     *
      * @param gameID
      * @return
      */
@@ -582,6 +597,7 @@ public class DataPB {
     /**
      * STATUS : WORKING
      * This query retrieves the points of a user in a current game given gameID and username
+     *
      * @param gameID
      * @param username
      * @return
@@ -608,6 +624,7 @@ public class DataPB {
 
     /**
      * STATUS : WORKING
+     *
      * @param gameID
      * @return
      */
@@ -632,6 +649,7 @@ public class DataPB {
     /**
      * STATUS : WORKING
      * This query provides a leaderboard from current game.
+     *
      * @param gameID
      * @return
      */
@@ -665,6 +683,7 @@ public class DataPB {
     /**
      * STATUS : WORKING
      * This query locates what game a current user is in.
+     *
      * @param username
      * @return
      */
@@ -719,6 +738,7 @@ public class DataPB {
 
     /**
      * STATUS: WORKING
+     *
      * @param word
      * @return
      */
@@ -774,4 +794,27 @@ public class DataPB {
         return letters;
     }
 
+    public static void assignRoundWinner(int roundID, String winner) {
+        try {
+            String query = "UPDATE round SET winner = ? WHERE roundID = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, winner);
+            ps.setInt(2, roundID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void assignGameWinner(int gameID, String winner) {
+        try {
+            String query = "UPDATE game SET winner = ? WHERE gameID = ?";
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, winner);
+            ps.setInt(2, gameID);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }
