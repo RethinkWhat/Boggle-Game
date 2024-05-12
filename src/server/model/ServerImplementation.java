@@ -578,6 +578,7 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     public void setLobbyTimerValue(long time) {
         lobbyTimerValue = time;
+        currLobbyTimerValue = lobbyTimerValue;
     }
 }
 
