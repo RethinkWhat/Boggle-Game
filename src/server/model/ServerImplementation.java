@@ -190,8 +190,7 @@ public class ServerImplementation extends BoggleClientPOA {
             ArrayList<String> players = DataPB.getPlayersInGame(gameID);
             System.out.println("PLAYERS IN GAME: " + players);
             for (String player : players) {
-                System.out.println("LATEST ROUND:" + DataPB.getLatestRound(gameID));
-                DataPB.createRoundDetails(gameID, roundID, 1, player);
+                DataPB.createRoundDetails(gameID, roundID, DataPB.getLatestRoundNumber(gameID), player);
             }
         }
     }
@@ -204,6 +203,7 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     @Override
     public String getOverallWinner(int gameId) {
+        //return "undecided";
         return DataPB.checkGameWinner(gameId);
     }
 

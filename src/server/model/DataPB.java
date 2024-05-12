@@ -95,6 +95,20 @@ public class DataPB {
         return 0;
     }
 
+    public static int getLatestRoundNumber(int gameID) {
+        try {
+            String stmt = "SELECT roundNumber FROM round_details WHERE gameID=? ORDER BY roundNumber DESC";
+            PreparedStatement preparedStatement = con.prepareStatement(stmt, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1, gameID);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next())
+                return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     public static int createGameRoom(Time time) {
         try {
             String insertStmt = "INSERT INTO game(duration) VALUES(?)";
@@ -803,7 +817,56 @@ public class DataPB {
         }
     }
     public static String checkGameWinner(int gameID) {
-        String winner = "undecided";
+        ArrayList<Integer> roundIDList = new ArrayList<>();
+        ArrayList<String> winners = new ArrayList<>();
+        try {
+            String q = "SELECT roundID FROM round_details WHERE gameID = ?";
+            PreparedStatement ps = con.prepareStatement(q);
+            ps.setInt(1, gameID);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                roundIDList.add(rs.getInt(1));
+            }
+
+            for (int id : roundIDList) {
+                System.out.println(id);
+                String q2 = "SELECT winner FROM round WHERE roundID = ?";
+                PreparedStatement ps2 = con.prepareStatement(q2);
+                ps2.setInt(1, id);
+                ResultSet rs2 = ps2.executeQuery();
+
+                if (rs2.next()) {
+                    String winner = rs2.getString("winner");
+                    if (winner != null)
+                        winners.add(rs2.getString("winner"));
+                }
+            }
+
+            System.out.println(winners);
+            if (!winners.isEmpty()) {
+                for (String s : winners) {
+                    int count = 0;
+                    for (String s2 : winners) {
+                        if (s.equals(s2)) {
+                            count += 1;
+                        }
+                    }
+                    if (count >= 3) {
+                        return s;
+                    }
+                }
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+        /*
         try {
             String query = "SELECT username, MAX(points) AS maxPoints " +
                     "FROM round_details " +
@@ -819,7 +882,7 @@ public class DataPB {
                 String topPlayer = rs.getString("username");
                 int maxPoints = rs.getInt("maxPoints");
 
-                if (maxPoints >= 3) {
+                if (maxPoints == 3) {
                     winner = topPlayer;
                     assignGameWinner(gameID, winner);
                 }
@@ -827,8 +890,11 @@ public class DataPB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return winner;
+
+         */
+        return "undecided";
     }
+
 
     public static void assignGameWinner(int gameID, String winner) {
         try {
