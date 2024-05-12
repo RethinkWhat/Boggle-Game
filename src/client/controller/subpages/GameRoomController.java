@@ -196,7 +196,7 @@ public class GameRoomController {
 
 
                 System.out.println("SENDING GAME ROOM ID: " + model.getGameRoomID());
-                String usernameWinnerRound = "rithik"; // TODO: BASTI model.getWfImpl().getRoundWinner(model.getGameRoomID());
+                String usernameWinnerRound = model.getWfImpl().getRoundWinner(model.getGameRoomID()); // TODO: BASTI model.getWfImpl().getRoundWinner(model.getGameRoomID());
                 String usernameWinnerGame = model.getWfImpl().getOverallWinner(model.getGameRoomID()); //TODO: BASTI method to populate db with who the winner is
 
                 // displays dialog messages and plays respective sfx.

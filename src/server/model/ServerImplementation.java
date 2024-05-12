@@ -204,7 +204,7 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     @Override
     public String getOverallWinner(int gameId) {
-        return DataPB.getGameWinner(gameId);
+        return DataPB.checkGameWinner(gameId);
     }
 
     /**

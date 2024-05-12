@@ -566,34 +566,6 @@ public class DataPB {
 
 
     /**
-     * STATUS : WORKING to be improved
-     * This query shows the current game winner given gameID.
-     * if the database is empty, it returns undecided by default
-     *
-     * @param gameID
-     * @return
-     */
-    public static String getGameWinner(int gameID) {
-        String winner = "undecided";
-        try {
-            String query = "SELECT winner FROM game WHERE gameID = ?";
-            PreparedStatement preparedStatement = con.prepareStatement(query);
-            preparedStatement.setInt(1, gameID);
-            ResultSet rs = preparedStatement.executeQuery();
-
-            if (rs.next()) {
-                String dbWinner = rs.getString("winner");
-                if (dbWinner != null && !dbWinner.trim().isEmpty()) {
-                    winner = dbWinner;
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return winner;
-    }
-
-    /**
      * STATUS : WORKING
      * This query retrieves the points of a user in a current game given gameID and username
      *
