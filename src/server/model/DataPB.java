@@ -794,6 +794,14 @@ public class DataPB {
         return letters;
     }
 
+
+    public static void updateRoundWinner(int gameID) {
+        int roundID = getLatestRound(gameID);
+        String query = ""; //TODO get the username and points of each player
+        String winner = ""; //TODO: get the username of the person with the highest points
+        assignRoundWinner(roundID, winner);
+    }
+
     public static void assignRoundWinner(int roundID, String winner) {
         try {
             String query = "UPDATE round SET winner = ? WHERE roundID = ?";
@@ -804,6 +812,22 @@ public class DataPB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static String checkGameWinner(int gameID) {
+        //TODO: Go through each round_details associated with gameID
+        //  TODO: Make statement: Group by username, COUNT(winner)
+        //      TODO: Sort Descending
+        //          TODO: Get username and highest value
+
+        //TODO: if highest value >= 3
+                //TODO: assignGameWinner(gameID, winner);
+                //TODO: return username
+        //TODO: else
+                // return undecided
+
+
+        return "undecided";
     }
 
     public static void assignGameWinner(int gameID, String winner) {

@@ -27,9 +27,9 @@ public class Timer implements Runnable {
             }
         }
         ServerImplementation.solveRoundPoints(id);
+        DataPB.updateRoundWinner(DataPB.getLatestRound(id));
         ServerImplementation.defineNextRound(id);
         ServerImplementation.startTimerForRound(id);
-        //DataPB.assignWinner(id);
     }
 
 
