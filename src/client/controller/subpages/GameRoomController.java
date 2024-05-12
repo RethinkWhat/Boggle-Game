@@ -214,7 +214,10 @@ public class GameRoomController {
                                 style.deepSkyBlue, style.goldenTainoi, style.black,
                                 style.goldenTainoi, false);
                         dialog.setBtnDialogListener(e -> parent.getView().getCardLayout().show(parent.getView().getPnlCards(), "home"));
+
                     }
+                    parent.getView().showHome();
+
                 } else {
                     sfxRoundOver();
                     if (model.getUsername().equals(usernameWinnerRound)) {
