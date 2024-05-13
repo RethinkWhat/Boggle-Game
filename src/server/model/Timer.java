@@ -33,7 +33,7 @@ public class Timer implements Runnable {
             DataPB.updateRoundWinner(id);
             String gameWinner = DataPB.checkGameWinner(id);
             if (gameWinner.equals("undecided")) {
-                Thread.sleep(10000L);
+                Thread.sleep(5000);
                 ServerImplementation.defineNextRound(id);
                 ServerImplementation.startTimerForRound(id);
             } else {

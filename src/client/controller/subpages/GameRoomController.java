@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
+import java.util.Timer;
 
 /**
  * The GameRoomController processes user requests for specifying their inputs, computing and comparing scores,
@@ -179,6 +180,7 @@ public class GameRoomController {
                         }
                     }
                     view.setLblTimerTxt(inSeconds);
+                    Thread.sleep(1000);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -207,7 +209,7 @@ public class GameRoomController {
                         new CustomizedMessageDialog("Game Winner", style.iconWinner, "YOU WON!",
                                 "You have won the game.", "EXIT GAME", style.deepSkyBlue,
                                 style.goldenTainoi, style.black, style.goldenTainoi, false);
-                    }else {
+                    } else {
                         sfxLose();
                         CustomizedMessageDialog dialog = new CustomizedMessageDialog("Game Winner",
                                 style.iconWinner, "WE HAVE A WINNER!",
@@ -222,21 +224,22 @@ public class GameRoomController {
                 } else {
                     CustomizedMessageDialog dialog;
                     sfxRoundOver();
+
                     if (model.getUsername().equals(usernameWinnerRound)) {
                         dialog = new CustomizedMessageDialog("Round Winner", style.iconWinner, "YOU WON THE ROUND!",
-                                "You had the most points this round.", style.goldenTainoi, style.black, style.goldenTainoi, 10000);
+                                "You had the most points this round.", style.goldenTainoi, style.black, style.goldenTainoi);
                     } else if (model.getUsername().equals("undecided")) {
                         dialog = new CustomizedMessageDialog("Game Tied", style.iconWinner, "No one won the game.",
-                                "Next round will start momentarily.", style.goldenTainoi, style.black, style.goldenTainoi, 10000);
+                                "Next round will start momentarily.", style.goldenTainoi, style.black, style.goldenTainoi);
                     } else {
                         dialog = new CustomizedMessageDialog("Round Done", style.iconWinner, "ROUND DONE",
-                                usernameWinnerRound + " had the most points this round.", style.goldenTainoi, style.black, style.goldenTainoi, 10000);
+                                usernameWinnerRound + " had the most points this round.", style.goldenTainoi, style.black, style.goldenTainoi);
                     }
 
+
                     try {
-                        Thread.sleep(10000);
-                        System.out.println("timer finished");
-                        dialog.dispose();
+                        Thread.sleep(3000);
+                        dialog.exitDialog();
                         model.setLetterList(model.getWfImpl().getLetters(model.getGameRoomID()));
                         System.out.println(model.getLetterList());
                         view.setRoundNumber(roundNumber++);
@@ -245,6 +248,7 @@ public class GameRoomController {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+
                 }
 
             }

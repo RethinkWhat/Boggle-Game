@@ -880,7 +880,7 @@ public class DataPB {
 
     public static void updateGameWinner(int gameID, String winner) {
         try {
-            String q = "UPDATE game (winner) VALUES(?) WHERE gameID = ?";
+            String q = "UPDATE game SET winner = ? WHERE gameID = ?";
             PreparedStatement ps = con.prepareStatement(q);
             ps.setString(1, winner);
             ps.setInt(2, gameID);

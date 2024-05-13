@@ -22,11 +22,6 @@ public class GameRoomModel {
     private long duration;
 
     public GameRoomModel(String username, BoggleClient wfImpl) {
-        try {
-            Thread.sleep(1000);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         this.username = username;
         this.wfImpl = wfImpl;
         gameRoomID = wfImpl.getGameID(username);

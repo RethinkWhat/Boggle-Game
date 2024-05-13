@@ -25,6 +25,8 @@ public class CustomizedMessageDialog extends JDialog {
     private SwingStylesheet style = new SwingStylesheet();
 
     private boolean exitProgram;
+
+    private JDialog dialog;
     /**
      * Constructs a CustomizedMessageDialog with customizable content.
      *
@@ -53,7 +55,7 @@ public class CustomizedMessageDialog extends JDialog {
         createDialog();
     }
 
-    public CustomizedMessageDialog(String title, ImageIcon icon, String titleMessage, String message,  Color iconColor, Color textColor, Color titleMessageColor, int duration ) {
+    public CustomizedMessageDialog(String title, ImageIcon icon, String titleMessage, String message,  Color iconColor, Color textColor, Color titleMessageColor ) {
         this.title = title;
         this.icon = icon;
         this.titleMessage = titleMessage;
@@ -62,13 +64,19 @@ public class CustomizedMessageDialog extends JDialog {
         this.textColor = textColor;
         this.titleMessageColor = titleMessageColor;
 
-        createNoButtonDialog(duration);
+        createNoButtonDialog();
+    }
+
+    public void exitDialog() {
+        dialog.dispose();
+        dialog.setVisible(false);
     }
 
 
-    private void createNoButtonDialog(int duration) {
+    private void createNoButtonDialog() {
         JFrame mainFrame = new JFrame();
-        JDialog dialog = new JDialog(mainFrame, title, true);
+        dialog = new JDialog(mainFrame, title, true);
+        dialog.setModalityType(Dialog.ModalityType.MODELESS);
         dialog.setTitle(title);
         dialog.setLayout(new GridLayout(3, 1));
         dialog.setSize(500, 300);
