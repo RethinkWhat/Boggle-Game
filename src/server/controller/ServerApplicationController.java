@@ -90,7 +90,8 @@ public class ServerApplicationController {
                     style.red,
                     style.white,
                     style.black,
-                    style.red
+                    style.red,
+                    false
             );
         }
     }

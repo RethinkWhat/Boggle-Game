@@ -2,6 +2,7 @@ package shared;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * A customizable message dialog for exiting the game.
@@ -22,6 +23,8 @@ public class ExitDialog extends JDialog {
     private JLabel lblSmall;
     private JLabel lblBig;
     private SwingStylesheet style = new SwingStylesheet();
+    private JDialog dialog;
+
 
     /**
      * Constructs a ExitDialog with customizable content.
@@ -36,7 +39,7 @@ public class ExitDialog extends JDialog {
      * @param textColor         The color of the text in the dialog.
      * @param titleMessageColor The color of the title message.
      */
-    public ExitDialog(String title, ImageIcon icon, String titleMessage, String message, String buttonText, Color buttonColor, Color iconColor, Color textColor, Color titleMessageColor) {
+    public ExitDialog(String title, ImageIcon icon, String titleMessage, String message, String buttonText, Color buttonColor, Color iconColor, Color textColor, Color titleMessageColor, boolean shorthand) {
         this.title = title;
         this.icon = icon;
         this.titleMessage = titleMessage;
@@ -47,7 +50,10 @@ public class ExitDialog extends JDialog {
         this.textColor = textColor;
         this.titleMessageColor = titleMessageColor;
 
-        createDialog();
+        if (!shorthand)
+            createDialog();
+        else
+            createCustomDialog();
     }
 
     private void createDialog() {
@@ -108,6 +114,65 @@ public class ExitDialog extends JDialog {
         dialog.setResizable(false);
         dialog.setVisible(true);
     }
+
+    private void createCustomDialog() {
+        JFrame mainFrame = new JFrame();
+        dialog = new JDialog(mainFrame, title, true);
+        dialog.setTitle(title);
+        dialog.setLayout(new GridLayout(3, 1));
+        dialog.setSize(500, 300);
+        dialog.setModalityType(ModalityType.MODELESS);
+
+        // Create pnlIcon panel
+        JPanel pnlIcon = new JPanel();
+        pnlIcon.setLayout(new BorderLayout());
+        pnlIcon.setPreferredSize(new Dimension(600, 200));
+
+        iconLabel = new JLabel(icon);
+        iconLabel.setForeground(iconColor);
+        pnlIcon.add(iconLabel, BorderLayout.CENTER);
+
+        // Create pnlMessage panel
+        JPanel pnlMessage = new JPanel(new GridBagLayout());
+        pnlMessage.setPreferredSize(new Dimension(600, 170));
+        lblBig = style.createLblH1(titleMessage, textColor);
+        lblSmall = style.createLblP(message, textColor);
+        lblBig.setForeground(titleMessageColor);
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        pnlMessage.add(lblBig, gbc);
+
+        gbc.gridy = 1;
+        pnlMessage.add(lblSmall, gbc);
+
+        // Create pnlButton panel
+        JPanel pnlButton = new JPanel(new FlowLayout());
+        pnlButton.setPreferredSize(new Dimension(600, 30));
+        btnDialog = style.createBtnRounded(buttonText, buttonColor, textColor, 10);
+
+        // Exiting the dialog
+        pnlButton.add(btnDialog);
+
+        btnCancel = style.createBtnRounded("CANCEL", style.deepSkyBlue, style.white, 10);
+        btnCancel.addActionListener(e -> {
+            dialog.dispose();
+            dialog.setVisible(false);
+        });
+        pnlButton.add(btnCancel);
+
+        // Add panels to the dialog
+        dialog.add(pnlIcon);
+        dialog.add(pnlMessage);
+        dialog.add(pnlButton);
+
+        dialog.setLocationRelativeTo(null);
+        dialog.setResizable(false);
+        dialog.setVisible(true);
+    }
+
+
 
     /**
      * Sets the title of the dialog.
@@ -188,6 +253,14 @@ public class ExitDialog extends JDialog {
     public void setDialogTitleMessageColor(Color titleMessageColor) {
         this.titleMessageColor = titleMessageColor;
         lblBig.setForeground(titleMessageColor);
+    }
+
+    public void setBtnExitListener(ActionListener exitListener) {
+        btnDialog.addActionListener(exitListener);
+    }
+
+    public void exit() {
+        dialog.dispose();
     }
 }
 
