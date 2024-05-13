@@ -191,14 +191,14 @@ public class GameRoomController {
 
                 model.sendUserWordList();
                 try {
-                    Thread.sleep(6000);
+                    Thread.sleep(2000);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
 
-                String usernameWinnerRound = model.getWfImpl().getRoundWinner(model.getGameRoomID()); // TODO: BASTI model.getWfImpl().getRoundWinner(model.getGameRoomID());
-                String usernameWinnerGame = model.getWfImpl().getOverallWinner(model.getGameRoomID()); //TODO: BASTI method to populate db with who the winner is
+                String usernameWinnerRound = model.getWfImpl().getRoundWinner(model.getGameRoomID());
+                String usernameWinnerGame = model.getWfImpl().getOverallWinner(model.getGameRoomID());
                 System.out.println("GAME WINNER: " + usernameWinnerGame);
                 // displays dialog messages and plays respective sfx.
                 if (!usernameWinnerGame.equals("undecided")) {
@@ -220,23 +220,30 @@ public class GameRoomController {
                     parent.getView().showHome();
 
                 } else {
+                    CustomizedMessageDialog dialog;
                     sfxRoundOver();
                     if (model.getUsername().equals(usernameWinnerRound)) {
-                        new CustomizedMessageDialog("Round Winner", style.iconWinner, "YOU WON THE ROUND!",
+                        dialog = new CustomizedMessageDialog("Round Winner", style.iconWinner, "YOU WON THE ROUND!",
                                 "You had the most points this round.", "NEXT ROUND", style.deepSkyBlue,
                                 style.goldenTainoi, style.black, style.goldenTainoi, false);
                     } else {
-                        new CustomizedMessageDialog("Round Done", style.iconWinner, "ROUND DONE",
+                        dialog = new CustomizedMessageDialog("Round Done", style.iconWinner, "ROUND DONE",
                                 usernameWinnerRound + " had the most points this round.",
                                 "NEXT ROUND", style.deepSkyBlue, style.goldenTainoi, style.black,
                                 style.goldenTainoi, false);
                     }
 
-                    System.out.println("okay clicked");
-                    model.setLetterList(model.getWfImpl().getLetters(model.getGameRoomID()));
-                    System.out.println(model.getLetterList());
-                    view.setRoundNumber(roundNumber++);
-                    startNextRound();
+                    try {
+                        Thread.sleep(10000);
+                        System.out.println("timer finished");
+                        dialog.dispose();
+                        model.setLetterList(model.getWfImpl().getLetters(model.getGameRoomID()));
+                        System.out.println(model.getLetterList());
+                        view.setRoundNumber(roundNumber++);
+                        startNextRound();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
             }
@@ -251,7 +258,7 @@ public class GameRoomController {
         @Override
         public void actionPerformed(ActionEvent e) {
             view.setErrorMessage("");
-            String input = view.getTxtWordInput().getText().trim();
+            String input = view.getTxtWordInput().getText().trim().toUpperCase();
 
             if (input.length() >= 4 || !input.contains(" ")) {
                 System.out.println(input);
