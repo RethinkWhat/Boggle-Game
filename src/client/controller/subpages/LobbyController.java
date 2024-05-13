@@ -42,8 +42,11 @@ public class LobbyController {
             BooleanHolder startLobby = new BooleanHolder(false);
             while (timerVal != 0) {
                 timerVal = model.getWfImpl().getCurrLobbyTimerValue(startLobby);
-                System.out.println("TIMER VALUE: " + timerVal);
-
+                String formattedTimer = String.format("%02d:%02d:%02d",
+                        (timerVal / 3600000) % 60,
+                        (timerVal / 60000) % 60,
+                        (timerVal / 1000) % 60);
+                System.out.println("TIMER VALUE: " + formattedTimer);
 
                 tempUsersInLobby = model.getUsersInLobby();
                 if (tempUsersInLobby.length != usersInLobby.length) {
@@ -52,8 +55,8 @@ public class LobbyController {
                     populateLobby(usersInLobby);
                 }
 
+                view.setLblTimerTxt(formattedTimer);
 
-                view.setLblTimerTxt("00:0" + timerVal / 1000);
             }
             if (startLobby.value) {
                 System.out.println("start lobby is valid");
@@ -65,6 +68,7 @@ public class LobbyController {
             } else {
                 parent.getView().showHome();
                 parent.playDefaultMusic();
+                parent.getView().showButtons();
             }
         } catch (Exception e) {
             e.printStackTrace();

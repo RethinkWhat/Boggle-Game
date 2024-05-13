@@ -220,6 +220,7 @@ public class GameRoomController {
 
                     }
                     parent.getView().showHome();
+                    parent.getView().showButtons();
 
                 } else {
                     CustomizedMessageDialog dialog;
@@ -279,10 +280,10 @@ public class GameRoomController {
                     sfxGoodInput();
                 }
             } else if (input.contains(" ")){
-            view.setErrorMessage("Input must only be a WORD!");
-            view.getTxtWordInput().setText("");
-            sfxBadInput();
-        } else {
+                view.setErrorMessage("Input must only be a WORD!");
+                view.getTxtWordInput().setText("");
+                sfxBadInput();
+            } else {
                 view.setErrorMessage("Input must be at least 4 CHARACTERS!");
                 view.getTxtWordInput().setText("");
                 sfxBadInput();
@@ -415,7 +416,7 @@ public class GameRoomController {
     private void sfxBadInput() {
         if (sfxOn) {
             try {
-               // sfxClip.stop();
+                // sfxClip.stop();
                 audioSoundStream = AudioSystem.getAudioInputStream(new File(badInput));
                 sfxClip = AudioSystem.getClip();
                 sfxClip.open(audioSoundStream);
@@ -432,7 +433,7 @@ public class GameRoomController {
     private void sfxGoodInput() {
         if (sfxOn) {
             try {
-             //   sfxClip.stop();
+                //   sfxClip.stop();
                 audioSoundStream = AudioSystem.getAudioInputStream(new File(goodInput));
                 sfxClip = AudioSystem.getClip();
                 sfxClip.open(audioSoundStream);
@@ -466,10 +467,10 @@ public class GameRoomController {
     private void sfxRoundOver() {
         if (sfxOn) {
             try {
-               // sfxClip.stop();
-               // audioSoundStream = AudioSystem.getAudioInputStream(new File(roundOver));
-               // sfxClip = AudioSystem.getClip();
-               // sfxClip.open(audioSoundStream);
+                // sfxClip.stop();
+                // audioSoundStream = AudioSystem.getAudioInputStream(new File(roundOver));
+                // sfxClip = AudioSystem.getClip();
+                // sfxClip.open(audioSoundStream);
                 //   sfxClip.start();
             } catch (Exception e) {
                 e.printStackTrace();
