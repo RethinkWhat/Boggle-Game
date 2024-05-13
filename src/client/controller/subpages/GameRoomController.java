@@ -224,13 +224,10 @@ public class GameRoomController {
                     sfxRoundOver();
                     if (model.getUsername().equals(usernameWinnerRound)) {
                         dialog = new CustomizedMessageDialog("Round Winner", style.iconWinner, "YOU WON THE ROUND!",
-                                "You had the most points this round.", "NEXT ROUND", style.deepSkyBlue,
-                                style.goldenTainoi, style.black, style.goldenTainoi, false);
+                                "You had the most points this round.", style.goldenTainoi, style.black, style.goldenTainoi);
                     } else {
                         dialog = new CustomizedMessageDialog("Round Done", style.iconWinner, "ROUND DONE",
-                                usernameWinnerRound + " had the most points this round.",
-                                "NEXT ROUND", style.deepSkyBlue, style.goldenTainoi, style.black,
-                                style.goldenTainoi, false);
+                                usernameWinnerRound + " had the most points this round.", style.goldenTainoi, style.black, style.goldenTainoi);
                     }
 
                     try {

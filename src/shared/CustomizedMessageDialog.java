@@ -53,6 +53,60 @@ public class CustomizedMessageDialog extends JDialog {
         createDialog();
     }
 
+    public CustomizedMessageDialog(String title, ImageIcon icon, String titleMessage, String message,  Color iconColor, Color textColor, Color titleMessageColor ) {
+        this.title = title;
+        this.icon = icon;
+        this.titleMessage = titleMessage;
+        this.message = message;
+        this.iconColor = iconColor;
+        this.textColor = textColor;
+        this.titleMessageColor = titleMessageColor;
+
+        createNoButtonDialog();
+    }
+
+
+
+    private void createNoButtonDialog() {
+        JFrame mainFrame = new JFrame();
+        JDialog dialog = new JDialog(mainFrame, title, true);
+        dialog.setTitle(title);
+        dialog.setLayout(new GridLayout(3, 1));
+        dialog.setSize(500, 300);
+
+        // Create pnlIcon panel
+        JPanel pnlIcon = new JPanel();
+        pnlIcon.setLayout(new BorderLayout());
+        pnlIcon.setPreferredSize(new Dimension(600, 200));
+
+        iconLabel = new JLabel(icon);
+        iconLabel.setForeground(iconColor);
+        pnlIcon.add(iconLabel, BorderLayout.CENTER);
+
+        // Create pnlMessage panel
+        JPanel pnlMessage = new JPanel(new GridBagLayout());
+        pnlMessage.setPreferredSize(new Dimension(600, 170));
+        lblBig = style.createLblH1(titleMessage, textColor);
+        lblSmall = style.createLblP(message, textColor);
+        lblBig.setForeground(titleMessageColor); // Set title message color
+        // Add labels to pnlServerClosed panel
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        pnlMessage.add(lblBig, gbc);
+
+        gbc.gridy = 1;
+        pnlMessage.add(lblSmall, gbc);
+
+        // Add panels to the dialog
+        dialog.add(pnlIcon);
+        dialog.add(pnlMessage);
+
+        dialog.setLocationRelativeTo(null);
+        dialog.setResizable(false);
+        dialog.setVisible(true);
+    }
+
     private void createDialog() {
         JFrame mainFrame = new JFrame();
         JDialog dialog = new JDialog(mainFrame, title, true);
