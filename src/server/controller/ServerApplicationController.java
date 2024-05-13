@@ -76,6 +76,7 @@ public class ServerApplicationController {
     }
 
     // Action listener for logging out
+    // Action listener for logging out
     class LogoutListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -90,7 +91,8 @@ public class ServerApplicationController {
                     style.red,
                     style.white,
                     style.black,
-                    style.red
+                    style.red,
+                    false
             );
         }
     }
