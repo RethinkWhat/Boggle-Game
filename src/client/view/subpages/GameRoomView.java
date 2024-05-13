@@ -181,6 +181,10 @@ public class GameRoomView extends JPanel {
         }
     }
 
+    public void setlblRoundNumber(String lblMsg) {
+        lblRoundNumber.setText(lblMsg);
+    }
+
     /**
      * Holds the player information.
      */

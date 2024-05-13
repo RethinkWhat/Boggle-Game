@@ -207,7 +207,7 @@ public class GameRoomController {
                         new CustomizedMessageDialog("Game Winner", style.iconWinner, "YOU WON!",
                                 "You have won the game.", "EXIT GAME", style.deepSkyBlue,
                                 style.goldenTainoi, style.black, style.goldenTainoi, false);
-                    } else {
+                    }else {
                         sfxLose();
                         CustomizedMessageDialog dialog = new CustomizedMessageDialog("Game Winner",
                                 style.iconWinner, "WE HAVE A WINNER!",
@@ -225,6 +225,9 @@ public class GameRoomController {
                     if (model.getUsername().equals(usernameWinnerRound)) {
                         dialog = new CustomizedMessageDialog("Round Winner", style.iconWinner, "YOU WON THE ROUND!",
                                 "You had the most points this round.", style.goldenTainoi, style.black, style.goldenTainoi, 10000);
+                    } else if (model.getUsername().equals("undecided")) {
+                        dialog = new CustomizedMessageDialog("Game Tied", style.iconWinner, "No one won the game.",
+                                "Next round will start momentarily.", style.goldenTainoi, style.black, style.goldenTainoi, 10000);
                     } else {
                         dialog = new CustomizedMessageDialog("Round Done", style.iconWinner, "ROUND DONE",
                                 usernameWinnerRound + " had the most points this round.", style.goldenTainoi, style.black, style.goldenTainoi, 10000);
@@ -237,6 +240,7 @@ public class GameRoomController {
                         model.setLetterList(model.getWfImpl().getLetters(model.getGameRoomID()));
                         System.out.println(model.getLetterList());
                         view.setRoundNumber(roundNumber++);
+                        view.setlblRoundNumber("Round " + roundNumber);
                         startNextRound();
                     } catch (Exception e) {
                         e.printStackTrace();

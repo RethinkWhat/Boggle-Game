@@ -786,26 +786,33 @@ public class DataPB {
 
     public static void updateRoundWinner(int gameID) {
         int roundID = getLatestRound(gameID);
-        String query = "SELECT username, points FROM round_details WHERE gameID = ? AND roundID = ? ORDER BY 2 DESC LIMIT 1";
+        String query = "SELECT username, points FROM round_details WHERE gameID = ? AND roundID = ? ORDER BY 2 DESC LIMIT 2";
         String winner = "";
+        ArrayList<String> winners = new ArrayList<>();
+        ArrayList<Integer> points = new ArrayList<>();
+
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, gameID);
             ps.setInt(2, roundID);
             ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                winner = rs.getString("username");
-                System.out.println("winnner under updateRoundWinner: " + winner);
+
+            while (rs.next()) {
+                winners.add(rs.getString("username"));
+                points.add(rs.getInt("points"));
             }
+
+            if (!points.get(0).equals(points.get(1))) {
+                assignRoundWinner(roundID, winners.get(0));
+            } else {
+                assignRoundWinner(roundID, "undecided");
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        if (winner != null) {
-            if (!winner.equals("")) {
-                System.out.println("WINNNER: " + winner);
-                assignRoundWinner(roundID, winner);
-            }
-        }
     }
+
+
 
 
 
@@ -844,7 +851,8 @@ public class DataPB {
                 if (rs2.next()) {
                     String winner = rs2.getString("winner");
                     if (winner != null)
-                        winners.add(rs2.getString("winner"));
+                        if (!winner.equals("undecided"))
+                            winners.add(rs2.getString("winner"));
                 }
             }
 
