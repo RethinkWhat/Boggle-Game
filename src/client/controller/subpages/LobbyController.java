@@ -57,10 +57,6 @@ public class LobbyController {
 
                 view.setLblTimerTxt(formattedTimer);
 
-                /**
-                 * added this, not sure if this fixes the bug regarding timer countdown
-                 */
-                Thread.sleep(1000);
             }
             if (startLobby.value) {
                 System.out.println("start lobby is valid");
