@@ -5,11 +5,13 @@ import client.controller.subpages.HomeController;
 import client.controller.subpages.HowToPlayController;
 import client.controller.subpages.SettingsController;
 import client.model.ClientApplicationModel;
+import client.model.LoginModel;
 import client.model.subpages.GameRoomModel;
 import client.model.subpages.HomeModel;
 import client.model.subpages.HowToPlayModel;
 import client.model.subpages.SettingsModel;
 import client.view.ClientApplicationView;
+import client.view.LoginView;
 import shared.ExitDialog;
 import shared.SwingResources;
 import shared.SwingStylesheet;
@@ -18,6 +20,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -76,6 +79,8 @@ public class ClientApplicationController {
      * The game music file path.
      */
     private String gameMusic = "res/audio/music/gameroom-music-v2.wav";
+
+    private ExitDialog exitDialog;
 
     /**
      * Constructs a ClientApplicationController with a specified view.
@@ -147,22 +152,35 @@ public class ClientApplicationController {
      * Logs the user out of the application.
      */
     class LogOutListener implements ActionListener {
+
         @Override
         public void actionPerformed(ActionEvent e) {
 
             SwingStylesheet style = new SwingStylesheet();
-            ExitDialog exitDialog = new ExitDialog(
+            exitDialog = new ExitDialog(
                     "Exit Confirmation",
                     new ImageIcon("res/drawable/icons/alert-red-solid.png"),
                     "EXIT CONFIRMATION",
                     "Are you sure you want to exit the game?.",
-                    "EXIT",
+                    "Logout",
                     style.red,
                     style.white,
                     style.black,
-                    style.red
+                    style.red,
+                    true
+                    
             );
+            exitDialog.setBtnExitListener(j -> logout());
         }
+    }
+
+    public void logout() {
+        System.out.println("reached logout");
+        view.dispose();
+        exitDialog.exit();
+        stopMusic();
+        model.getWfImpl().logout(getModel().getUsername());
+        new LoginController(new LoginView(), new LoginModel(model.getWfImpl()));
     }
 
     /**
@@ -250,5 +268,9 @@ public class ClientApplicationController {
      */
     public Clip getMusicClip() {
         return musicClip;
+    }
+
+    public void exit() {
+        exitDialog.exit();
     }
 }
