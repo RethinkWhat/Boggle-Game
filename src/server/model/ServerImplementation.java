@@ -119,8 +119,10 @@ public class ServerImplementation extends BoggleClientPOA {
 
         String letters = createRandomLetterSet();
         int roundID = DataPB.createRound(letters);
+        int roundNumber = DataPB.getLatestRoundNumber(gameRoomID) + 1;
+        System.out.println("CREATING ROUND DETAILS IN JOIN GAME ROOM");
         for (String player : players) {
-            DataPB.createRoundDetails(gameRoomID,roundID, 1, player);
+            DataPB.createRoundDetails(gameRoomID,roundID, roundNumber, player);
         }
 
         System.out.println(gameRoomID + " " + roundID);
@@ -176,7 +178,7 @@ public class ServerImplementation extends BoggleClientPOA {
      * @return
      */
     @Override
-    public synchronized String getRoundWinner(int gameID) {
+    public String getRoundWinner(int gameID) {
         return DataPB.getWinnerOfLatestRound(gameID);
     }
 
@@ -189,12 +191,12 @@ public class ServerImplementation extends BoggleClientPOA {
             System.out.println("NEW ROUND ID: " + roundID);
             ArrayList<String> players = DataPB.getPlayersInGame(gameID);
             System.out.println("PLAYERS IN GAME: " + players);
+            int roundNumber = DataPB.getLatestRoundNumber(gameID) + 1;
             for (String player : players) {
-                DataPB.createRoundDetails(gameID, roundID, DataPB.getLatestRoundNumber(gameID), player);
+                DataPB.createRoundDetails(gameID, roundID, roundNumber, player);
             }
         }
     }
-
     /**
      * Method to get the overall winner of a GAME if there is any. Otherwise, the method returns undecided.
      * Call this method after every round to check if there is already an overall winner.

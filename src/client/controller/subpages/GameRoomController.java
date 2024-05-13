@@ -191,13 +191,12 @@ public class GameRoomController {
 
                 model.sendUserWordList();
                 try {
-                    Thread.sleep(3000);
+                    Thread.sleep(6000);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
 
-                System.out.println("SENDING GAME ROOM ID: " + model.getGameRoomID());
                 String usernameWinnerRound = model.getWfImpl().getRoundWinner(model.getGameRoomID()); // TODO: BASTI model.getWfImpl().getRoundWinner(model.getGameRoomID());
                 String usernameWinnerGame = model.getWfImpl().getOverallWinner(model.getGameRoomID()); //TODO: BASTI method to populate db with who the winner is
                 System.out.println("GAME WINNER: " + usernameWinnerGame);

@@ -546,9 +546,15 @@ public class DataPB {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        System.out.println(winner);
         return winner;
     }
+
+    public static void main(String[] args) {
+        DataPB.setCon();
+        String w = DataPB.getWinnerOfLatestRound(161);
+        System.out.println(w);
+    }
+
 
 
     /**

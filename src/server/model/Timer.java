@@ -31,12 +31,13 @@ public class Timer implements Runnable {
             ServerImplementation.solveRoundPoints(id);
             Thread.sleep(1000L);
             DataPB.updateRoundWinner(id);
+            Thread.sleep(1000L);
+            ServerImplementation.defineNextRound(id);
+            ServerImplementation.startTimerForRound(id);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-        ServerImplementation.defineNextRound(id);
-        ServerImplementation.startTimerForRound(id);
     }
 
 
