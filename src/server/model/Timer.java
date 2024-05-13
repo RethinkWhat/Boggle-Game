@@ -18,7 +18,7 @@ public class Timer implements Runnable {
     @Override
     public void run() {
         currTimerValue = timerDuration;
-        while(currTimerValue > 0L) {
+        while (currTimerValue > 0L) {
             try {
                 Thread.sleep(1000L);
                 currTimerValue -= 1000L;
@@ -29,10 +29,16 @@ public class Timer implements Runnable {
         try {
             Thread.sleep(2000L);
             ServerImplementation.solveRoundPoints(id);
+            Thread.sleep(2000L);
             DataPB.updateRoundWinner(id);
-            Thread.sleep(10000L);
-            ServerImplementation.defineNextRound(id);
-            ServerImplementation.startTimerForRound(id);
+            String gameWinner = DataPB.checkGameWinner(id);
+            if (gameWinner.equals("undecided")) {
+                Thread.sleep(10000L);
+                ServerImplementation.defineNextRound(id);
+                ServerImplementation.startTimerForRound(id);
+            } else {
+                DataPB.updateGameWinner(id, gameWinner);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();

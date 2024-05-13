@@ -485,12 +485,13 @@ public class DataPB {
      */
     public static ResultSet getUsersWordlists(int gameID) {
         ResultSet resultSet = null;
+        int roundID = DataPB.getLatestRound(gameID);
         try {
             String query = "SELECT username, words FROM round_details " +
-                    "WHERE gameID = ? AND roundNumber = (SELECT MAX(roundNumber) FROM round_details WHERE gameID = ?)";
+                    "WHERE gameID = ? AND roundID = ?";
             PreparedStatement preparedStatement = con.prepareStatement(query);
             preparedStatement.setInt(1, gameID);
-            preparedStatement.setInt(2, gameID);
+            preparedStatement.setInt(2, roundID);
             resultSet = preparedStatement.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -508,12 +509,14 @@ public class DataPB {
      */
     public static void addUserWordList(String username, int gameID, String[] wordList) {
         try {
-            String query = "UPDATE round_details SET words = ? WHERE gameID = ? AND username = ?";
+            int latestRound = DataPB.getLatestRound(gameID);
+            String query = "UPDATE round_details SET words = ? WHERE gameID = ? AND username = ? AND roundID = ?";
             PreparedStatement ps = con.prepareStatement(query);
             String words = String.join(",", wordList);
             ps.setString(1, words);
             ps.setInt(2, gameID);
             ps.setString(3, username);
+            ps.setInt(4, latestRound);
 
             ps.executeUpdate();
         } catch (SQLException sqle) {
@@ -547,12 +550,6 @@ public class DataPB {
             e.printStackTrace();
         }
         return winner;
-    }
-
-    public static void main(String[] args) {
-        DataPB.setCon();
-        String w = DataPB.getWinnerOfLatestRound(161);
-        System.out.println(w);
     }
 
 
@@ -789,7 +786,7 @@ public class DataPB {
 
     public static void updateRoundWinner(int gameID) {
         int roundID = getLatestRound(gameID);
-        String query = "SELECT username, MAX(points) AS maxPoints FROM round_details WHERE gameID = ? AND roundID = ?";
+        String query = "SELECT username, points FROM round_details WHERE gameID = ? AND roundID = ? ORDER BY 2 DESC LIMIT 1";
         String winner = "";
         try (PreparedStatement ps = con.prepareStatement(query)) {
             ps.setInt(1, gameID);
@@ -797,6 +794,7 @@ public class DataPB {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 winner = rs.getString("username");
+                System.out.println("winnner under updateRoundWinner: " + winner);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -825,8 +823,9 @@ public class DataPB {
     public static String checkGameWinner(int gameID) {
         ArrayList<Integer> roundIDList = new ArrayList<>();
         ArrayList<String> winners = new ArrayList<>();
+
         try {
-            String q = "SELECT roundID FROM round_details WHERE gameID = ?";
+            String q = "SELECT DISTINCT roundID FROM round_details WHERE gameID = ?";
             PreparedStatement ps = con.prepareStatement(q);
             ps.setInt(1, gameID);
             ResultSet rs = ps.executeQuery();
@@ -836,7 +835,7 @@ public class DataPB {
             }
 
             for (int id : roundIDList) {
-                System.out.println(id);
+                System.out.println("ID LIST: " + id);
                 String q2 = "SELECT winner FROM round WHERE roundID = ?";
                 PreparedStatement ps2 = con.prepareStatement(q2);
                 ps2.setInt(1, id);
@@ -868,38 +867,28 @@ public class DataPB {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
-
-        /*
-        try {
-            String query = "SELECT username, MAX(points) AS maxPoints " +
-                    "FROM round_details " +
-                    "WHERE gameID = ? " +
-                    "GROUP BY username " +
-                    "ORDER BY maxPoints DESC " +
-                    "LIMIT 1";
-            PreparedStatement ps = con.prepareStatement(query);
-            ps.setInt(1, gameID);
-            ResultSet rs = ps.executeQuery();
-
-            if (rs.next()) {
-                String topPlayer = rs.getString("username");
-                int maxPoints = rs.getInt("maxPoints");
-
-                if (maxPoints == 3) {
-                    winner = topPlayer;
-                    assignGameWinner(gameID, winner);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-         */
         return "undecided";
     }
+
+    public static void updateGameWinner(int gameID, String winner) {
+        try {
+            String q = "UPDATE game (winner) VALUES(?) WHERE gameID = ?";
+            PreparedStatement ps = con.prepareStatement(q);
+            ps.setString(1, winner);
+            ps.setInt(2, gameID);
+            ps.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+
+    public static void main(String[] args) {
+        DataPB.setCon();
+        String w = DataPB.checkGameWinner(27);
+        System.out.println(w);
+    }
+
 
 
     public static void assignGameWinner(int gameID, String winner) {

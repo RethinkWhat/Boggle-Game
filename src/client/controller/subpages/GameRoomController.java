@@ -191,7 +191,7 @@ public class GameRoomController {
 
                 model.sendUserWordList();
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(5000);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -224,10 +224,10 @@ public class GameRoomController {
                     sfxRoundOver();
                     if (model.getUsername().equals(usernameWinnerRound)) {
                         dialog = new CustomizedMessageDialog("Round Winner", style.iconWinner, "YOU WON THE ROUND!",
-                                "You had the most points this round.", style.goldenTainoi, style.black, style.goldenTainoi);
+                                "You had the most points this round.", style.goldenTainoi, style.black, style.goldenTainoi, 10000);
                     } else {
                         dialog = new CustomizedMessageDialog("Round Done", style.iconWinner, "ROUND DONE",
-                                usernameWinnerRound + " had the most points this round.", style.goldenTainoi, style.black, style.goldenTainoi);
+                                usernameWinnerRound + " had the most points this round.", style.goldenTainoi, style.black, style.goldenTainoi, 10000);
                     }
 
                     try {

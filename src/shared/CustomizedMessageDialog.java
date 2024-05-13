@@ -2,6 +2,7 @@ package shared;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 /**
@@ -24,7 +25,6 @@ public class CustomizedMessageDialog extends JDialog {
     private SwingStylesheet style = new SwingStylesheet();
 
     private boolean exitProgram;
-
     /**
      * Constructs a CustomizedMessageDialog with customizable content.
      *
@@ -53,7 +53,7 @@ public class CustomizedMessageDialog extends JDialog {
         createDialog();
     }
 
-    public CustomizedMessageDialog(String title, ImageIcon icon, String titleMessage, String message,  Color iconColor, Color textColor, Color titleMessageColor ) {
+    public CustomizedMessageDialog(String title, ImageIcon icon, String titleMessage, String message,  Color iconColor, Color textColor, Color titleMessageColor, int duration ) {
         this.title = title;
         this.icon = icon;
         this.titleMessage = titleMessage;
@@ -62,12 +62,11 @@ public class CustomizedMessageDialog extends JDialog {
         this.textColor = textColor;
         this.titleMessageColor = titleMessageColor;
 
-        createNoButtonDialog();
+        createNoButtonDialog(duration);
     }
 
 
-
-    private void createNoButtonDialog() {
+    private void createNoButtonDialog(int duration) {
         JFrame mainFrame = new JFrame();
         JDialog dialog = new JDialog(mainFrame, title, true);
         dialog.setTitle(title);
@@ -82,7 +81,6 @@ public class CustomizedMessageDialog extends JDialog {
         iconLabel = new JLabel(icon);
         iconLabel.setForeground(iconColor);
         pnlIcon.add(iconLabel, BorderLayout.CENTER);
-
         // Create pnlMessage panel
         JPanel pnlMessage = new JPanel(new GridBagLayout());
         pnlMessage.setPreferredSize(new Dimension(600, 170));

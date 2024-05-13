@@ -112,7 +112,7 @@ public class ServerImplementation extends BoggleClientPOA {
      * @param players
      * @return
      */
-    private void joinGameRoom(ArrayList<String> players) {
+    private synchronized void joinGameRoom(ArrayList<String> players) {
 
         int gameRoomID =  DataPB.createGameRoom(new Time(roundDuration));
         System.out.println("created game room " + gameRoomID);
@@ -426,6 +426,11 @@ public class ServerImplementation extends BoggleClientPOA {
         System.out.println("reached solve round points method");
         Map<String, List<String>> uncleanedUserWordMapList = getUsersWordlists(gameID);
 
+
+        for (String key : uncleanedUserWordMapList.keySet()) {
+            System.out.println("uncleaned user word list: ");
+            System.out.println(key+ ": " + uncleanedUserWordMapList.get(key));
+        }
         Map<String, List<String>> cleanedUserWordMapList = compareAllWordLists(uncleanedUserWordMapList);
 
         for (String user : cleanedUserWordMapList.keySet()) {
@@ -433,9 +438,7 @@ public class ServerImplementation extends BoggleClientPOA {
         }
             System.out.println("for looping");
             for (String username : cleanedUserWordMapList.keySet()) {
-                int prevScore = DataPB.getUserRoundPoints(gameID, username);
-                System.out.println(username + " previous score: " + prevScore);
-                int currentTotalScore = computeTotalScore(cleanedUserWordMapList.get(username)) + prevScore;
+                int currentTotalScore = computeTotalScore(cleanedUserWordMapList.get(username));
                 System.out.println("total score: " + currentTotalScore);
                 System.out.println("updating user points");
                 DataPB.updatePoints(gameID, currentTotalScore, username);
