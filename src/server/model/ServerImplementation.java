@@ -275,7 +275,7 @@ public class ServerImplementation extends BoggleClientPOA {
 
     @Override
     public void logout(String username) {
-        //TODO: Basti
+        loggedIn.remove(username);
     }
 
     /**

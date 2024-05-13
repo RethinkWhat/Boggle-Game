@@ -156,12 +156,14 @@ public class ClientApplicationController {
                     new ImageIcon("res/drawable/icons/alert-red-solid.png"),
                     "EXIT CONFIRMATION",
                     "Are you sure you want to exit the game?.",
-                    "EXIT",
+                    "Cancel",
                     style.red,
                     style.white,
                     style.black,
                     style.red
             );
+            model.getWfImpl().logout(getModel().getUsername());
+            view.dispose();
         }
     }
 
