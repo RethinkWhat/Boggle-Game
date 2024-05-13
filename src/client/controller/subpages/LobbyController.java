@@ -8,44 +8,47 @@ import client.view.ClientApplicationView;
 import client.view.subpages.LobbyView;
 import org.omg.CORBA.BooleanHolder;
 
+import javax.swing.*;
+
 public class LobbyController {
 
     private LobbyModel model;
     private LobbyView view;
 
     private ClientApplicationController parent;
+    private volatile boolean lobbyTimerRunning = true;
+
 
     public LobbyController(LobbyModel lobbyModel, LobbyView lobbyView, ClientApplicationController parent) {
         this.model = lobbyModel;
         this.view = lobbyView;
         this.parent = parent;
 
-        Thread nT = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                timer();
-            }
-        });
-        nT.start();
+        startTimer();
     }
 
     public void timer() {
-        view.setLblTimerTxt("00:" + 10000 / 1000);
+        view.setLblTimerTxt("00:00");
         long timerVal = -1;
         LobbyUser[] usersInLobby;
         LobbyUser[] tempUsersInLobby;
+
         try {
             model.getWfImpl().attemptJoin(model.getUsername());
             usersInLobby = model.getUsersInLobby();
             populateLobby(usersInLobby);
 
             BooleanHolder startLobby = new BooleanHolder(false);
-            while (timerVal != 0) {
+
+            while (lobbyTimerRunning && timerVal != 0) {
                 timerVal = model.getWfImpl().getCurrLobbyTimerValue(startLobby);
                 String formattedTimer = String.format("%02d:%02d:%02d",
                         (timerVal / 3600000) % 60,
                         (timerVal / 60000) % 60,
                         (timerVal / 1000) % 60);
+
+                SwingUtilities.invokeLater(() -> view.setLblTimerTxt(formattedTimer));
+
                 System.out.println("TIMER VALUE: " + formattedTimer);
 
                 tempUsersInLobby = model.getUsersInLobby();
@@ -55,9 +58,9 @@ public class LobbyController {
                     populateLobby(usersInLobby);
                 }
 
-                view.setLblTimerTxt(formattedTimer);
-
+                Thread.sleep(1000);
             }
+
             if (startLobby.value) {
                 System.out.println("start lobby is valid");
                 parent.getView().showGameRoom();
@@ -73,6 +76,16 @@ public class LobbyController {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void startTimer() {
+        lobbyTimerRunning = true;
+        Thread nT = new Thread(this::timer);
+        nT.start();
+    }
+
+    public void stopTimer() {
+        lobbyTimerRunning = false;
     }
 
     public void populateLobby(LobbyUser[] users) {
