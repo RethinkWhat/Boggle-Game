@@ -135,7 +135,7 @@ public class PlayersController {
                 CustomizedMessageDialog playerCreated = new CustomizedMessageDialog(
                         "Player Created",
                         new ImageIcon("res/drawable/icons/success-tainoi-solid.png"),
-                        "PLAYER REMOVED",
+                        "PLAYER CREATED",
                         "You have successfully created an account for this player.",
                         "CLOSE",
                         style.deepSkyBlue,
