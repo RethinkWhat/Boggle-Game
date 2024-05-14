@@ -52,8 +52,10 @@ public class LobbyController {
 
             BooleanHolder startLobby = new BooleanHolder(false);
             while (timerVal != 0) {
-                if (exitLobby)
+                if (exitLobby) {
+                    startLobby.value = false;
                     break;
+                }
                 timerVal = model.getWfImpl().getCurrLobbyTimerValue(startLobby);
                 String formattedTimer = String.format("%02d:%02d:%02d",
                         (timerVal / 3600000) % 60,

@@ -371,21 +371,17 @@ public class ServerImplementation extends BoggleClientPOA {
                         lobbyTimerStarted = false;
                     currLobbyTimerValue = lobbyTimerValue;
                     break;
-                }catch (Exception var2) {
+                } catch (Exception var2) {
                     var2.printStackTrace();
                 }
             }
-            System.out.println(currLobby);
-            if (currLobby.size() > 1) {
-                System.out.println("joining game room.");
-                joinGameRoom(currLobby);
-                try {
-                    Thread.sleep(1000);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
             try {
+                System.out.println("CURR LOBBY: " + currLobby);
+                if (currLobby.size() > 1) {
+                    System.out.println("joining game room.");
+                    joinGameRoom(currLobby);
+                    Thread.sleep(1000);
+                }
                 Thread.sleep(1000L);
                 currLobby = new ArrayList<>();
                 lobbyTimerStarted = false;
@@ -394,7 +390,7 @@ public class ServerImplementation extends BoggleClientPOA {
                 e.printStackTrace();
             }
         };
-        timerThread =  new Thread(t);
+        timerThread = new Thread(t);
         timerThread.start();
     }
 
