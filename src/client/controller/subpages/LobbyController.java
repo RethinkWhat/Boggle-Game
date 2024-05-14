@@ -10,6 +10,7 @@ import org.omg.CORBA.BooleanHolder;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.channels.ClosedByInterruptException;
 
 public class LobbyController {
 
@@ -83,7 +84,14 @@ public class LobbyController {
                 parent.getView().showButtons();
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            timerThread.interrupt();
+            exitLobby = true;
+            model.getWfImpl().exitLobby(model.getUsername());
+            parent.getView().showHome();
+            parent.getView().setNavLocationText("Home");
+            parent.getView().showButtons();
+            parent.stopMusic();
+            parent.playDefaultMusic();
         }
     }
 

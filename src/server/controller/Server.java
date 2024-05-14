@@ -56,6 +56,9 @@ public class Server{
             this.ref = rootpoa.servant_to_reference(this.serverImpl);
             this.href = BoggleClientHelper.narrow(this.ref);
 
+            String p = orb.object_to_string(ref);
+            System.out.println(p);
+
             this.objRef = orb.resolve_initial_references("NameService");
 
             this.ncRef = NamingContextExtHelper.narrow(objRef);
