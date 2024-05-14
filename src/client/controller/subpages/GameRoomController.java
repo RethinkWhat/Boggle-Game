@@ -171,6 +171,7 @@ public class GameRoomController {
                             });
                         }
                     }
+                    inSeconds = (int) model.getWfImpl().getGameDurationVal(model.getGameRoomID()) / 1000;
                     view.setLblTimerTxt(inSeconds);
                     Thread.sleep(1000);
                 } catch (Exception e) {
@@ -184,17 +185,21 @@ public class GameRoomController {
 
 
                 model.sendUserWordList();
+                String usernameWinnerRound = "";
+                String usernameWinnerGame = "";
                 try {
                     Thread.sleep(5000);
+                    usernameWinnerRound = model.getWfImpl().getRoundWinner(model.getGameRoomID());
+                    usernameWinnerGame = model.getWfImpl().getOverallWinner(model.getGameRoomID());
+                    populateLeaderboard();
+                    Thread.sleep(1000);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
 
 
-                String usernameWinnerRound = model.getWfImpl().getRoundWinner(model.getGameRoomID());
-                String usernameWinnerGame = model.getWfImpl().getOverallWinner(model.getGameRoomID());
+
                 System.out.println("GAME WINNER: " + usernameWinnerGame);
-                populateLeaderboard();
 
                 // displays dialog messages and plays respective sfx.
                 if (!usernameWinnerGame.equals("undecided")) {
