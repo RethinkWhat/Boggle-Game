@@ -263,6 +263,8 @@ public class GameRoomController {
             view.addPlayerInLeaderboard(userInfo.username, userInfo.pfpAddress,
                     userInfo.points);
         }
+        view.revalidate();
+        view.repaint();
     }
 
     public void endRound() {
