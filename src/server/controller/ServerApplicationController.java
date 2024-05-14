@@ -3,6 +3,7 @@ package server.controller;
 import server.controller.subpages.GameSettingsController;
 import server.controller.subpages.PlayersController;
 import server.model.ServerApplicationModel;
+import server.model.ServerImplementation;
 import server.model.subpages.GameSettingsModel;
 import server.model.subpages.PlayersModel;
 import server.view.ServerApplicationView;
@@ -20,7 +21,7 @@ public class ServerApplicationController {
 
     private ServerApplicationModel model;
     private PlayersController playersController;
-
+    private ServerImplementation serImpl;
     private Server server;
     private String[] args = {"-ORBInitialPort", "1500", "-ORBInitialHost", "100.84.168.124"};//change as needed
 
@@ -28,6 +29,7 @@ public class ServerApplicationController {
         this.view = view;
         this.model = model;
         this.server = new Server();
+        //System.out.println("This come later");
 
         view.getPlayersView().hideAddPlayerPanel();
 
