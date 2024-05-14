@@ -132,6 +132,7 @@ public class GameRoomController {
         view.repaint();
 
         startNextRound();
+        populateLeaderboard();
     }
 
     /**
@@ -193,6 +194,7 @@ public class GameRoomController {
                 String usernameWinnerRound = model.getWfImpl().getRoundWinner(model.getGameRoomID());
                 String usernameWinnerGame = model.getWfImpl().getOverallWinner(model.getGameRoomID());
                 System.out.println("GAME WINNER: " + usernameWinnerGame);
+                populateLeaderboard();
                 // displays dialog messages and plays respective sfx.
                 if (!usernameWinnerGame.equals("undecided")) {
                     if (model.getUsername().equals(usernameWinnerGame)) {
@@ -212,8 +214,6 @@ public class GameRoomController {
                     }
                     parent.getView().showHome();
                     parent.getView().showButtons();
-                    populateLeaderboard();
-
                 } else {
                     CustomizedMessageDialog dialog;
                     sfxRoundOver();
