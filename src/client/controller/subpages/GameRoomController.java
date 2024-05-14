@@ -140,15 +140,6 @@ public class GameRoomController {
     private void startNextRound() {
         Thread timer = new Thread(gameTimer());
         timer.start();
-
-
-        currGameLeaderboard = Arrays.asList(model.getWfImpl().getCurrGameLeaderboard(model.getGameRoomID()));
-        view.removeAllInLeaderboard();
-        for (userInfo userInfo : currGameLeaderboard) {
-            view.addPlayerInLeaderboard(userInfo.username, userInfo.pfpAddress,
-                    userInfo.points);
-        }
-
     }
 
 
@@ -216,11 +207,12 @@ public class GameRoomController {
                                 usernameWinnerGame + " has won the game.", "EXIT GAME",
                                 style.deepSkyBlue, style.goldenTainoi, style.black,
                                 style.goldenTainoi, false);
-                        dialog.setBtnDialogListener(e -> parent.getView().getCardLayout().show(parent.getView().getPnlCards(), "home"));
+                        dialog.setBtnDialogListener(e -> endRound());
 
                     }
                     parent.getView().showHome();
                     parent.getView().showButtons();
+                    populateLeaderboard();
 
                 } else {
                     CustomizedMessageDialog dialog;
@@ -255,6 +247,20 @@ public class GameRoomController {
             }
         };
         return toReturn;
+    }
+
+    public void populateLeaderboard() {
+        currGameLeaderboard = Arrays.asList(model.getWfImpl().getCurrGameLeaderboard(model.getGameRoomID()));
+        view.removeAllInLeaderboard();
+        for (userInfo userInfo : currGameLeaderboard) {
+            view.addPlayerInLeaderboard(userInfo.username, userInfo.pfpAddress,
+                    userInfo.points);
+        }
+    }
+
+    public void endRound() {
+        parent.getView().getCardLayout().show(parent.getView().getPnlCards(), "home");
+        parent.getHomeController().populateLeaderboard();
     }
 
     /**

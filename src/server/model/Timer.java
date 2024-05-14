@@ -27,7 +27,7 @@ public class Timer implements Runnable {
             }
         }
         try {
-            Thread.sleep(2000L);
+            Thread.sleep(3000L);
             ServerImplementation.solveRoundPoints(id);
             Thread.sleep(2000L);
             DataPB.updateRoundWinner(id);

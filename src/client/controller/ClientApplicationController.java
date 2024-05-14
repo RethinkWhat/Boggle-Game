@@ -231,6 +231,10 @@ public class ClientApplicationController {
         }
     }
 
+    public HomeController getHomeController() {
+        return homeController;
+    }
+
     /**
      * Stops the current music.
      */

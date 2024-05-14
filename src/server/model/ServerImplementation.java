@@ -456,6 +456,7 @@ public class ServerImplementation extends BoggleClientPOA {
                 System.out.println("total score: " + currentTotalScore);
                 System.out.println("updating user points");
                 DataPB.updatePoints(gameID, currentTotalScore, username);
+                DataPB.updatePlayerPoints(username, currentTotalScore);
             }
     }
 
