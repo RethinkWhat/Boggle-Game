@@ -756,7 +756,7 @@ public class GameRoomView extends JPanel {
         SwingUtilities.invokeLater(() -> txaPlayerInputs.append(username + ": " + input + "\n"));
     }
     public void clearUserInputList() {
-        txaPlayerInputs.removeAll();
+        txaPlayerInputs.setText("");
         repaint();
         revalidate();
     }
