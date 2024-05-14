@@ -8,6 +8,9 @@ import client.view.ClientApplicationView;
 import client.view.subpages.LobbyView;
 import org.omg.CORBA.BooleanHolder;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 public class LobbyController {
 
     private LobbyModel model;
@@ -15,18 +18,24 @@ public class LobbyController {
 
     private ClientApplicationController parent;
 
+    Thread timerThread;
+
+    private boolean exitLobby;
+
     public LobbyController(LobbyModel lobbyModel, LobbyView lobbyView, ClientApplicationController parent) {
         this.model = lobbyModel;
         this.view = lobbyView;
         this.parent = parent;
 
-        Thread nT = new Thread(new Runnable() {
+        timerThread = new Thread(new Runnable() {
             @Override
             public void run() {
                 timer();
             }
         });
-        nT.start();
+        timerThread.start();
+
+        view.setExitLobbyListener(new ExitListener());
     }
 
     public void timer() {
@@ -34,6 +43,7 @@ public class LobbyController {
         long timerVal = -1;
         LobbyUser[] usersInLobby;
         LobbyUser[] tempUsersInLobby;
+        exitLobby = false;
         try {
             model.getWfImpl().attemptJoin(model.getUsername());
             usersInLobby = model.getUsersInLobby();
@@ -41,6 +51,8 @@ public class LobbyController {
 
             BooleanHolder startLobby = new BooleanHolder(false);
             while (timerVal != 0) {
+                if (exitLobby)
+                    break;
                 timerVal = model.getWfImpl().getCurrLobbyTimerValue(startLobby);
                 String formattedTimer = String.format("%02d:%02d:%02d",
                         (timerVal / 3600000) % 60,
@@ -79,6 +91,21 @@ public class LobbyController {
         view.removePlayersInUserPanel();
         for (LobbyUser user : users) {
             view.addPlayerInUserPanel(user.pfpAddress, user.username);
+        }
+    }
+
+    public class ExitListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            timerThread.interrupt();
+            exitLobby = true;
+            model.getWfImpl().exitLobby(model.getUsername());
+            parent.getView().showHome();
+            parent.getView().setNavLocationText("Home");
+            parent.getView().showButtons();
+            parent.stopMusic();
+            parent.playDefaultMusic();
+
         }
     }
 }

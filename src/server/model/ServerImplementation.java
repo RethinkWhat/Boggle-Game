@@ -32,6 +32,8 @@ public class ServerImplementation extends BoggleClientPOA {
 
     private Thread timerThread;
 
+    private boolean lobbyTimerStarted = false;
+
     /**
      * Default constructor for server implementation object
      */
@@ -64,11 +66,11 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     public synchronized void attemptJoin(String username) {
         System.out.println("attempting join");
-        if (currLobbyTimerValue == lobbyTimerValue) {
+        currLobby.add(username);
+        if (!lobbyTimerStarted) {
             System.out.println("starting lobby");
             startLobbyTime();
         }
-        currLobby.add(username);
     }
 
     /**
@@ -267,8 +269,10 @@ public class ServerImplementation extends BoggleClientPOA {
     @Override
     public void exitLobby(String username) {
         currLobby.remove(username);
-        if (currLobby.size() == 0) {
+        System.out.println(currLobby);
+        if (currLobby.isEmpty()) {
             currLobbyTimerValue = lobbyTimerValue;
+            System.out.println("reached");
             timerThread.interrupt();
         }
     }
@@ -354,16 +358,25 @@ public class ServerImplementation extends BoggleClientPOA {
     /** PRIVATE Methods */
 
     private void startLobbyTime() {
+        System.out.println("starting lobby timer");
+        lobbyTimerStarted = true;
         Runnable t = () -> {
             while (currLobbyTimerValue > 0L) {
                 try {
+                    System.out.println(currLobbyTimerValue);
                     Thread.sleep(1000L);
                     currLobbyTimerValue -= 1000L;
-                } catch (Exception var2) {
+                } catch (InterruptedException e) {
+                    if (currLobby.isEmpty())
+                        lobbyTimerStarted = false;
+                    currLobbyTimerValue = lobbyTimerValue;
+                    break;
+                }catch (Exception var2) {
                     var2.printStackTrace();
                 }
             }
-            if (currLobby.size() > 0) {
+            System.out.println(currLobby);
+            if (currLobby.size() > 1) {
                 System.out.println("joining game room.");
                 joinGameRoom(currLobby);
                 try {
@@ -371,8 +384,14 @@ public class ServerImplementation extends BoggleClientPOA {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+            }
+            try {
+                Thread.sleep(1000L);
                 currLobby = new ArrayList<>();
+                lobbyTimerStarted = false;
                 currLobbyTimerValue = lobbyTimerValue;
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         };
         timerThread =  new Thread(t);

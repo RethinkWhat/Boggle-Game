@@ -111,10 +111,11 @@ public class HomeController {
                         parent.getView().getLobbyView(), parent);
                 System.out.println("new lobby created\n");
 
+                /*
                 parent.getView().getLobbyView().setExitLobbyListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent e) {
-//                      parent.getModel().getWfImpl().exitGameRoom(model.getUsername());
+                      parent.getModel().getWfImpl().exitLobby(model.getUsername());
                         parent.getView().showHome();
                         parent.getView().setNavLocationText("Home");
                         parent.getView().showButtons();
@@ -122,6 +123,8 @@ public class HomeController {
                         parent.playDefaultMusic();
                     }
                 });
+
+                 */
             });
         }
     }
