@@ -238,6 +238,7 @@ public class GameRoomController {
                         System.out.println(model.getLetterList());
                         view.setRoundNumber(roundNumber++);
                         view.setlblRoundNumber("Round " + roundNumber);
+                        view.clearUserInputList();
                         startNextRound();
                     } catch (Exception e) {
                         e.printStackTrace();

@@ -755,7 +755,11 @@ public class GameRoomView extends JPanel {
     public void addUserInput(String username, String input) {
         SwingUtilities.invokeLater(() -> txaPlayerInputs.append(username + ": " + input + "\n"));
     }
-
+    public void clearUserInputList() {
+        txaPlayerInputs.removeAll();
+        repaint();
+        revalidate();
+    }
     /**
      * Sets a specified value of prgTimer.
      *
