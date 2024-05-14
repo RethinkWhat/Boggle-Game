@@ -195,6 +195,7 @@ public class GameRoomController {
                 String usernameWinnerGame = model.getWfImpl().getOverallWinner(model.getGameRoomID());
                 System.out.println("GAME WINNER: " + usernameWinnerGame);
                 populateLeaderboard();
+
                 // displays dialog messages and plays respective sfx.
                 if (!usernameWinnerGame.equals("undecided")) {
                     if (model.getUsername().equals(usernameWinnerGame)) {
