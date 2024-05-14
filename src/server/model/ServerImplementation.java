@@ -3,7 +3,6 @@ package server.model;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.sql.Time;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -386,7 +385,7 @@ public class ServerImplementation extends BoggleClientPOA {
                 currLobby = new ArrayList<>();
                 lobbyTimerStarted = false;
                 currLobbyTimerValue = lobbyTimerValue;
-            } catch (Exception e) {
+            } catch (InterruptedException ignored) {} catch (Exception e) {
                 e.printStackTrace();
             }
         };
