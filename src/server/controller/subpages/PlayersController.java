@@ -149,15 +149,15 @@ public class PlayersController {
                     System.out.println("Player adding failed!");
                     SwingStylesheet style = new SwingStylesheet();
                     CustomizedMessageDialog playerCreated = new CustomizedMessageDialog(
-                            "Player Existed",
-                            new ImageIcon("res/drawable/icons/koyuki.jpg"),
-                            "PLAYER EXISTED",
-                            "Player already existed, cancelling account creation.",
-                            "okay",
+                            "Player Exists",
+                            new ImageIcon("res/drawable/icons/error-red-solid.png"),
+                            "PLAYER EXISTS",
+                            "Player already exists. Enter a new player name.",
+                            "OKAY",
                             style.deepSkyBlue,
-                            style.goldenTainoi,
+                            style.red,
                             style.black,
-                            style.goldenTainoi,
+                            style.red,
                             false
                     );
                 }

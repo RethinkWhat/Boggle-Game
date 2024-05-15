@@ -208,13 +208,12 @@ public class GameSettingsView extends JPanel {
             sveChanges.setPreferredSize(new Dimension(170,45));
             sveChanges.setFocusable(false);
 
-            btnCancel = style.createBtnRounded("CANCEL", style.red, style.deepSkyBlue, 10);
+            btnCancel = style.createBtnRounded("CANCEL", style.red, style.white, 10);
             btnCancel.setPreferredSize(new Dimension(150,45));
             btnCancel.setFocusable(false);
 
-            btnBackToDefault = style.createBtnRounded("BACK TO DEFAULT", style.deepSkyBlue, style.white, 10);
+            btnBackToDefault = style.createBtnTxtOnly("BACK TO DEFAULT", style.deepSkyBlue);
             btnBackToDefault.setPreferredSize(new Dimension(180,35));
-            //btnBackToDefault.setFont(new Font("Arial", Font.BOLD, 15));
             btnBackToDefault.setFocusable(false);
             btnBackToDefault.setBorder(null);
 
