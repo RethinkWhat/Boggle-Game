@@ -129,7 +129,7 @@ public class CustomizedMessageDialog extends JDialog {
 
     private void createGameWinDialog() {
         JFrame mainFrame = new JFrame();
-        JDialog dialog = new JDialog(mainFrame, title, true);
+        dialog = new JDialog(mainFrame, title, true);
         dialog.setTitle(title);
         dialog.setLayout(new GridLayout(3, 1));
         dialog.setSize(500, 300);

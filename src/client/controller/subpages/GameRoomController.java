@@ -268,6 +268,7 @@ public class GameRoomController {
     }
 
     public void endRound() {
+        System.out.println("this will work");
         parent.getHomeController().populateLeaderboard();
         parent.getView().getCardLayout().show(parent.getView().getPnlCards(), "home");
         parent.getView().revalidate();
