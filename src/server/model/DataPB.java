@@ -183,9 +183,9 @@ public class DataPB {
         int noOfMatches = 0;
 
         try {
-            String query = "SELECT DISTINCT rd.gameID, rd.username, g.duration, g.gameStatus, g.winner AS gameWinner " +
+            String query = "SELECT COUNT(DISTINCT rd.gameID) " +
                     "FROM round_details rd JOIN game g USING (gameID) " +
-                    "WHERE username = ? AND g.gameStatus = 'done'";
+                    "WHERE rd.username = ? AND g.gameStatus = 'done'";
 
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, username);
@@ -193,7 +193,7 @@ public class DataPB {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                ++noOfMatches;
+                noOfMatches = rs.getInt(1);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -210,22 +210,22 @@ public class DataPB {
      * @throws SQLException
      */
     public static int getWins(String username) {
-        int size = 0;
+        int wins = 0;
         try {
-            String query = "SELECT winner FROM game WHERE winner = ? AND gameStatus = 'done'";
+            String query = "SELECT COUNT(*) FROM game WHERE winner = ? AND gameStatus = 'done'";
 
             PreparedStatement ps = con.prepareStatement(query);
             ps.setString(1, username);
             ResultSet rs = ps.executeQuery();
 
             while (rs.next()) {
-                ++size;
+                wins = rs.getInt(1);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return size;
+        return wins;
     }
 
     /**
