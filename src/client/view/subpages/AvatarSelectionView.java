@@ -153,6 +153,7 @@ public class AvatarSelectionView extends JFrame {
             if (selectedAvatarPath != null) {
                 DataPB.setCon();
                 boolean success = dataPB.changeProfilePicture(username, selectedAvatarPath);
+                //TODO: model.getWfImpl().editInfo(model.getUsername(), "pfp", selectedAvatarPath);
                 if (success) {
                     System.out.println("Change Avatar Success!");
                 } else {

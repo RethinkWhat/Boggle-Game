@@ -203,21 +203,21 @@ public class GameRoomController {
 
                 // displays dialog messages and plays respective sfx.
                 if (!usernameWinnerGame.equals("undecided")) {
+                    CustomizedMessageDialog dialog;
                     if (model.getUsername().equals(usernameWinnerGame)) {
                         sfxWinner();
-                        new CustomizedMessageDialog("Game Winner", style.iconWinner, "YOU WON!",
+                        dialog = new CustomizedMessageDialog("Game Winner", style.iconWinner, "YOU WON!",
                                 "You have won the game.", "EXIT GAME", style.deepSkyBlue,
                                 style.goldenTainoi, style.black, style.goldenTainoi, false);
                     } else {
                         sfxLose();
-                        CustomizedMessageDialog dialog = new CustomizedMessageDialog("Game Winner",
+                        dialog = new CustomizedMessageDialog("Game Winner",
                                 style.iconWinner, "WE HAVE A WINNER!",
                                 usernameWinnerGame + " has won the game.", "EXIT GAME",
                                 style.deepSkyBlue, style.goldenTainoi, style.black,
                                 style.goldenTainoi, false);
-                        dialog.setBtnDialogListener(e -> endRound());
-
                     }
+                    dialog.setBtnDialogListener(e -> endRound());
                     parent.getView().showHome();
                     parent.getView().showButtons();
                 } else {
