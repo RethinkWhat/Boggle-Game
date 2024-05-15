@@ -162,9 +162,8 @@ public class PlayersController {
                             style.goldenTainoi,
                             false
                     );
-                    view.hideAddPlayerPanel();
+                    view.closeAddPlayerPanel();
                 } else {
-                    System.out.println("Player adding failed!");
                     SwingStylesheet style = new SwingStylesheet();
                     CustomizedMessageDialog playerCreated = new CustomizedMessageDialog(
                             "Player Exists",
@@ -178,6 +177,7 @@ public class PlayersController {
                             style.red,
                             false
                     );
+                    view.getAddPlayerPanel().clearFields();
                 }
             }catch (Exception ee){
                 ee.printStackTrace();

@@ -492,6 +492,18 @@ public class PlayersView extends JPanel {
         public void setBtnTxtCancelActionListener(ActionListener actionListener) {
             btnTxtCancel.addActionListener(actionListener);
         }
+
+        public void clearFields() {
+            txtUsername.setText("Username");
+            txtFullName.setText("Name");
+            txtPassword.setText("Password");
+            txtPassword.setEchoChar((char) 0);
+            txtConfirmPassword.setText("Confirm Password");
+            txtConfirmPassword.setEchoChar((char) 0);
+            chkPassword.setSelected(false);
+            chkConfirmPassword.setSelected(false);
+            lblErrorMessage.setText("");
+        }
     }
 
     public void showAddPlayerPanel() {
