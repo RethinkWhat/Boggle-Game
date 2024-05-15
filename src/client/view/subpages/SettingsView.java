@@ -109,7 +109,7 @@ public class SettingsView extends JPanel{
 
             gbc.gridy++;
             gbc.insets = new Insets(0, -10, 15, 0);
-            btnDelAcc = navButtonWithLabel(container, style.iconAccMan, "Delete Account", null, gbc);
+            btnDelAcc = navButtonWithLabel(container, style.iconAccMan, "Account", null, gbc);
             btnDelAcc.setFocusable(false);
 
             gbc.gridy++;
