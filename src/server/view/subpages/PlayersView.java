@@ -345,7 +345,7 @@ public class PlayersView extends JPanel {
          */
         public AddPlayerPanel() {
             setBackground(style.deepSkyBlue);
-            setPreferredSize(new Dimension(500, 700));
+            setPreferredSize(new Dimension(500, 725));
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setLocationRelativeTo(null);
             setResizable(false);
@@ -369,7 +369,7 @@ public class PlayersView extends JPanel {
             add(lblAvatar, gbc);
 
             gbc.gridy = 2;
-            gbc.gridwidth = 1;
+            gbc.gridwidth = 2;
             gbc.fill = GridBagConstraints.NONE;
             btnEdit = style.createBtnRoundedH3("EDIT", style.deepSkyBlue, style.white, 10);
             btnEdit.setPreferredSize(new Dimension(150,30));
@@ -413,6 +413,8 @@ public class PlayersView extends JPanel {
 
             gbc.gridy = 9;
             lblErrorMessage = style.createLblP("", style.red);
+            lblErrorMessage.setPreferredSize(new Dimension(300, 10));
+            lblErrorMessage.setHorizontalAlignment(SwingConstants.CENTER);
             add(lblErrorMessage, gbc);
 
             gbc.gridy = 10;
@@ -489,6 +491,18 @@ public class PlayersView extends JPanel {
 
         public void setBtnTxtCancelActionListener(ActionListener actionListener) {
             btnTxtCancel.addActionListener(actionListener);
+        }
+
+        public void clearFields() {
+            txtUsername.setText("Username");
+            txtFullName.setText("Name");
+            txtPassword.setText("Password");
+            txtPassword.setEchoChar((char) 0);
+            txtConfirmPassword.setText("Confirm Password");
+            txtConfirmPassword.setEchoChar((char) 0);
+            chkPassword.setSelected(false);
+            chkConfirmPassword.setSelected(false);
+            lblErrorMessage.setText("");
         }
     }
 

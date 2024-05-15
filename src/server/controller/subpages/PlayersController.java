@@ -94,13 +94,31 @@ public class PlayersController {
             view.getAddPlayerPanel().getTxtFullName().addFocusListener(new SwingResources.TextFieldFocus(view.getAddPlayerPanel().
                     getTxtFullName(), "Name", view.getAddPlayerPanel().getLblErrorMessage()));
 
-            view.getAddPlayerPanel().getTxtPassword().addFocusListener(new SwingResources.PasswordFocusWithCheckbox
-                    (view.getAddPlayerPanel().getTxtPassword(), view.getAddPlayerPanel().getChkPassword(), "Password",
-                            view.getAddPlayerPanel().getLblErrorMessage()));
+            JPasswordField txtPassword = view.getAddPlayerPanel().getTxtPassword();
+            JCheckBox chkPassword = view.getAddPlayerPanel().getChkPassword();
+            txtPassword.setEchoChar((char) 0);
+            txtPassword.addFocusListener(new SwingResources.PasswordFocusWithCheckbox(
+                    txtPassword, chkPassword, "Password", view.getAddPlayerPanel().getLblErrorMessage()));
+            chkPassword.addActionListener(e1 -> {
+                if (chkPassword.isSelected()) {
+                    txtPassword.setEchoChar((char) 0);
+                } else {
+                    txtPassword.setEchoChar('\u25CF');
+                }
+            });
 
-            view.getAddPlayerPanel().getTxtConfirmPassword().addFocusListener(new SwingResources.PasswordFocusWithCheckbox
-                    (view.getAddPlayerPanel().getTxtConfirmPassword(), view.getAddPlayerPanel().getChkConfirmPassword(),
-                            "Confirm Password", view.getAddPlayerPanel().getLblErrorMessage()));
+            JPasswordField txtConfirmPassword = view.getAddPlayerPanel().getTxtConfirmPassword();
+            JCheckBox chkConfirmPassword = view.getAddPlayerPanel().getChkConfirmPassword();
+            txtConfirmPassword.setEchoChar((char) 0);
+            txtConfirmPassword.addFocusListener(new SwingResources.PasswordFocusWithCheckbox(
+                    txtConfirmPassword, chkConfirmPassword, "Confirm Password", view.getAddPlayerPanel().getLblErrorMessage()));
+            chkConfirmPassword.addActionListener(e1 -> {
+                if (chkConfirmPassword.isSelected()) {
+                    txtConfirmPassword.setEchoChar((char) 0);
+                } else {
+                    txtConfirmPassword.setEchoChar('\u25CF');
+                }
+            });
         }
     }
 
@@ -144,22 +162,22 @@ public class PlayersController {
                             style.goldenTainoi,
                             false
                     );
-                    view.hideAddPlayerPanel();
+                    view.closeAddPlayerPanel();
                 } else {
-                    System.out.println("Player adding failed!");
                     SwingStylesheet style = new SwingStylesheet();
                     CustomizedMessageDialog playerCreated = new CustomizedMessageDialog(
-                            "Player Existed",
-                            new ImageIcon("res/drawable/icons/koyuki.jpg"),
-                            "PLAYER EXISTED",
-                            "Player already existed, cancelling account creation.",
-                            "okay",
+                            "Player Exists",
+                            new ImageIcon("res/drawable/icons/error-red-solid.png"),
+                            "PLAYER EXISTS",
+                            "Player already exists. Enter a new player name.",
+                            "OKAY",
                             style.deepSkyBlue,
-                            style.goldenTainoi,
+                            style.red,
                             style.black,
-                            style.goldenTainoi,
+                            style.red,
                             false
                     );
+                    view.getAddPlayerPanel().clearFields();
                 }
             }catch (Exception ee){
                 ee.printStackTrace();

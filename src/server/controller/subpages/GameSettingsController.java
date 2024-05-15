@@ -76,14 +76,11 @@ public class GameSettingsController {
     public class BackToDefaultListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("button BTD clicked");
-            view.showSaved();
-            view.getBtnEdit().addActionListener(new EditListener());
             view.getGameDurationComboBox().setSelectedIndex(0);
             view.getWaitingDurationComboBox().setSelectedIndex(0);
-            view.getNumberOfPlayersComboBox().setSelectedIndex(0);
             model.updateGameDuration(gameDurationInMins[0] * 60000L);
-            model.updateWaitingDuration(waitTimeInSeconds[0] * 1000 );
+            model.updateWaitingDuration(waitTimeInSeconds[0] * 1000);
+            view.showSaved();
         }
     }
 
