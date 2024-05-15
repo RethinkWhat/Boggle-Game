@@ -208,14 +208,14 @@ public class GameRoomController {
                         sfxWinner();
                         dialog = new CustomizedMessageDialog("Game Winner", style.iconWinner, "YOU WON!",
                                 "You have won the game.", "EXIT GAME", style.deepSkyBlue,
-                                style.goldenTainoi, style.black, style.goldenTainoi, false);
+                                style.goldenTainoi, style.black, style.goldenTainoi, 1);
                     } else {
                         sfxLose();
                         dialog = new CustomizedMessageDialog("Game Winner",
                                 style.iconWinner, "WE HAVE A WINNER!",
                                 usernameWinnerGame + " has won the game.", "EXIT GAME",
                                 style.deepSkyBlue, style.goldenTainoi, style.black,
-                                style.goldenTainoi, false);
+                                style.goldenTainoi, 1);
                     }
                     dialog.setBtnDialogListener(e -> endRound());
                     parent.getView().showHome();
