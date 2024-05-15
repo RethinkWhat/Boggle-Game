@@ -121,7 +121,7 @@ public class GameSettingsView extends JPanel {
             gbc.anchor = GridBagConstraints.CENTER;
             gbc.insets = new Insets(200, 10, 10, 10);
 
-            btnEdit = style.createBtnRounded("EDIT", style.deepSkyBlue, style.deepSkyBlue, 10);
+            btnEdit = style.createBtnRounded("EDIT", style.deepSkyBlue, style.white, 10);
             btnEdit.setPreferredSize(new Dimension(150,45));
             btnEdit.setFocusable(false);
             this.add(btnEdit, gbc);
@@ -204,7 +204,7 @@ public class GameSettingsView extends JPanel {
             gbc.anchor = GridBagConstraints.CENTER;
             gbc.insets = new Insets(220, 10, 10, 10);
 
-            sveChanges = style.createBtnRounded("SAVE CHANGES", style.deepSkyBlue, style.deepSkyBlue, 10);
+            sveChanges = style.createBtnRounded("SAVE CHANGES", style.deepSkyBlue, style.white, 10);
             sveChanges.setPreferredSize(new Dimension(170,45));
             sveChanges.setFocusable(false);
 
@@ -212,9 +212,9 @@ public class GameSettingsView extends JPanel {
             btnCancel.setPreferredSize(new Dimension(150,45));
             btnCancel.setFocusable(false);
 
-            btnBackToDefault = style.createBtnRounded("BACK TO DEFAULT", style.deepSkyBlue, style.deepSkyBlue, 10);
+            btnBackToDefault = style.createBtnRounded("BACK TO DEFAULT", style.deepSkyBlue, style.white, 10);
             btnBackToDefault.setPreferredSize(new Dimension(180,35));
-            btnBackToDefault.setFont(new Font("Arial", Font.BOLD, 15));
+            //btnBackToDefault.setFont(new Font("Arial", Font.BOLD, 15));
             btnBackToDefault.setFocusable(false);
             btnBackToDefault.setBorder(null);
 
@@ -239,6 +239,8 @@ public class GameSettingsView extends JPanel {
             this.setPreferredSize(new Dimension(1300, 700));
             this.setMaximumSize(new Dimension(1300, 700));
             this.setMinimumSize(new Dimension(1300, 700));
+
+
         }
 
         // enables the panel to have rounded corners
@@ -263,6 +265,7 @@ public class GameSettingsView extends JPanel {
     public JButton getBtnEdit() {
         return btnEdit;
     }
+    public JComboBox<String> getDuraBox(){return gameDurationComboBox;}
 
     // sets a specified action listener for btnEdit
     public void setEditListener(ActionListener actionListener) {
@@ -353,5 +356,13 @@ public class GameSettingsView extends JPanel {
         this.add(pnlMain, BorderLayout.CENTER);
         this.revalidate();
         this.repaint();
+    }
+
+    public void setGameDurationComboBox(int index){
+        gameDurationComboBox.setSelectedIndex(index);
+    }
+
+    public void setWaitingDurationComboBox(int index){
+        waitingDurationComboBox.setSelectedIndex(index);
     }
 }

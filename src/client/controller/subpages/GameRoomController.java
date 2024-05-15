@@ -157,8 +157,8 @@ public class GameRoomController {
                     view.setPrgTimerMaxVal(inSeconds);
                     System.out.println(inSeconds);
                     while (inSeconds > 0) {
-                        Thread.sleep(1000);
                         view.setLblTimerTxt(inSeconds);
+                        Thread.sleep(1000);
                         inSeconds = (int) model.getWfImpl().getGameDurationVal(model.getGameRoomID()) / 1000;
                         System.out.println(inSeconds);
                         view.setPrgTimerValue(inSeconds);

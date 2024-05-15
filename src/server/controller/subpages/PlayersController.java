@@ -127,26 +127,43 @@ public class PlayersController {
                 view.getAddPlayerPanel().setLblErrorMessage("Passwords do not match!");
                 return;
             }
+            try{
+                boolean added = model.addPlayer(username, password, fullName, view.getAddPlayerPanel().getAvatarImagePath());
 
-            boolean added = model.addPlayer(username, password, fullName, view.getAddPlayerPanel().getAvatarImagePath());
+                if (added) {
+                    SwingStylesheet style = new SwingStylesheet();
+                    CustomizedMessageDialog playerCreated = new CustomizedMessageDialog(
+                            "Player Created",
+                            new ImageIcon("res/drawable/icons/success-tainoi-solid.png"),
+                            "PLAYER CREATED",
+                            "You have successfully created an account for this player.",
+                            "CLOSE",
+                            style.deepSkyBlue,
+                            style.goldenTainoi,
+                            style.black,
+                            style.goldenTainoi,
+                            false
+                    );
+                    view.hideAddPlayerPanel();
+                } else {
+                    System.out.println("Player adding failed!");
+                    SwingStylesheet style = new SwingStylesheet();
+                    CustomizedMessageDialog playerCreated = new CustomizedMessageDialog(
+                            "Player Existed",
+                            new ImageIcon("res/drawable/icons/koyuki.jpg"),
+                            "PLAYER EXISTED",
+                            "Player already existed, cancelling account creation.",
+                            "okay",
+                            style.deepSkyBlue,
+                            style.goldenTainoi,
+                            style.black,
+                            style.goldenTainoi,
+                            false
+                    );
+                }
+            }catch (Exception ee){
+                ee.printStackTrace();
 
-            if (added) {
-                SwingStylesheet style = new SwingStylesheet();
-                CustomizedMessageDialog playerCreated = new CustomizedMessageDialog(
-                        "Player Created",
-                        new ImageIcon("res/drawable/icons/success-tainoi-solid.png"),
-                        "PLAYER CREATED",
-                        "You have successfully created an account for this player.",
-                        "CLOSE",
-                        style.deepSkyBlue,
-                        style.goldenTainoi,
-                        style.black,
-                        style.goldenTainoi,
-                        false
-                );
-                view.hideAddPlayerPanel();
-            } else {
-                System.out.println("Player adding failed!");
             }
         }
     }
