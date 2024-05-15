@@ -227,7 +227,7 @@ public class GameRoomController {
                     if (model.getUsername().equals(usernameWinnerRound)) {
                         dialog = new CustomizedMessageDialog("Round Winner", style.iconWinner, "YOU WON THE ROUND!",
                                 "You had the most points this round.", style.goldenTainoi, style.black, style.goldenTainoi);
-                    } else if (model.getUsername().equals("undecided")) {
+                    } else if (usernameWinnerRound.equals("undecided")) {
                         dialog = new CustomizedMessageDialog("Game Tied", style.iconWinner, "No one won the game.",
                                 "Next round will start momentarily.", style.goldenTainoi, style.black, style.goldenTainoi);
                     } else {
@@ -268,8 +268,10 @@ public class GameRoomController {
     }
 
     public void endRound() {
-        parent.getView().getCardLayout().show(parent.getView().getPnlCards(), "home");
         parent.getHomeController().populateLeaderboard();
+        parent.getView().getCardLayout().show(parent.getView().getPnlCards(), "home");
+        parent.getView().revalidate();
+        parent.getView().repaint();
     }
 
     /**
