@@ -72,11 +72,14 @@ public class HomeController {
     }
 
     public void populateLeaderboard() {
+        System.out.println("reached populate leaderboard");
         userInfo[] leaderboards = model.getLeaderboard();
         homeView.clearPnlLeaderBoard();
+        System.out.println("cleared leader board");
         for (userInfo leaderboard : leaderboards) {
             homeView.addPlayerInLeaderboard(leaderboard.username, leaderboard.pfpAddress, leaderboard.points);
         }
+        System.out.println("populated and revalidating");
         homeView.revalidate();
         homeView.repaint();
     }

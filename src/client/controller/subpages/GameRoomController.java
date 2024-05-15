@@ -143,7 +143,7 @@ public class GameRoomController {
         timer.start();
     }
 
-
+    CustomizedMessageDialog dialog;
     public Runnable gameTimer() {
         System.out.println("game timer reached");
         Runnable toReturn = new Runnable() {
@@ -203,23 +203,28 @@ public class GameRoomController {
 
                 // displays dialog messages and plays respective sfx.
                 if (!usernameWinnerGame.equals("undecided")) {
-                    CustomizedMessageDialog dialog;
+                    //ActionListener actionListener = e -> { endRound();};
                     if (model.getUsername().equals(usernameWinnerGame)) {
                         sfxWinner();
                         dialog = new CustomizedMessageDialog("Game Winner", style.iconWinner, "YOU WON!",
                                 "You have won the game.", "EXIT GAME", style.deepSkyBlue,
-                                style.goldenTainoi, style.black, style.goldenTainoi, 1);
+                                style.goldenTainoi, style.black, style.goldenTainoi);
                     } else {
                         sfxLose();
                         dialog = new CustomizedMessageDialog("Game Winner",
                                 style.iconWinner, "WE HAVE A WINNER!",
                                 usernameWinnerGame + " has won the game.", "EXIT GAME",
                                 style.deepSkyBlue, style.goldenTainoi, style.black,
-                                style.goldenTainoi, 1);
+                                style.goldenTainoi);
                     }
-                    dialog.setBtnDialogListener(e -> endRound());
-                    parent.getView().showHome();
-                    parent.getView().showButtons();
+                    dialog.setBtnDialogListener(e -> {endRound();});
+                    try {
+                        Thread.sleep(1000);
+                        parent.getView().showHome();
+                        parent.getView().showButtons();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 } else {
                     CustomizedMessageDialog dialog;
                     sfxRoundOver();
@@ -270,9 +275,11 @@ public class GameRoomController {
     public void endRound() {
         System.out.println("this will work");
         parent.getHomeController().populateLeaderboard();
+        parent.getSettingsController().updateGameStats();
+        System.out.println("populated parent");
+        dialog.exitDialog();
         parent.getView().getCardLayout().show(parent.getView().getPnlCards(), "home");
-        parent.getView().revalidate();
-        parent.getView().repaint();
+
     }
 
     /**

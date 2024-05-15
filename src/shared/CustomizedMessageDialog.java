@@ -24,9 +24,13 @@ public class CustomizedMessageDialog extends JDialog {
     private JLabel lblBig;
     private SwingStylesheet style = new SwingStylesheet();
 
+    private int number;
+
     private boolean exitProgram;
 
     private JDialog dialog;
+
+    private ActionListener listener;
     /**
      * Constructs a CustomizedMessageDialog with customizable content.
      *
@@ -55,7 +59,7 @@ public class CustomizedMessageDialog extends JDialog {
         createDialog();
     }
 
-    public CustomizedMessageDialog(String title, ImageIcon icon, String titleMessage, String message, String buttonText, Color buttonColor, Color iconColor, Color textColor, Color titleMessageColor, int number) {
+    public CustomizedMessageDialog(String title, ImageIcon icon, String titleMessage, String message, String buttonText, Color buttonColor, Color iconColor, Color textColor, Color titleMessageColor) {
         this.title = title;
         this.icon = icon;
         this.titleMessage = titleMessage;
@@ -66,7 +70,8 @@ public class CustomizedMessageDialog extends JDialog {
         this.textColor = textColor;
         this.titleMessageColor = titleMessageColor;
 
-        createGameWinDialog();
+
+           createGameWinDialog();
     }
 
     public CustomizedMessageDialog(String title, ImageIcon icon, String titleMessage, String message,  Color iconColor, Color textColor, Color titleMessageColor ) {
@@ -127,9 +132,15 @@ public class CustomizedMessageDialog extends JDialog {
         dialog.setVisible(true);
     }
 
+    public JDialog getDialog() {
+        return dialog;
+    }
+
     private void createGameWinDialog() {
+        System.out.println("tthis is number: " + number);
         JFrame mainFrame = new JFrame();
         dialog = new JDialog(mainFrame, title, true);
+        dialog.setModalityType(Dialog.ModalityType.MODELESS);
         dialog.setTitle(title);
         dialog.setLayout(new GridLayout(3, 1));
         dialog.setSize(500, 300);
@@ -162,6 +173,7 @@ public class CustomizedMessageDialog extends JDialog {
         JPanel pnlButton = new JPanel(new FlowLayout());
         pnlButton.setPreferredSize(new Dimension(600, 30));
         btnDialog = style.createBtnRounded(buttonText, buttonColor, textColor, 10);
+        //btnDialog.addActionListener(l);
 
         pnlButton.add(btnDialog);
 

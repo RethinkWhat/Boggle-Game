@@ -38,10 +38,8 @@ public class SettingsController {
 
         // set texts
         this.settingsView.setFullNameText(model.getFullName());
-        this.settingsView.setGamesPlayedText(model.getMatchesPartTwo());
-        this.settingsView.setGamesWonText(model.getWinsPartTwo());
-        this.settingsView.setTotalPointsText(model.getUserPoints());
         this.settingsView.setAvatarImagePath(model.getPFPOfUser(model.getUsername()));
+        updateGameStats();
 
         // action listeners
         this.settingsView.setChangeAvatarListener(new ChangeAvatarListener());
@@ -64,6 +62,12 @@ public class SettingsController {
         this.settingsView.repaint();
         this.parentView.revalidate();
         this.parentView.repaint();
+    }
+
+    public void updateGameStats() {
+        this.settingsView.setGamesPlayedText(model.getMatchesPartTwo());
+        this.settingsView.setGamesWonText(model.getWinsPartTwo());
+        this.settingsView.setTotalPointsText(model.getUserPoints());
     }
 
     class ChangeAvatarListener implements ActionListener {
