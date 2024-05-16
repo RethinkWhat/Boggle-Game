@@ -121,7 +121,7 @@ public class AvatarSelectionView extends JFrame {
     }
 
     public void setSelectionListener(ActionListener actionListener, JButton btnSelection) {
-
+        btnSelection.addActionListener(actionListener);
     }
 
     public void setConfirmListener(ActionListener actionListener) {

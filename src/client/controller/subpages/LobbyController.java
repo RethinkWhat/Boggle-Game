@@ -73,16 +73,17 @@ public class LobbyController {
             }
             if (startLobby.value) {
                 parent.getView().showGameRoom();
-                parent.stopMusic();
+             //   parent.stopMusic();
                 parent.playGameMusic();
                 new GameRoomController(new GameRoomModel(model.getUsername(), model.getWfImpl()),
                         parent.getView().getGameRoomView(), parent);
             } else {
                 parent.getView().showHome();
-                parent.playDefaultMusic();
+              //  parent.playDefaultMusic();
                 parent.getView().showButtons();
             }
         } catch (Exception e) {
+            /*
             timerThread.interrupt();
             exitLobby = true;
             model.getWfImpl().exitLobby(model.getUsername());
@@ -91,6 +92,9 @@ public class LobbyController {
             parent.getView().showButtons();
             parent.stopMusic();
             parent.playDefaultMusic();
+
+             */
+            e.printStackTrace();
         }
     }
 
@@ -111,7 +115,7 @@ public class LobbyController {
             parent.getView().setNavLocationText("Home");
             parent.getView().showButtons();
             parent.stopMusic();
-            parent.playDefaultMusic();
+        //    parent.playDefaultMusic();
 
         }
     }

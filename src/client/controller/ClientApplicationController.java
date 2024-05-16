@@ -91,8 +91,8 @@ public class ClientApplicationController {
         this.view = view;
 
         try {
-            musicClip = AudioSystem.getClip();
-            sfxClip = AudioSystem.getClip();
+          //  musicClip = AudioSystem.getClip();
+         //   sfxClip = AudioSystem.getClip();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -187,12 +187,12 @@ public class ClientApplicationController {
      */
     public void playDefaultMusic() {
         try {
-            musicClip.stop();
-            audioMusicStream = AudioSystem.getAudioInputStream(new File(defaultMusic).getAbsoluteFile());
-            musicClip = AudioSystem.getClip();
-            musicClip.open(audioMusicStream);
-            musicClip.start();
-            musicClip.loop(Clip.LOOP_CONTINUOUSLY);
+            //musicClip.stop();
+          //  audioMusicStream = AudioSystem.getAudioInputStream(new File(defaultMusic).getAbsoluteFile());
+            //musicClip = AudioSystem.getClip();
+           // musicClip.open(audioMusicStream);
+           // musicClip.start();
+           // musicClip.loop(Clip.LOOP_CONTINUOUSLY);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -203,7 +203,7 @@ public class ClientApplicationController {
      */
     public void playLobbyMusic() {
         try {
-            musicClip.stop();
+            //musicClip.stop();
             audioMusicStream = AudioSystem.getAudioInputStream(new File(lobbyMusic).getAbsoluteFile());
             musicClip = AudioSystem.getClip();
             musicClip.open(audioMusicStream);
@@ -219,7 +219,7 @@ public class ClientApplicationController {
      */
     public void playGameMusic() {
         try {
-            musicClip.stop();
+           // musicClip.stop();
             audioMusicStream = AudioSystem.getAudioInputStream(new File(gameMusic).getAbsoluteFile());
             musicClip = AudioSystem.getClip();
             musicClip.open(audioMusicStream);
@@ -242,7 +242,7 @@ public class ClientApplicationController {
      * Stops the current music.
      */
     public void stopMusic() {
-        musicClip.stop();
+        //musicClip.stop();
     }
 
     /**

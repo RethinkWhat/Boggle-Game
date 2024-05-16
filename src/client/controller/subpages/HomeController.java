@@ -54,7 +54,7 @@ public class HomeController {
         this.model = model;
         this.parent = parent;
 
-        parent.playDefaultMusic();
+     //   parent.playDefaultMusic();
 
         // action listeners
         homeView.setJoinListener(new JoinGameListener(parent));
@@ -107,7 +107,7 @@ public class HomeController {
 
                 parent.getView().hideButtons();
 
-                parent.playLobbyMusic();
+              //  parent.playLobbyMusic();
                 new LobbyController(new LobbyModel(parent.getModel().getUsername(), parent.getModel().getWfImpl()),
                         parent.getView().getLobbyView(), parent);
 

@@ -158,7 +158,7 @@ public class GameRoomController {
                         inSeconds = (int) model.getWfImpl().getGameDurationVal(model.getGameRoomID()) / 1000;
                         view.setPrgTimerValue(inSeconds);
                         if (inSeconds == 10) {
-                            sfxCountdown();
+                            //sfxCountdown();
                             SwingUtilities.invokeLater(() -> {
                                 view.getPrgTimer().setBackground(style.red);
                                 view.getLblTimer().setForeground(style.red);
@@ -463,7 +463,7 @@ public class GameRoomController {
     private void sfxCountdown() {
         if (sfxOn) {
             try {
-                sfxClip.stop();
+                //sfxClip.stop();
                 audioSoundStream = AudioSystem.getAudioInputStream(new File(countdown));
                 sfxClip = AudioSystem.getClip();
                 sfxClip.open(audioSoundStream);
