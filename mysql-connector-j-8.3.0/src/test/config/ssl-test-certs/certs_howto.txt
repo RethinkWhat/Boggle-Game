@@ -18,20 +18,20 @@ $ openssl req -new -x509 -nodes -sha256 -days 3650 -key ca-key.pem -out ca-cert.
   Locality Name (eg, city) []:Redwood Shores
   Organization Name (eg, company) []:Oracle
   Organizational Unit Name (eg, section) []:MySQL
-  Common Name (e.g. server FQDN or YOUR name) []:MySQL Connector/J CA
+  Common Name (e.g. Server_Java FQDN or YOUR name) []:MySQL Connector/J CA
   Email Address []:mysql@oracle.com
 
 
 2. Server key and certificate
 =============================
 
-(Generate the server key)
-$ openssl genrsa -out server-key.pem 2048
+(Generate the Server_Java key)
+$ openssl genrsa -out Server_Java-key.pem 2048
 
-(Generate a certificate signing request for the server)
-$ openssl req -new -key server-key.pem -out server-csr.pem
+(Generate a certificate signing request for the Server_Java)
+$ openssl req -new -key Server_Java-key.pem -out Server_Java-csr.pem
 (Or, if the Subject Alternative Name field is required for testing - *used together with below sign command*)
-$ openssl req -new -key server-key.pem -out server-csr.pem \
+$ openssl req -new -key Server_Java-key.pem -out Server_Java-csr.pem \
     -reqexts SAN \
     -config <(cat /etc/ssl/openssl.cnf <(printf "\n[SAN]\n\nsubjectAltName=@alt_names\n\n[alt_names]\nDNS.1=bug99767.mysql.san1.tst\nDNS.2=*.mysql.san2.tst\nDNS.3=bug*.mysql.san3.tst\nDNS.4=*99767.mysql.san4.tst\nDNS.5=bug99767.*.san5.tst\nDNS.6=bug99767.*\nDNS.7=*\nIP.1=9.9.7.67\nIP.2=99.7.6.7"))
   (...)
@@ -40,53 +40,53 @@ $ openssl req -new -key server-key.pem -out server-csr.pem \
   Locality Name (eg, city) []:Redwood Shores
   Organization Name (eg, company) []:Oracle
   Organizational Unit Name (eg, section) []:MySQL
-  Common Name (e.g. server FQDN or YOUR name) []:MySQL Connector/J Server
+  Common Name (e.g. Server_Java FQDN or YOUR name) []:MySQL Connector/J Server
   Email Address []:mysql@oracle.com
   (...)
   A challenge password []:
   An optional company name []:
 
-(Sign the server certificate signing request)
-$ openssl x509 -req -in server-csr.pem -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -days 3650 -sha256 -out server-cert.pem
+(Sign the Server_Java certificate signing request)
+$ openssl x509 -req -in Server_Java-csr.pem -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -days 3650 -sha256 -out Server_Java-cert.pem
 (Or, if the Subject Alternative Name field is required for testing - *used together with above request command*)
-$ openssl x509 -req -in server-csr.pem -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -days 3650 -sha256 -out server-cert.pem \
+$ openssl x509 -req -in Server_Java-csr.pem -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -days 3650 -sha256 -out Server_Java-cert.pem \
 -extfile <(printf "subjectAltName=@alt_names\n\n[alt_names]\nDNS.1=bug99767.mysql.san1.tst\nDNS.2=*.mysql.san2.tst\nDNS.3=bug*.mysql.san3.tst\nDNS.4=*99767.mysql.san4.tst\nDNS.5=bug99767.*.san5.tst\nDNS.6=bug99767.*\nDNS.7=*\nIP.1=9.9.7.67\nIP.2=99.7.6.7") 
 
 (OPTIONAL: Delete the certificate signing request file)
-$ rm server-csr.pem
+$ rm Server_Java-csr.pem
 
-(OPTIONAL: Verify the server certificate)
-$ openssl verify -CAfile ca-cert.pem server-cert.pem
+(OPTIONAL: Verify the Server_Java certificate)
+$ openssl verify -CAfile ca-cert.pem Server_Java-cert.pem
 
 
 3. Client key and certificate
 =============================
 
-(Generate the client key)
-$ openssl genrsa -out client-key.pem 2048
+(Generate the Client_Java key)
+$ openssl genrsa -out Client_Java-key.pem 2048
 
-(Generate a certificate signing request for the client)
-$ openssl req -new -key client-key.pem -out client-csr.pem
+(Generate a certificate signing request for the Client_Java)
+$ openssl req -new -key Client_Java-key.pem -out Client_Java-csr.pem
   (...)
   Country Name (2 letter code) []:US
   State or Province Name (full name) []:California
   Locality Name (eg, city) []:Redwood Shores
   Organization Name (eg, company) []:Oracle
   Organizational Unit Name (eg, section) []:MySQL
-  Common Name (e.g. server FQDN or YOUR name) []:MySQL Connector/J Client
+  Common Name (e.g. Server_Java FQDN or YOUR name) []:MySQL Connector/J Client
   Email Address []:mysql@oracle.com
   (...)
   A challenge password []:
   An optional company name []:
 
-(Sign the client certificate signing request)
-$ openssl x509 -req -in client-csr.pem -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -days 3650 -sha256 -out client-cert.pem
+(Sign the Client_Java certificate signing request)
+$ openssl x509 -req -in Client_Java-csr.pem -CA ca-cert.pem -CAkey ca-key.pem -set_serial 01 -days 3650 -sha256 -out Client_Java-cert.pem
 
 (OPTIONAL: Delete the certificate signing request file)
-$ rm client-csr.pem
+$ rm Client_Java-csr.pem
 
-(OPTIONAL: Verify the client certificate)
-$ openssl verify -CAfile ca-cert.pem client-cert.pem
+(OPTIONAL: Verify the Client_Java certificate)
+$ openssl verify -CAfile ca-cert.pem Client_Java-cert.pem
 
 
 4. CA truststore
@@ -103,17 +103,17 @@ $ keytool -list -keystore ca-truststore -storepass password
 5. Client key and certificate keystore
 ======================================
 
-(Convert client key to pkcs12 format)
-$ openssl pkcs12 -export -in client-cert.pem -inkey client-key.pem -name "mysqlclient" -passout pass:password -out client-keystore.p12
+(Convert Client_Java key to pkcs12 format)
+$ openssl pkcs12 -export -in Client_Java-cert.pem -inkey Client_Java-key.pem -name "mysqlclient" -passout pass:password -out Client_Java-keystore.p12
 
-(Create a keystore containing the client key)
-$ keytool -importkeystore -srckeystore client-keystore.p12 -srcstoretype pkcs12 -srcstorepass password -destkeystore client-keystore -deststoretype JKS -deststorepass password
+(Create a keystore containing the Client_Java key)
+$ keytool -importkeystore -srckeystore Client_Java-keystore.p12 -srcstoretype pkcs12 -srcstorepass password -destkeystore Client_Java-keystore -deststoretype JKS -deststorepass password
 
-(OPTIONAL: Delete the client key in pkcs12 format)
-$ rm client-keystore.p12
+(OPTIONAL: Delete the Client_Java key in pkcs12 format)
+$ rm Client_Java-keystore.p12
 
-(OPTIONAL: List the contents of the client keystore)
-$ keytool -list -keystore client-keystore -storepass password
+(OPTIONAL: List the contents of the Client_Java keystore)
+$ keytool -list -keystore Client_Java-keystore -storepass password
 
 
 
@@ -123,7 +123,7 @@ RUN SERVER WITH TEST CERTS
 Add to my.conf:
 
 [mysqld]
-ssl-key = "/path/server-key.pem"
-ssl-cert = "/path/server-cert.pem"
+ssl-key = "/path/Server_Java-key.pem"
+ssl-cert = "/path/Server_Java-cert.pem"
 ssl-ca = "/path/ca-cert.pem"
 

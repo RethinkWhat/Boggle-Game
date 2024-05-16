@@ -110,7 +110,7 @@ Version 8.0.32
   - Fix for Bug#108414 (Bug#34578541), Malformed packet generation for `COM_STMT_EXECUTE`.
     Thanks to Seongman Yang for his contribution.
 
-  - Fix for Bug#106252 (Bug#33968169), Connector/J client hangs after prepare & execute process with old version server.
+  - Fix for Bug#106252 (Bug#33968169), Connector/J Client_Java hangs after prepare & execute process with old version Server_Java.
     Thanks to Zhe Huang for his contribution.
 
   - Fix for Bug#34725725, RPM and DEB builds broken after introducing javadoc for maven bundles.
@@ -161,7 +161,7 @@ Version 8.0.29
 
   - Fix for Bug#21978230, COMMENT PARSING NOT PROPER IN PREPSTMT.EXECUTEBATCH().
 
-  - Fix for Bug#81468 (23312764), MySQL server fails to rewrite batch insert when column name contains word select.
+  - Fix for Bug#81468 (23312764), MySQL Server_Java fails to rewrite batch insert when column name contains word select.
 
   - Fix for Bug#106435 (33850099), 8.0.28 Connector/J has regressive in setAutoCommit after Bug#104067 (33054827).
 
@@ -192,7 +192,7 @@ Version 8.0.29
 
   - Fix for Bug#85317 (25672958), EXECUTE BATCH WILL THROW NULL POINTER EXCEPTION WHERE THE COLUMN IS BLOB!
 
-  - Fix for Bug#105915 (33678490), Connector/J 8 server prepared statement precision loss in execute batch.
+  - Fix for Bug#105915 (33678490), Connector/J 8 Server_Java prepared statement precision loss in execute batch.
 
   - Fix for Bug#104349 (33563548), com.mysql.cj NPE.
 
@@ -255,7 +255,7 @@ Version 8.0.27
 
   - WL#14707, Support OCI IAM authentication.
 
-  - WL#14660, Testsuite with support for single MySQL server instance.
+  - WL#14660, Testsuite with support for single MySQL Server_Java instance.
 
   - Fix for Bug#103878 (32954449), CONNECTOR/J 8 : QUERY WITH 'SHOW XXX' WILL GET EXCEPTION WHEN USE CURSOR.
 
@@ -373,7 +373,7 @@ Version 8.0.22
 
   - WL#14096, Add option to specify LOAD DATA LOCAL allow list folder.
 
-  - WL#13780, Skip system-wide trust and key stores (incl. X DevAPI client certs).
+  - WL#13780, Skip system-wide trust and key stores (incl. X DevAPI Client_Java certs).
 
   - WL#14017, XProtocol -- support for configurable compression algorithms.
 
@@ -433,7 +433,7 @@ Version 8.0.19
 
   - WL#13367, DNS SRV support.
 
-  - WL#12736, DevAPI: Specify TLS ciphers to be used by a client or session.
+  - WL#12736, DevAPI: Specify TLS ciphers to be used by a Client_Java or session.
 
   - Fix for regression tests broken by Bug#97079 fix.
 
@@ -698,7 +698,7 @@ Version 8.0.11
 
 Version 8.0.10
 
-  - (Skipped version number to align versions between components and server)
+  - (Skipped version number to align versions between components and Server_Java)
 
 Version 8.0.9
 
@@ -735,7 +735,7 @@ Version 8.0.9
 
   - Fix for Bug#88232 (27047676), c/J does not rollback transaction when autoReconnect=true.
 
-  - Fix for Bug#88242 (27040063), autoReconnect and socketTimeout JDBC option makes wrong order of client packet.
+  - Fix for Bug#88242 (27040063), autoReconnect and socketTimeout JDBC option makes wrong order of Client_Java packet.
 
   - Fix for Bug#88021 (26939943), High GC pressure when driver configured with serversideprepared statements.
     Thanks to Johnathan Crawford for his contribution.
@@ -942,7 +942,7 @@ Version 6.0.6
 
   - Fix for BUG#82896 (24613062), Unexpected behavior on attempt to connect to JDBC driver with unsupported URL.
 
-  - Added client-side failover during XSession initialization for multi-router configuration.
+  - Added Client_Java-side failover during XSession initialization for multi-router configuration.
 
   - Removed Extension interface. All extension classes now implement their specific interfaces.
 
@@ -983,7 +983,7 @@ Version 6.0.6
   - Added support for matching against pattern for X DevAPI list_objects calls.
     Added Schema.getCollections(String pattern) and Schema.getTables(String pattern) interface methods.
 
-  - Switched to "mysqlx" namespace for X DevAPI StmtExecute messages. This change is incompatible to MySQL server versions < 5.7.14.
+  - Switched to "mysqlx" namespace for X DevAPI StmtExecute messages. This change is incompatible to MySQL Server_Java versions < 5.7.14.
 
   - Fix for Bug#82046 (23743947), MYSQL CONNECTOR JAVA OSGI METADATA BROKEN.
 
@@ -1012,9 +1012,9 @@ Version 6.0.6
 
   - Fix for Bug#22730682, ARRAYINDEXOUTOFBOUNDSEXCEPTION FROM CONNECTIONGROUPMANAGER.REMOVEHOST().
 
-  - Fix for Bug#77171 (21181466), On every connect getting sql_mode from server creates unnecessary exception.
+  - Fix for Bug#77171 (21181466), On every connect getting sql_mode from Server_Java creates unnecessary exception.
 
-  - Fix for Bug#79343 (22353759), NPE in TimeUtil.loadTimeZoneMappings causing server time zone value unrecognized.
+  - Fix for Bug#79343 (22353759), NPE in TimeUtil.loadTimeZoneMappings causing Server_Java time zone value unrecognized.
 
   - Fix for Bug#22038729, X DevAPI: Any API call after a failed CALL PROC() results in hang
 
@@ -1035,7 +1035,7 @@ Version 6.0.6
 
   - Deprecate the EOF packet.
 
-  - Fix for Bug#75956, Inserting timestamps using a server PreparedStatement and useLegacyDatetimeCode=false
+  - Fix for Bug#75956, Inserting timestamps using a Server_Java PreparedStatement and useLegacyDatetimeCode=false
 
   - Fix for Bug#22385172, CONNECTOR/J MANIFEST DOES NOT EXPOSE FABRIC (OSGi).
 
@@ -1082,7 +1082,7 @@ Version 6.0.6
 
   - Null-merge of Bug#54095 (11761585) fix.
 
-  - Removed support code for MySQL server versions < 5.7.
+  - Removed support code for MySQL Server_Java versions < 5.7.
 
   - Merged version 5.1.37.
 
@@ -1154,7 +1154,7 @@ Version 6.0.6
 
   - Fix for Bug#75113 (20821888), Fail in failover of the connection in MySQL fabric
 
-  - Fix for Bug#72077 (18425861), Fabric connection with username to a server with disabled auth throws NPE
+  - Fix for Bug#72077 (18425861), Fabric connection with username to a Server_Java with disabled auth throws NPE
 
   - Add test for already fixed Bug#72546 (18719760), C/J Fabric createGroup() throws ClassCastException
 
@@ -1182,14 +1182,14 @@ Version 6.0.6
 
   - Fix for Bug#75309 (20272931), mysql connector/J driver in streaming mode will in the blocking state.
 
-  - New property 'readOnlyPropagatesToServer' controls the implicit propagation of read only transaction access mode to server.
+  - New property 'readOnlyPropagatesToServer' controls the implicit propagation of read only transaction access mode to Server_Java.
 
   - Fix for Bug#54095 (11761585), Unnecessary call in newSetTimestampInternal.
     Test case only. The bug was fixed as a consequence of the patch for Bug#71084.
 
   - Fix for Bug#67760 (15936413), Deadlock when concurrently executing prepared statements with Timestamp objects.
 
-  - Fix for Bug#71084 (18028319), Wrong java.sql.Date stored if client and server time zones differ.
+  - Fix for Bug#71084 (18028319), Wrong java.sql.Date stored if Client_Java and Server_Java time zones differ.
     Two connection properties added, "noTimezoneConversionForDateType" and "cacheDefaultTimezone", to define if and how time zone conversions are available to
     DATE data type values.
 
@@ -1218,7 +1218,7 @@ Version 6.0.6
   - Merged version 5.1.33.
 
   - Fix for Bug#17441747, C/J DOESN'T SUPPORT XA RECOVER OUTPUT FORMAT CHANGED IN MYSQL 5.7.
-    Test case was disabled for affected server versions 5.7.0 - 5.7.4.
+    Test case was disabled for affected Server_Java versions 5.7.0 - 5.7.4.
 
   - Fix for Bug#19145408, Error messages may not be interpreted according to the proper character set
 
@@ -1253,7 +1253,7 @@ Version 6.0.6
 
   - Fix for Bug#72890 (18970520), Java jdbc driver returns incorrect return code when it's part of XA transaction.
 
-  - Fabric client now supports Fabric 1.5. Older versions are no longer supported.
+  - Fabric Client_Java now supports Fabric 1.5. Older versions are no longer supported.
 
   - Fix for Bug#71672 (18232840), Every SQL statement is checked if it contains "ON DUPLICATE KEY UPDATE" or not.
     Thanks to Andrej Golovnin for his contribution.
@@ -1294,7 +1294,7 @@ Version 6.0.6
 
   - Added tests for changes in GET DIAGNOSTIC syntax introduced in MySQL 5.7.0.
 
-  - Fix for Bug#67803 (16708231), XA commands sent twice to MySQL server.
+  - Fix for Bug#67803 (16708231), XA commands sent twice to MySQL Server_Java.
     Thanks to Andrej Golovnin for his contribution.
 
   - Fix for Bug#55680 (16737192), MySQL Connector/J memory leak
@@ -1447,7 +1447,7 @@ Version 6.0.6
   - Fix for Bug#69308 (16879267), Avoid calling batchedStatement.close() twice, and thus raising and ignoring an undercover SQLException, in methods
     PreparedStatement.executeBatchedInserts and PreparedStatement.executePreparedBatchAsMultiStatement.
 
-  - Fix for Bug#68400, useCompression=true and connect to server, zip native method cause out of memory.
+  - Fix for Bug#68400, useCompression=true and connect to Server_Java, zip native method cause out of memory.
     CompressedInputStream now does not keep reference to connection.
     Thank Dominic Tootell for his investigation, proposed solution and all the help he provided.
 
@@ -1480,7 +1480,7 @@ Version 6.0.6
   - Fix for Bug#60816, Cannot pass NULL to an INOUT procedure parameter.
 
   - Added support for Connection Attributes when used with MySQL Server versions (5.6+) which support this feature.
-    By default, the following standard attributes are sent to the server, where they can be seen in the
+    By default, the following standard attributes are sent to the Server_Java, where they can be seen in the
     performance_schema.session_connect_attrs table:
      * _client_version : the version of MySQL Connector Java in use
      * _client_name : "MySQL Connector Java"
@@ -1488,7 +1488,7 @@ Version 6.0.6
      * _runtime_vendor : the name of company which produced the Java runtime environment
     Additionally, users may supply their own key/value attributes to be exposed by providing them in
     "key1:value1,key2:value2" format in the connectionAttributes connection property.
-    To avoid sending any connection attributes to the server, set connectionAttributes property to "none".
+    To avoid sending any connection attributes to the Server_Java, set connectionAttributes property to "none".
 
   - Fix for Bug#68763 (16545334), ReplicationConnection.isMasterConnection() returns false always.
 
@@ -1545,7 +1545,7 @@ Version 6.0.6
   - Added tests for explicit partition selection syntax introduced in 5.6GA.
 
   - Added support of password expiration protocol. This introduces new boolean connection property disconnectOnExpiredPasswords.
-    If disconnectOnExpiredPasswords = true and password expired then connection will be rejected by server with ErrorCode == 1820 (ER_MUST_CHANGE_PASSWORD).
+    If disconnectOnExpiredPasswords = true and password expired then connection will be rejected by Server_Java with ErrorCode == 1820 (ER_MUST_CHANGE_PASSWORD).
     If disconnectOnExpiredPasswords = false then connection will enter to "sandbox" mode,
     all commands except SET PASSWORD = ... and SET PASSWORD FOR CURRRENT_USER() = ... will cause an error to be thrown.
 
@@ -1577,16 +1577,16 @@ Version 6.0.6
     Test suite modified to don't perform comparison of PASSWORD() results if old_passwords=2
     because with SHA-256 password hashing enabled they are nondeterministic.
 
-  - The driver now allows the mechanism for caching MySQL server configuration values replaceable at runtime,
+  - The driver now allows the mechanism for caching MySQL Server_Java configuration values replaceable at runtime,
     via the "serverConfigCacheFactory" property. The default is an implementation that is a per-VM concurrent
     map, keyed by URL. The driver will invalidate cache entries when SQLExceptions that indicate communications
-    errors are thrown (on the assumption that the server has been or is restarting), or if the server version
+    errors are thrown (on the assumption that the Server_Java has been or is restarting), or if the Server_Java version
     that is being connected to, differs from the one that was present when the cached values were populated.
 
     To replace the default implementation, implement CacheAdapterFactory<String, Map<String, String>>, and
     use the fully-qualified class name of this implementation for "serverConfigCacheFactory".
 
-  - Connection.setReadOnly() will take advantage of server-side support for read-only transactions
+  - Connection.setReadOnly() will take advantage of Server_Java-side support for read-only transactions
     present in MySQL-5.6 and newer. Calling .isReadOnly() will incur a round-trip if useLocalSessionState
     is not enabled.
 
@@ -1631,7 +1631,7 @@ Version 6.0.6
     clean these up when the VM notices the connection is no longer referenced by
     anything else.
 
-  - Added the ability to add new client-side prepared statement parse info caches by
+  - Added the ability to add new Client_Java-side prepared statement parse info caches by
     implementing com.mysql.jdbc.CacheAdapterFactory and telling the driver to use it
     when "cachePrepStmts=true" via the "parseInfoCacheFactory" configuration property.
 
@@ -1658,13 +1658,13 @@ Version 6.0.6
 
   - Fix for pluggable authentication tests to run on Windows.
 
-  - Fix for Bug#13897714, NPE in testsuite.regression.StatementRegressionTest.testBug1933() with 5.6.5_m8 server.
+  - Fix for Bug#13897714, NPE in testsuite.regression.StatementRegressionTest.testBug1933() with 5.6.5_m8 Server_Java.
 
   - Fix for Bug#55962, Savepoint identifier is occasionally considered as floating point numbers.
 
-  - Fix for Bug#13955027, SET OPTION syntax was removed starting from 5.6.5 server version.
+  - Fix for Bug#13955027, SET OPTION syntax was removed starting from 5.6.5 Server_Java version.
 
-  - Fix for Bug#13958793, ClassCastException in ConnectionImpl.buildCollationMapping() with 4.1 server.
+  - Fix for Bug#13958793, ClassCastException in ConnectionImpl.buildCollationMapping() with 4.1 Server_Java.
 
   - Fix for Bug#36478, Client prepared statement bugged if word 'limit' included in the query.
 
@@ -1674,7 +1674,7 @@ Version 6.0.6
 
   - Fix for Bug#63456, MetaData precision is different when using UTF8 or Latin1 tables.
 	The problem was in finding maxBytesPerChar through versioned mapping from Java charset to MySQL charset.
-	That map returns "utf8mb4" instead "utf8" for server versions starting with 5.5.2.
+	That map returns "utf8mb4" instead "utf8" for Server_Java versions starting with 5.5.2.
 	CharsetMapping, ConnectionImpl and Field have been reorganized to use static maps INDEX_TO_MYSQL_CHARSET,
 	STATIC_CHARSET_TO_NUM_BYTES_MAP instead. Also dynamic maps ConnectionImpl.indexToCustomMysqlCharset
 	and ConnectionImpl.mysqlCharsetToCustomMblen have been added for custom charsets.
@@ -1730,18 +1730,18 @@ Version 6.0.6
   - Reverting changes made to ConnectionImpl.java,
     private boolean characterSetNamesMatches function.
 
-  - Added function MYSQL_INDEX_TO_MYSQL_CHARSET to retrieve server charset name
+  - Added function MYSQL_INDEX_TO_MYSQL_CHARSET to retrieve Server_Java charset name
     using index instead of parsing variables to CharsetMapping.java.
 
   - Completed fix for Bug#61201/12649557, fixed tests failures.
 
   - Fix for Bug#61201/12649557, Can't establish connection when url has
-    sessionVariables and characterEncoding. Fix covers only MySQL server 4.1+
+    sessionVariables and characterEncoding. Fix covers only MySQL Server_Java 4.1+
 
   - Fix for Bug#61501 - Calling Statement.cancel() on a statement that isn't
     currently executing will cause some later-executed query on the same
     connection to be cancelled unexpectedly. The driver now guards against this
-    condition, but it is an underlying server issue. The MySQL statement "KILL QUERY"
+    condition, but it is an underlying Server_Java issue. The MySQL statement "KILL QUERY"
     (which is what the driver uses to implement Statement.cancel()) is rather
     non-deterministic, and thus the use of Statement.cancel() should be avoided
     if possible.
@@ -1756,7 +1756,7 @@ Version 6.0.6
 
 07-04-11 - Version 5.1.17
 
-  - Fix for Bug#61332 - LIKE not optimized in server when run against I__S tables and no wildcards used.
+  - Fix for Bug#61332 - LIKE not optimized in Server_Java when run against I__S tables and no wildcards used.
     Databases/tables with "_" and/or "%" in their names (escaped or not) will be handled by this code path,
 	although slower, since it's rare to find these characters in table names in SQL. If there's a "_" or "%"
 	in the string, LIKE will take care of that, otherwise we now use = . The only exception is
@@ -1764,7 +1764,7 @@ Version 6.0.6
 
   - Fix for Bug#61150 - First call to stored procedure fails with "No Database Selected".
 	The workaround introduced in DatabaseMetaData.getCallStmtParameterTypes to fix
-	the bug in server where SHOW CREATE PROCEDURE was not respecting lower-case table names
+	the bug in Server_Java where SHOW CREATE PROCEDURE was not respecting lower-case table names
 	is misbehaving when connection is not attached to database and on non-casesensitive OS.
 
   - Fix for Bug#61105 - Avoid a concurrent bottleneck in Java's character set
@@ -1773,12 +1773,12 @@ Version 6.0.6
 04-21-11 - Version 5.1.16
 
   - Partial fix for BUG#54135 - setQueryTimeout unsafe across VIP. Fix prevents c/J from
-    killing the right ConnectionID but on wrong server.
+    killing the right ConnectionID but on wrong Server_Java.
 
   - Fix for BUG#57808 - wasNull not set for DATE field with value 0000-00-00
 	in getDate() although zeroDateTimeBehavior is convertToNull.
 
-  - Fix for Bug#54425 - Bypassing the server protocol bug where DB should be null-terminated
+  - Fix for Bug#54425 - Bypassing the Server_Java protocol bug where DB should be null-terminated
     whether it exists or not. Affects COM_CHANGE_USER.
 
   - Fix for Bug#60313 (11890729), bug in
@@ -1787,12 +1787,12 @@ Version 6.0.6
   - Fix for bug 11782297, DBMD.getTables (so thus getColumns too) fails with
     table names containing dot (like "junk_[Sp:e,c/ C-h+a=.r]").
 
-  - Added the ability to determine if the connection is against a server on the
+  - Added the ability to determine if the connection is against a Server_Java on the
     same host via the Connection.isServerLocal() method.
 
   - Fix for bug 12325877, Setting "autoReconnect=true" and
     "cacheServerConfiguration=true" would cause connections created after
-    an existing connection fails to have non-existent values for server
+    an existing connection fails to have non-existent values for Server_Java
     variables which lead to exceeding of max allowed packet exceptions when the
     new connections were used.
 
@@ -1849,11 +1849,11 @@ Version 6.0.6
    - Typo in StatementRegressionTest.testLikeWithBackslashes fixed. StatementRegressionTest
      is up to date.
 
-   - Fix for Bug#58232 - CallableStatement fails to fetch OUT parameter against 5.5 server
+   - Fix for Bug#58232 - CallableStatement fails to fetch OUT parameter against 5.5 Server_Java
 
    - Testsuite.regression.Connection, tests for BUG#45419 refined by Todd so not to cause failures.
 
-   - Testsuite.regression.CallableStatement, tests for BUG#26959 failing against 5.5+ server.
+   - Testsuite.regression.CallableStatement, tests for BUG#26959 failing against 5.5+ Server_Java.
 
    - Bringing testsuite.regression.CachedRowsetTest up to date.
 
@@ -1867,12 +1867,12 @@ Version 6.0.6
 
    - Removing commented source in fix for Bug#57697
    - Fix for Bug#57697 - Metadata getTables() was not checking for table_name already been quoted.
-   - Fix for Bug#57694 - 3byte UTF8 can not be used with 5.5.3+ server.
+   - Fix for Bug#57694 - 3byte UTF8 can not be used with 5.5.3+ Server_Java.
    - Fix for Bug#57701 - StatementsTest.testBatchRewriteErrors() failing on new servers.
 
    - Fix for Bug#54756 - Cannot retrieve data from ResultSet by column name from a Sphinx daemon.
-     We were relying only on "server version string" passed. Now, determining
-	 server version is done via protocol flags too, where applicable.
+     We were relying only on "Server_Java version string" passed. Now, determining
+	 Server_Java version is done via protocol flags too, where applicable.
 
    - Fix for Bug#57022 - cannot execute a store procedure with output parameters,
      database parameter was ignored in db.sp notation. The fix is to "sanitize"
@@ -1889,7 +1889,7 @@ Version 6.0.6
    - Patch for Bug#56305, unhandled NPE in DatabaseMetaData.java when calling
      wrong-cased function without access to mysql.proc. Although simple by
      itself, some more enhancements were needed for everything to function
-     properly.  So, along with catching potential NPE due to server bug, a
+     properly.  So, along with catching potential NPE due to Server_Java bug, a
      guard against calling JDBC functions with db_name.proc_name notation was
      also added. Necessary changes added to StringUtils.java too.
 
@@ -1898,7 +1898,7 @@ Version 6.0.6
 
        loadBalanceAutoCommitStatementThreshold defines the number of matching
        statements which will trigger the driver to (potentially) swap physical
-       server connections,
+       Server_Java connections,
 
        loadBalanceAutoCommitStatementRegex defines the regular expression
        against which statements must match.  The default values (0 and blank,
@@ -1961,10 +1961,10 @@ Version 6.0.6
       longer has to be specified.
 
     - Fixed Bug#56979 - Improper connection closing logic leads to TIME_WAIT
-      sockets on server
+      sockets on Server_Java
 
     - Fixed Bug#57380 - DatabaseMetaData.supportsMultipleResultSets() now returns
-      true when connected to a 4.1 version or later server.
+      true when connected to a 4.1 version or later Server_Java.
 
     - Fixed Bug#58706 - Failover connections didn't honor "failOverReadOnly=false", and in some
       situations would not fall back.
@@ -2080,7 +2080,7 @@ Version 6.0.6
     - Fixed Bug#50538 - ${svn.revno} shows up in DBMD.getDriverVersion().
 
     - Removed usage of timestamp nanoseconds in PreparedStatement.setTimestamp(),
-      as long as Bug#50774 exists in the server and there's no real support
+      as long as Bug#50774 exists in the Server_Java and there's no real support
       for nanos/micros in TIMESTAMPs, avoid the performance regression usage of
       them causes.
 
@@ -2103,15 +2103,15 @@ Version 6.0.6
 
     - Fix for BUG#48172 - Batch rewrite requires space immediately after "VALUES"
 
-    - Statement Interceptors didn't completely intercept server-side prepared statements.
+    - Statement Interceptors didn't completely intercept Server_Java-side prepared statements.
 
     - Fix for BUG#48486 Cannot use load balanced connections with MysqlConnectionPoolDataSource.
 
-    - Fix for Bug#32525 - "noDatetimeStringSync" doesn't work for server-side prepared statements. Now it does.
+    - Fix for Bug#32525 - "noDatetimeStringSync" doesn't work for Server_Java-side prepared statements. Now it does.
 
     - Hooked up exception interceptors so they get called now.
 
-    - Rev'd the statement interceptor interface to pass on some server flags, warning counts and errors. See
+    - Rev'd the statement interceptor interface to pass on some Server_Java flags, warning counts and errors. See
       the com.mysql.jdbc.StatementInteceptorsV2 interface for more details. The driver will create adaptors to
       transparently convert older implementations to the newer interface at runtime.
 
@@ -2157,13 +2157,13 @@ Version 6.0.6
 
     - Fixed BUG#46637 - When the driver encounters an error condition that causes it to create a
       CommunicationsException, it tries to build a friendly error message that helps diagnose
-      what is wrong. However, if there has been no network packets received from the server,
+      what is wrong. However, if there has been no network packets received from the Server_Java,
       the error message contains bogus information like:
 
-      "The last packet successfully received from the server was 1,249,932,468,916 milliseconds ago.
-      The last packet sent successfully to the server was 0 milliseconds ago."
+      "The last packet successfully received from the Server_Java was 1,249,932,468,916 milliseconds ago.
+      The last packet sent successfully to the Server_Java was 0 milliseconds ago."
 
-      Now the error message states that it has never received any packets from the server in this
+      Now the error message states that it has never received any packets from the Server_Java in this
       scenario.
 
     - Added a new option, "queryTimeoutKillsConnection", when set to "true" will cause timeouts set
@@ -2178,11 +2178,11 @@ Version 6.0.6
       swath of code used to generate lists of hosts, both for load-balanced and fault tolerant connections and
       their tests.
 
-    - Fixed the ResultSet side of BUG#23584 - Calendar discared when retrieving dates from server-side prepared
+    - Fixed the ResultSet side of BUG#23584 - Calendar discared when retrieving dates from Server_Java-side prepared
       statements. The other cases of this bug were fixed when "useLegacyDatetimeCode=false" became the default.
 
-    - Fixed Bug#44324 - Data truncation exceptions did not return the vendor error code from the server. Note that
-      the vendor error code is not hard-coded to 1265 as in the bug report, because the server returns different
+    - Fixed Bug#44324 - Data truncation exceptions did not return the vendor error code from the Server_Java. Note that
+      the vendor error code is not hard-coded to 1265 as in the bug report, because the Server_Java returns different
       error codes for different types of truncations, and we did not want to mask those.
 
     - Fixed Bug#27431 - ResultSet.deleteRow() advances the cursor. The driver now places the cursor on the prior
@@ -2207,7 +2207,7 @@ Version 6.0.6
     - Modified/fixed test cases using UnreliableSocketFactory.
 
     - Fixed BUG#43421 - Made doPing() global blacklist-aware, so that it does not
-      throw Exceptions when at least a single load-balanced server is available.
+      throw Exceptions when at least a single load-balanced Server_Java is available.
 
     - Fixed BUG#43071 - Specifying ASCII encoding for converting seed String to
       byte array; allowing system default encoding to be used causes auth failures
@@ -2233,8 +2233,8 @@ Version 6.0.6
       when connecting to MySQL-4.1 or older.
 
     - The driver will automatically disable elideSetAutoCommit and useLocalTransactionState
-      if it detects a MySQL server version older than 6.0.10 with the query cache enabled, due
-      to Bug#36326 which can cause the server to report bogus transaction state.
+      if it detects a MySQL Server_Java version older than 6.0.10 with the query cache enabled, due
+      to Bug#36326 which can cause the Server_Java to report bogus transaction state.
 
     - Fixed a performance regression (Bug#41532) in rewritten batched inserts when "ON DUPLICATE KEY"
       was present.
@@ -2247,8 +2247,8 @@ Version 6.0.6
     - Fixed Bug#44056 - Statement.getGeneratedKeys() retains result set instances until statement is closed,
       thus causing memory leaks for long-lived statements, or statements used in tight loops.
 
-    - Fixed issues with server-side prepared statement batch re-writing caused by the fix to Bug#41532.
-      Rewriting of batched statements now works the same between normal prepared statements and server-side
+    - Fixed issues with Server_Java-side prepared statement batch re-writing caused by the fix to Bug#41532.
+      Rewriting of batched statements now works the same between normal prepared statements and Server_Java-side
       prepared statements.
 
     - Fixed Bug#44862 - getBestRowIdentifier does not return resultset as per JDBC API specifications
@@ -2266,7 +2266,7 @@ Version 6.0.6
     - Fixed Bug#41730 - SQL Injection when using U+00A5 and SJIS
 
     - Fixed Bug#43196 - Statement.getGeneratedKeys() doesn't return values for UNSIGNED BIGINTS with values > Long.MAX_VALUE.
-      Unfortunately, because the server doesn't tell clients what TYPE the auto increment value is, the driver can't consistently
+      Unfortunately, because the Server_Java doesn't tell clients what TYPE the auto increment value is, the driver can't consistently
       return BigIntegers for the result set returned from getGeneratedKeys(), it will only return them if the value is > Long.MAX_VALUE.
       If your application needs this consistency, it will need to check the class of the return value from .getObject() on the
       ResultSet returned by Statement.getGeneratedKeys() and if it's not a BigInteger, create one based on the java.lang.Long that
@@ -2300,18 +2300,18 @@ Version 6.0.6
     - Support use of INFORMATION_SCHEMA.PARAMETERS when "useInformationSchema" is set "true" and the view exists
       for DatabaseMetaData.getProcedureColumns() and getFunctionColumns().
 
-    - When "logSlowQueries" is set to "true", and the driver has made a connection to a server that has suport
-      for the SERVER_QUERY_WAS_SLOW flag in the protocol, the query will be logged if the server indicates the
+    - When "logSlowQueries" is set to "true", and the driver has made a connection to a Server_Java that has suport
+      for the SERVER_QUERY_WAS_SLOW flag in the protocol, the query will be logged if the Server_Java indicates the
       query has passed the slow query threshold.
 
     - Added new property, "maxAllowedPacket" to set maximum allowed packet size to
-      send to server.
+      send to Server_Java.
 
 10-22-08 - Version 5.1.7
 	- Fixed BUG#33861 - Added global blacklist for LoadBalancingConnectionProxy and
 	  implemented in RandomBalanceStrategy and BestResponseTimeBalanceStrategy.
 	  Added new property, "loadBalanceBlacklistTimeout", to control how long a
-	  server lives in the global blacklist.
+	  Server_Java lives in the global blacklist.
 
 	- Fixed BUG#38782 - Possible IndexOutOfBoundsException in random load balancing
 	  strategy.
@@ -2334,7 +2334,7 @@ Version 6.0.6
 	  CONCUR_READONLY from getConcurrency.
 
 	- Fixed BUG#35666 - NullPointerException when using "logSlowQueries=true" with
-	  server-side prepared statements enabled.
+	  Server_Java-side prepared statements enabled.
 
 	- Fixed BUG#35660 - Calling equals() on connections created with "jdbc:mysql:loadbalance:"
 	  URLs did not have the same behavior as "plain" connections. The behavior we use
@@ -2387,8 +2387,8 @@ Version 6.0.6
 	  also made INFORMATION_SCHEMA tables available via DatabaseMetadata.getColumns().
 
 	- Fixed BUG#39352, "INSERT ... ON DUPLICATE KEY UPDATE" doesn't return "0" for un-affected rows. This requires the driver to not
-	  send the "CLIENT_FOUND_ROWS" flag to the server when it connects if the connection property "useAffectedRows" is set to "true",
-	  which breaks JDBC-compliance, but currently there is no other way to get correct return values from the server.
+	  send the "CLIENT_FOUND_ROWS" flag to the Server_Java when it connects if the connection property "useAffectedRows" is set to "true",
+	  which breaks JDBC-compliance, but currently there is no other way to get correct return values from the Server_Java.
 
 	- Fixed BUG#38747 - ResultSets in "streaming" mode throw an exception when closed when the connection is set as "read-only".
 
@@ -2429,14 +2429,14 @@ Version 6.0.6
 
     - Fixed Bug#20491 - DatabaseMetadata.getColumns() doesn't
       return correct column names if connection character set
-      isn't UTF-8. (There was a server-side component of this that
+      isn't UTF-8. (There was a Server_Java-side component of this that
       was fixed late in the 5.0 development cycle, it seems, this
       is the last piece that fixes some loose ends in the JDBC
       driver). This fix touches *all* metadata information coming
-      from the MySQL server itself.
+      from the MySQL Server_Java itself.
 
-    - Fixed MysqlIO.nextRowFast() to only attempt to read server
-      warning counts and status if talking to a 4.1 or newer server
+    - Fixed MysqlIO.nextRowFast() to only attempt to read Server_Java
+      warning counts and status if talking to a 4.1 or newer Server_Java
       (fixes a hang when reading data from 4.0 servers).
 
     - Made profiler event handling extensible via the "profilerEventHandler"
@@ -2446,7 +2446,7 @@ Version 6.0.6
       throw an ArrayIndexOutOfBounds when setting the last parameter to null when calling setNull().
 
     - Added SSL-related configuration property "verifyServerCertificate". If set to "false", the driver won't verify
-      the server's certificate when "useSSL" is set to "true".
+      the Server_Java's certificate when "useSSL" is set to "true".
 
       When using this feature, the keystore parameters should be specified by the
       "clientCertificateKeyStore*" properties, rather than system properties, as the JSSE doesn't
@@ -2465,10 +2465,10 @@ Version 6.0.6
       the literal that MySQL requires.
 
       Note that to get this scenario to work with MySQL (since it doesn't support
-      per-value timezones), you need to configure your server (or session) to be in UTC,
+      per-value timezones), you need to configure your Server_Java (or session) to be in UTC,
       and tell the driver not to use the legacy date/time code by setting
       "useLegacyDatetimeCode" to "false". This will cause the driver to always convert
-      to/from the server and client timezone consistently.
+      to/from the Server_Java and Client_Java timezone consistently.
 
       This bug fix also fixes BUG#15604, by adding entirely new date/time handling
       code that can be switched on by "useLegacyDatetimeCode" being set to "false" as
@@ -2494,7 +2494,7 @@ Version 6.0.6
 
     - Added two new connection properties, "selfDestructOnPingSecondsLifetime" and
       "selfDestructOnPingMaxOperations" designed to control overall connection lifetime
-      (useful to reclaim resources on the server side) for connection pools that don't have such a
+      (useful to reclaim resources on the Server_Java side) for connection pools that don't have such a
       facility.
 
       The driver will consult the values of these properties when a ping is sent, either through
@@ -2505,11 +2505,11 @@ Version 6.0.6
       throw a SQLException with the SQLState of "08S01" at the time of the ping, which
       will cause the connection to be invalidated with most pools in use today.
 
-    - Fixed issue where driver could send invalid server-side prepared statement
-      IDs to the server when the driver was setup to do auto-reconnect as the
+    - Fixed issue where driver could send invalid Server_Java-side prepared statement
+      IDs to the Server_Java when the driver was setup to do auto-reconnect as the
       connection could get set up enough to start sending queries on one thread,
       while the thread that "noticed" the connection was down hasn't completed
-      re-preparing all of the server-side prepared statements that were open when
+      re-preparing all of the Server_Java-side prepared statements that were open when
       the connection died.
 
       Potentially fixes cause for bug 28934. Potentially fixes other possible race
@@ -2545,7 +2545,7 @@ Version 6.0.6
     - Fixed BUG#34677 - Blob.truncate() wouldn't take "0" as an argument.
 
     - CommunicationExceptions now carry information about the last time a packet
-      was received from the MySQL server, as well as when the last packet was sent
+      was received from the MySQL Server_Java, as well as when the last packet was sent
       to one, in an effort to make it easier to debug communications errors caused
       by network timeouts.
 
@@ -2572,15 +2572,15 @@ Version 6.0.6
 
     - The ConnectionLifecycleInterceptor interface now has callback methods for
       transaction initiation (transactionBegun()), and completion
-      (transactionCompleted()), as reported by the *server* (i.e.
+      (transactionCompleted()), as reported by the *Server_Java* (i.e.
       calling Connection.setAutoCommit(false) will not trigger
       transactionBegun() being called, however the first statement
-      which causes a transaction to start on the server will cause
+      which causes a transaction to start on the Server_Java will cause
       transactionBegun() to be called *after* the statement has been processed
-      on the server).
+      on the Server_Java).
 
     - Fixed Bug#34913 - ResultSet.getTimestamp() returns incorrect
-      values for month/day of TIMESTAMPs when using server-side
+      values for month/day of TIMESTAMPs when using Server_Java-side
       prepared statements (not enabled by default).
 
     - Fixed BUG#34937 - MysqlConnectionPoolDataSource does not support
@@ -2597,7 +2597,7 @@ Version 6.0.6
       servers, especially in connection pools. Connections that are configured
       with "roundRobinLoadBalance=true" no longer set the failover state,
       as it's assumed that we're not attempting to fall-back to a master
-      server. This fixes BUG#34963.
+      Server_Java. This fixes BUG#34963.
 
 10-09-07 - Version 5.1.5
 
@@ -2620,7 +2620,7 @@ Version 6.0.6
 	- Setting "useBlobToStoreUTF8OutsideBMP" to "true" tells the
 	  driver to treat [MEDIUM/LONG/TINY]BLOB columns as [LONG]VARCHAR
 	  columns holding text encoded in UTF-8 that has characters
-	  outside the BMP (4-byte encodings), which MySQL server
+	  outside the BMP (4-byte encodings), which MySQL Server_Java
 	  can't handle natively.
 
 	  Set "utf8OutsideBmpExcludedColumnNamePattern" to a regex so that
@@ -2637,7 +2637,7 @@ Version 6.0.6
 	  and getLocalInfileInputStream().
 
 	  setLocalInfileInputStream() sets an InputStream instance that will be used to send data
-      to the MySQL server for a "LOAD DATA LOCAL INFILE" statement
+      to the MySQL Server_Java for a "LOAD DATA LOCAL INFILE" statement
       rather than a FileInputStream or URLInputStream that represents
       the path given as an argument to the statement.
 
@@ -2645,7 +2645,7 @@ Version 6.0.6
       "LOAD DATA LOCAL INFILE" statement, and will automatically
       be closed by the driver, so it needs to be reset
       before each call to execute*() that would cause the MySQL
-      server to request data to fulfill the request for
+      Server_Java to request data to fulfill the request for
       "LOAD DATA LOCAL INFILE".
 
       If this value is set to NULL, the driver will revert to using
@@ -2707,7 +2707,7 @@ Version 6.0.6
       to Connection.serverPrepareStatement() for consistency with
       Connection.clientPrepareStatement().
 
-      We've also added server and client prepareStatement() methods that cover
+      We've also added Server_Java and Client_Java prepareStatement() methods that cover
       all of the variants in the JDBC API.
 
     - Similar to Connection, we pulled out vendor extensions to Statement
@@ -2750,7 +2750,7 @@ Version 6.0.6
 
     - Setting "rewriteBatchedStatements" to "true" now causes CallableStatements
       with batched arguments to be re-written in the form "CALL (...); CALL (...); ..."
-      to send the batch in as few client-server round trips as possible.
+      to send the batch in as few Client_Java-Server_Java round trips as possible.
 
     - Driver now picks appropriate internal row representation (whole row in one
       buffer, or individual byte[]s for each column value) depending on heuristics,
@@ -2793,7 +2793,7 @@ Version 6.0.6
 	  the old class will not be instantiated for communications link-related
 	  errors under Java 6.
 
-	- Added support for JDBC-4.0's client information. The backend storage
+	- Added support for JDBC-4.0's Client_Java information. The backend storage
 	  of information provided via Connection.setClientInfo() and retrieved
 	  by Connection.getClientInfo() is pluggable by any class that implements
 	  the com.mysql.jdbc.JDBC4ClientInfoProvider interface and has a no-args
@@ -2802,8 +2802,8 @@ Version 6.0.6
 	  The implementation used by the driver is configured using the
 	  "clientInfoProvider" configuration property (with a default of value
 	  of "com.mysql.jdbc.JDBC4CommentClientInfoProvider", an implementation
-	  which lists the client info as a comment prepended to every query
-	  sent to the server).
+	  which lists the Client_Java info as a comment prepended to every query
+	  sent to the Server_Java).
 
 	  This functionality is only available when using Java-6 or newer.
 
@@ -2827,24 +2827,24 @@ nn-nn-07 - Version 5.0.9
 
             * blobsAreStrings  - Should the driver always treat BLOBs as Strings
                                  specifically to work around dubious metadata returned
-                                 by the server for GROUP BY clauses?
+                                 by the Server_Java for GROUP BY clauses?
 
             * functionsNeverReturnBlobs - Should the driver always treat data from
                                           functions returning BLOBs as Strings -
                                           specifically to work around dubious metadata
-                                          returned by the server for GROUP BY clauses?
+                                          returned by the Server_Java for GROUP BY clauses?
 
     - Fixed BUG#29106 - Connection checker for JBoss didn't use same method parameters
       via reflection, causing connections to always seem "bad".
 
-    - Fixed BUG#30664 - Note that this fix only works for MySQL server
+    - Fixed BUG#30664 - Note that this fix only works for MySQL Server_Java
       versions 5.0.25 and newer, since earlier versions didn't consistently
       return correct metadata for functions, and thus results from
       subqueries and functions were indistinguishable from each other,
       leading to type-related bugs.
 
     - Fixed BUG#28972 - DatabaseMetaData.getTypeInfo() for the types DECIMAL
-      and NUMERIC will return a precision of 254 for server versions older than
+      and NUMERIC will return a precision of 254 for Server_Java versions older than
       5.0.3, 64 for versions 5.0.3-5.0.5 and 65 for versions newer than 5.0.5.
 
     - Fixed BUG#29852 - Closing a load-balanced connection would cause a
@@ -2873,7 +2873,7 @@ nn-nn-07 - Version 5.0.9
 
     - Specifying a "validation query" in your connection pool
       that starts with "/* ping */" _exactly_ will cause the driver to
-      instead send a ping to the server and return a fake result set (much
+      instead send a ping to the Server_Java and return a fake result set (much
       lighter weight), and when using a ReplicationConnection or a LoadBalancedConnection,
       will send the ping across all active connections.
 
@@ -2887,7 +2887,7 @@ nn-nn-07 - Version 5.0.9
       throws NullPointerException.
 
     - Driver will now fall back to sane defaults for max_allowed_packet and
-      net_buffer_length if the server reports them incorrectly (and will log
+      net_buffer_length if the Server_Java reports them incorrectly (and will log
       this situation at WARN level, since it's actually an error condition).
 
     - Fixed BUG#27916 - UNSIGNED types not reported via DBMD.getTypeInfo(), and
@@ -2899,10 +2899,10 @@ nn-nn-07 - Version 5.0.9
 
     - Fixed BUG#31053 - Connections established using URLs of the form
       "jdbc:mysql:loadbalance://" weren't doing failover if they tried to
-      connect to a MySQL server that was down. The driver now attempts
+      connect to a MySQL Server_Java that was down. The driver now attempts
       connections to the next "best" (depending on the load balance strategy
-      in use) server, and continues to attempt connecting to the next "best"
-      server every 250 milliseconds until one is found that is up and running
+      in use) Server_Java, and continues to attempt connecting to the next "best"
+      Server_Java every 250 milliseconds until one is found that is up and running
       or 5 minutes has passed.
 
       If the driver gives up, it will throw the last-received SQLException.
@@ -2913,11 +2913,11 @@ nn-nn-07 - Version 5.0.9
       MySQL-5.0+ enables the use of cursors that allow Connector/J to save
       memory by fetching result set rows in chunks (where the chunk size
       is set by calling setFetchSize() on a Statement or ResultSet) by
-      using fully-materialized cursors on the server.
+      using fully-materialized cursors on the Server_Java.
 
       The driver will will now automatically set "useServerPrepStmts" to
       "true" when "useCursorFetch" has been set to "true", since the feature
-      requires server-side prepared statements in order to function.
+      requires Server_Java-side prepared statements in order to function.
 
 	- Fixed BUG#28469 - PreparedStatement.getMetaData() for statements
 	  containing leading one-line comments is not returned correctly.
@@ -2967,7 +2967,7 @@ nn-nn-07 - Version 5.0.9
 
 	- Give more information in EOFExceptions thrown out of MysqlIO (how many
 	  bytes the driver expected to read, how many it actually read, say that
-	  communications with the server were unexpectedly lost).
+	  communications with the Server_Java were unexpectedly lost).
 
 	- Setting "useDynamicCharsetInfo" to "false" now causes driver to use
 	  static lookups for collations as well (makes
@@ -2975,23 +2975,23 @@ nn-nn-07 - Version 5.0.9
 	  to performance increase for ColdFusion, which calls this method for
 	  every column on every table it sees, it appears).
 
-	- Driver detects when it is running in a ColdFusion MX server (tested
+	- Driver detects when it is running in a ColdFusion MX Server_Java (tested
 	  with version 7), and uses the configuration bundle "coldFusion",
 	  which sets useDynamicCharsetInfo to "false" (see previous entry), and
 	  sets useLocalSessionState and autoReconnect to "true".
 
-	- Fixed BUG#28851 - parser in client-side prepared statements
+	- Fixed BUG#28851 - parser in Client_Java-side prepared statements
 	  eats character following '/' if it's not a multi-line comment.
 
-	- Fixed BUG#28956 - parser in client-side prepared statements
+	- Fixed BUG#28956 - parser in Client_Java-side prepared statements
 	  runs to end of statement, rather than end-of-line for '#' comments.
 
 	  Also added support for '--' single-line comments.
 
 	- Don't send any file data in response to LOAD DATA LOCAL INFILE
-	  if the feature is disabled at the client side. This is to prevent
-	  a malicious server or man-in-the-middle from asking the client for
-	  data that the client is not expecting. Thanks to Jan Kneschke for
+	  if the feature is disabled at the Client_Java side. This is to prevent
+	  a malicious Server_Java or man-in-the-middle from asking the Client_Java for
+	  data that the Client_Java is not expecting. Thanks to Jan Kneschke for
 	  discovering the exploit and Andrey "Poohie" Hristov, Konstantin Osipov
 	  and Sergei Golubchik for discussions about implications and possible
 	  fixes. This fixes BUG 29605 for JDBC.
@@ -3015,8 +3015,8 @@ nn-nn-07 - Version 5.0.9
 	  be thrown when calling stored procedure on JDK-1.5 or newer, as the Number
 	  classes in JDK-1.5+ are whitespace intolerant.
 
-	- Fixed BUG#26173 - When useCursorFetch=true, sometimes server would return
-	  new, more exact metadata during the execution of the server-side prepared
+	- Fixed BUG#26173 - When useCursorFetch=true, sometimes Server_Java would return
+	  new, more exact metadata during the execution of the Server_Java-side prepared
 	  statement that enables this functionality, which the driver ignored (using
 	  the original metadata returned during prepare()), causing corrupt reading
 	  of data due to type mismatch when the actual rows were returned.
@@ -3027,7 +3027,7 @@ nn-nn-07 - Version 5.0.9
 	  comments in them.
 
 	- Give better error message when "streaming" result sets, and the connection
-	  gets clobbered because of exceeding net_write_timeout on the server. (which is
+	  gets clobbered because of exceeding net_write_timeout on the Server_Java. (which is
 	  basically what the error message says too).
 
 	- Fixed BUG#26789 - fast date/time parsing doesn't take into
@@ -3051,13 +3051,13 @@ nn-nn-07 - Version 5.0.9
 
 	- Fixed BUG#27400 - CALL /* ... */ some_proc() doesn't work. As a side effect
 	  of this fix, you can now use /* */ and # comments when preparing statements using
-	  client-side prepared statement emulation.
+	  Client_Java-side prepared statement emulation.
 
 	  If the comments happen to contain parameter markers '?', they will be treated
 	  as belonging to the comment (i.e. not recognized) rather than being a parameter
 	  of the statement.
 
-	  Note that the statement when sent to the server will contain the comments
+	  Note that the statement when sent to the Server_Java will contain the comments
 	  as-is, they're not stripped during the process of preparing the PreparedStatement
 	  or CallableStatement.
 
@@ -3078,7 +3078,7 @@ nn-nn-07 - Version 5.0.9
 
 	- Added configuration property "useDynamicCharsetInfo". If set to "false"
 	  (the default), the driver will use a per-connection cache of character set
-	  information queried from the server when necessary, or when set to "true",
+	  information queried from the Server_Java when necessary, or when set to "true",
 	  use a built-in static mapping that is more efficient, but isn't aware of
 	  custom character sets or character sets implemented after the release of
 	  the JDBC driver.
@@ -3106,7 +3106,7 @@ nn-nn-07 - Version 5.0.9
 	- Driver will now use INSERT INTO ... VALUES (DEFAULT) form of statement
 	  for updatable result sets for ResultSet.insertRow(), rather than
 	  pre-populating the insert row with values from DatabaseMetaData.getColumns()
-	  (which results in a "SHOW FULL COLUMNS" on the server for every result
+	  (which results in a "SHOW FULL COLUMNS" on the Server_Java for every result
 	  set). If an application requires access to the default values before
 	  insertRow() has been called, the JDBC URL should be configured with
 	  "populateInsertRowWithDefaultValues" set to "true".
@@ -3160,34 +3160,34 @@ nn-nn-07 - Version 5.0.9
         the best response time for the previous transaction.
 
     - When "useLocalSessionState" is set to "true" and connected to a MySQL-5.0 or
-      later server, the JDBC driver will now determine whether an actual "commit" or
+      later Server_Java, the JDBC driver will now determine whether an actual "commit" or
       "rollback" statement needs to be sent to the database when Connection.commit()
       or Connection.rollback() is called.
 
       This is especially helpful for high-load situations with connection pools that
       always call Connection.rollback() on connection check-in/check-out because it
-      avoids a round-trip to the server.
+      avoids a round-trip to the Server_Java.
 
 03-01-07 - Version 5.0.5
 
     - Fixed BUG#23645 - Some collations/character sets reported as "unknown"
 	  (specifically cias variants of existing character sets), and inability to override
-	  the detected server character set.
+	  the detected Server_Java character set.
 
 	- Performance enhancement of initial character set configuration, driver
       will only send commands required to configure connection character set
-      session variables if the current values on the server do not match
+      session variables if the current values on the Server_Java do not match
       what is required.
 
     - Fixed BUG#24360 .setFetchSize() breaks prepared SHOW and other commands.
 
-    - Fixed BUG#24344 - useJDBCCompliantTimezoneShift with server-side prepared
-	  statements gives different behavior than when using client-side prepared
-	  statements. (this is now fixed if moving from server-side prepared statements
-	  to client-side prepared statements by setting "useSSPSCompatibleTimezoneShift" to
+    - Fixed BUG#24344 - useJDBCCompliantTimezoneShift with Server_Java-side prepared
+	  statements gives different behavior than when using Client_Java-side prepared
+	  statements. (this is now fixed if moving from Server_Java-side prepared statements
+	  to Client_Java-side prepared statements by setting "useSSPSCompatibleTimezoneShift" to
 	  true", as the driver can't tell if this is a new deployment that never used
-	  server-side prepared statements, or if it is an existing deployment that is
-	  switching to client-side prepared statements from server-side prepared statements.
+	  Server_Java-side prepared statements, or if it is an existing deployment that is
+	  switching to Client_Java-side prepared statements from Server_Java-side prepared statements.
 
     - Fixed BUG#23304 - DBMD using "show" and DBMD using information_schema do
       not return results consistent with each other. (note this fix only
@@ -3207,11 +3207,11 @@ nn-nn-07 - Version 5.0.9
 	  in-line (/* ... */) comments and therefore can't rewrite batched statements
 	  or reliably detect type of statements when they're used.
 
-	- Fixed BUG#24065 - Better error message when server doesn't return enough
+	- Fixed BUG#24065 - Better error message when Server_Java doesn't return enough
 	  information to determine stored procedure/function parameter types.
 
-	- Fixed BUG#21438 - Driver sending nanoseconds to server for timestamps when
-	  using server-side prepared statements, when server expects microseconds.
+	- Fixed BUG#21438 - Driver sending nanoseconds to Server_Java for timestamps when
+	  using Server_Java-side prepared statements, when Server_Java expects microseconds.
 
 	- Fixed BUG#25514 - Timer instance used for Statement.setQueryTimeout()
 	  created per-connection, rather than per-VM, causing memory leak
@@ -3234,7 +3234,7 @@ nn-nn-07 - Version 5.0.9
 
     - Fixed BUG#25399 - EscapeProcessor gets confused by multiple
       backslashes. We now push the responsibility of syntax errors back
-      on to the server for most escape sequences.
+      on to the Server_Java for most escape sequences.
 
 	- Fixed BUG#25379 - INOUT parameters in CallableStatements get
 	  doubly-escaped.
@@ -3271,16 +3271,16 @@ nn-nn-07 - Version 5.0.9
 	  when "cacheResultSetMetadata=true" was configured.
 
 	- Use faster datetime parsing for ResultSets that come from plain or
-	  non-server-side prepared statements. (Enable old implementation with
+	  non-Server_Java-side prepared statements. (Enable old implementation with
 	  "useFastDateParsing=false" as a configuration parameter).
 
 	- Fixed BUG#24794 - DatabaseMetaData.getSQLKeywords() doesn't return
 	  all reserved words for current MySQL version. The current fix/implementation
 	  returns keywords for MySQL-5.1, and doesn't distinguish between different
-	  versions of the server.
+	  versions of the Server_Java.
 
 	- When using cached metadata, skip field-level metadata packets coming from
-	  the server, rather than reading them and discarding them without creating
+	  the Server_Java, rather than reading them and discarding them without creating
 	  com.mysql.jdbc.Field instances.
 
 	- Fixed BUG#25836 - Statement execution which timed out doesn't always
@@ -3291,7 +3291,7 @@ nn-nn-07 - Version 5.0.9
 
 	- Added configuration property "localSocketAddress",which is the hostname or
 	  IP address given to explicitly configure the interface that the driver will
-	  bind the client side of the TCP/IP connection to when connecting.
+	  bind the Client_Java side of the TCP/IP connection to when connecting.
 
 	- Take "localSocketAddress" property into account when creating instances
 	  of CommunicationsException when the underyling exception is a
@@ -3300,7 +3300,7 @@ nn-nn-07 - Version 5.0.9
 
 	- Fixed some NPEs when cached metadata was used with UpdatableResultSets.
 
-	- The "rewriteBatchedStatements" feature can now be used with server-side
+	- The "rewriteBatchedStatements" feature can now be used with Server_Java-side
 	  prepared statements.
 
 	- Fixed BUG#26326 - Connection property "socketFactory" wasn't exposed via
@@ -3331,7 +3331,7 @@ nn-nn-07 - Version 5.0.9
 	  (which could happen for cross-reference or imported-key requests, as
 	  the list of tables is generated first, then iterated).
 
-	- Fixed logging of XA commands sent to server, it's now configurable
+	- Fixed logging of XA commands sent to Server_Java, it's now configurable
 	  via "logXaCommands" property (defaults to "false").
 
 	- Fixed issue where XADataSources couldn't be bound into JNDI,
@@ -3349,7 +3349,7 @@ nn-nn-07 - Version 5.0.9
 10-20-06 - Version 5.0.4
 
     - Fixed BUG#21379 - column names don't match metadata in cases
-      where server doesn't return original column names (column functions)
+      where Server_Java doesn't return original column names (column functions)
 	  thus breaking compatibility with applications that expect 1-1 mappings
 	  between findColumn() and rsmd.getColumnName(), usually manifests itself
 	  as "Can't find column ('')" exceptions.
@@ -3374,24 +3374,24 @@ nn-nn-07 - Version 5.0.9
 	  Statement.setQueryTimeout() when specification says argument is
 	  to be in seconds.
 
-	- Workaround for server crash when calling stored procedures
-	  via a server-side prepared statement (driver now detects
-	  prepare(stored procedure) and substitutes client-side prepared
+	- Workaround for Server_Java crash when calling stored procedures
+	  via a Server_Java-side prepared statement (driver now detects
+	  prepare(stored procedure) and substitutes Client_Java-side prepared
 	  statement), addresses BUG#22297.
 
 	- Added new _ci collations to CharsetMapping, fixing
 	  Bug#22456 - utf8_unicode_ci not working.
 
 	- Fixed BUG#22290 - Driver issues truncation on write exception when
-	  it shouldn't (due to sending big decimal incorrectly to server with
-	  server-side prepared statement).
+	  it shouldn't (due to sending big decimal incorrectly to Server_Java with
+	  Server_Java-side prepared statement).
 
 	- Fixed BUG#22613 - DBMD.getColumns() does not return expected
 	  COLUMN_SIZE for the SET type, now returns length of largest possible
 	  set disregarding whitespace or the "," delimitters to be consistent
 	  with the ODBC driver.
 
-	- Driver now sends numeric 1 or 0 for client-prepared statement
+	- Driver now sends numeric 1 or 0 for Client_Java-prepared statement
 	  setBoolean() calls instead of '1' or '0'.
 
 	- DatabaseMetaData correctly reports true for supportsCatalog*()
@@ -3400,7 +3400,7 @@ nn-nn-07 - Version 5.0.9
 07-26-06 - Version 5.0.3
 
     - Fixed BUG#20650 - Statement.cancel() causes NullPointerException
-      if underlying connection has been closed due to server failure.
+      if underlying connection has been closed due to Server_Java failure.
 
     - Added configuration option "noAccessToProcedureBodies" which will
       cause the driver to create basic parameter metadata for
@@ -3418,8 +3418,8 @@ nn-nn-07 - Version 5.0.9
       was assuming that the platform character set would be a superset
       of MySQL's "latin1" when doing the handshake for authentication,
       and when reading error messages. We now use Cp1252 for all strings
-      sent to the server during the handshake phase, and a hard-coded mapping
-      of the "language" server variable to the character set that
+      sent to the Server_Java during the handshake phase, and a hard-coded mapping
+      of the "language" Server_Java variable to the character set that
       is used for error messages.
 
     - Fixed BUG#19169 - ConnectionProperties (and thus some
@@ -3453,11 +3453,11 @@ nn-nn-07 - Version 5.0.9
     - XADataSource implemented (ported from 3.2 branch which won't be
       released as a product). Use
       "com.mysql.jdbc.jdbc2.optional.MysqlXADataSource" as your datasource
-      class name in your application server to utilize XA transactions
+      class name in your application Server_Java to utilize XA transactions
       in MySQL-5.0.10 and newer.
 
     - PreparedStatement.setString() didn't work correctly when
-      sql_mode on server contained NO_BACKSLASH_ESCAPES, and no characters
+      sql_mode on Server_Java contained NO_BACKSLASH_ESCAPES, and no characters
       that needed escaping were present in the string.
 
     - Attempt detection of the MySQL type "BINARY" (it's an alias, so this isn't
@@ -3481,7 +3481,7 @@ nn-nn-07 - Version 5.0.9
       causes the driver to use GMT for _all_ TIMESTAMP/DATETIME timezones,
       and the current VM timezone for any other type that refers to timezones.
       This feature can not be used when "useTimezone=true" to convert between
-      server and client timezones.
+      Server_Java and Client_Java timezones.
 
     - Add one level of indirection of internal representation of CallableStatement
       parameter metadata to avoid class not found issues on JDK-1.3 for
@@ -3524,7 +3524,7 @@ nn-nn-07 - Version 5.0.9
       part of fix to BUG#14972).
 
     - Implementation of Statement.cancel() and Statement.setQueryTimeout().
-      Both require MySQL-5.0.0 or newer server, require a separate connection
+      Both require MySQL-5.0.0 or newer Server_Java, require a separate connection
       to issue the "KILL QUERY" command, and in the case of setQueryTimeout()
       creates an additional thread to handle the timeout functionality.
 
@@ -3576,7 +3576,7 @@ nn-nn-07 - Version 3.1.15
 	- Fixed BUG#23281 - Downed slave caused round-robin load balance to
 	  not cycle back to first host in list.
 
-	- Disabled use of server-side prepared statements by default.
+	- Disabled use of Server_Java-side prepared statements by default.
 
 	- Handle YYYY-MM-DD hh:mm:ss format of timestamp in
 	  ResultSet.getTimeFromString().
@@ -3598,7 +3598,7 @@ nn-nn-07 - Version 3.1.15
 	  when there is row data and moveToInsertRow() is called.
 
 	- Fixed BUG#20485 - Updatable result set that contains
-	  a BIT column fails when server-side prepared statements are used.
+	  a BIT column fails when Server_Java-side prepared statements are used.
 
 	- Fixed BUG#16987 - Memory leak with profileSQL=true.
 
@@ -3609,9 +3609,9 @@ nn-nn-07 - Version 3.1.15
 	  due to Reference containing RefAddrs with null content.
 
 	- Fixed BUG#20306 - ResultSet.getShort() for UNSIGNED TINYINT
-	  returns incorrect values when using server-side prepared statements.
+	  returns incorrect values when using Server_Java-side prepared statements.
 
-	- Fixed BUG#20687 - Can't pool server-side prepared statements, exception
+	- Fixed BUG#20687 - Can't pool Server_Java-side prepared statements, exception
 	  raised when re-using them.
 
 	- Fixed BUG#21062 - ResultSet.getSomeInteger() doesn't work for BIT(>1).
@@ -3619,7 +3619,7 @@ nn-nn-07 - Version 3.1.15
 	- Fixed BUG#18880 - ResultSet.getFloatFromString() can't retrieve
 	  values near Float.MIN/MAX_VALUE.
 
-	- Fixed BUG#20888 - escape of quotes in client-side prepared
+	- Fixed BUG#20888 - escape of quotes in Client_Java-side prepared
 	  statements parsing not respected. Patch covers more than bug report,
 	  including NO_BACKSLASH_ESCAPES being set, and stacked quote characters
 	  forms of escaping (i.e. '' or "").
@@ -3639,10 +3639,10 @@ nn-nn-07 - Version 3.1.15
 	  to STDERR.
 
 	- Fixed BUG#22290 - Driver issues truncation on write exception when
-	  it shouldn't (due to sending big decimal incorrectly to server with
-	  server-side prepared statement).
+	  it shouldn't (due to sending big decimal incorrectly to Server_Java with
+	  Server_Java-side prepared statement).
 
-	- Driver now sends numeric 1 or 0 for client-prepared statement
+	- Driver now sends numeric 1 or 0 for Client_Java-prepared statement
 	  setBoolean() calls instead of '1' or '0'.
 
 	- Fixed bug where driver would not advance to next host if
@@ -3739,7 +3739,7 @@ nn-nn-07 - Version 3.1.15
 	- Fixed BUG#17587 - clearParameters() on a closed prepared statement
 	  causes NPE.
 
-	- Map "latin1" on MySQL server to CP1252 for MySQL > 4.1.0.
+	- Map "latin1" on MySQL Server_Java to CP1252 for MySQL > 4.1.0.
 
 	- Added additional accessor and mutator methods on ConnectionProperties
 	  so that DataSource users can use same naming as regular URL properties.
@@ -3748,7 +3748,7 @@ nn-nn-07 - Version 3.1.15
 	  warning in set.
 
 	- Improved performance of retrieving BigDecimal, Time, Timestamp and Date
-	  values from server-side prepared statements by creating fewer short-lived
+	  values from Server_Java-side prepared statements by creating fewer short-lived
 	  instances of Strings when the native type is not an exact match for
 	  the requested type. Fixes BUG#18496 for BigDecimals.
 
@@ -3756,28 +3756,28 @@ nn-nn-07 - Version 3.1.15
 	  are corrupted.
 
 	- Fixed BUG#17450 - ResultSet.wasNull() not always reset
-	  correctly for booleans when done via conversion for server-side
+	  correctly for booleans when done via conversion for Server_Java-side
 	  prepared statements.
 
 	- Fixed BUG#16277 - Invalid classname returned for
 	  RSMD.getColumnClassName() for BIGINT type.
 
-	- Fixed case where driver wasn't reading server status correctly when
-	  fetching server-side prepared statement rows, which in some cases
+	- Fixed case where driver wasn't reading Server_Java status correctly when
+	  fetching Server_Java-side prepared statement rows, which in some cases
 	  could cause warning counts to be off, or multiple result sets to not
 	  be read off the wire.
 
 	- Driver now aware of fix for BIT type metadata that went into
-	  MySQL-5.0.21 for server not reporting length consistently (bug
+	  MySQL-5.0.21 for Server_Java not reporting length consistently (bug
 	  number 13601).
 
 	- Fixed BUG#19282 - ResultSet.wasNull() returns incorrect value
-	  when extracting native string from server-side prepared statement
+	  when extracting native string from Server_Java-side prepared statement
 	  generated result set.
 
 11-30-05 - Version 3.1.12
 
-    - Fixed client-side prepared statement bug with embedded ? inside
+    - Fixed Client_Java-side prepared statement bug with embedded ? inside
       quoted identifiers (it was recognized as a placeholder, when it
       was not).
 
@@ -3799,7 +3799,7 @@ nn-nn-07 - Version 3.1.15
 
     - Fixed DatabaseMetaData.stores*Identifiers():
 
-        * if lower_case_table_names=0 (on server):
+        * if lower_case_table_names=0 (on Server_Java):
 
             storesLowerCaseIdentifiers() returns false
             storesLowerCaseQuotedIdentifiers() returns false
@@ -3808,7 +3808,7 @@ nn-nn-07 - Version 3.1.15
             storesUpperCaseIdentifiers() returns false
             storesUpperCaseQuotedIdentifiers() returns true
 
-        * if lower_case_table_names=1 (on server):
+        * if lower_case_table_names=1 (on Server_Java):
 
             storesLowerCaseIdentifiers() returns true
             storesLowerCaseQuotedIdentifiers() returns true
@@ -3838,7 +3838,7 @@ nn-nn-07 - Version 3.1.15
 	- Fixed BUG#14938 - Unable to initialize character set mapping
 	  tables (due to J2EE classloader differences).
 
-	- Fixed BUG#14972 - Deadlock while closing server-side prepared
+	- Fixed BUG#14972 - Deadlock while closing Server_Java-side prepared
 	  statements from multiple threads sharing one connection.
 
 	- Fixed BUG#12230 -	logSlowQueries should give better info.
@@ -3851,7 +3851,7 @@ nn-nn-07 - Version 3.1.15
 	  to "true" (also included in the 3-0-Compat configuration "bundle").
 
 	- Fixed BUG#13048 - maxQuerySizeToLog is not respected. Added logging of
-	  bound values for execute() phase of server-side prepared statements
+	  bound values for execute() phase of Server_Java-side prepared statements
 	  when profileSQL=true as well.
 
 	- Fixed BUG#15065 - Usage advisor complains about unreferenced
@@ -3876,7 +3876,7 @@ nn-nn-07 - Version 3.1.15
       "plain" statements.
 
     - Fixed BUG#11663 - Incorrect generation of testcase scripts
-      for server-side prepared statements.
+      for Server_Java-side prepared statements.
 
     - Fixed regression caused by fix for BUG#11552 that caused driver
       to return incorrect values for unsigned integers when those
@@ -3887,7 +3887,7 @@ nn-nn-07 - Version 3.1.15
     - Fixed BUG#11797 - Escape tokenizer doesn't respect stacked single quotes
 	  for escapes.
 
-	- GEOMETRY type not recognized when using server-side prepared statements.
+	- GEOMETRY type not recognized when using Server_Java-side prepared statements.
 
     - Fixed BUG#11879 -- ReplicationConnection won't switch to slave, throws
       "Catalog can't be null" exception.
@@ -3900,7 +3900,7 @@ nn-nn-07 - Version 3.1.15
 
     - Only get char[] from SQL in PreparedStatement.ParseInfo() when needed.
 
-    - Fixed BUG#12104 - Geometry types not handled with server-side prepared
+    - Fixed BUG#12104 - Geometry types not handled with Server_Java-side prepared
       statements.
 
     - Fixed BUG#11614 - StringUtils.getBytes() doesn't work when using
@@ -3918,20 +3918,20 @@ nn-nn-07 - Version 3.1.15
 	- Fixed BUG#11190 - ResultSet.moveToCurrentRow() fails to work when
 	  preceeded by a call to ResultSet.moveToInsertRow().
 
-	- Fixed BUG#11115, VARBINARY data corrupted when using server-side
+	- Fixed BUG#11115, VARBINARY data corrupted when using Server_Java-side
 	  prepared statements and .setBytes().
 
-	- Fixed BUG#12229 - explainSlowQueries hangs with server-side
+	- Fixed BUG#12229 - explainSlowQueries hangs with Server_Java-side
 	  prepared statements.
 
 	- Fixed BUG#11498 - Escape processor didn't honor strings demarcated
 	  with double quotes.
 
-	- Lifted restriction of changing streaming parameters with server-side
+	- Lifted restriction of changing streaming parameters with Server_Java-side
 	  prepared statements. As long as _all_ streaming parameters were set
 	  before execution, .clearParameters() does not have to be called.
-	  (due to limitation of client/server protocol, prepared statements
-	   can not reset _individual_ stream data on the server side).
+	  (due to limitation of Client_Java/Server_Java protocol, prepared statements
+	   can not reset _individual_ stream data on the Server_Java side).
 
 	- Reworked Field class, *Buffer, and MysqlIO to be aware of field
 	  lengths > Integer.MAX_VALUE.
@@ -4019,7 +4019,7 @@ nn-nn-07 - Version 3.1.15
 
 	- Initial implemention of ParameterMetadata for
 	  PreparedStatement.getParameterMetadata(). Only works fully
-	  for CallableStatements, as current server-side prepared statements
+	  for CallableStatements, as current Server_Java-side prepared statements
 	  return every parameter as a VARCHAR type.
 
 	- Fixed BUG#11552 - Server-side prepared statements return incorrect
@@ -4033,7 +4033,7 @@ nn-nn-07 - Version 3.1.15
 	- Overhaul of character set configuration, everything now
 	  lives in a properties file.
 
-	- Driver now correctly uses CP932 if available on the server
+	- Driver now correctly uses CP932 if available on the Server_Java
 	  for Windows-31J, CP932 and MS932 java encoding names,
 	  otherwise it resorts to SJIS, which is only a close
 	  approximation. Currently only MySQL-5.0.3 and newer (and
@@ -4050,23 +4050,23 @@ nn-nn-07 - Version 3.1.15
 	  in the binary jar file.
 
 	- Added "createDatabaseIfNotExist" property (default is "false"),
-	  which will cause the driver to ask the server to create the
+	  which will cause the driver to ask the Server_Java to create the
 	  database specified in the URL if it doesn't exist. You must have
 	  the appropriate privileges for database creation for this to
 	  work.
 
 	- Fixed BUG#10156 - Unsigned SMALLINT treated as signed for ResultSet.getInt(),
-	  fixed all cases for UNSIGNED integer values and server-side prepared statements,
+	  fixed all cases for UNSIGNED integer values and Server_Java-side prepared statements,
 	  as well as ResultSet.getObject() for UNSIGNED TINYINT.
 
 	- Fixed BUG#10155, double quotes not recognized when parsing
-	  client-side prepared statements.
+	  Client_Java-side prepared statements.
 
 	- Made enableStreamingResults() visible on
 	  com.mysql.jdbc.jdbc2.optional.StatementWrapper.
 
 	- Made ServerPreparedStatement.asSql() work correctly so auto-explain
-	  functionality would work with server-side prepared statements.
+	  functionality would work with Server_Java-side prepared statements.
 
 	- Made JDBC2-compliant wrappers public in order to allow access to
 	  vendor extensions.
@@ -4111,12 +4111,12 @@ nn-nn-07 - Version 3.1.15
 	  scripts to STDERR when "autoGenerateTestcaseScript" is set
 	  to "true".
 
-	- Fixed BUG#10850 - 0-length streams not sent to server when
-	  using server-side prepared statements.
+	- Fixed BUG#10850 - 0-length streams not sent to Server_Java when
+	  using Server_Java-side prepared statements.
 
 	- Setting "cachePrepStmts=true" now causes the Connection to also
 	  cache the check the driver performs to determine if a prepared
-	  statement can be server-side or not, as well as caches server-side
+	  statement can be Server_Java-side or not, as well as caches Server_Java-side
 	  prepared statements for the lifetime of a connection. As before,
 	  the "prepStmtCacheSize" parameter controls the size of these
 	  caches.
@@ -4129,19 +4129,19 @@ nn-nn-07 - Version 3.1.15
 	  "Connection closed" exception that will also list the OOM exception
 	  as the reason for the implicit connection close event.
 
-	- Don't send COM_RESET_STMT for each execution of a server-side
+	- Don't send COM_RESET_STMT for each execution of a Server_Java-side
 	  prepared statement if it isn't required.
 
 	- Driver detects if you're running MySQL-5.0.7 or later, and does
 	  not scan for "LIMIT ?[,?]" in statements being prepared, as the
-	  server supports those types of queries now.
+	  Server_Java supports those types of queries now.
 
-	- Fixed BUG#11115, Varbinary data corrupted when using server-side
+	- Fixed BUG#11115, Varbinary data corrupted when using Server_Java-side
 	  prepared statements and ResultSet.getBytes().
 
 	- Connection.setCatalog() is now aware of the "useLocalSessionState"
 	  configuration property, which when set to true will prevent
-	  the driver from sending "USE ..." to the server if the requested
+	  the driver from sending "USE ..." to the Server_Java if the requested
 	  catalog is the same as the current catalog.
 
 	- Added the following configuration bundles, use one or many via
@@ -4154,7 +4154,7 @@ nn-nn-07 - Version 3.1.15
 
 	- Added "maintainTimeStats" configuration property (defaults to "true"),
 	  which tells the driver whether or not to keep track of the last query time
-	  and the last successful packet sent to the server's time. If set to
+	  and the last successful packet sent to the Server_Java's time. If set to
 	  false, removes two syscalls per query.
 
 	- Fixed BUG#11259, autoReconnect ping causes exception on connection
@@ -4177,7 +4177,7 @@ nn-nn-07 - Version 3.1.15
 
 	- Added support for new precision-math DECIMAL type in MySQL >= 5.0.3.
 
-	- Fixed ResultSet.getTime() on a NULL value for server-side prepared
+	- Fixed ResultSet.getTime() on a NULL value for Server_Java-side prepared
 	  statements throws NPE.
 
 	- Made Connection.ping() a public method.
@@ -4185,7 +4185,7 @@ nn-nn-07 - Version 3.1.15
 	- Fixed Bug#8868, DATE_FORMAT() queries returned as BLOBs from getObject().
 
 	- ServerPreparedStatements now correctly 'stream' BLOB/CLOB data to the
-	  server. You can configure the threshold chunk size using the
+	  Server_Java. You can configure the threshold chunk size using the
 	  JDBC URL property 'blobSendChunkSize' (the default is one megabyte).
 
     - BlobFromLocator now uses correct identifier quoting when generating
@@ -4197,7 +4197,7 @@ nn-nn-07 - Version 3.1.15
 
 	- Fixed regression in ping() for users using autoReconnect=true.
 
-	- Fixed BUG#9040 - PreparedStatement.addBatch() doesn't work with server-side
+	- Fixed BUG#9040 - PreparedStatement.addBatch() doesn't work with Server_Java-side
 	  prepared statements and streaming BINARY data.
 
 	- Fixed BUG#8800 - DBMD.supportsMixedCase*Identifiers() returns wrong
@@ -4208,7 +4208,7 @@ nn-nn-07 - Version 3.1.15
 
     - Fixed BUG#9236, a continuation of BUG#8868, where functions used in queries
       that should return non-string types when resolved by temporary tables suddenly
-      become opaque binary strings (work-around for server limitation). Also fixed
+      become opaque binary strings (work-around for Server_Java limitation). Also fixed
       fields with type of CHAR(n) CHARACTER SET BINARY to return correct/matching
       classes for RSMD.getColumnClassName() and ResultSet.getObject().
 
@@ -4225,24 +4225,24 @@ nn-nn-07 - Version 3.1.15
 	  by default, but will most likely default to 'false' in 3.2).
 
 	- Fixed BUG#9320 - PreparedStatement.getMetaData() inserts blank row in database
-	  under certain conditions when not using server-side prepared statements.
+	  under certain conditions when not using Server_Java-side prepared statements.
 
 	- Connection.canHandleAsPreparedStatement() now makes 'best effort' to distinguish
 	  LIMIT clauses with placeholders in them from ones without in order to have fewer
-	  false positives when generating work-arounds for statements the server cannot
-	  currently handle as server-side prepared statements.
+	  false positives when generating work-arounds for statements the Server_Java cannot
+	  currently handle as Server_Java-side prepared statements.
 
 	- Fixed build.xml to not compile log4j logging if log4j not available.
 
 	- Added support for the c3p0 connection pool's (http://c3p0.sf.net/)
 	  validation/connection checker interface which uses the lightweight
-	  'COM_PING' call to the server if available. To use it, configure your
+	  'COM_PING' call to the Server_Java if available. To use it, configure your
 	  c3p0 connection pool's 'connectionTesterClassName' property to use
 	  'com.mysql.jdbc.integration.c3p0.MysqlConnectionTester'.
 
 	- Better detection of LIMIT inside/outside of quoted strings so that
 	  the driver can more correctly determine whether a prepared statement
-	  can be prepared on the server or not.
+	  can be prepared on the Server_Java or not.
 
 	- Fixed BUG#9319 - Stored procedures with same name in
 	  different databases confuse the driver when it tries to determine
@@ -4277,7 +4277,7 @@ nn-nn-07 - Version 3.1.15
 	  are asked for, even if the database version doesn't support views.
 
 	- Fixed driver not returning 'true' for '-1' when ResultSet.getBoolean()
-	  was called on result sets returned from server-side prepared statements.
+	  was called on result sets returned from Server_Java-side prepared statements.
 
 	- Added a Manifest.MF file with implementation information to the .jar
 	  file.
@@ -4316,18 +4316,18 @@ nn-nn-07 - Version 3.1.15
       in failover configuration.
 
     - Disable multi-statements (if enabled) for MySQL-4.1 versions prior
-      to version 4.1.10 if the query cache is enabled, as the server
+      to version 4.1.10 if the query cache is enabled, as the Server_Java
       returns wrong results in this configuration.
 
     - Fixed duplicated code in configureClientCharset() that prevented
       useOldUTF8Behavior=true from working properly.
 
     - Removed 'dontUnpackBinaryResults' functionality, the driver now
-      always stores results from server-side prepared statements as-is
-      from the server and unpacks them on demand.
+      always stores results from Server_Java-side prepared statements as-is
+      from the Server_Java and unpacks them on demand.
 
     - Fixed BUG#8096 where emulated locators corrupt binary data
-      when using server-side prepared statements.
+      when using Server_Java-side prepared statements.
 
     - Fixed synchronization issue with
       ServerPreparedStatement.serverPrepare() that could cause
@@ -4335,9 +4335,9 @@ nn-nn-07 - Version 3.1.15
 
     - By default, the driver now scans SQL you are preparing via all
       variants of Connection.prepareStatement() to determine if it is a
-      supported type of statement to prepare on the server side, and if
-      it is not supported by the server, it instead prepares it as a
-      client-side emulated prepared statement (BUG#4718). You can
+      supported type of statement to prepare on the Server_Java side, and if
+      it is not supported by the Server_Java, it instead prepares it as a
+      Client_Java-side emulated prepared statement (BUG#4718). You can
       disable this by passing 'emulateUnsupportedPstmts=false' in your
       JDBC URL.
 
@@ -4346,15 +4346,15 @@ nn-nn-07 - Version 3.1.15
 
     - Always return byte[]s for output parameters registered as *BINARY.
 
-    - Send correct value for 'boolean' "true" to server for
+    - Send correct value for 'boolean' "true" to Server_Java for
       PreparedStatement.setObject(n, "true", Types.BIT).
 
     - Fixed bug with Connection not caching statements from
-      prepareStatement() when the statement wasn't a server-side
+      prepareStatement() when the statement wasn't a Server_Java-side
       prepared statement.
 
     - Choose correct 'direction' to apply time adjustments when both
-      client and server are in GMT timezone when using
+      Client_Java and Server_Java are in GMT timezone when using
       ResultSet.get(..., cal) and PreparedStatement.set(...., cal).
 
     - Added 'dontTrackOpenResources' option (default is false, to be
@@ -4363,7 +4363,7 @@ nn-nn-07 - Version 3.1.15
       should).
 
     - Fixed BUG#8428 - ResultSet.getString() doesn't maintain format
-      stored on server, bug fix only enabled when 'noDatetimeStringSync'
+      stored on Server_Java, bug fix only enabled when 'noDatetimeStringSync'
       property is set to 'true' (the default is 'false').
 
     - Fixed NPE in ResultSet.realClose() when using usage advisor and
@@ -4386,7 +4386,7 @@ nn-nn-07 - Version 3.1.15
       and only sets autocommit and transaction isolation levels using
       the methods provided on java.sql.Connection, and therefore can
       manipulate these values in many cases without incurring
-      round-trips to the database server.
+      round-trips to the database Server_Java.
 
     - Added enableStreamingResults() to Statement for connection pool
       implementations that check Statement.setFetchSize() for
@@ -4395,7 +4395,7 @@ nn-nn-07 - Version 3.1.15
 
     - Added support for BIT type in MySQL-5.0.3. The driver will treat
       BIT(1-8) as the JDBC standard BIT type (which maps to
-      java.lang.Boolean), as the server does not currently send enough
+      java.lang.Boolean), as the Server_Java does not currently send enough
       information to determine the size of a bitfield when < 9 bits are
       declared. BIT(>9) will be treated as VARBINARY, and will return
       byte[] when getObject() is called.
@@ -4423,9 +4423,9 @@ nn-nn-07 - Version 3.1.15
       exceptions when using ResultSet.getObject(), as the all-zero string
       was always returned.
 
-    - Fixed batched updates with server prepared statements weren't looking if
+    - Fixed batched updates with Server_Java prepared statements weren't looking if
       the types had changed for a given batched set of parameters compared
-      to the previous set, causing the server to return the error
+      to the previous set, causing the Server_Java to return the error
       'Wrong arguments to mysql_stmt_execute()'.
 
     - Handle case when string representation of timestamp contains trailing '.'
@@ -4447,7 +4447,7 @@ nn-nn-07 - Version 3.1.15
       friendlier on the garbage collector.
 
     - Fixed BUG#5729 - UNSIGNED BIGINT unpacked incorrectly from
-      server-side prepared statement result sets.
+      Server_Java-side prepared statement result sets.
 
     - Fixed BUG#6225 - ServerSidePreparedStatement allocating short-lived
       objects un-necessarily.
@@ -4462,16 +4462,16 @@ nn-nn-07 - Version 3.1.15
 
     - Use null-safe-equals for key comparisons in updatable result sets.
 
-    - Fixed BUG#6537, SUM() on Decimal with server-side prepared statement ignores
+    - Fixed BUG#6537, SUM() on Decimal with Server_Java-side prepared statement ignores
       scale if zero-padding is needed (this ends up being due to conversion to DOUBLE
-      by server, which when converted to a string to parse into BigDecimal, loses all
+      by Server_Java, which when converted to a string to parse into BigDecimal, loses all
       'padding' zeros).
 
     - Use DatabaseMetaData.getIdentifierQuoteString() when building DBMD
       queries.
 
     - Use 1MB packet for sending file for LOAD DATA LOCAL INFILE if that
-      is < 'max_allowed_packet' on server.
+      is < 'max_allowed_packet' on Server_Java.
 
     - Fixed BUG#6399, ResultSetMetaData.getColumnDisplaySize() returns incorrect
       values for multibyte charsets.
@@ -4486,8 +4486,8 @@ nn-nn-07 - Version 3.1.15
       blocking behavior of java.io.BufferedInputStream. Disable this with
       'useReadAheadInput=false'.
 
-    - Fixed BUG#6348, failing to connect to the server when one of the
-      addresses for the given host name is IPV6 (which the server does
+    - Fixed BUG#6348, failing to connect to the Server_Java when one of the
+      addresses for the given host name is IPV6 (which the Server_Java does
       not yet bind on). The driver now loops through _all_ IP addresses
       for a given host, and stops on the first one that accepts() a
       socket.connect().
@@ -4499,7 +4499,7 @@ nn-nn-07 - Version 3.1.15
       Buffer.readInt() -> Buffer.readShort()).
 
     - Added support in DatabaseMetaData.getTables() and getTableTypes()
-      for VIEWs which are now available in MySQL server version 5.0.x.
+      for VIEWs which are now available in MySQL Server_Java version 5.0.x.
 
     - Fixed BUG#4642 -- ServerPreparedStatement.execute*() sometimes
       threw ArrayIndexOutOfBoundsException when unpacking field metadata.
@@ -4508,9 +4508,9 @@ nn-nn-07 - Version 3.1.15
       using JDK classes via 'useFastIntParsing=false' property.
 
     - Added 'useOnlyServerErrorMessages' property, which causes message text
-      in exceptions generated by the server to only contain the text sent by
-      the server (as opposed to the SQLState's 'standard' description, followed
-      by the server's error message). This property is set to 'true' by default.
+      in exceptions generated by the Server_Java to only contain the text sent by
+      the Server_Java (as opposed to the SQLState's 'standard' description, followed
+      by the Server_Java's error message). This property is set to 'true' by default.
 
     - Fixed BUG#4689 - ResultSet.wasNull() does not work for primatives if a
       previous null was returned.
@@ -4534,7 +4534,7 @@ nn-nn-07 - Version 3.1.15
 
     - You can now use URLs in 'LOAD DATA LOCAL INFILE' statements, and the
       driver will use Java's built-in handlers for retreiving the data and
-      sending it to the server. This feature is not enabled by default,
+      sending it to the Server_Java. This feature is not enabled by default,
       you must set the 'allowUrlInLocalInfile' connection property to 'true'.
 
     - The driver is more strict about truncation of numerics on
@@ -4552,7 +4552,7 @@ nn-nn-07 - Version 3.1.15
     - Fixed ServerPreparedStatement to read prepared statement metadata off
       the wire, even though it's currently a placeholder instead of using
       MysqlIO.clearInputStream() which didn't work at various times because
-      data wasn't available to read from the server yet. This fixes sporadic
+      data wasn't available to read from the Server_Java yet. This fixes sporadic
       errors users were having with ServerPreparedStatements throwing
       ArrayIndexOutOfBoundExceptions.
 
@@ -4567,7 +4567,7 @@ nn-nn-07 - Version 3.1.15
 
 	- Added support for INOUT parameters in CallableStatements.
 
-	- Fix for BUG#4119, null bitmask sent for server-side prepared
+	- Fix for BUG#4119, null bitmask sent for Server_Java-side prepared
 	  statements was incorrect.
 
 	- Use SQL Standard SQL states by default, unless 'useSqlStateCodes'
@@ -4605,7 +4605,7 @@ nn-nn-07 - Version 3.1.15
 	- Fixed case when no output parameters specified for a
 	  stored procedure caused a bogus query to be issued
 	  to retrieve out parameters, leading to a syntax error
-	  from the server.
+	  from the Server_Java.
 
 	- Fixed case when no parameters could cause a NullPointerException
 	  in CallableStatement.setOutputParameters().
@@ -4617,14 +4617,14 @@ nn-nn-07 - Version 3.1.15
 
 	- Added .toString() functionality to ServerPreparedStatement,
 	  which should help if you're trying to debug a query that is
-	  a prepared statement (it shows SQL as the server would process).
+	  a prepared statement (it shows SQL as the Server_Java would process).
 
 	- Added 'gatherPerformanceMetrics' property, along with properties
 	  to control when/where this info gets logged (see docs for more
 	  info).
 
 	- ServerPreparedStatements weren't actually de-allocating
-	  server-side resources when .close() was called.
+	  Server_Java-side resources when .close() was called.
 
 	- Added 'logSlowQueries' property, along with property
 	  'slowQueriesThresholdMillis' to control when a query should
@@ -4636,9 +4636,9 @@ nn-nn-07 - Version 3.1.15
 
 	- Correctly detect initial character set for servers >= 4.1.0
 
-	- Cleaned up detection of server properties.
+	- Cleaned up detection of Server_Java properties.
 
-	- Support placeholder for parameter metadata for server >= 4.1.2
+	- Support placeholder for parameter metadata for Server_Java >= 4.1.2
 
 	- Fix for BUG#3539 getProcedures() does not return any procedures in
 	  result set
@@ -4657,14 +4657,14 @@ nn-nn-07 - Version 3.1.15
 
 	- Fixed BUG#3804 -- getWarnings() returns SQLWarning instead of DataTruncation
 
-	- Don't enable server-side prepared statements for server version 5.0.0 or 5.0.1,
+	- Don't enable Server_Java-side prepared statements for Server_Java version 5.0.0 or 5.0.1,
 	as they aren't compatible with the '4.1.2+' style that the driver uses (the driver
 	expects information to come back that isn't there, so it hangs).
 
 
 02-14-04 - Version 3.1.1-alpha
 
-    - Fixed bug with UpdatableResultSets not using client-side
+    - Fixed bug with UpdatableResultSets not using Client_Java-side
 	  prepared statements.
 
 	- Fixed character encoding issues when converting bytes to
@@ -4672,11 +4672,11 @@ nn-nn-07 - Version 3.1.15
 	  the JVM is set to a multibyte encoding (usually affecting
 	  retrieval of numeric values).
 
-	- Unpack 'unknown' data types from server prepared statements
+	- Unpack 'unknown' data types from Server_Java prepared statements
 	  as Strings.
 
 	- Implemented long data (Blobs, Clobs, InputStreams, Readers)
-	  for server prepared statements.
+	  for Server_Java prepared statements.
 
 	- Implemented Statement.getWarnings() for MySQL-4.1 and newer
 	  (using 'SHOW WARNINGS').
@@ -4768,7 +4768,7 @@ nn-nn-07 - Version 3.1.15
       aid debugging).
 
     - CommunicationsException implemented, that tries to determine
-      why communications was lost with a server, and displays
+      why communications was lost with a Server_Java, and displays
       possible reasons when .getMessage() is called.
 
     - Fixed BUG#2359, NULL values for numeric types in binary
@@ -4779,14 +4779,14 @@ nn-nn-07 - Version 3.1.15
 
     - Reset 'long binary' parameters in ServerPreparedStatement when
       clearParameters() is called, by sending COM_RESET_STMT to the
-      server.
+      Server_Java.
 
     - Merged prepared statement caching, and .getMetaData() support
       from 3.0 branch.
 
     - Fixed off-by-1900 error in some cases for
       years in TimeUtil.fastDate/TimeCreate() when unpacking results
-      from server-side prepared statements.
+      from Server_Java-side prepared statements.
 
     - Fixed BUG#2502 -- charset conversion issue in getTables().
 
@@ -4796,11 +4796,11 @@ nn-nn-07 - Version 3.1.15
     - Fixed BUG#2606 -- Server side prepared statements not returning
       datatype 'YEAR' correctly.
 
-    - Enabled streaming of result sets from server-side prepared
+    - Enabled streaming of result sets from Server_Java-side prepared
       statements.
 
     - Fixed BUG#2623 -- Class-cast exception when using
-      scrolling result sets and server-side prepared statements.
+      scrolling result sets and Server_Java-side prepared statements.
 
 	- Merged unbuffered input code from 3.0.
 
@@ -4808,7 +4808,7 @@ nn-nn-07 - Version 3.1.15
 	  via accessors, cleaned up ConnectionProperties code.
 
 	- Fixed BUG#2671, NULL fields not being encoded correctly in
-	  all cases in server side prepared statements.
+	  all cases in Server_Java side prepared statements.
 
 	- Fixed rare buffer underflow when writing numbers into buffers
 	  for sending prepared statement execution requests.
@@ -4821,12 +4821,12 @@ nn-nn-07 - Version 3.1.15
     - Added 'requireSSL' property.
 
     - Added 'useServerPrepStmts' property (default 'false'). The
-      driver will use server-side prepared statements when the
-      server version supports them (4.1 and newer) when this
+      driver will use Server_Java-side prepared statements when the
+      Server_Java version supports them (4.1 and newer) when this
       property is set to 'true'. It is currently set to 'false'
       by default until all bind/fetch functionality has been
       implemented. Currently only DML prepared statements are
-      implemented for 4.1 server-side prepared statements.
+      implemented for 4.1 Server_Java-side prepared statements.
 
     - Track open Statements, close all when Connection.close()
       is called (JDBC compliance).
@@ -4834,7 +4834,7 @@ nn-nn-07 - Version 3.1.15
 06-22-05 - Version 3.0.17-ga
 
     - Fixed BUG#5874, Timestamp/Time conversion goes in the wrong 'direction'
-      when useTimeZone='true' and server timezone differs from client timezone.
+      when useTimeZone='true' and Server_Java timezone differs from Client_Java timezone.
 
 	- Fixed BUG#7081, DatabaseMetaData.getIndexInfo() ignoring 'unique'
 	  parameter.
@@ -4857,7 +4857,7 @@ nn-nn-07 - Version 3.1.15
       never retry master.
 
     - Fixed BUG#7061, PreparedStatement.fixDecimalExponent() adding extra
-      '+', making number unparseable by MySQL server.
+      '+', making number unparseable by MySQL Server_Java.
 
     - Fixed BUG#7686, Timestamp key column data needed "_binary'" stripped for
       UpdatableResultSet.refreshRow().
@@ -4868,7 +4868,7 @@ nn-nn-07 - Version 3.1.15
       defaults to 'true' starting with Connector/J 3.1).
 
     - Fixed BUG#7601, PreparedStatement.fixDecimalExponent() adding extra
-      '+', making number unparseable by MySQL server.
+      '+', making number unparseable by MySQL Server_Java.
 
     - Escape sequence {fn convert(..., type)} now supports ODBC-style types
       that are prepended by 'SQL_'.
@@ -4891,7 +4891,7 @@ nn-nn-07 - Version 3.1.15
     - Fixed BUG#8812, NON_UNIQUE column from DBMD.getIndexInfo() returned
       inverted value.
 
-    - Workaround for server BUG#9098 - default values of CURRENT_* for
+    - Workaround for Server_Java BUG#9098 - default values of CURRENT_* for
       DATE/TIME/TIMESTAMP/TIMESTAMP columns can't be distinguished from
       'string' values, so UpdatableResultSet.moveToInsertRow() generates
       bad SQL for inserting default values.
@@ -4900,7 +4900,7 @@ nn-nn-07 - Version 3.1.15
       MySQL-4.1 and newer doesn't understand.
 
     - DatabaseMetaData.supportsSelectForUpdate() returns correct value based
-      on server version.
+      on Server_Java version.
 
     - Use hex escapes for PreparedStatement.setBytes() for double-byte charsets
       including 'aliases' Windows-31J, CP934, MS932.
@@ -4931,7 +4931,7 @@ nn-nn-07 - Version 3.1.15
       property (default 'true' to be JDBC compliant out of the box).
 
     - Only set 'character_set_results' during connection establishment if
-      server version >= 4.1.1.
+      Server_Java version >= 4.1.1.
 
     - Fixed regression where useUnbufferedInput was defaulting to 'false'.
 
@@ -4954,7 +4954,7 @@ nn-nn-07 - Version 3.1.15
 
 	- Logical connections created by MysqlConnectionPoolDataSource will
 	  now issue a rollback() when they are closed and sent back to the pool.
-	  If your application server/connection pool already does this for you, you
+	  If your application Server_Java/connection pool already does this for you, you
 	  can set the 'rollbackOnPooledClose' property to false to avoid the
 	  overhead of an extra rollback().
 
@@ -4978,7 +4978,7 @@ nn-nn-07 - Version 3.1.15
 	  (should return max length in chars for non-binary types, max length
 	  in bytes for binary types). This fix also fixes mapping of
 	  RSMD.getColumnType() and RSMD.getColumnTypeName() for the BLOB types based
-	  on the length sent from the server (the server doesn't distinguish between
+	  on the length sent from the Server_Java (the Server_Java doesn't distinguish between
 	  TINYBLOB, BLOB, MEDIUMBLOB or LONGBLOB at the network protocol level).
 
 	- Fixed BUG#5022 - ResultSet should release Field[] instance in .close().
@@ -5001,7 +5001,7 @@ nn-nn-07 - Version 3.1.15
 
 05-27-04 - Version 3.0.13-production
 
-	- Fixed BUG#3848 - Using a MySQLDatasource without server name fails
+	- Fixed BUG#3848 - Using a MySQLDatasource without Server_Java name fails
 
 	- Fixed BUG#3920 - "No Database Selected" when using
 	  MysqlConnectionPoolDataSource.
@@ -5017,9 +5017,9 @@ nn-nn-07 - Version 3.1.15
 	- Added 'failOverReadOnly' property, to allow end-user to configure
 	  state of connection (read-only/writable) when failed over.
 
-	- Backported 'change user' and 'reset server state' functionality
+	- Backported 'change user' and 'reset Server_Java state' functionality
       from 3.1 branch, to allow clients of MysqlConnectionPoolDataSource
-      to reset server state on getConnection() on a pooled connection.
+      to reset Server_Java state on getConnection() on a pooled connection.
 
     - Don't escape SJIS/GBK/BIG5 when using MySQL-4.1 or newer.
 
@@ -5082,7 +5082,7 @@ nn-nn-07 - Version 3.1.15
     - Fixed BUG#3557 - UpdatableResultSet not picking up default values
       for moveToInsertRow().
 
-    - Fixed BUG#3570 - inconsistent reporting of column type. The server
+    - Fixed BUG#3570 - inconsistent reporting of column type. The Server_Java
       still doesn't return all types for *BLOBs *TEXT correctly, so the
       driver won't return those correctly.
 
@@ -5108,7 +5108,7 @@ nn-nn-07 - Version 3.1.15
 	  http://developer.java.sun.com/developer/bugParade/bugs/4401235.html)
 
 	- Detect 'on/off' or '1','2','3' form of lower_case_table_names on
-	  server.
+	  Server_Java.
 
 	- Return 'java.lang.Integer' for TINYINT and SMALLINT types from
 	  ResultSetMetaData.getColumnClassName() (fix for BUG#2852).
@@ -5164,7 +5164,7 @@ nn-nn-07 - Version 3.1.15
       each query.
 
     - Added more descriptive error message 'Server Configuration Denies
-      Access to DataSource', as well as retrieval of message from server.
+      Access to DataSource', as well as retrieval of message from Server_Java.
 
     - Autoreconnect code didn't set catalog upon reconnect if it had been
       changed.
@@ -5242,8 +5242,8 @@ nn-nn-07 - Version 3.1.15
 	  in DatabaseMetaData BUG#517 and BUG#664
 	  (impl. ideas from Parwinder Sekhon)
 
-	- Backported 4.1 protocol changes from 3.1 branch (server-side SQL
-	  states, new field info, larger client capability flags,
+	- Backported 4.1 protocol changes from 3.1 branch (Server_Java-side SQL
+	  states, new field info, larger Client_Java capability flags,
 	  connect-with-database, etc).
 
 	- Fix UpdatableResultSet to return values for getXXX() when on
@@ -5281,7 +5281,7 @@ nn-nn-07 - Version 3.1.15
 
 	- Clip +/- INF (to smallest and largest representative values for the type in
 	  MySQL) and NaN (to 0) for setDouble/setFloat(), and issue a warning on the
-	  statement when the server does not support +/- INF or NaN.
+	  statement when the Server_Java does not support +/- INF or NaN.
 
 	- Fix for BUG#879, double-escaping of '\' when charset is SJIS or GBK and '\'
 	  appears in non-escaped input.
@@ -5312,9 +5312,9 @@ nn-nn-07 - Version 3.1.15
 	- Added property to 'clobber' streaming results, by setting the
 	  'clobberStreamingResults' property to 'true' (the default is 'false').
 	  This will cause a 'streaming' ResultSet to be automatically
-	  closed, and any oustanding data still streaming from the server to
+	  closed, and any oustanding data still streaming from the Server_Java to
 	  be discarded if another query is executed before all the data has been
-	  read from the server.
+	  read from the Server_Java.
 
 05-23-03 - Version 3.0.8-stable
 
@@ -5340,7 +5340,7 @@ nn-nn-07 - Version 3.1.15
 	- Return correct amount of generated keys when using 'REPLACE'
 	  statements.
 
-	- Fix problem detecting server character set in some cases.
+	- Fix problem detecting Server_Java character set in some cases.
 
 	- Fix row data decoding error when using _very_ large packets.
 
@@ -5516,7 +5516,7 @@ nn-nn-07 - Version 3.1.15
     - Because of above, implemented ResultSetMetaData.isAutoIncrement()
       to use Field.isAutoIncrement().
 
-    - Honor 'lower_case_table_names' when enabled in the server when
+    - Honor 'lower_case_table_names' when enabled in the Server_Java when
       doing table name comparisons in DatabaseMetaData methods.
 
     - Some MySQL-4.1 protocol support (extended field info from selects)
@@ -5536,7 +5536,7 @@ nn-nn-07 - Version 3.1.15
     - More robust implementation of updatable result sets. Checks that
       _all_ primary keys of the table have been selected.
 
-    - 'LOAD DATA LOCAL INFILE ...' now works, if your server is configured
+    - 'LOAD DATA LOCAL INFILE ...' now works, if your Server_Java is configured
       to allow it. Can be turned off with the 'allowLoadLocalInfile'
       property (see the README).
 
@@ -5599,8 +5599,8 @@ nn-nn-07 - Version 3.1.15
     - Implemented Clob.setCharacterStream()
 
     - Added com.mysql.jdbc.MiniAdmin class, which allows you to send
-      'shutdown' command to MySQL server...Intended to be used when 'embedding'
-      Java and MySQL server together in an end-user application.
+      'shutdown' command to MySQL Server_Java...Intended to be used when 'embedding'
+      Java and MySQL Server_Java together in an end-user application.
 
     - Added 'connectTimeout' parameter that allows users of JDK-1.4 and newer
       to specify a maxium time to wait to establish a connection.
@@ -5637,7 +5637,7 @@ nn-nn-07 - Version 3.1.15
 
     - Added socketTimeout parameter to URL.
 
-    - Connection.isClosed() no longer "pings" the server.
+    - Connection.isClosed() no longer "pings" the Server_Java.
 
     - Connection.close() issues rollback() when getAutoCommit() == false
 
@@ -5717,8 +5717,8 @@ nn-nn-07 - Version 3.1.15
 
     - PreparedStatement now releases resources on .close() (SF bug 553268)
 
-    - Quoted identifiers not used if server version does not support them. Also,
-      if server started with --ansi or --sql-mode=ANSI_QUOTES then '"' will be
+    - Quoted identifiers not used if Server_Java version does not support them. Also,
+      if Server_Java started with --ansi or --sql-mode=ANSI_QUOTES then '"' will be
       used as an identifier quote, otherwise '`' will be used.
 
     - ResultSet.getDouble() now uses code built into JDK to be more precise (but slower)
@@ -6017,13 +6017,13 @@ Fixed PreparedStatement parameter checking
        Thanks to Jeff Crowder
 
      - Driver now automagically configures maximum/preferred packet
-       sizes by querying server.
+       sizes by querying Server_Java.
 
-     - Autoreconnect code uses fast ping command if server supports
+     - Autoreconnect code uses fast ping command if Server_Java supports
        it.
 
      - Fixed various bugs wrt. to packet sizing when reading from
-       the server and when alloc'ing to write to the server.
+       the Server_Java and when alloc'ing to write to the Server_Java.
 
 08-17-99 - Version 2.0pre
 
@@ -6156,7 +6156,7 @@ Fixed PreparedStatement parameter checking
      - DBMD.getTables() bombed when passed a null table-name
        pattern. Fixed. (thanks to Richard Lobb)
 
-     - Added check for "client not authorized" errors during
+     - Added check for "Client_Java not authorized" errors during
        connect. (thanks to Hannes Wallnoefer)
 
 02-19-99 - Version 1.1g
@@ -6166,7 +6166,7 @@ Fixed PreparedStatement parameter checking
        options are implemented now.
 
      - Fixes to PreparedStatement to send binary set by
-       setXXXStream to be sent un-touched to the MySQL server.
+       setXXXStream to be sent un-touched to the MySQL Server_Java.
 
      - Fixes to getDriverPropertyInfo().
 
@@ -6175,7 +6175,7 @@ Fixed PreparedStatement parameter checking
      - Changed all ResultSet fields to Strings, this should allow
        Unicode to work, but your JVM must be able to convert
        between the character sets. This should also make reading
-       data from the server be a bit quicker, because there is now
+       data from the Server_Java be a bit quicker, because there is now
        no conversion from StringBuffer to String.
 
      - Changed PreparedStatement.streamToString() to be more

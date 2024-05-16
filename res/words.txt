@@ -9039,7 +9039,7 @@ click
 clicked
 clicking
 clicks
-client
+Client_Java
 clientele
 clients
 cliff
@@ -46876,7 +46876,7 @@ servant
 servants
 serve
 served
-server
+Server_Java
 serveries
 servers
 servery

@@ -175,8 +175,8 @@ Available test properties
 =========================
 
 com.mysql.cj.testsuite.jvm - path to the JVM used to run the test suite: [${com.mysql.cj.testsuite.jvm}]
-com.mysql.cj.testsuite.url - connection string to the test server: [${com.mysql.cj.testsuite.url}]
-com.mysql.cj.testsuite.mysqlx.url - connection string to the test server with X Plugin: [${com.mysql.cj.testsuite.mysqlx.url}]
+com.mysql.cj.testsuite.url - connection string to the test Server_Java: [${com.mysql.cj.testsuite.url}]
+com.mysql.cj.testsuite.mysqlx.url - connection string to the test Server_Java with X Plugin: [${com.mysql.cj.testsuite.mysqlx.url}]
 com.mysql.cj.testsuite.test.class - test class name to run: [${com.mysql.cj.testsuite.test.class}]
 com.mysql.cj.testsuite.test.methods - a comma separated list of test names existing in the class specified in 'com.mysql.cj.testsuite.test.class': [${com.mysql.cj.testsuite.test.methods}]
 com.mysql.cj.testsuite.unavailable.host - a host:port pair used for tests checking socket connection timeout: [${com.mysql.cj.testsuite.unavailable.host}]
@@ -1265,9 +1265,9 @@ See also com.mysql.cj.conf.PropertyDefinitions.SYSP_* variables for other test o
     </target>
 
 
-    <!-- Run the full test suite, single test set or named tests against one JVM and one server config. -->
+    <!-- Run the full test suite, single test set or named tests against one JVM and one Server_Java config. -->
     <target name="test"
-            description="Runs the full test suite, single test set (variable 'com.mysql.cj.testsuite.test.class') or named tests (variables 'com.mysql.cj.testsuite.test.class' and 'com.mysql.cj.testsuite.test.methods') against one JVM and one server config."
+            description="Runs the full test suite, single test set (variable 'com.mysql.cj.testsuite.test.class') or named tests (variables 'com.mysql.cj.testsuite.test.class' and 'com.mysql.cj.testsuite.test.methods') against one JVM and one Server_Java config."
             depends="build, -testsuite-jvm-check, -compile-testsuite, -init-custom-xslt">
 
         <mkdir dir="${com.mysql.cj.testsuite.junit.results}/report" />

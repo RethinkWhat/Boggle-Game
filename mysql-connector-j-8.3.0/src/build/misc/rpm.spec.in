@@ -102,7 +102,7 @@ Requires:          java-headless >= 1:1.8.0
 %endif
 
 %description
-MySQL provides connectivity for client applications developed in the
+MySQL provides connectivity for Client_Java applications developed in the
 Java programming language with @MYSQL_CJ_DISPLAY_PROD_NAME@, a driver that
 implements the [Java Database Connectivity (JDBC) API]
 (http://www.oracle.com/technetwork/java/javase/jdbc/).
@@ -111,7 +111,7 @@ implements the [Java Database Connectivity (JDBC) API]
 the [JDBC 4.2](http://docs.oracle.com/javase/8/docs/technotes/guides/jdbc/)
 specification. The Type 4 designation means that the driver is a pure
 Java implementation of the MySQL protocol and does not rely on the
-MySQL client libraries.
+MySQL Client_Java libraries.
 
 For detailed information please visit the official
 [@MYSQL_CJ_DISPLAY_PROD_NAME@ documentation]
