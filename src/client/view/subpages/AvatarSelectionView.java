@@ -25,6 +25,7 @@ public class AvatarSelectionView extends JFrame {
     public AvatarSelectionView(HomeView homeView, SettingsView settingsView) {
         this.homeView = homeView;
         this.settingsView = settingsView;
+        avatarButtons = new JButton[4];
 
         SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Avatar Selection");
@@ -116,12 +117,15 @@ public class AvatarSelectionView extends JFrame {
 
             frame.setVisible(true);
 
-            avatarButtons = new JButton[]{avatar1, avatar2, avatar3, avatar4};
+            avatarButtons[0] = avatar1;
+            avatarButtons[1] = avatar2;
+            avatarButtons[2] = avatar3;
+            avatarButtons[3] = avatar4;
         });
     }
 
     public void setSelectionListener(ActionListener actionListener, JButton btnSelection) {
-
+        btnSelection.addActionListener(actionListener);
     }
 
     public void setConfirmListener(ActionListener actionListener) {

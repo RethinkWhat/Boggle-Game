@@ -392,7 +392,7 @@ public class GameRoomController {
         Collections.shuffle(letterSet);
         view.removeAllLetters();
         for (String letter : letterSet) {
-            backgroundColor = letter.matches("[AEIOU]") ? style.deepSkyBlue : style.goldenTainoi;
+            backgroundColor = letter.matches("(?i)[aeiou]") ? style.deepSkyBlue : style.goldenTainoi;
             view.addLetterToLetterSet(letter, backgroundColor);
         }
     }
@@ -434,8 +434,7 @@ public class GameRoomController {
                 sfxClip = AudioSystem.getClip();
                 sfxClip.open(audioSoundStream);
                 sfxClip.start();
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }
         }
     }
@@ -451,8 +450,7 @@ public class GameRoomController {
                 sfxClip = AudioSystem.getClip();
                 sfxClip.open(audioSoundStream);
                 sfxClip.start();
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }
         }
     }
@@ -468,8 +466,7 @@ public class GameRoomController {
                 sfxClip = AudioSystem.getClip();
                 sfxClip.open(audioSoundStream);
                 sfxClip.start();
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }
         }
     }
@@ -485,8 +482,7 @@ public class GameRoomController {
                 sfxClip = AudioSystem.getClip();
                 sfxClip.open(audioSoundStream);
                 sfxClip.start();
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }
         }
     }
@@ -502,8 +498,7 @@ public class GameRoomController {
                 sfxClip = AudioSystem.getClip();
                 sfxClip.open(audioSoundStream);
                 sfxClip.start();
-            } catch (Exception e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
             }
         }
     }
