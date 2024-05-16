@@ -175,7 +175,6 @@ public class ClientApplicationController {
     }
 
     public void logout() {
-        System.out.println("reached logout");
         view.dispose();
         exitDialog.exit();
         stopMusic();

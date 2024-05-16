@@ -2,6 +2,7 @@ package client.controller.subpages;
 
 import client.controller.ClientApplicationController;
 import client.model.BoggleApp.userInfo;
+import client.model.subpages.AvatarSelectionModel;
 import client.model.subpages.HomeModel;
 import client.model.subpages.LobbyModel;
 import client.view.subpages.AvatarSelectionView;
@@ -72,14 +73,11 @@ public class HomeController {
     }
 
     public void populateLeaderboard() {
-        System.out.println("reached populate leaderboard");
         userInfo[] leaderboards = model.getLeaderboard();
         homeView.clearPnlLeaderBoard();
-        System.out.println("cleared leader board");
         for (userInfo leaderboard : leaderboards) {
             homeView.addPlayerInLeaderboard(leaderboard.username, leaderboard.pfpAddress, leaderboard.points);
         }
-        System.out.println("populated and revalidating");
         homeView.revalidate();
         homeView.repaint();
     }
@@ -105,14 +103,13 @@ public class HomeController {
         public void actionPerformed(ActionEvent e) {
             SwingUtilities.invokeLater(() -> {
                 parent.getView().showLobby();
-                parent.getView().setNavLocationText("Lobby");System.out.println("creating new lobby");
+                parent.getView().setNavLocationText("Lobby");
 
                 parent.getView().hideButtons();
 
                 parent.playLobbyMusic();
                 new LobbyController(new LobbyModel(parent.getModel().getUsername(), parent.getModel().getWfImpl()),
                         parent.getView().getLobbyView(), parent);
-                System.out.println("new lobby created\n");
 
                 /*
                 parent.getView().getLobbyView().setExitLobbyListener(new ActionListener() {
@@ -139,7 +136,9 @@ public class HomeController {
     class EditPfpListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            avatarSelectionView = new AvatarSelectionView(model.getUsername(), new DataPB(), homeView, settingsView);
+            new AvatarSelectionController(new AvatarSelectionView(homeView, settingsView),
+                    new AvatarSelectionModel(model.getUsername(), model.getWfImpl()));
+            avatarSelectionView = new AvatarSelectionView(homeView , settingsView);
         }
     }
 }

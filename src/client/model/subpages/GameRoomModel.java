@@ -26,10 +26,7 @@ public class GameRoomModel {
         this.wfImpl = wfImpl;
         gameRoomID = wfImpl.getGameID(username);
         duration = wfImpl.getGameDurationVal(gameRoomID);
-        System.out.println("duration: " + duration);
-        System.out.println("game room ID: " + gameRoomID);
         letterList = wfImpl.getLetters(gameRoomID);
-        System.out.println("letterList: " + letterList);
         wordSet = new HashSet<>();
     }
 
@@ -38,8 +35,6 @@ public class GameRoomModel {
     }
 
     public void sendUserWordList() {
-        System.out.println(wordSet);
-        System.out.println("sending word set");
         if (!wordSet.isEmpty())
             wfImpl.sendUserWordList(gameRoomID,username, wordSet.toArray(new String[0]));
     }

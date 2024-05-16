@@ -64,10 +64,8 @@ public class ServerImplementation extends BoggleClientPOA {
      * @param username
      */
     public synchronized void attemptJoin(String username) {
-        System.out.println("attempting join");
         currLobby.add(username);
         if (!lobbyTimerStarted) {
-            System.out.println("starting lobby");
             startLobbyTime();
         }
     }
@@ -116,17 +114,14 @@ public class ServerImplementation extends BoggleClientPOA {
     private synchronized void joinGameRoom(ArrayList<String> players) {
 
         int gameRoomID =  DataPB.createGameRoom(new Time(roundDuration));
-        System.out.println("created game room " + gameRoomID);
 
         String letters = createRandomLetterSet();
         int roundID = DataPB.createRound(letters);
         int roundNumber = DataPB.getLatestRoundNumber(gameRoomID) + 1;
-        System.out.println("CREATING ROUND DETAILS IN JOIN GAME ROOM");
         for (String player : players) {
             DataPB.createRoundDetails(gameRoomID,roundID, roundNumber, player);
         }
 
-        System.out.println(gameRoomID + " " + roundID);
         ongoingGameTimers.add(new Timer(gameRoomID, roundDuration));
         startTimerForRound(gameRoomID);
     }
@@ -142,18 +137,6 @@ public class ServerImplementation extends BoggleClientPOA {
 
             if (ongoingGameTimer.getID() == gameID) {
                 long timer = ongoingGameTimer.getCurrTimerValue();
-                System.out.println(timer);
-                /*
-                if (timer == 0) {
-                    try {
-                      //  System.out.println("this portion of the code solves the round points");
-                      //  solveRoundPoints(gameID);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                 */
                 return timer;
             }
         }
@@ -168,7 +151,6 @@ public class ServerImplementation extends BoggleClientPOA {
      */
     @Override
     public void sendUserWordList(int gameID, String username, String[] wordList) {
-        System.out.println("word list has been added and should be accesible.");
         DataPB.addUserWordList(username,gameID, wordList);
     }
 
@@ -184,14 +166,11 @@ public class ServerImplementation extends BoggleClientPOA {
     }
 
     public static void defineNextRound(int gameID) {
-        System.out.println("Defining next letter set");
         if (DataPB.gameOngoing(gameID)) {
             String letters = createRandomLetterSet();
             int roundID = DataPB.createRound(letters);
 
-            System.out.println("NEW ROUND ID: " + roundID);
             ArrayList<String> players = DataPB.getPlayersInGame(gameID);
-            System.out.println("PLAYERS IN GAME: " + players);
             int roundNumber = DataPB.getLatestRoundNumber(gameID) + 1;
             for (String player : players) {
                 DataPB.createRoundDetails(gameID, roundID, roundNumber, player);
@@ -225,7 +204,6 @@ public class ServerImplementation extends BoggleClientPOA {
                 pfp = "";
             userInfo curr = new userInfo(key, pfp, userPointsMap.get(key));
 
-            System.out.println("leaderboard: " + curr.username + " " + curr.pfpAddress + " " + userPointsMap.get(key));
             toReturn[x] = curr;
             x++;
         }
@@ -268,10 +246,8 @@ public class ServerImplementation extends BoggleClientPOA {
     @Override
     public void exitLobby(String username) {
         currLobby.remove(username);
-        System.out.println(currLobby);
         if (currLobby.isEmpty()) {
             currLobbyTimerValue = lobbyTimerValue;
-            System.out.println("reached");
             timerThread.interrupt();
         }
     }
@@ -357,12 +333,10 @@ public class ServerImplementation extends BoggleClientPOA {
     /** PRIVATE Methods */
 
     private void startLobbyTime() {
-        System.out.println("starting lobby timer");
         lobbyTimerStarted = true;
         Runnable t = () -> {
             while (currLobbyTimerValue > 0L) {
                 try {
-                    System.out.println(currLobbyTimerValue);
                     Thread.sleep(1000L);
                     currLobbyTimerValue -= 1000L;
                 } catch (InterruptedException e) {
@@ -375,9 +349,7 @@ public class ServerImplementation extends BoggleClientPOA {
                 }
             }
             try {
-                System.out.println("CURR LOBBY: " + currLobby);
                 if (currLobby.size() > 1) {
-                    System.out.println("joining game room.");
                     joinGameRoom(currLobby);
                     Thread.sleep(1000);
                 }
@@ -437,24 +409,13 @@ public class ServerImplementation extends BoggleClientPOA {
      * @param gameID
      */
     public static void solveRoundPoints(int gameID) {
-        System.out.println("reached solve round points method");
         Map<String, List<String>> uncleanedUserWordMapList = getUsersWordlists(gameID);
-
-
-        for (String key : uncleanedUserWordMapList.keySet()) {
-            System.out.println("uncleaned user word list: ");
-            System.out.println(key+ ": " + uncleanedUserWordMapList.get(key));
-        }
         Map<String, List<String>> cleanedUserWordMapList = compareAllWordLists(uncleanedUserWordMapList);
 
         for (String user : cleanedUserWordMapList.keySet()) {
-            System.out.println("User word map: " + user + ": " + cleanedUserWordMapList.get(user));
         }
-            System.out.println("for looping");
             for (String username : cleanedUserWordMapList.keySet()) {
                 int currentTotalScore = computeTotalScore(cleanedUserWordMapList.get(username));
-                System.out.println("total score: " + currentTotalScore);
-                System.out.println("updating user points");
                 DataPB.updatePoints(gameID, currentTotalScore, username);
                 DataPB.updatePlayerPoints(username, currentTotalScore);
             }
@@ -476,9 +437,7 @@ public class ServerImplementation extends BoggleClientPOA {
 
         try {
             while (rs.next()) {
-                System.out.println("getting user word list");
                 String username = rs.getString(1);
-                System.out.println(username);
                 String words = rs.getString(2);
                 if (words != null) {
                     if (words.contains(",")) {
@@ -528,7 +487,6 @@ public class ServerImplementation extends BoggleClientPOA {
                 .map(Map.Entry::getKey)
                 .collect(Collectors.toList());
 
-        System.out.println("DUPLICATE WORD LIST: " + duplicateWords);
         for (String user : userWordMapList.keySet()) {
             List<String> words = new ArrayList<>();
             for (String word : userWordMapList.get(user)) {
@@ -587,7 +545,6 @@ public class ServerImplementation extends BoggleClientPOA {
         int totalScore = 0;
 
             for (String word : wordList) {
-                System.out.println("WORD: " + word);
                 totalScore += word.length();
             }
         return totalScore;
