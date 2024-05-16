@@ -19,7 +19,7 @@ public class Client {
         try {
             Properties props = new Properties();
             props.put("org.omg.CORBA.ORBInitialPort","1500");//change the port
-            props.put("org.omg.CORBA.ORBInitialHost","100.84.168.124");//change the host
+            props.put("org.omg.CORBA.ORBInitialHost","192.168.23.183");//change the host
             ORB orb = ORB.init(args, props);
             System.out.println("started");
 //          ORB orb = ORB.init(args, null);

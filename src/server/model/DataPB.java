@@ -895,10 +895,12 @@ public class DataPB {
 
     public static void updateGameWinner(int gameID, String winner) {
         try {
-            String q = "UPDATE game SET winner = ? WHERE gameID = ?";
+            String stmt = "done";
+            String q = "UPDATE game SET winner = ?, gameStatus = ? WHERE gameID = ?";
             PreparedStatement ps = con.prepareStatement(q);
             ps.setString(1, winner);
-            ps.setInt(2, gameID);
+            ps.setString(2, stmt);
+            ps.setInt(3, gameID);
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
