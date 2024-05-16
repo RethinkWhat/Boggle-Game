@@ -43,7 +43,7 @@ public class SettingsController {
         updateGameStats();
 
         // action listeners
-        this.settingsView.setChangeAvatarListener(new ChangeAvatarListener());
+        this.settingsView.setChangeAvatarListener(new EditPfpListener());
         this.settingsView.setEditListener(new EditFullNameListener());
         this.settingsView.setSaveChangesListener(new SaveChangesListener());
         this.settingsView.setChangePassListener(new ChangePassListener());
@@ -71,13 +71,15 @@ public class SettingsController {
         this.settingsView.setTotalPointsText(model.getUserPoints());
     }
 
-    class ChangeAvatarListener implements ActionListener {
+    /**
+     * Processes editing of player profile picture.
+     */
+    class EditPfpListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            AvatarSelectionView view = new AvatarSelectionView(homeView, settingsView);
-            new AvatarSelectionController(view,
+            AvatarSelectionView v = new AvatarSelectionView(homeView, settingsView);
+            new AvatarSelectionController(v,
                     new AvatarSelectionModel(model.getUsername(), model.getWfImpl()));
-            avatarSelectionView = new AvatarSelectionView(homeView , settingsView);
         }
     }
 
