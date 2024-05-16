@@ -41,7 +41,6 @@ public class Server{
 
     public void run(String[] args) {
         try {
-            //System.out.println("This server comes first");
             Properties props = new Properties();
             props.put("org.omg.CORBA.ORBInitialPort","1500");//change as needed
             props.put("org.omg.CORBA.ORBInitialHost", "100.84.168.124");//change as needed
@@ -58,7 +57,6 @@ public class Server{
             this.href = BoggleClientHelper.narrow(this.ref);
 
             String p = orb.object_to_string(ref);
-            System.out.println(p);
 
             this.objRef = orb.resolve_initial_references("NameService");
 
@@ -69,9 +67,6 @@ public class Server{
             ncRef.rebind(this.pathname, this.href);
 
             orb.run();
-
-            System.out.println("Server is running...");
-
         } catch (Exception e) {
             e.printStackTrace();
         }

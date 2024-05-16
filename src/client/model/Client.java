@@ -21,19 +21,14 @@ public class Client {
             props.put("org.omg.CORBA.ORBInitialPort","1500");//change the port
             props.put("org.omg.CORBA.ORBInitialHost","100.84.168.124");//change the host
             ORB orb = ORB.init(args, props);
-            System.out.println("started");
 //          ORB orb = ORB.init(args, null);
-            System.out.println("orb initialized");
             org.omg.CORBA.Object objRef = orb.resolve_initial_references("NameService");
             System.out.println("name service made + " + objRef);
             NamingContextExt ncRef = NamingContextExtHelper.narrow(objRef);
             System.out.println("ncRef defined " + ncRef);
             String name = "WordFactory";
-            System.out.println("Starting client.");
 
-            System.out.println("reached");
             wfImpl = BoggleClientHelper.narrow(ncRef.resolve_str(name));
-            System.out.println("reached2");
             new LoginController(new LoginView(), new LoginModel(wfImpl));
         } catch (Exception e) {
             e.printStackTrace();

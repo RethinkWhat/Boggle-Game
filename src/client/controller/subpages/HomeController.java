@@ -73,14 +73,11 @@ public class HomeController {
     }
 
     public void populateLeaderboard() {
-        System.out.println("reached populate leaderboard");
         userInfo[] leaderboards = model.getLeaderboard();
         homeView.clearPnlLeaderBoard();
-        System.out.println("cleared leader board");
         for (userInfo leaderboard : leaderboards) {
             homeView.addPlayerInLeaderboard(leaderboard.username, leaderboard.pfpAddress, leaderboard.points);
         }
-        System.out.println("populated and revalidating");
         homeView.revalidate();
         homeView.repaint();
     }
@@ -106,14 +103,13 @@ public class HomeController {
         public void actionPerformed(ActionEvent e) {
             SwingUtilities.invokeLater(() -> {
                 parent.getView().showLobby();
-                parent.getView().setNavLocationText("Lobby");System.out.println("creating new lobby");
+                parent.getView().setNavLocationText("Lobby");
 
                 parent.getView().hideButtons();
 
                 parent.playLobbyMusic();
                 new LobbyController(new LobbyModel(parent.getModel().getUsername(), parent.getModel().getWfImpl()),
                         parent.getView().getLobbyView(), parent);
-                System.out.println("new lobby created\n");
 
                 /*
                 parent.getView().getLobbyView().setExitLobbyListener(new ActionListener() {

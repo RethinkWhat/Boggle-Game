@@ -61,11 +61,9 @@ public class LobbyController {
                         (timerVal / 3600000) % 60,
                         (timerVal / 60000) % 60,
                         (timerVal / 1000) % 60);
-                System.out.println("TIMER VALUE: " + formattedTimer);
 
                 tempUsersInLobby = model.getUsersInLobby();
                 if (tempUsersInLobby.length != usersInLobby.length) {
-                    System.out.println("reached");
                     usersInLobby = tempUsersInLobby;
                     populateLobby(usersInLobby);
                 }
@@ -74,7 +72,6 @@ public class LobbyController {
 
             }
             if (startLobby.value) {
-                System.out.println("start lobby is valid");
                 parent.getView().showGameRoom();
                 parent.stopMusic();
                 parent.playGameMusic();

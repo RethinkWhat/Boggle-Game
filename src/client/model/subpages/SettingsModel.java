@@ -126,7 +126,6 @@ public class SettingsModel {
      */
     public String getPFPOfUser(String username){
         try {
-            System.out.println("PFP: " + wfImpl.getPFPOFUser(username));
             return wfImpl.getPFPOFUser(username);
         } catch (Exception e) {
             return "";
