@@ -1,12 +1,10 @@
 package client.controller;
 
-import client.controller.subpages.GameRoomController;
 import client.controller.subpages.HomeController;
 import client.controller.subpages.HowToPlayController;
 import client.controller.subpages.SettingsController;
 import client.model.ClientApplicationModel;
 import client.model.LoginModel;
-import client.model.subpages.GameRoomModel;
 import client.model.subpages.HomeModel;
 import client.model.subpages.HowToPlayModel;
 import client.model.subpages.SettingsModel;
@@ -20,7 +18,6 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -93,8 +90,7 @@ public class ClientApplicationController {
         try {
             musicClip = AudioSystem.getClip();
             sfxClip = AudioSystem.getClip();
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
 
         SwingUtilities.invokeLater(() -> {
@@ -193,8 +189,7 @@ public class ClientApplicationController {
             musicClip.open(audioMusicStream);
             musicClip.start();
             musicClip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -209,8 +204,7 @@ public class ClientApplicationController {
             musicClip.open(audioMusicStream);
             musicClip.start();
             musicClip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
@@ -225,8 +219,7 @@ public class ClientApplicationController {
             musicClip.open(audioMusicStream);
             musicClip.start();
             musicClip.loop(Clip.LOOP_CONTINUOUSLY);
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch (Exception ignored) {
         }
     }
 
