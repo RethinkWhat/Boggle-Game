@@ -43,7 +43,7 @@ public class Server{
         try {
             Properties props = new Properties();
             props.put("org.omg.CORBA.ORBInitialPort","1500");//change as needed
-            props.put("org.omg.CORBA.ORBInitialHost", "100.84.168.124");//change as needed
+            props.put("org.omg.CORBA.ORBInitialHost", "192.168.23.183");//change as needed
             this.orb = ORB.init(args, props);
 
 //            this.orb = ORB.init(args, null);
