@@ -2,6 +2,7 @@ package client.controller.subpages;
 
 import client.controller.ClientApplicationController;
 import client.model.BoggleApp.userInfo;
+import client.model.subpages.AvatarSelectionModel;
 import client.model.subpages.HomeModel;
 import client.model.subpages.LobbyModel;
 import client.view.subpages.AvatarSelectionView;
@@ -139,7 +140,9 @@ public class HomeController {
     class EditPfpListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            avatarSelectionView = new AvatarSelectionView(model.getUsername(), new DataPB(), homeView, settingsView);
+            new AvatarSelectionController(new AvatarSelectionView(homeView, settingsView),
+                    new AvatarSelectionModel(model.getUsername(), model.getWfImpl()));
+            avatarSelectionView = new AvatarSelectionView(homeView , settingsView);
         }
     }
 }

@@ -1,6 +1,7 @@
 package client.controller.subpages;
 
 import client.controller.ClientApplicationController;
+import client.model.subpages.AvatarSelectionModel;
 import client.model.subpages.SettingsModel;
 import client.view.subpages.AvatarSelectionView;
 import client.view.ClientApplicationView;
@@ -73,7 +74,9 @@ public class SettingsController {
     class ChangeAvatarListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            avatarSelectionView = new AvatarSelectionView(model.getUsername(), new DataPB(), homeView , settingsView);
+            new AvatarSelectionController(new AvatarSelectionView(homeView, settingsView),
+                    new AvatarSelectionModel(model.getUsername(), model.getWfImpl()));
+            avatarSelectionView = new AvatarSelectionView(homeView , settingsView);
         }
     }
 

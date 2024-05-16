@@ -273,7 +273,6 @@ public class DataPB {
      * STATUS: WORKING
      * Updates the points of the user
      *
-     * @param roundIdentifier
      * @param newPoints
      */
     public static void updatePoints(int gameID, int newPoints, String username) {

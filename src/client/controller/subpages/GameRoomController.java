@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
-import java.util.Timer;
 
 /**
  * The GameRoomController processes user requests for specifying their inputs, computing and comparing scores,
@@ -145,7 +144,6 @@ public class GameRoomController {
 
     CustomizedMessageDialog dialog;
     public Runnable gameTimer() {
-        System.out.println("game timer reached");
         Runnable toReturn = new Runnable() {
             @Override
             public void run() {
@@ -153,16 +151,12 @@ public class GameRoomController {
                     model.getWordSet().clear();
                     populateLetterSet(model.getLetterList());
                     int inSeconds = (int) model.getDuration() / 1000;
-                    System.out.println("IN SECONDS: " + inSeconds);
                     view.setPrgTimerMaxVal(inSeconds);
-                    System.out.println(inSeconds);
                     while (inSeconds > 0) {
                         view.setLblTimerTxt(inSeconds);
                         Thread.sleep(1000);
                         inSeconds = (int) model.getWfImpl().getGameDurationVal(model.getGameRoomID()) / 1000;
-                        System.out.println(inSeconds);
                         view.setPrgTimerValue(inSeconds);
-                        System.out.println(inSeconds);
                         if (inSeconds == 10) {
                             sfxCountdown();
                             SwingUtilities.invokeLater(() -> {
@@ -196,10 +190,6 @@ public class GameRoomController {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
-
-
-                System.out.println("GAME WINNER: " + usernameWinnerGame);
 
                 // displays dialog messages and plays respective sfx.
                 if (!usernameWinnerGame.equals("undecided")) {
@@ -245,7 +235,6 @@ public class GameRoomController {
                         Thread.sleep(3000);
                         dialog.exitDialog();
                         model.setLetterList(model.getWfImpl().getLetters(model.getGameRoomID()));
-                        System.out.println(model.getLetterList());
                         view.setRoundNumber(roundNumber++);
                         view.setlblRoundNumber("Round " + roundNumber);
                         view.clearUserInputList();
@@ -273,10 +262,8 @@ public class GameRoomController {
     }
 
     public void endRound() {
-        System.out.println("this will work");
         parent.getHomeController().populateLeaderboard();
         parent.getSettingsController().updateGameStats();
-        System.out.println("populated parent");
         dialog.exitDialog();
         parent.getView().getCardLayout().show(parent.getView().getPnlCards(), "home");
 
