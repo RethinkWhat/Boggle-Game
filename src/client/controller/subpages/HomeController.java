@@ -136,9 +136,9 @@ public class HomeController {
     class EditPfpListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            new AvatarSelectionController(new AvatarSelectionView(homeView, settingsView),
+            AvatarSelectionView v = new AvatarSelectionView(homeView, settingsView);
+            new AvatarSelectionController(v,
                     new AvatarSelectionModel(model.getUsername(), model.getWfImpl()));
-            avatarSelectionView = new AvatarSelectionView(homeView , settingsView);
         }
     }
 }

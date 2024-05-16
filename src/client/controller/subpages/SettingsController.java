@@ -74,7 +74,8 @@ public class SettingsController {
     class ChangeAvatarListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            new AvatarSelectionController(new AvatarSelectionView(homeView, settingsView),
+            AvatarSelectionView view = new AvatarSelectionView(homeView, settingsView);
+            new AvatarSelectionController(view,
                     new AvatarSelectionModel(model.getUsername(), model.getWfImpl()));
             avatarSelectionView = new AvatarSelectionView(homeView , settingsView);
         }

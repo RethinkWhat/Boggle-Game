@@ -38,7 +38,6 @@ public class AvatarSelectionController {
         this.view = view;
         this.model = model;
         selectedAvatarPath = null;
-
         // action listeners
         for (JButton btnAvatar: view.getAvatarButtons()) {
             view.setSelectionListener(new AvatarSelectionListener(), btnAvatar);

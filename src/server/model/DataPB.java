@@ -183,7 +183,7 @@ public class DataPB {
      * @return
      */
     public static boolean editInfo(String username, String toEdit, String newInfo) {
-        if (!(toEdit.equalsIgnoreCase("username") || toEdit.equalsIgnoreCase("fullName"))) {
+        if (!(toEdit.equalsIgnoreCase("username") || toEdit.equalsIgnoreCase("fullName") || toEdit.equalsIgnoreCase("pfp"))) {
             return false;
         }
 

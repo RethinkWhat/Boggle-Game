@@ -27,7 +27,6 @@ public class AvatarSelectionView extends JFrame {
         this.settingsView = settingsView;
         avatarButtons = new JButton[4];
 
-        SwingUtilities.invokeLater(() -> {
             JFrame frame = new JFrame("Avatar Selection");
             frame.setSize(412, 505);
             frame.setResizable(false);
@@ -98,6 +97,11 @@ public class AvatarSelectionView extends JFrame {
             avatar4.setBorder(null);
             avatar4.setFocusable(false);
 
+            avatarButtons[0] = avatar1;
+            avatarButtons[1] = avatar2;
+            avatarButtons[2] = avatar3;
+            avatarButtons[3] = avatar4;
+
             avatarPanel.add(avatar1);
             avatarPanel.add(avatar2);
             avatarPanel.add(avatar3);
@@ -116,12 +120,6 @@ public class AvatarSelectionView extends JFrame {
             contentPane.add(buttonPanel, BorderLayout.SOUTH);
 
             frame.setVisible(true);
-
-            avatarButtons[0] = avatar1;
-            avatarButtons[1] = avatar2;
-            avatarButtons[2] = avatar3;
-            avatarButtons[3] = avatar4;
-        });
     }
 
     public void setSelectionListener(ActionListener actionListener, JButton btnSelection) {
@@ -133,7 +131,7 @@ public class AvatarSelectionView extends JFrame {
     }
 
     public JButton getAvatar1() {
-        return avatar1;
+        return avatarButtons[0];
     }
 
     public JButton getAvatar2() {
@@ -163,4 +161,5 @@ public class AvatarSelectionView extends JFrame {
     public HomeView getHomeView() {
         return homeView;
     }
+
 }
