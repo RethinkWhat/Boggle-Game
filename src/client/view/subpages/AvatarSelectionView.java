@@ -17,17 +17,12 @@ public class AvatarSelectionView extends JFrame {
     private JButton avatar4; // the avatar 4 button
     private JButton btnConfirm; // the confirm button
     private SwingStylesheet style = new SwingStylesheet(); // the stylesheet
-    private DataPB dataPB; // the data pb
-    private String username; // the username of the current user
-    private String selectedAvatarPath; // the selected avatar state of the user
     private JButton[] avatarButtons; // the avatar buttons
     private AvatarChangedSuccessView avatarChangedSuccessView; // the avatar changed success prompt view
     private HomeView homeView; // the home view
     private SettingsView settingsView; // the settings view
 
-    public AvatarSelectionView(String username, DataPB dataPB, HomeView homeView, SettingsView settingsView) {
-        this.username = username;
-        this.dataPB = dataPB;
+    public AvatarSelectionView(HomeView homeView, SettingsView settingsView) {
         this.homeView = homeView;
         this.settingsView = settingsView;
 
@@ -122,57 +117,46 @@ public class AvatarSelectionView extends JFrame {
             frame.setVisible(true);
 
             avatarButtons = new JButton[]{avatar1, avatar2, avatar3, avatar4};
-
-            for (JButton avatarButton : avatarButtons) {
-                avatarButton.addActionListener(new AvatarSelectionListener());
-            }
-
-            btnConfirm.addActionListener(new ConfirmButtonListener1());
-            btnConfirm.addActionListener(new ConfirmButtonListener2());
-
         });
     }
 
-    private class AvatarSelectionListener implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            JButton clickedButton = (JButton) e.getSource();
+    public void setSelectionListener(ActionListener actionListener, JButton btnSelection) {
 
-            for (JButton avatarButton : avatarButtons) {
-                avatarButton.setBackground(style.white);
-            }
-
-            clickedButton.setBackground(style.gray);
-            selectedAvatarPath = ((ImageIcon) clickedButton.getIcon()).getDescription();
-        }
     }
 
-    private class ConfirmButtonListener1 implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            if (selectedAvatarPath != null) {
-                DataPB.setCon();
-                boolean success = dataPB.changeProfilePicture(username, selectedAvatarPath);
-                //TODO: model.getWfImpl().editInfo(model.getUsername(), "pfp", selectedAvatarPath);
-                if (success) {
-                    System.out.println("Change Avatar Success!");
-                } else {
-                    System.out.println("Change Avatar Failed!");
-                }
-            }
-            for (JButton avatarButton : avatarButtons) {
-                avatarButton.setBackground(style.white);
-            }
-            SwingUtilities.getWindowAncestor(btnConfirm).dispose();
-        }
+    public void setConfirmListener(ActionListener actionListener) {
+        btnConfirm.addActionListener(actionListener);
     }
 
-    private class ConfirmButtonListener2 implements ActionListener {
-        @Override
-        public void actionPerformed(ActionEvent e) {
-            homeView.setAvatarImagePath(selectedAvatarPath);
-            settingsView.setAvatarImagePath(selectedAvatarPath);
-            SwingUtilities.getWindowAncestor(btnConfirm).dispose();
-        }
+    public JButton getAvatar1() {
+        return avatar1;
+    }
+
+    public JButton getAvatar2() {
+        return avatar2;
+    }
+
+    public JButton getAvatar3() {
+        return avatar3;
+    }
+
+    public JButton getAvatar4() {
+        return avatar4;
+    }
+
+    public JButton getBtnConfirm() {
+        return btnConfirm;
+    }
+
+    public JButton[] getAvatarButtons() {
+        return avatarButtons;
+    }
+
+    public SettingsView getSettingsView() {
+        return settingsView;
+    }
+
+    public HomeView getHomeView() {
+        return homeView;
     }
 }

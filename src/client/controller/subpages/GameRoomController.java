@@ -19,7 +19,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 import java.util.List;
-import java.util.Timer;
 
 /**
  * The GameRoomController processes user requests for specifying their inputs, computing and comparing scores,
@@ -145,7 +144,6 @@ public class GameRoomController {
 
     CustomizedMessageDialog dialog;
     public Runnable gameTimer() {
-        System.out.println("game timer reached");
         Runnable toReturn = new Runnable() {
             @Override
             public void run() {
@@ -153,16 +151,12 @@ public class GameRoomController {
                     model.getWordSet().clear();
                     populateLetterSet(model.getLetterList());
                     int inSeconds = (int) model.getDuration() / 1000;
-                    System.out.println("IN SECONDS: " + inSeconds);
                     view.setPrgTimerMaxVal(inSeconds);
-                    System.out.println(inSeconds);
                     while (inSeconds > 0) {
                         view.setLblTimerTxt(inSeconds);
                         Thread.sleep(1000);
                         inSeconds = (int) model.getWfImpl().getGameDurationVal(model.getGameRoomID()) / 1000;
-                        System.out.println(inSeconds);
                         view.setPrgTimerValue(inSeconds);
-                        System.out.println(inSeconds);
                         if (inSeconds == 10) {
                             sfxCountdown();
                             SwingUtilities.invokeLater(() -> {
@@ -197,10 +191,6 @@ public class GameRoomController {
                     e.printStackTrace();
                 }
 
-
-
-                System.out.println("GAME WINNER: " + usernameWinnerGame);
-
                 // displays dialog messages and plays respective sfx.
                 if (!usernameWinnerGame.equals("undecided")) {
                     //ActionListener actionListener = e -> { endRound();};
@@ -227,7 +217,6 @@ public class GameRoomController {
                     }
                 } else {
                     CustomizedMessageDialog dialog;
-                    sfxRoundOver();
 
                     if (model.getUsername().equals(usernameWinnerRound)) {
                         dialog = new CustomizedMessageDialog("Round Winner", style.iconWinner, "YOU WON THE ROUND!",
@@ -245,7 +234,6 @@ public class GameRoomController {
                         Thread.sleep(3000);
                         dialog.exitDialog();
                         model.setLetterList(model.getWfImpl().getLetters(model.getGameRoomID()));
-                        System.out.println(model.getLetterList());
                         view.setRoundNumber(roundNumber++);
                         view.setlblRoundNumber("Round " + roundNumber);
                         view.clearUserInputList();
@@ -261,6 +249,9 @@ public class GameRoomController {
         return toReturn;
     }
 
+    /**
+     * Populates the players in the leaderboard.
+     */
     public void populateLeaderboard() {
         currGameLeaderboard = Arrays.asList(model.getWfImpl().getCurrGameLeaderboard(model.getGameRoomID()));
         view.removeAllInLeaderboard();
@@ -272,11 +263,12 @@ public class GameRoomController {
         view.repaint();
     }
 
+    /**
+     * Completes a round.
+     */
     public void endRound() {
-        System.out.println("this will work");
         parent.getHomeController().populateLeaderboard();
         parent.getSettingsController().updateGameStats();
-        System.out.println("populated parent");
         dialog.exitDialog();
         parent.getView().getCardLayout().show(parent.getView().getPnlCards(), "home");
 
@@ -292,7 +284,6 @@ public class GameRoomController {
             String input = view.getTxtWordInput().getText().trim().toUpperCase();
 
             if (input.length() >= 4 || !input.contains(" ")) {
-                System.out.println(input);
                 if (!validateInput(input)) {
                     view.setErrorMessage("Input must CONFORM to the letter set!");
                     view.getTxtWordInput().setText("");
@@ -315,7 +306,6 @@ public class GameRoomController {
             }
         }
     }
-
 
     /**
      * Turns the music on or off.
@@ -376,13 +366,11 @@ public class GameRoomController {
 
         for (int i = 0; i < input.length(); i++) {
             if (!Character.isLetter(input.charAt(i)) || Character.isWhitespace(input.charAt(i))) {
-                System.out.println("i: " + input.charAt(i));
                 return false;
             }
         }
 
         if (compareWordToLetterset(letterSetList, input)){
-            System.out.println("reached comaprison");
             return model.getWfImpl().isValidWord(input);
         }
         return false;
@@ -480,23 +468,6 @@ public class GameRoomController {
                 sfxClip = AudioSystem.getClip();
                 sfxClip.open(audioSoundStream);
                 sfxClip.start();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    /**
-     * Plays the round over sfx.
-     */
-    private void sfxRoundOver() {
-        if (sfxOn) {
-            try {
-                // sfxClip.stop();
-                // audioSoundStream = AudioSystem.getAudioInputStream(new File(roundOver));
-                // sfxClip = AudioSystem.getClip();
-                // sfxClip.open(audioSoundStream);
-                //   sfxClip.start();
             } catch (Exception e) {
                 e.printStackTrace();
             }

@@ -47,7 +47,6 @@ public class GameSettingsController {
         public void actionPerformed(ActionEvent e) {
             // Get the selected index
             int selectedIndex = view.getGameDurationComboBox().getSelectedIndex();
-            System.out.println("option:" + selectedIndex);
             selectedGameDur = selectedIndex;
         }
     }
@@ -56,14 +55,12 @@ public class GameSettingsController {
         public void actionPerformed(ActionEvent e) {
             // Get the selected index
             int selectedIndex = view.getWaitingDurationComboBox().getSelectedIndex();
-            System.out.println("option:" + selectedIndex);
             selectedWaitDur = selectedIndex;
         }
     }
     public class EditListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("button clicked");
             view.showEditView();
             view.getGameDurationComboBox().addActionListener(new DuraBoxListener());
             view.getWaitingDurationComboBox().addActionListener(new WaitBoxListener());
@@ -88,13 +85,10 @@ public class GameSettingsController {
     public class SaveListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("button SAVE clicked");
             view.showSaved();
             view.getBtnEdit().addActionListener(new EditListener());
             view.setGameDurationComboBox(selectedGameDur);
-            System.out.println(view.getGameDurationComboBox().getSelectedIndex());
             int gameDurChoice = view.getGameDurationComboBox().getSelectedIndex();
-            System.out.println(gameDurationInMins[gameDurChoice] * 60000L);
             model.updateGameDuration(gameDurationInMins[gameDurChoice] * 60000L);
 
             view.setWaitingDurationComboBox(selectedWaitDur);

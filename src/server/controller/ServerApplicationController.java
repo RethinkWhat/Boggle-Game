@@ -29,7 +29,6 @@ public class ServerApplicationController {
         this.view = view;
         this.model = model;
         this.server = new Server();
-        //System.out.println("This come later");
 
         view.getPlayersView().hideAddPlayerPanel();
 

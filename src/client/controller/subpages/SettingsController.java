@@ -1,6 +1,7 @@
 package client.controller.subpages;
 
 import client.controller.ClientApplicationController;
+import client.model.subpages.AvatarSelectionModel;
 import client.model.subpages.SettingsModel;
 import client.view.subpages.AvatarSelectionView;
 import client.view.ClientApplicationView;
@@ -73,7 +74,9 @@ public class SettingsController {
     class ChangeAvatarListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            avatarSelectionView = new AvatarSelectionView(model.getUsername(), new DataPB(), homeView , settingsView);
+            new AvatarSelectionController(new AvatarSelectionView(homeView, settingsView),
+                    new AvatarSelectionModel(model.getUsername(), model.getWfImpl()));
+            avatarSelectionView = new AvatarSelectionView(homeView , settingsView);
         }
     }
 
@@ -108,12 +111,10 @@ public class SettingsController {
             }
 
             if (success) {
-                System.out.println("FullName Change Success!");
                 settingsView.setFullNameText(newFullName);
                 settingsView.getFullNameTextField().setEnabled(false);
                 profChangeSuccessView.main();
             } else {
-                System.out.println("FullName Change Failed!");
                 changeProfInfoErrorView.main();
             }
         }
@@ -129,11 +130,9 @@ public class SettingsController {
                 try {
                     boolean success = model.editPassword(model.getUsername(), settingsView.getCurrentPassword(), newPassword);
                     if (success) {
-                        System.out.println("Change Password Success!");
                         settingsView.clearPasswordFields();
                         passChangeSuccessView.main();
                     } else {
-                        System.out.println("Change Password Failed!");
                         settingsView.clearPasswordFields();
                         changePassErrorView.main();
                     }
@@ -143,7 +142,6 @@ public class SettingsController {
             } else {
                 settingsView.getErrorMessageLabel().setVisible(true);
                 settingsView.clearPasswordFields();
-                System.out.println("Passwords Do Not Match!");
                 changePassErrorView.main();
 
                 Timer timer = new Timer(4000, new ActionListener() {
