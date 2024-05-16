@@ -2,7 +2,7 @@ package server.model;
 
 public class ORBInitializer {
     public static void run(){
-        String terminalCommand = "ORBD -ORBInitialPort 1500 -ORBInitialHost 192.168.23.183";//change as needed
+        String terminalCommand = "ORBD -ORBInitialPort 1500 -ORBInitialHost 100.84.168.124";//change as needed
 
         Thread thread = new Thread(() -> {
             try {
