@@ -96,7 +96,7 @@ public class GameSettingsView extends JPanel {
 
             gbc.gridx = 0;
             gameDurationComboBox = style.createCmbRounded(style.goldenTainoi, style.black, -6);
-            gameDurationComboBox.setModel(new DefaultComboBoxModel<>(new String[]{" 1 minute/s", " 2 minute/s", " 3 minute/s", " 4 minute/s"}));
+            gameDurationComboBox.setModel(new DefaultComboBoxModel<>(new String[]{" 30 seconds", " 1 minute/s", " 2 minute/s", " 3 minute/s", " 4 minute/s"}));
             gameDurationComboBox.setSelectedIndex(0);
             gameDurationComboBox.setPreferredSize(new Dimension(180, 60));
             gameDurationComboBox.setFont(new Font("Arial", Font.BOLD, 16));
@@ -179,7 +179,7 @@ public class GameSettingsView extends JPanel {
 
             gbc.gridx = 0;
             gameDurationComboBox = style.createCmbRounded(style.goldenTainoi, style.black, -6);
-            gameDurationComboBox.setModel(new DefaultComboBoxModel<>(new String[]{" 1 minute/s", " 2 minute/s", " 3 minute/s", " 4 minute/s"}));
+            gameDurationComboBox.setModel(new DefaultComboBoxModel<>(new String[]{" 30 seconds", " 1 minute/s", " 2 minute/s", " 3 minute/s", " 4 minute/s"}));
             gameDurationComboBox.setSelectedIndex(0);
             gameDurationComboBox.setPreferredSize(new Dimension(180, 60));
             gameDurationComboBox.setFont(new Font("Arial", Font.BOLD, 16));

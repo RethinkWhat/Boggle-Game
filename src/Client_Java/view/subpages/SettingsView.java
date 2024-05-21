@@ -142,11 +142,11 @@ public class SettingsView extends JPanel{
             container.add(button, gbc);
 
             gbc.gridx = 1;
-            gbc.insets = new Insets(10, 0, 0, 0);
+            gbc.insets = new Insets(10, 10, 0, 0);
             container.add(leftPnlLbl, gbc);
 
             gbc.gridx = 2;
-            gbc.insets = new Insets(10, -50, 0, 0);
+            gbc.insets = new Insets(10, 10, 0, 0);
             container.add(leftPnlStateLbl, gbc);
 
             return button;

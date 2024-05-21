@@ -12,7 +12,7 @@ public class GameSettingsController {
     private GameSettingsView view;
 
 
-    private int[] gameDurationInMins = {1,2,3,4};
+    private int[] gameDurationInMins = {30,1,2,3,4};
     private int[] waitTimeInSeconds = {10, 15, 20, 25};
 
     int selectedGameDur;
@@ -73,7 +73,7 @@ public class GameSettingsController {
         public void actionPerformed(ActionEvent e) {
             view.getGameDurationComboBox().setSelectedIndex(0);
             view.getWaitingDurationComboBox().setSelectedIndex(0);
-            model.updateGameDuration(gameDurationInMins[0] * 60000L);
+            model.updateGameDuration(gameDurationInMins[0] * 1000L);
             model.updateWaitingDuration(waitTimeInSeconds[0] * 1000);
             view.showSaved();
         }
@@ -87,7 +87,12 @@ public class GameSettingsController {
             view.getBtnEdit().addActionListener(new EditListener());
             view.setGameDurationComboBox(selectedGameDur);
             int gameDurChoice = view.getGameDurationComboBox().getSelectedIndex();
-            model.updateGameDuration(gameDurationInMins[gameDurChoice] * 60000L);
+
+            if (gameDurChoice == 0)
+                model.updateGameDuration(gameDurationInMins[gameDurChoice] * 1000L);
+
+            else
+                model.updateGameDuration(gameDurationInMins[gameDurChoice] * 60000L);
 
             view.setWaitingDurationComboBox(selectedWaitDur);
             int waitChoice = view.getWaitingDurationComboBox().getSelectedIndex();

@@ -62,7 +62,6 @@ public class DataPB {
      */
     public static int createRound(String letters) {
         try {
-            System.out.println(letters);
             String stmt = "INSERT INTO round(letters) VALUES(?)";
             PreparedStatement preparedStatement = con.prepareStatement(stmt, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString(1, letters);
@@ -87,10 +86,6 @@ public class DataPB {
      */
     public static int createRoundDetails(int gameID, int roundID, int roundNumber, String username) {
         try {
-            System.out.println("game id: " + gameID);
-            System.out.println("round id: " + roundID);
-            System.out.println("round Number: " + roundNumber);
-            System.out.println("username: " + username);
             String stmt = "INSERT INTO round_details(gameID, roundID, roundNumber, username) VALUES (?,?,?,?)";
             PreparedStatement preparedStatement = con.prepareStatement(stmt, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, gameID);
@@ -162,12 +157,10 @@ public class DataPB {
             ResultSet rs = stmt.getGeneratedKeys();
             while (rs.next()) {
                 int id = rs.getInt(1);
-                System.out.println("game room generated with id: " + id);
                 return id;
             }
             return -1;
         } catch (Exception var5) {
-            System.out.println("Exception frfr");
             var5.printStackTrace();
             return -1;
         }
@@ -685,8 +678,6 @@ public class DataPB {
 
             while (rs.next()) {
                 String username = rs.getString("username");
-                System.out.println(gameID);
-                System.out.println("usernames: " + username);
                 int totalPoints = rs.getInt("total_points");
                 String pfpAddress = getPFPOfUser(username);
                 userInfo user = new userInfo(username, pfpAddress, totalPoints);
